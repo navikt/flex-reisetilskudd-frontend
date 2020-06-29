@@ -1,0 +1,32 @@
+{
+  "name": "flex-reisetilskudd-frontend",
+  "version": "1.0.0",
+  "description": "This project contains the application code and infrastructure for flex-reisetilskudd-backend ## Technologies used * React * Typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navikt/flex-reisetilskudd-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/navikt/flex-reisetilskudd-frontend/issues"
+  },
+  "homepage": "https://github.com/navikt/flex-reisetilskudd-frontend#readme",
+  
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-react": "^7.10.1",
+    "parcel-bundler": "^1.12.4"
+  }
+}
