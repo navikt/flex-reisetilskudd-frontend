@@ -12,6 +12,9 @@
         "jsx": "react",
     },
     "include": [
-        "./src/**/*"
+        "src"
+    ],
+    "exclude": [
+        "dist"
     ]
 }
