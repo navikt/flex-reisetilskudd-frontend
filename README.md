@@ -5,6 +5,9 @@ This project contains the application code and infrastructure for flex-reisetils
 * Typescript
 
 ## Getting started
+Clone the repo and run `npm install` to install the dependencies.
+Run `npm start` to start up the server. Page should run on `http://localhost:1234/`
+
 
 ### Building the application
 ## Contact us
