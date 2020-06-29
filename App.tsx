@@ -1,6 +1,10 @@
-import React from "react";
+import * as React from 'react';
 
-class App extends React.Component {
+interface Props {
+  name: string
+}
+
+class App extends React.Component<Props> {
   render() {
     const { name } = this.props;
     return (
