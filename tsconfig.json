@@ -2,19 +2,9 @@
     "compilerOptions": {
         "outDir": "./dist/",
         "sourceMap": true,
-        "strict": true,
-        "noImplicitReturns": true,
         "noImplicitAny": true,
-        "module": "es6",
-        "moduleResolution": "node",
-        "target": "es5",
-        "allowJs": true,
-        "jsx": "react",
-    },
-    "include": [
-        "src"
-    ],
-    "exclude": [
-        "dist"
-    ]
+        "module": "commonjs",
+        "target": "es6",
+        "jsx": "react"
+    }
 }
