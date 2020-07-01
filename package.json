@@ -16,14 +16,15 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run generate-env-config && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --runInBand --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
     "format": "prettier --write src/**/*.{ts,tsx,scss,css,json}",
-    "isready": "npm run format && npm run lint && npm run test:coverage && npm run build"
+    "isready": "npm run format && npm run lint && npm run test:coverage && npm run build",
+    "generate-env-config": "chmod +x ./env.sh && ./env.sh && mv env-config.js ./public/"
   },
   "eslintConfig": {
     "extends": "react-app"
