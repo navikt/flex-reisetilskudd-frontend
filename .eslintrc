@@ -43,13 +43,6 @@
     "no-multiple-empty-lines": ["error", { "max": 2, "maxBOF": 1}],
     "react/jsx-tag-spacing": 2
   },
-  "settings": {
-    "react": {
-      "pragma": "React",
-      "version": "detect"
-    }
-  },
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
   }

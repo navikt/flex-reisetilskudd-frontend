@@ -1,8 +1,9 @@
-import './App.css'
+import './App.css';
 
-import React from 'react'
+import React from 'react';
 
-import logo from './logo.svg'
+import logo from './logo.svg';
+import env from './utils/environment'
 
 console.log('hshdshd')
 
@@ -12,8 +13,7 @@ function App() {
           <header className="App-header">
               <img src={logo} className="App-logo" alt="logo" />
               <p>
-                  Edit 
-{' '}
+                  Edit
                   <code>src/App.tsx</code>
                     {' '}
                   and save to reload.
@@ -24,7 +24,7 @@ function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Learn React
+                  {/* env.reisepengerUrl */}
                 </a>
             </header>
         </div>
