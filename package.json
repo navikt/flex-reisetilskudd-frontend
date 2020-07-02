@@ -12,8 +12,7 @@
     "@types/react-dom": "^16.9.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "typescript": "^3.7.5"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "npm run generate-env-config && react-scripts start",
@@ -21,7 +20,8 @@
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --runInBand --watchAll=false",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json src --color",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.json src --fix",
     "format": "prettier --write src/**/*.{ts,tsx,scss,css,json}",
     "isready": "npm run format && npm run lint && npm run test:coverage && npm run build",
     "generate-env-config": "chmod +x ./env.sh && ./env.sh && mv env-config.js ./public/"
@@ -44,11 +44,19 @@
   "devDependencies": {
     "@types/enzyme": "3.10.5",
     "@types/enzyme-adapter-react-16": "1.0.6",
+    "@typescript-eslint/eslint-plugin": "^3.5.0",
+    "@typescript-eslint/parser": "^3.5.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
     "enzyme-to-json": "3.5.0",
+    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^2.5.1",
     "jest-fetch-mock": "3.0.3",
-    "ts-jest": "26.1.1"
+    "ts-jest": "26.1.1",
+    "typescript": "^3.9.6"
   },
   "jest": {
     "collectCoverageFrom": [
