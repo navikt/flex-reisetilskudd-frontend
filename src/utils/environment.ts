@@ -5,6 +5,9 @@ class Environment {
     get reisepengerUrl() {
         return this.env.REISEPENGER_URL
     }
+    get apiUrl() {
+        return this.env.API_URL
+    }
 
 }
 
