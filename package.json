@@ -16,13 +16,36 @@
     "react-scripts": "3.4.1",
     "typescript": "^3.7.5"
   },
+  "devDependencies": {
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/uuid": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^3.5.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "cypress": "^4.8.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-plugin-cypress": "^2.11.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "jest-environment-jsdom-fifteen": "^1.0.2",
+    "jest-react-hooks-shallow": "^1.4.1",
+    "react-test-renderer": "^16.13.1",
+    "source-map": "^0.7.3"
+  },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "lint": "eslint --ext=ts,tsx src --color",
-    "lint:fix": "eslint --ext=ts,tsx src --fix"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json src --color",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx src",
+    "format": "prettier --write src/**/*.{ts,tsx,scss,css,json}",
+    "isready": "npm run format && npm run lint && npm run test:coverage && npm run build",
+    "generate-env-config": "chmod +x ./env.sh && ./env.sh && mv env-config.js ./public/"
   },
   "eslintConfig": {
     "extends": "react-app"
