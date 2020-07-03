@@ -1,5 +1,5 @@
 class Environment {
-  // eslint-disable-next-line no-underscore-dangle
+  /* eslint-disable-next-line */
   private env = (window as any)._env_;
 
   get reisepengerUrl() {
