@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import logo from './logo.svg';
-// import env from './utils/environment'
+import env from './utils/environment';
 
 const App: React.FunctionComponent = () => (
   <div className="App">
@@ -18,7 +18,7 @@ const App: React.FunctionComponent = () => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        {/* env.reisepengerUrl */}
+        {env.reisepengerUrl}
       </a>
     </header>
   </div>
