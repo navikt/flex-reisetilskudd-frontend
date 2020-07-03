@@ -1,7 +1,8 @@
 import React, { useState, useEffect, ReactElement } from 'react';
-import logo from './logo.svg';
+import Lenkepanel from 'nav-frontend-lenkepanel';
 import env from './utils/environment';
-import './App.css';
+
+import Tabell from './components/Tabell';
 
 function MeldingBoks(sykmeldingId : string, fnr: string) {
   return (
@@ -40,20 +41,17 @@ function App() : ReactElement {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          {' '}
-          <code>src/App.tsx</code>
-          {' '}
-          and save to reload.
-        </p>
         <div>
           <h3> Meldinger fra backend: </h3>
           {
             meldinger.map((melding : Melding) => MeldingBoks(melding.sykmeldingId, melding.fnr))
           }
         </div>
+        <Lenkepanel href="#" border tittelProps="innholdstittel">
+          Lenketekst
+        </Lenkepanel>
+        <Tabell />
+
       </header>
     </div>
   );
