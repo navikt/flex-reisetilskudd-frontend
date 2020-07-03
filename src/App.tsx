@@ -1,27 +1,62 @@
-import './App.css';
-import React from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import logo from './logo.svg';
 import env from './utils/environment';
+import './App.css';
 
-const App: React.FunctionComponent = () => (
-  <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit
-        <code>src/App.tsx</code>
-        and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {env.reisepengerUrl}
-      </a>
-    </header>
-  </div>
-);
+function MeldingBoks(sykmeldingId : string, fnr: string) {
+  return (
+    <div>
+      <ul>
+        <li>
+          {' '}
+          { sykmeldingId }
+          {' '}
+        </li>
+        <li>
+          {' '}
+          { fnr }
+          {' '}
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+type Melding = { sykmeldingId: string, fnr: string };
+
+function App() : ReactElement {
+  const [meldinger, setMeldinger] = useState([]);
+
+  const getMeldinger = () => {
+    fetch(`${env.apiUrl}reisetilskudd`, { credentials: 'include' })
+      .then((response) => response.json())
+      .then((json) => setMeldinger(json));
+  };
+
+  useEffect(() => {
+    getMeldinger();
+  }, []);
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit
+          {' '}
+          <code>src/App.tsx</code>
+          {' '}
+          and save to reload.
+        </p>
+        <div>
+          <h3> Meldinger fra backend: </h3>
+          {
+            meldinger.map((melding : Melding) => MeldingBoks(melding.sykmeldingId, melding.fnr))
+          }
+        </div>
+      </header>
+    </div>
+  );
+}
 
 export default App;
