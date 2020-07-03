@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^5.6.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -15,13 +16,34 @@
     "react-scripts": "3.4.1",
     "typescript": "^3.7.5"
   },
+  "devDependencies": {
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/uuid": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^3.5.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "cypress": "^4.8.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-plugin-cypress": "^2.11.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "husky": "^4.2.5",
+    "jest-environment-jsdom-fifteen": "^1.0.2",
+    "jest-react-hooks-shallow": "^1.4.1",
+    "react-test-renderer": "^16.13.1",
+    "source-map": "^0.7.3"
+  },
   "scripts": {
-    "start": "npm run generate-env-config && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:coverage": "react-scripts test --coverage --runInBand --watchAll=false",
-    "eject": "react-scripts eject",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
+    "start": "npm run generate-env-config && craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json src --color",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.json src --fix",
     "format": "prettier --write src/**/*.{ts,tsx,scss,css,json}",
     "isready": "npm run format && npm run lint && npm run test:coverage && npm run build",
     "generate-env-config": "chmod +x ./env.sh && ./env.sh && mv env-config.js ./public/"
@@ -41,55 +63,9 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@types/enzyme": "3.10.5",
-    "@types/enzyme-adapter-react-16": "1.0.6",
-    "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.2",
-    "enzyme-to-json": "3.5.0",
-    "jest-fetch-mock": "3.0.3",
-    "ts-jest": "26.1.1"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts",
-      "!src/index.tsx",
-      "!src/serviceWorker.ts"
-    ],
-    "coveragePathIgnorePatterns": [
-      "./src/*/*.types.{ts,tsx}",
-      "./src/index.tsx",
-      "./src/serviceWorker.ts"
-    ],
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text-summary",
-      "clover"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "statements": 95,
-        "branches": 95,
-        "lines": 95,
-        "functions": 95
-      }
-    },
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/ts-jest"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-      "src/(.*)$": "<rootDir>/src/$1"
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
     }
   }
 }

@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb-typescript"
+  ],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "simple-import-sort",
+    "react-hooks"
+  ],
+  "env": {
+    "browser": true,
+    "jest": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}

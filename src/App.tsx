@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+=======
 import './App.css';
+import React from 'react';
+>>>>>>> 67e3ca15018eec7267b61e67dd546593d8153d96
+import logo from './logo.svg';
 import env from './utils/environment';
 
+<<<<<<< HEAD
 function App() {
   const [meldinger, setMeldinger] = useState([]);
   
@@ -36,6 +41,28 @@ function App() {
     </div>
   );
 }
+=======
+const App: React.FunctionComponent = () => (
+  <div className="App">
+    <header className="App-header">
+      <img src={logo} className="App-logo" alt="logo" />
+      <p>
+        Edit
+        <code>src/App.tsx</code>
+        and save to reload.
+      </p>
+      <a
+        className="App-link"
+        href="https://reactjs.org"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {env.reisepengerUrl}
+      </a>
+    </header>
+  </div>
+);
+>>>>>>> 67e3ca15018eec7267b61e67dd546593d8153d96
 
 function Melding(sykmeldingId : string, fnr: string) {
   return (
