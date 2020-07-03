@@ -3,12 +3,12 @@ class Environment {
   private env = (window as any)._env_;
 
   get reisepengerUrl() {
-      return this.env.REISEPENGER_URL
-  }
-  get apiUrl() {
-      return this.env.API_URL
+    return this.env.REISEPENGER_URL;
   }
 
+  get apiUrl() {
+    return this.env.API_URL;
+  }
 }
 
 const env = new Environment();
