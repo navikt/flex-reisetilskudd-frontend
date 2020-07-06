@@ -1,8 +1,6 @@
 import React, { useState, useEffect, ReactElement } from 'react';
-import Lenkepanel from 'nav-frontend-lenkepanel';
 import env from './utils/environment';
-
-import Tabell from './components/Tabell';
+import Filopplaster from './components/filopplaster/Filopplaster';
 
 function MeldingBoks(sykmeldingId : string, fnr: string) {
   return (
@@ -47,11 +45,10 @@ function App() : ReactElement {
             meldinger.map((melding : Melding) => MeldingBoks(melding.sykmeldingId, melding.fnr))
           }
         </div>
-        <Lenkepanel href="#" border tittelProps="innholdstittel">
-          Lenketekst
-        </Lenkepanel>
-        <Tabell />
-
+        <Filopplaster
+          tillatteFiltyper={['image/png', 'image/jpeg']}
+          maxFilstørrelse={1024 * 1024}
+        />
       </header>
     </div>
   );
