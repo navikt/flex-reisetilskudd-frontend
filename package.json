@@ -51,8 +51,9 @@
     "source-map": "^0.7.3"
   },
   "scripts": {
+    "start-mock": "MOCK_BACKEND=true npm run generate-env-config && REACT_APP_DECORATOR_URL=https://www.nav.no/dekoratoren craco start",
     "start": "npm run generate-env-config && craco start",
-    "build": "craco build",
+    "build": "PUBLIC_URL=##PUBLIC_URL## REACT_APP_DECORATOR_URL=##DECORATOR_URL## craco build",
     "test": "craco test",
     "eject": "craco eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json src --color",
