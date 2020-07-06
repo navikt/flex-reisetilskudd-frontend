@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect, ReactElement } from 'react';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 import env from './utils/environment';
@@ -30,8 +31,17 @@ function App() : ReactElement {
 
   const getMeldinger = () => {
     fetch(`${env.apiUrl}reisetilskudd`, { credentials: 'include' })
-      .then((response) => response.json())
-      .then((json) => setMeldinger(json));
+      .then((response) => {
+        if (!response.ok) {
+          console.log('Nå må vi redirecte');
+          throw new Error('401 unathorized');
+        } else {
+          console.log('Goodigood');
+          return response.json();
+        }
+      })
+      .then((json) => setMeldinger(json))
+      .catch(() => console.log('redirecting!'));
   };
 
   useEffect(() => {
