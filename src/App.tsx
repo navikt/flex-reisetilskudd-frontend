@@ -3,6 +3,7 @@ import Lenkepanel from 'nav-frontend-lenkepanel';
 import env from './utils/environment';
 
 import Tabell from './components/Tabell';
+import RadioPG from './components/Sporsmal';
 
 function MeldingBoks(sykmeldingId : string, fnr: string) {
   return (
@@ -51,6 +52,7 @@ function App() : ReactElement {
           Lenketekst
         </Lenkepanel>
         <Tabell />
+        <RadioPG />
 
       </header>
     </div>
