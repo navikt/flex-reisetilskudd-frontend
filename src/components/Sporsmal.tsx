@@ -8,9 +8,8 @@ const RadioPG = () => {
 
   return (
     <RadioPanelGruppe
-      name="samplename"
-      className="horisontal-radiogruppe"
-      legend="Hvilken drikke er best?"
+      name="Radio-spørsmål"
+      legend="Skal reisetilskuddet utbetales til arbeidsgiver?"
       radios={[
         { label: 'Ja', value: 'ja', id: 'jaId' },
         { label: 'Nei', value: 'nei', id: 'neiId' },
