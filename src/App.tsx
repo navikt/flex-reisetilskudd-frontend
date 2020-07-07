@@ -1,5 +1,6 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import Lenkepanel from 'nav-frontend-lenkepanel';
+import { Undertittel } from 'nav-frontend-typografi';
 import env from './utils/environment';
 
 import Tabell from './components/Tabell';
@@ -52,6 +53,9 @@ function App() : ReactElement {
           Lenketekst
         </Lenkepanel>
         <Tabell />
+        <Undertittel>
+          Utbetaling
+        </Undertittel>
         <RadioPG />
 
       </header>
