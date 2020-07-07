@@ -1,29 +1,27 @@
 import 'nav-frontend-skjema-style';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
+import './sporsmal.less';
 
-const RadioPG= () => {
-  const [active, setActive] = useState('juice1id')
+const RadioPG = () => {
+  const [active, setActive] = useState();
 
-  return(
-  <RadioPanelGruppe
-    name="samplename"
-    legend="Hvilken drikke er best?"
-    radios={[
-        { label: 'Eplejuice', value: 'juice1', id: 'juice1id' },
-        { label: 'Appelsinjuice', value: 'juice2', id: 'juice2id' },
-        { label: 'Melk', value: 'melk', id: 'melkid' },
-        { label: 'Ananasjuice', value: 'juice3', id: 'juice4id' }
-    ]}
-    checked={'juice2id'}
-    onChange= {() => setActive('juice2id')}
-/>)
+  return (
+    <RadioPanelGruppe
+      name="samplename"
+      className="horisontal-radiogruppe"
+      legend="Hvilken drikke er best?"
+      radios={[
+        { label: 'Ja', value: 'ja', id: 'jaId' },
+        { label: 'Nei', value: 'nei', id: 'neiId' },
+      ]}
+      checked={active}
+      onChange={(_, e) => setActive(e)}
+    />
+  );
+};
 
-}
-
-
-
-/*function RadioPG() : ReactElement {
+/* function RadioPG() : ReactElement {
   return (
     <div className="radioContainer" key="melk">
       <input
@@ -38,6 +36,6 @@ const RadioPG= () => {
       <label className= "skjemaelement__label" htmlFor= "Ja-svar">Ja</label>
     </div>
   );
-}*/
+} */
 
 export default RadioPG;
