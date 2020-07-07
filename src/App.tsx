@@ -32,16 +32,14 @@ function App() : ReactElement {
   const getMeldinger = () => {
     fetch(`${env.apiUrl}reisetilskudd`, { credentials: 'include' })
       .then((response) => {
-        if (!response.ok) {
-          console.log('Nå må vi redirecte');
-          throw new Error('401 unathorized');
-        } else {
-          console.log('Goodigood');
-          return response.json();
+        if (response.status === 401) {
+          if (env.loginServiceUrl) {
+            window.location.replace(`${env.loginServiceUrl}/?redirect=${window.location.href}`);
+          }
         }
+        return response.json();
       })
-      .then((json) => setMeldinger(json))
-      .catch(() => console.log('redirecting!'));
+      .then((json) => setMeldinger(json));
   };
 
   useEffect(() => {
