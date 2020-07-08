@@ -17,6 +17,10 @@ class Environment {
   get isProd() {
     return this.env.IS_PROD === 'TRUE';
   }
+
+  get loginServiceUrl() {
+    return this.env.LOGIN_SERVICE_URL;
+  }
 }
 
 const env = new Environment();

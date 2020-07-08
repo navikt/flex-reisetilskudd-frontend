@@ -4,4 +4,5 @@ window._env_ = {
   REACT_APP_DECORATOR_URL: "http://localhost:8100/dekoratoren",
   IS_Q1: "FALSE",
   IS_PROD: "FALSE",
+  LOGIN_SERVICE_URL: "http://localhost:5000",
 };

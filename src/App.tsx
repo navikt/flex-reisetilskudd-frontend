@@ -1,6 +1,14 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect, ReactElement } from 'react';
+import Lenkepanel from 'nav-frontend-lenkepanel';
+import { Undertittel } from 'nav-frontend-typografi';
 import env from './utils/environment';
 import Filopplaster from './components/filopplaster/Filopplaster';
+import Brodsmuler from './components/Brodsmuler';
+import { sideHjelpeteksterID } from './constants/sideIDKonstanter';
+
+import Tabell from './components/Tabell';
+import RadioPG from './components/Sporsmal';
 
 function MeldingBoks(sykmeldingId : string, fnr: string) {
   return (
@@ -21,6 +29,8 @@ function MeldingBoks(sykmeldingId : string, fnr: string) {
   );
 }
 
+const getBrødsmuleHjelpetekst = () => sideHjelpeteksterID.DAGENS_TRANSPORTMIDDEL;
+
 type Melding = { sykmeldingId: string, fnr: string };
 
 function App() : ReactElement {
@@ -28,7 +38,14 @@ function App() : ReactElement {
 
   const getMeldinger = () => {
     fetch(`${env.apiUrl}reisetilskudd`, { credentials: 'include' })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 401) {
+          if (env.loginServiceUrl) {
+            window.location.replace(`${env.loginServiceUrl}/?redirect=${window.location.href}`);
+          }
+        }
+        return response.json();
+      })
       .then((json) => setMeldinger(json));
   };
 
@@ -45,10 +62,21 @@ function App() : ReactElement {
             meldinger.map((melding : Melding) => MeldingBoks(melding.sykmeldingId, melding.fnr))
           }
         </div>
+        <Brodsmuler aktivtSteg={getBrødsmuleHjelpetekst()} />
         <Filopplaster
           tillatteFiltyper={['image/png', 'image/jpeg']}
           maxFilstørrelse={1024 * 1024}
         />
+
+        <Lenkepanel href="#" border tittelProps="innholdstittel">
+          Lenketekst
+        </Lenkepanel>
+        <Tabell />
+        <Undertittel>
+          Utbetaling
+        </Undertittel>
+        <RadioPG />
+
       </header>
     </div>
   );
