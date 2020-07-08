@@ -1,9 +1,14 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect, ReactElement } from 'react';
+import Lenkepanel from 'nav-frontend-lenkepanel';
+import { Undertittel } from 'nav-frontend-typografi';
 import env from './utils/environment';
 import Filopplaster from './components/filopplaster/Filopplaster';
 import Brodsmuler from './components/Brodsmuler';
 import { sideHjelpeteksterID } from './constants/sideIDKonstanter';
+
+import Tabell from './components/Tabell';
+import RadioPG from './components/Sporsmal';
 
 function MeldingBoks(sykmeldingId : string, fnr: string) {
   return (
@@ -62,6 +67,16 @@ function App() : ReactElement {
           tillatteFiltyper={['image/png', 'image/jpeg']}
           maxFilstørrelse={1024 * 1024}
         />
+
+        <Lenkepanel href="#" border tittelProps="innholdstittel">
+          Lenketekst
+        </Lenkepanel>
+        <Tabell />
+        <Undertittel>
+          Utbetaling
+        </Undertittel>
+        <RadioPG />
+
       </header>
     </div>
   );
