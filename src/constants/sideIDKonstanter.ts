@@ -9,4 +9,3 @@ export const sideHjelpetekster = {
   DAGENS_TRANSPORTMIDDEL: 'Dagens transportmiddel',
   REISETILSKUDD_PERIODE: 'Transportmiddel i reisetilskuddperioden',
 };
-

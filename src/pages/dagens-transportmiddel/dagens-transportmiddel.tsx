@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-const DagensTransportmiddel = () => {
-    return(
-        <div>
-
-        </div>
-    )
+function DagensTransportmiddel():ReactElement {
+  return (
+    <div />
+  );
 }
 
 export default DagensTransportmiddel;

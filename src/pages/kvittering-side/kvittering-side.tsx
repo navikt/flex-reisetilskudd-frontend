@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-const KvitteringSide = () => {
-    return(
-        <div>
-
-        </div>
-    )
+function KvitteringSide():ReactElement {
+  return (
+    <div />
+  );
 }
 
 export default KvitteringSide;
