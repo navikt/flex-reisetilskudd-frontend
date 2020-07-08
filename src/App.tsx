@@ -2,6 +2,8 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import env from './utils/environment';
 import Filopplaster from './components/filopplaster/Filopplaster';
+import Brodsmuler from './components/Brodsmuler';
+import { sideHjelpeteksterID } from './constants/sideIDKonstanter';
 
 function MeldingBoks(sykmeldingId : string, fnr: string) {
   return (
@@ -21,6 +23,8 @@ function MeldingBoks(sykmeldingId : string, fnr: string) {
     </div>
   );
 }
+
+const getBrødsmuleHjelpetekst = () => sideHjelpeteksterID.DAGENS_TRANSPORTMIDDEL;
 
 type Melding = { sykmeldingId: string, fnr: string };
 
@@ -53,6 +57,7 @@ function App() : ReactElement {
             meldinger.map((melding : Melding) => MeldingBoks(melding.sykmeldingId, melding.fnr))
           }
         </div>
+        <Brodsmuler aktivtSteg={getBrødsmuleHjelpetekst()} />
         <Filopplaster
           tillatteFiltyper={['image/png', 'image/jpeg']}
           maxFilstørrelse={1024 * 1024}
