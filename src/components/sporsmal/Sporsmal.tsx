@@ -2,12 +2,17 @@ import 'nav-frontend-skjema-style';
 import React, { useState, ReactElement } from 'react';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import './sporsmal.less';
+import { Undertittel } from 'nav-frontend-typografi';
 
 function RadioPG(): ReactElement {
   const [active, setActive] = useState();
 
   return (
-    <RadioPanelGruppe
+    <div>
+      <Undertittel>
+        Utbetaling
+      </Undertittel>
+       <RadioPanelGruppe
       name="Radio-spørsmål"
       legend="Skal reisetilskuddet utbetales til arbeidsgiver?"
       radios={[
@@ -17,6 +22,7 @@ function RadioPG(): ReactElement {
       checked={active}
       onChange={(_, e) => setActive(e)}
     />
+    </div>
   );
 }
 
