@@ -12,16 +12,16 @@ function RadioPG(): ReactElement {
       <Undertittel>
         Utbetaling
       </Undertittel>
-       <RadioPanelGruppe
-      name="Radio-spørsmål"
-      legend="Skal reisetilskuddet utbetales til arbeidsgiver?"
-      radios={[
-        { label: 'Ja', value: 'ja', id: 'jaId' },
-        { label: 'Nei', value: 'nei', id: 'neiId' },
-      ]}
-      checked={active}
-      onChange={(_, e) => setActive(e)}
-    />
+      <RadioPanelGruppe
+        name="Radio-spørsmål"
+        legend="Skal reisetilskuddet utbetales til arbeidsgiver?"
+        radios={[
+          { label: 'Ja', value: 'ja', id: 'jaId' },
+          { label: 'Nei', value: 'nei', id: 'neiId' },
+        ]}
+        checked={active}
+        onChange={(_, e) => setActive(e)}
+      />
     </div>
   );
 }

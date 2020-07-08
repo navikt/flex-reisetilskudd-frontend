@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import React, { ReactElement } from 'react';
 // import env from './utils/environment';
+import {
+  BrowserRouter as Router, Switch, Route, Link,
+} from 'react-router-dom';
 import Soknaden from './pages/soknaden/soknaden';
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import Utbetaling from './pages/utbetaling/utbetaling';
 import DagensTransportmiddel from './pages/dagens-transportmiddel/dagens-transportmiddel';
 import ReiseTilskuddPeriode from './pages/reisetilskudd-periode/reisetilskudd-periode';
