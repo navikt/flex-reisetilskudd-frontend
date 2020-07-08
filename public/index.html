@@ -35,6 +35,10 @@
       <section id="decorator-footer" class="navno-dekorator" role="main"></section>
       <div id="decorator-env" data-src="%REACT_APP_DECORATOR_URL%/env"></div>
       <script type="text/javascript" src="%REACT_APP_DECORATOR_URL%/client.js"></script>
-  </div>
+    </div>
+    <script type="application/javascript">
+      window.frontendlogger = { info: function(){}, warn: function(){}, error: function(){}, event: function(){}};
+      window.frontendlogger.appname = 'flex-reisetilskudd-frontend';
+    </script>
   </body>
 </html>
