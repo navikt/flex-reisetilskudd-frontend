@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
 import React, { ReactElement } from 'react';
-// import env from './utils/environment';
 import Soknaden from './pages/soknaden/soknaden';
 
 function App() : ReactElement {
