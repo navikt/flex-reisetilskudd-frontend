@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
 import React, { ReactElement } from 'react';
-// import env from './utils/environment';
 import {
   BrowserRouter as Router, Switch, Route, Link,
 } from 'react-router-dom';
