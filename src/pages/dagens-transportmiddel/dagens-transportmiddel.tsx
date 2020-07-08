@@ -1,8 +1,15 @@
 import React, { ReactElement } from 'react';
+import { Undertittel } from 'nav-frontend-typografi';
+import RadioPG from '../../components/sporsmal/Sporsmal';
 
 function DagensTransportmiddel():ReactElement {
   return (
-    <div />
+    <div>
+      <Undertittel>
+        Transportmiddel til daglig
+      </Undertittel>
+      <RadioPG />
+    </div>
   );
 }
 
