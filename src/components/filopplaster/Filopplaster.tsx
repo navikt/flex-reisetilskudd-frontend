@@ -7,6 +7,7 @@ import opplasting from '../../assets/opplasting.svg';
 import formaterFilstørrelse from './utils';
 import { IVedlegg } from '../../models/vedlegg';
 import OpplastedeFiler from './OpplastedeFiler';
+import { logger } from '../../utils/logger';
 
 interface Props {
   tillatteFiltyper?: string[];
@@ -28,6 +29,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
       const nyeVedlegg : IVedlegg[] = [];
 
       filer.forEach((fil: File) => {
+        logger.info(`Prøver å laste opp fil ${fil.name}`);
         if (maxFilstørrelse && fil.size > maxFilstørrelse) {
           const maks = formaterFilstørrelse(maxFilstørrelse);
           feilmeldingsliste.push(`Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}`);
