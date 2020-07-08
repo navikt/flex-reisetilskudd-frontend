@@ -4,6 +4,7 @@ import Modal from 'nav-frontend-modal';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDropzone } from 'react-dropzone';
 import { Input } from 'nav-frontend-skjema';
+import { Knapp } from 'nav-frontend-knapper';
 import opplasting from '../../assets/opplasting.svg';
 import formaterFilstørrelse from './utils';
 import { IVedlegg } from '../../models/vedlegg';
@@ -18,7 +19,7 @@ interface Props {
 const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) => {
   const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
   const [vedlegg, settVedlegg] = useState<IVedlegg[]>([]);
-  const [åpenModal, settÅpenModal] = useState<boolean>(true);
+  const [åpenModal, settÅpenModal] = useState<boolean>(false);
 
   const lukkModal = () => {
     settÅpenModal(false);
@@ -35,14 +36,12 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
           const maks = formaterFilstørrelse(maxFilstørrelse);
           feilmeldingsliste.push(`Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}`);
           settFeilmeldinger(feilmeldingsliste);
-          settÅpenModal(true);
           return;
         }
 
         if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
           feilmeldingsliste.push(`Filtypen til ${fil.name} er ugyldig. Gyldige typer er ${tillatteFiltyper}`);
           settFeilmeldinger(feilmeldingsliste);
-          settÅpenModal(true);
           return;
         }
 
@@ -55,6 +54,8 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
         });
 
         settVedlegg([...vedlegg, ...nyeVedlegg]);
+
+        settÅpenModal(true);
       });
     },
     // eslint-disable-next-line
@@ -87,17 +88,27 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
           contentLabel="Modal"
           className="filopplaster-modal"
         >
-          <Undertittel>Ny kvittering</Undertittel>
-          <div className="input-rad">
-            <Input className="kvittering-input" label="Dato" />
-            <Input className="kvittering-input" label="Totalt beløp" inputMode="numeric" />
-          </div>
-          <div className="feilmelding">
-            {feilmeldinger.map((feilmelding) => (
-              <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
-                {feilmelding}
-              </AlertStripeFeil>
-            ))}
+          <div className="modal-content">
+            <div className="kvittering-header">
+              <Undertittel> Ny kvittering</Undertittel>
+            </div>
+            <div className="input-rad">
+              <Input className="kvittering-input" label="Dato" />
+              <Input className="kvittering-input" label="Totalt beløp" inputMode="numeric" />
+            </div>
+            <div className="opplastede-filer">
+              <OpplastedeFiler filliste={vedlegg} />
+            </div>
+            <Knapp className="lagre-kvittering">
+              Lagre kvittering
+            </Knapp>
+            <div className="feilmelding">
+              {feilmeldinger.map((feilmelding) => (
+                <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
+                  {feilmelding}
+                </AlertStripeFeil>
+              ))}
+            </div>
           </div>
         </Modal>
         <div {...getRootProps()}>
