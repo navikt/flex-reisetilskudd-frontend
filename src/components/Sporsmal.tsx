@@ -1,9 +1,9 @@
 import 'nav-frontend-skjema-style';
-import React, { useState } from 'react';
+import React, { useState, ReactElement } from 'react';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import './sporsmal.less';
 
-const RadioPG = () => {
+const RadioPG = () : ReactElement => {
   const [active, setActive] = useState();
 
   return (
