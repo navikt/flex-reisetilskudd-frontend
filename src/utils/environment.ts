@@ -9,6 +9,10 @@ class Environment {
   get apiUrl() {
     return this.env.API_URL;
   }
+
+  get loginServiceUrl() {
+    return this.env.LOGIN_SERVICE_URL;
+  }
 }
 
 const env = new Environment();

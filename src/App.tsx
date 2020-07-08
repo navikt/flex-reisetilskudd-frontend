@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect, ReactElement } from 'react';
 import env from './utils/environment';
 import Filopplaster from './components/filopplaster/Filopplaster';
@@ -28,7 +29,14 @@ function App() : ReactElement {
 
   const getMeldinger = () => {
     fetch(`${env.apiUrl}reisetilskudd`, { credentials: 'include' })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 401) {
+          if (env.loginServiceUrl) {
+            window.location.replace(`${env.loginServiceUrl}/?redirect=${window.location.href}`);
+          }
+        }
+        return response.json();
+      })
       .then((json) => setMeldinger(json));
   };
 
