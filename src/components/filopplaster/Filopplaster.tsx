@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDropzone } from 'react-dropzone';
+import { Input } from 'nav-frontend-skjema';
 import opplasting from '../../assets/opplasting.svg';
 import formaterFilstørrelse from './utils';
 import { IVedlegg } from '../../models/vedlegg';
@@ -17,7 +18,7 @@ interface Props {
 const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) => {
   const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
   const [vedlegg, settVedlegg] = useState<IVedlegg[]>([]);
-  const [åpenModal, settÅpenModal] = useState<boolean>(false);
+  const [åpenModal, settÅpenModal] = useState<boolean>(true);
 
   const lukkModal = () => {
     settÅpenModal(false);
@@ -84,7 +85,13 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
           onRequestClose={() => lukkModal()}
           closeButton
           contentLabel="Modal"
+          className="filopplaster-modal"
         >
+          <Undertittel>Ny kvittering</Undertittel>
+          <div className="input-rad">
+            <Input className="kvittering-input" label="Dato" />
+            <Input className="kvittering-input" label="Totalt beløp" inputMode="numeric" />
+          </div>
           <div className="feilmelding">
             {feilmeldinger.map((feilmelding) => (
               <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
