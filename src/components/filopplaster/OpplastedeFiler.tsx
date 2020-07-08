@@ -7,7 +7,7 @@ import { IVedlegg } from '../../models/vedlegg';
 
 interface Props {
   filliste: IVedlegg[];
-  slettVedlegg: (vedlegg: IVedlegg) => void;
+  slettVedlegg?: (vedlegg: IVedlegg) => void;
 }
 
 const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => (
@@ -28,16 +28,20 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg }) => (
               )
             </Normaltekst>
           </div>
-          <button
-            className="slett"
-            onClick={() => {
-              slettVedlegg(fil);
-            }}
-            type="submit"
-          >
-            <Normaltekst>slett</Normaltekst>
-            <img className="slettikon" src={slett} alt="Rødt kryss" />
-          </button>
+          {slettVedlegg
+            ? (
+              <button
+                className="slett"
+                onClick={() => {
+                  slettVedlegg(fil);
+                }}
+                type="submit"
+              >
+                <Normaltekst>slett</Normaltekst>
+                <img className="slettikon" src={slett} alt="Rødt kryss" />
+              </button>
+            )
+            : <></>}
         </div>
         {index === filliste.length - 1 ? '' : <hr />}
       </div>
