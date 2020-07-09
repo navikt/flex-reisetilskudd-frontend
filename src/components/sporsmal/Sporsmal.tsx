@@ -4,21 +4,35 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import './sporsmal.less';
 import { Undertittel } from 'nav-frontend-typografi';
 
-function RadioPG(): ReactElement {
+interface Svaralternativ {
+  label: string,
+  value: string,
+  id: string,
+}
+
+interface RadioPGProps {
+  tittel: string,
+  name: string,
+  spørsmålstekst: string,
+  svaralternativer: Svaralternativ[],
+}
+
+function RadioPG({
+  tittel, name, spørsmålstekst, svaralternativer,
+}: RadioPGProps): ReactElement {
   const [active, setActive] = useState();
 
   return (
     <div>
       <Undertittel>
-        Utbetaling
+        {tittel}
       </Undertittel>
       <RadioPanelGruppe
-        name="Radio-spørsmål"
-        legend="Skal reisetilskuddet utbetales til arbeidsgiver?"
-        radios={[
-          { label: 'Ja', value: 'ja', id: 'jaId' },
-          { label: 'Nei', value: 'nei', id: 'neiId' },
-        ]}
+        name={name}
+        legend={spørsmålstekst}
+        radios={
+          svaralternativer
+        }
         checked={active}
         onChange={(_, e) => setActive(e)}
       />

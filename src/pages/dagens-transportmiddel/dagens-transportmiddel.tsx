@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
-import RadioPG from '../../components/sporsmal/Sporsmal';
+// import RadioPG from '../../components/sporsmal/Sporsmal';
 
 function DagensTransportmiddel():ReactElement {
   return (
@@ -8,7 +8,7 @@ function DagensTransportmiddel():ReactElement {
       <Undertittel>
         Transportmiddel til daglig
       </Undertittel>
-      <RadioPG />
+      {/* <RadioPG /> */}
     </div>
   );
 }
