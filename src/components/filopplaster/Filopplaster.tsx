@@ -10,6 +10,7 @@ import formaterFilstørrelse from './utils';
 import { IVedlegg } from '../../models/vedlegg';
 import OpplastedeFiler from './OpplastedeFiler';
 import { logger } from '../../utils/logger';
+import { ReisetilskuddDatovelger } from '../dato/ReisetilskuddDatovelger';
 
 interface Props {
   tillatteFiltyper?: string[];
@@ -75,6 +76,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
 
   return (
     <div className="filopplaster-wrapper">
+      <ReisetilskuddDatovelger id="dato" onChange={() => {}} />
       <div className="tittel-wrapper">
         <div className="opplastede-filer">
           <OpplastedeFiler
