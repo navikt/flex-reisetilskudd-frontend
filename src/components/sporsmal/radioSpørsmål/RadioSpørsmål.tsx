@@ -1,25 +1,13 @@
 import 'nav-frontend-skjema-style';
 import React, { useState, ReactElement } from 'react';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import './sporsmal.less';
+import './RadioSpørsmål.less';
 import { Undertittel } from 'nav-frontend-typografi';
+import { RadioSpørsmålProps } from '../../../types/types';
 
-interface Svaralternativ {
-  label: string,
-  value: string,
-  id: string,
-}
-
-interface RadioPGProps {
-  tittel: string,
-  name: string,
-  spørsmålstekst: string,
-  svaralternativer: Svaralternativ[],
-}
-
-function RadioPG({
+function RadioSpørsmål({
   tittel, name, spørsmålstekst, svaralternativer,
-}: RadioPGProps): ReactElement {
+}: RadioSpørsmålProps): ReactElement {
   const [active, setActive] = useState();
 
   return (
@@ -40,4 +28,4 @@ function RadioPG({
   );
 }
 
-export default RadioPG;
+export default RadioSpørsmål;
