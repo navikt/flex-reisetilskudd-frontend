@@ -3,6 +3,8 @@ import Brodsmuler from '../../components/Brodsmuler';
 import { sideHjelpeteksterID } from '../../constants/sideIDKonstanter';
 import ReiseTilskuddPeriode from '../reisetilskudd-periode/reisetilskudd-periode';
 import Utbetaling from '../utbetaling/utbetaling';
+import TilbakeKnapp from '../../components/knapper/TilbakeKnapp';
+import VidereKnapp from '../../components/knapper/VidereKnapp';
 
 const getBrødsmuleHjelpetekst = () => sideHjelpeteksterID.DAGENS_TRANSPORTMIDDEL;
 
@@ -12,6 +14,8 @@ function Soknaden():ReactElement {
       <Brodsmuler aktivtSteg={getBrødsmuleHjelpetekst()} />
       <ReiseTilskuddPeriode />
       <Utbetaling />
+      <TilbakeKnapp />
+      <VidereKnapp />
     </div>
   );
 }
