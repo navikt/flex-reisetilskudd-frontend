@@ -25,7 +25,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
     settÅpenModal(false);
   };
 
-  const onDrop = useCallback(
+  const onDropCallback = useCallback(
     (filer) => {
       const feilmeldingsliste: string[] = [];
       const nyeVedlegg : IVedlegg[] = [];
@@ -68,7 +68,10 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
     settVedlegg(nyVedleggsliste);
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: onDropCallback,
+    multiple: false,
+  });
 
   return (
     <div className="filopplaster-wrapper">
