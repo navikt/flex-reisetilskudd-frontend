@@ -11,6 +11,7 @@ import { IVedlegg } from '../../models/vedlegg';
 import OpplastedeFiler from './OpplastedeFiler';
 import { logger } from '../../utils/logger';
 import ReisetilskuddDatovelger from '../dato/ReisetilskuddDatovelger';
+import './Filopplaster.less';
 
 interface Props {
   tillatteFiltyper?: string[];
