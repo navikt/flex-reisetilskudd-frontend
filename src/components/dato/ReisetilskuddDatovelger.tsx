@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Flatpickr from 'react-flatpickr';
 import { Norwegian } from 'flatpickr/dist/l10n/no';
 import './flatpickr.less';
-import './ReisetilskuddDatovelger.less'
+import './ReisetilskuddDatovelger.less';
 import { Element } from 'nav-frontend-typografi';
 
 export interface IDatovelgerProps {
@@ -12,7 +12,7 @@ export interface IDatovelgerProps {
 
 const ReisetilskuddDatovelger: React.FC<IDatovelgerProps> = ({
   label = '',
-  className = ''
+  className = '',
 }) => {
   const [dato, setDato] = useState(new Date());
 
