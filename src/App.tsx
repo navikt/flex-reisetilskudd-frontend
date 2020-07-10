@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import {
-  BrowserRouter as Router, Switch, Route, Link,
+  BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Soknaden from './pages/soknaden/soknaden';
@@ -13,34 +13,14 @@ function App() : ReactElement {
     <Router>
       <div>
         <Normaltekst>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Hjem</Link>
-              </li>
-              <li>
-                <Link to="/utbetaling">Utbetaling</Link>
-              </li>
-              <li>
-                <Link to="/dagens-transportmiddel">Dagens transportmiddel</Link>
-              </li>
-              <li>
-                <Link to="/reisetilskudd-periode">Reisetilskudd periode</Link>
-              </li>
-            </ul>
-          </nav>
-
-          {
-        }
-
           <Switch>
-            <Route path="/utbetaling">
+            <Route path="/1">
               <Utbetaling />
             </Route>
-            <Route path="/dagens-transportmiddel">
+            <Route path="/2">
               <DagensTransportmiddel />
             </Route>
-            <Route path="/reisetilskudd-periode">
+            <Route path="/3">
               <ReiseTilskuddPeriode />
             </Route>
             <Route path="/">
