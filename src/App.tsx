@@ -7,6 +7,7 @@ import Soknaden from './pages/soknaden/soknaden';
 import Utbetaling from './pages/utbetaling/utbetaling';
 import DagensTransportmiddel from './pages/dagens-transportmiddel/dagens-transportmiddel';
 import ReiseTilskuddPeriode from './pages/reisetilskudd-periode/reisetilskudd-periode';
+import KvitteringSide from './pages/kvittering-side/kvittering-side';
 
 function App() : ReactElement {
   return (
@@ -48,6 +49,7 @@ function App() : ReactElement {
             </Route>
           </Switch>
         </Normaltekst>
+        <KvitteringSide />
       </div>
     </Router>
   );
