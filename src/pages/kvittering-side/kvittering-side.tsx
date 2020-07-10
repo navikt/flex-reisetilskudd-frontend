@@ -8,19 +8,21 @@ function KvitteringSide():ReactElement {
     <div className="page-wrapper">
       <p>morra di er mann</p>
       <div className="liste-wrapper">
-        <Normaltekst>
-          <Undertittel>Nå har du gjort første del</Undertittel>
-          <p>Du har sendt beskjed om sykefraværet til arbeidsgiveren din</p>
-          <Undertittel>Du har nå fullført andre del</Undertittel>
-          <p>
+        <div className="tekstwrapper">
+          <Normaltekst>
+            <Undertittel>Nå har du gjort første del</Undertittel>
+            <p>Du har sendt beskjed om sykefraværet til arbeidsgiveren din</p>
+            <Undertittel>Du har nå fullført andre del</Undertittel>
             <p>
-              Kravet ditt om reisetilskudd er nå under behandling.
-              Du vil få varsel når dette er klart
+              <p>
+                Kravet ditt om reisetilskudd er nå under behandling.
+                Du vil få varsel når dette er klart
+              </p>
+              <b>Lurer du på hva saksbehandler gjør?</b>
+              <p><a href="www.nav.no">Les mer om reglene for reisetilskudd .</a></p>
             </p>
-            <b>Lurer du på hva saksbehandler gjør?</b>
-            <p><a href="www.nav.no">Les mer om reglene for reisetilskudd .</a></p>
-          </p>
-        </Normaltekst>
+          </Normaltekst>
+        </div>
       </div>
       <div className="veien-videre-wrapper">
         <AlertStripe className="gronn-checkbox" type="suksess">
