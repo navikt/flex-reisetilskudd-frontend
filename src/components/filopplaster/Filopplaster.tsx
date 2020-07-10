@@ -1,15 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDropzone } from 'react-dropzone';
 import { Input } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import opplasting from '../../assets/opplasting.svg';
 import formaterFilstørrelse from './utils';
 import { IVedlegg } from '../../models/vedlegg';
 import OpplastedeFiler from './OpplastedeFiler';
-import { logger } from '../../utils/logger';
 import ReisetilskuddDatovelger from '../dato/ReisetilskuddDatovelger';
 import './Filopplaster.less';
 
@@ -29,21 +28,17 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
 
   const onDropCallback = useCallback(
     (filer) => {
-      const feilmeldingsliste: string[] = [];
       const nyeVedlegg : IVedlegg[] = [];
 
       filer.forEach((fil: File) => {
-        logger.info(`Prøver å laste opp fil ${fil.name}`);
         if (maxFilstørrelse && fil.size > maxFilstørrelse) {
           const maks = formaterFilstørrelse(maxFilstørrelse);
-          feilmeldingsliste.push(`Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}`);
-          settFeilmeldinger(feilmeldingsliste);
+          settFeilmeldinger([...feilmeldinger, `Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}`]);
           return;
         }
 
         if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-          feilmeldingsliste.push(`Filtypen til ${fil.name} er ugyldig. Gyldige typer er ${tillatteFiltyper}`);
-          settFeilmeldinger(feilmeldingsliste);
+          settFeilmeldinger([...feilmeldinger, `Filtypen til ${fil.name} er ugyldig. Gyldige typer er ${tillatteFiltyper}`]);
           return;
         }
 
@@ -55,6 +50,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
           størrelse: fil.size,
         });
 
+        settFeilmeldinger([]);
         settVedlegg([...vedlegg, ...nyeVedlegg]);
 
         settÅpenModal(true);
@@ -94,23 +90,18 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
           className="filopplaster-modal"
         >
           <div className="modal-content">
-            <Undertittel className="kvittering-header"> Ny kvittering</Undertittel>
-            <div className="input-rad">
-              <ReisetilskuddDatovelger label="Dato" />
-              <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" />
-            </div>
-            <div className="opplastede-filer">
-              <OpplastedeFiler filliste={vedlegg} />
-            </div>
-            <Knapp className="lagre-kvittering">
-              Lagre kvittering
-            </Knapp>
-            <div className="feilmelding">
-              {feilmeldinger.map((feilmelding) => (
-                <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
-                  {feilmelding}
-                </AlertStripeFeil>
-              ))}
+            <div>
+              <Undertittel className="kvittering-header"> Ny kvittering</Undertittel>
+              <div className="input-rad">
+                <ReisetilskuddDatovelger label="Dato" />
+                <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" />
+              </div>
+              <div className="opplastede-filer">
+                <OpplastedeFiler filliste={vedlegg} />
+              </div>
+              <Knapp className="lagre-kvittering">
+                Lagre kvittering
+              </Knapp>
             </div>
           </div>
         </Modal>
@@ -140,6 +131,15 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
             </>
           )}
         </div>
+
+        <div>
+          {feilmeldinger.map((feilmelding) => (
+            <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
+              {feilmelding}
+            </AlertStripeFeil>
+          ))}
+        </div>
+
       </div>
     </div>
   );
