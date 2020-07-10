@@ -71,8 +71,8 @@
 
 .filopplaster-modal {
   .modal-content {
+    min-width: 200px;
     padding: 0 5%;
-    
     display: grid;
 
     .lagre-kvittering {
@@ -84,12 +84,12 @@
   }
 
   .input-rad {
-    display: flex;
-    flex-direction: row;
-    
-    .kvittering-input:not(:last-of-type) {
-      margin-right: 10px;
-    }
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 1em;
+    justify-content: space-between;
+    align-items: end;
   }
 }
 

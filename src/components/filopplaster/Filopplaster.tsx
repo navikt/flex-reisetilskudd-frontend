@@ -77,7 +77,6 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
 
   return (
     <div className="filopplaster-wrapper">
-      <ReisetilskuddDatovelger />
       <div className="tittel-wrapper">
         <div className="opplastede-filer">
           <OpplastedeFiler
@@ -95,12 +94,10 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
           className="filopplaster-modal"
         >
           <div className="modal-content">
-            <div className="kvittering-header">
-              <Undertittel> Ny kvittering</Undertittel>
-            </div>
+            <Undertittel className="kvittering-header"> Ny kvittering</Undertittel>
             <div className="input-rad">
-              <Input className="kvittering-input" label="Dato" />
-              <Input className="kvittering-input" label="Totalt beløp" inputMode="numeric" />
+              <ReisetilskuddDatovelger label="Dato"/>
+              <Input label="Totalt beløp" inputMode="numeric" />
             </div>
             <div className="opplastede-filer">
               <OpplastedeFiler filliste={vedlegg} />
