@@ -1,24 +1,26 @@
 import 'nav-frontend-skjema-style';
 import React, { useState, ReactElement } from 'react';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import './sporsmal.less';
+import './RadioSpørsmål.less';
 import { Undertittel } from 'nav-frontend-typografi';
+import { RadioSpørsmålProps } from '../../../types/types';
 
-function RadioPG(): ReactElement {
+function RadioSpørsmål({
+  tittel, name, spørsmålstekst, svaralternativer,
+}: RadioSpørsmålProps): ReactElement {
   const [active, setActive] = useState();
 
   return (
     <div>
       <Undertittel>
-        Utbetaling
+        {tittel}
       </Undertittel>
       <RadioPanelGruppe
-        name="Radio-spørsmål"
-        legend="Skal reisetilskuddet utbetales til arbeidsgiver?"
-        radios={[
-          { label: 'Ja', value: 'ja', id: 'jaId' },
-          { label: 'Nei', value: 'nei', id: 'neiId' },
-        ]}
+        name={name}
+        legend={spørsmålstekst}
+        radios={
+          svaralternativer
+        }
         checked={active}
         onChange={(_, e) => setActive(e)}
       />
@@ -26,4 +28,4 @@ function RadioPG(): ReactElement {
   );
 }
 
-export default RadioPG;
+export default RadioSpørsmål;
