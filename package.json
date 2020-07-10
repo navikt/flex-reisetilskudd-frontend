@@ -15,6 +15,7 @@
     "classnames": "^2.2.6",
     "craco-less": "^1.17.0",
     "fast-safe-stringify": "^2.0.7",
+    "flatpickr": "^4.6.3",
     "lodash.throttle": "^4.1.1",
     "nav-datovelger": "^6.1.9",
     "nav-frontend-alertstriper": "^3.0.20",
@@ -48,12 +49,14 @@
     "react-day-picker": "^7.4.8",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",
+    "react-flatpickr": "^3.10.1",
     "react-modal": "^3.11.2",
     "react-scripts": "3.4.1",
     "typescript": "^3.7.5"
   },
   "devDependencies": {
     "@types/react-dom": "^16.9.8",
+    "@types/react-flatpickr": "^3.8.1",
     "@types/react-router-dom": "^5.1.5",
     "@types/uuid": "^8.0.0",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
