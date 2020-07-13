@@ -1,9 +1,11 @@
-import { ReactElement } from 'react';
+import React from 'react';
 import RadioSpørsmål from '../../components/sporsmal/radioSpørsmål/RadioSpørsmål';
-import { offentligPrivatSpørsmål } from '../../components/sporsmal/radioSpørsmål/radioSpørsmålTekster';
+import { utbetalingSpørsmål } from '../../components/sporsmal/spørsmålTekster';
 
-function Utbetaling(): ReactElement {
-  return RadioSpørsmål(offentligPrivatSpørsmål);
-}
+const Utbetaling = () => (
+  <>
+    {RadioSpørsmål(utbetalingSpørsmål)}
+  </>
+);
 
 export default Utbetaling;

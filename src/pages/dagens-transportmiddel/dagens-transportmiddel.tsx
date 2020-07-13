@@ -1,16 +1,13 @@
-import React, { ReactElement } from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
-// import RadioPG from '../../components/sporsmal/Sporsmal';
+import React from 'react';
+import RadioSpørsmål from '../../components/sporsmal/radioSpørsmål/RadioSpørsmål';
+import CheckboxSpørsmål from '../../components/sporsmal/checkboxSpørsmål/CheckboxSpørsmål';
+import { offentligPrivatSpørsmål, transportAlternativerPrivat } from '../../components/sporsmal/spørsmålTekster';
 
-function DagensTransportmiddel():ReactElement {
-  return (
-    <div>
-      <Undertittel>
-        Transportmiddel til daglig
-      </Undertittel>
-      {/* <RadioPG /> */}
-    </div>
-  );
-}
+const DagensTransportmiddel = () => (
+  <>
+    {RadioSpørsmål(offentligPrivatSpørsmål)}
+    {CheckboxSpørsmål(transportAlternativerPrivat)}
+  </>
+);
 
 export default DagensTransportmiddel;
