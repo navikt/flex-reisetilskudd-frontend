@@ -1,5 +1,8 @@
 .page-wrapper{
     background-color: rgb(238, 238, 238);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
 }
 
 .liste-wrapper{
@@ -9,6 +12,8 @@
     margin-left: 15rem;
     margin-right: 15rem;
     padding-bottom: 2rem;
+    min-width: 28em;
+    max-width: 30em;
 }
 .tekstwrapper{
     padding-left: 3rem;
@@ -22,6 +27,8 @@
     padding-left: 10rem;
     padding-right: 10rem;
     padding-bottom: 10rem;
+    min-width: 40em;
+    max-width: 40em;
 }
 
 .gronn-checkbox{
@@ -35,4 +42,28 @@
 .bla-info{
     background-color: white;
     justify-content: center;
+}
+
+.numberCircle{
+    border-radius: 50%;
+    min-width: 1em;
+    height: 1em;
+    padding: 8px;
+
+    background: rgb(125, 181, 141);
+    color: black;
+    text-align: center;
+    font: 14px Arial, sans-serif;
+}
+
+.inline-container{
+    display:flex;
+    flex-direction:row;
+    vertical-align: text-top;
+}
+
+span:before{
+    content:" "; 
+    display:inline-block; 
+    width:32px;
 }
