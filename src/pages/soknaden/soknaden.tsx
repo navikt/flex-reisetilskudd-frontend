@@ -18,8 +18,6 @@ function Soknaden():ReactElement {
     <div>
       <Brodsmuler aktivtSteg={idNum} />
       <TilbakeKnapp />
-      <VidereKnapp />
-
       <Vis hvis={idNum === 1}>
         <Utbetaling />
       </Vis>
@@ -29,6 +27,7 @@ function Soknaden():ReactElement {
       <Vis hvis={idNum === 3}>
         <ReiseTilskuddPeriode />
       </Vis>
+      <VidereKnapp aktivtSteg={idNum} />
     </div>
   );
 }

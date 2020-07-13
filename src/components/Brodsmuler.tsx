@@ -13,7 +13,7 @@ export const pathUtenSteg = (pathname: string) : string => {
 };
 
 function Brodsmuler({ aktivtSteg } : Brodsmuleprops) : ReactElement {
-  const generteSteg = Object.entries(sideHjelpetekster).map(([, verdi], index) => ({ label: `${verdi}`, aktiv: (index === aktivtSteg - 1), index }));
+  const generteSteg = Object.entries(sideHjelpetekster).map(([, verdi], index) => ({ label: `${verdi}`, index }));
   const history = useHistory();
 
   function goTo(idx: number) {
@@ -26,6 +26,7 @@ function Brodsmuler({ aktivtSteg } : Brodsmuleprops) : ReactElement {
       onChange={(id) => {
         goTo(id + 1);
       }}
+      aktivtSteg={aktivtSteg - 1}
       visLabel
       autoResponsiv
     />
