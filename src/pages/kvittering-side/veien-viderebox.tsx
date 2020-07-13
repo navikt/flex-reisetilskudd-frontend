@@ -2,17 +2,21 @@ import React, { ReactElement } from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
 import './kvittering-side.less';
 import { Undertittel } from 'nav-frontend-typografi';
+import moment from 'moment';
 
 function VeienVidereBox():ReactElement {
+  const today = moment().format('\tDD.MM.YYYY');
+  const time = moment().format('\tHH:mm');
+
   return (
     <div className="veien-videre-wrapper">
       <AlertStripe className="gronn-checkbox" type="suksess">
         <Undertittel>Sykemeldingen er sendt til NAV</Undertittel>
         <p>
           Dato sendt:
-          {}
+          {today}
           , kl:
-          {}
+          {time}
         </p>
       </AlertStripe>
       <AlertStripe className="bla-info" type="info">
