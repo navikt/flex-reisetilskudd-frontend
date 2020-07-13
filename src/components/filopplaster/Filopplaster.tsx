@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useCallback } from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
@@ -11,6 +12,7 @@ import { IVedlegg } from '../../models/vedlegg';
 import OpplastedeFiler from './OpplastedeFiler';
 import ReisetilskuddDatovelger from '../dato/ReisetilskuddDatovelger';
 import './Filopplaster.less';
+import env from '../../utils/environment';
 
 interface Props {
   tillatteFiltyper?: string[];
@@ -44,6 +46,59 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
 
         const requestData = new FormData();
         requestData.append('file', fil);
+
+        { /* const response = await fetch(env.get, {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, *cors, same-origin
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'same-origin', // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, 
+          origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+
+        fetch(env.apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        })
+          .then((response: {}))
+
+        .post<OpplastetVedlegg>(`${Environment().dokumentUrl}`, requestData, {
+            withCredentials: true,
+            headers: {
+              'content-type': 'multipart/form-data',
+              accept: 'application/json',
+            },
+          })
+          .then((response: { data: OpplastetVedlegg }) => {
+            const { data } = response;
+            nyeVedlegg.push({
+              dokumentId: data.dokumentId,
+              navn: fil.name,
+              størrelse: fil.size,
+              tidspunkt: dagensDatoStreng,
+            });
+
+            const opplastedeVedlegg = dokumentasjon.opplastedeVedlegg || [];
+            settDokumentasjon({
+              ...dokumentasjon,
+              opplastedeVedlegg: [...opplastedeVedlegg, ...nyeVedlegg],
+            });
+          })
+          .catch((error) => {
+            feilmeldingsliste.push(
+              intl.formatMessage({ id: 'filopplaster.feilmelding.generisk' })
+            );
+            settFeilmeldinger(feilmeldingsliste);
+            settÅpenModal(true);
+          }); */ }
 
         nyeVedlegg.push({
           navn: fil.name,
@@ -111,17 +166,17 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
               </Normaltekst>
             </>
           ) : (
-            <>
-              <img
-                src={opplasting}
-                className="opplastingsikon"
-                alt="Opplastingsikon"
-              />
-              <Normaltekst className="tekst">
-                Last opp dokumentasjon
+              <>
+                <img
+                  src={opplasting}
+                  className="opplastingsikon"
+                  alt="Opplastingsikon"
+                />
+                <Normaltekst className="tekst">
+                  Last opp dokumentasjon
               </Normaltekst>
-            </>
-          )}
+              </>
+            )}
         </div>
 
         <div className="feilmeldinger">
