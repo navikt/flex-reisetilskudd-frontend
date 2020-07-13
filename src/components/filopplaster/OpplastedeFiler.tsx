@@ -8,7 +8,7 @@ import { IVedlegg } from '../../models/vedlegg';
 interface Props {
   filliste: IVedlegg[];
   slettVedlegg?: (vedlegg: IVedlegg) => void;
-  className? : string;
+  className?: string;
 }
 
 const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg, className }) => (

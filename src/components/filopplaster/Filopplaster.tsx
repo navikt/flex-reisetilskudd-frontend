@@ -28,7 +28,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
 
   const onDropCallback = useCallback(
     (filer) => {
-      const nyeVedlegg : IVedlegg[] = [];
+      const nyeVedlegg: IVedlegg[] = [];
 
       filer.forEach((fil: File) => {
         if (maxFilstørrelse && fil.size > maxFilstørrelse) {
@@ -51,8 +51,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
         });
 
         settFeilmeldinger([]);
-        settVedlegg([...vedlegg, ...nyeVedlegg]);
-
+        settVedlegg((gamleVedlegg) => [...gamleVedlegg, ...nyeVedlegg]);
         settÅpenModal(true);
       });
     },
