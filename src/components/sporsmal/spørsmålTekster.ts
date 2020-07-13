@@ -1,9 +1,11 @@
-import { RadioSpørsmålProps, CheckboxProps } from '../../types/types';
+import {
+  RadioSpørsmålProps, CheckboxProps, InputProps, VeilederProps,
+} from '../../types/types';
 
 export const utbetalingSpørsmål: RadioSpørsmålProps = {
   tittel: 'Utbetaling til arbeidsgiver',
   name: 'UtbetalingArbeidsgiver',
-  spørsmålstekst: 'Skal reisetilskuddet utbetales til deg eller til <SETT-INN-ARBEIDSGIVER',
+  spørsmålstekst: 'Skal reisetilskuddet utbetales til deg eller til <SETT-INN-ARBEIDSGIVER>?',
   svaralternativer: [
     {
       label: 'Meg',
@@ -55,4 +57,22 @@ export const transportAlternativerPrivat: CheckboxProps = {
       id: 'EgenBil',
     },
   ],
+};
+
+export const antallKilometerSpørsmål: InputProps = {
+  tittel: 'Antall kilometer fra bosted til arbeid',
+  inputMode: 'numeric',
+  feil: 'Her er det noe feil',
+  bredde: 'S',
+};
+
+export const månedligeUtgifterSpørsmål: InputProps = {
+  tittel: 'Månedlige utgifter til offentlig transport',
+  inputMode: 'numeric',
+  feil: 'Her er det noe feil',
+  bredde: 'S',
+};
+
+export const transportVeileder: VeilederProps = {
+  hjelpetekst: 'Offentlig transport regnes som kollektiv transport, taxi, bysykler, el-scooter.',
 };
