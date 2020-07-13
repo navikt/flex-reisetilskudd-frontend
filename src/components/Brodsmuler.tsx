@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { sideHjelpetekster } from '../constants/sideIDKonstanter';
 import { SEPARATOR } from '../utils/constants';
 
-type Brodsmuleprops = {aktivtSteg: string};
+type Brodsmuleprops = {aktivtSteg: number};
 
 export const pathUtenSteg = (pathname: string) : string => {
   const arr: string[] = pathname.split(SEPARATOR);
@@ -13,7 +13,7 @@ export const pathUtenSteg = (pathname: string) : string => {
 };
 
 function Brodsmuler({ aktivtSteg } : Brodsmuleprops) : ReactElement {
-  const generteSteg = Object.entries(sideHjelpetekster).map(([nøkkel, verdi], index) => ({ label: `${verdi}`, aktiv: (nøkkel === aktivtSteg), index }));
+  const generteSteg = Object.entries(sideHjelpetekster).map(([, verdi], index) => ({ label: `${verdi}`, aktiv: (index === aktivtSteg - 1), index }));
   const history = useHistory();
 
   function goTo(idx: number) {
