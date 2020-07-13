@@ -73,14 +73,11 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
 
   return (
     <div className="filopplaster-wrapper">
-      <div className="tittel-wrapper">
-        <div className="opplastede-filer">
-          <OpplastedeFiler
-            filliste={vedlegg}
-            slettVedlegg={slettVedlegg}
-          />
-        </div>
-      </div>
+      <OpplastedeFiler
+        className="opplastede-filer"
+        filliste={vedlegg}
+        slettVedlegg={slettVedlegg}
+      />
       <div className="filopplaster">
         <Modal
           isOpen={åpenModal}
@@ -90,19 +87,15 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
           className="filopplaster-modal"
         >
           <div className="modal-content">
-            <div>
-              <Undertittel className="kvittering-header"> Ny kvittering</Undertittel>
-              <div className="input-rad">
-                <ReisetilskuddDatovelger label="Dato" />
-                <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" />
-              </div>
-              <div className="opplastede-filer">
-                <OpplastedeFiler filliste={vedlegg} />
-              </div>
-              <Knapp className="lagre-kvittering">
-                Lagre kvittering
-              </Knapp>
+            <Undertittel className="kvittering-header"> Ny kvittering</Undertittel>
+            <div className="input-rad">
+              <ReisetilskuddDatovelger label="Dato" />
+              <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" />
             </div>
+            <OpplastedeFiler className="opplastede-filer" filliste={vedlegg} />
+            <Knapp className="lagre-kvittering">
+              Lagre kvittering
+            </Knapp>
           </div>
         </Modal>
         <div {...getRootProps()}>
