@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import {
-  BrowserRouter as Router, Switch, Route, Link,
+  BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
-import Soknaden from './pages/soknaden/soknaden';
+import Soknaden from './pages/soknaden/soknaden'
 import Utbetaling from './pages/utbetaling/utbetaling';
 import DagensTransportmiddel from './pages/dagens-transportmiddel/dagens-transportmiddel';
 import ReiseTilskuddPeriode from './pages/reisetilskudd-periode/reisetilskudd-periode';
@@ -51,6 +51,16 @@ function App() : ReactElement {
         </Normaltekst>
         <KvitteringSide />
       </div>
+      <Normaltekst>
+        <Switch>
+          <Route path="/soknaden/:id">
+            <Soknaden />
+          </Route>
+          <Route path="/kvittering">
+            <KvitteringSide />
+          </Route>
+        </Switch>
+      </Normaltekst>
     </Router>
   );
 }

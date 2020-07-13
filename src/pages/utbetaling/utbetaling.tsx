@@ -1,12 +1,11 @@
-import React, { ReactElement } from 'react';
-import RadioPG from '../../components/sporsmal/Sporsmal';
+import React from 'react';
+import RadioSpørsmål from '../../components/sporsmal/radioSpørsmål/RadioSpørsmål';
+import { utbetalingSpørsmål } from '../../components/sporsmal/spørsmålTekster';
 
-function Utbetaling(): ReactElement {
-  return (
-    <div>
-      <RadioPG />
-    </div>
-  );
-}
+const Utbetaling = () => (
+  <>
+    {RadioSpørsmål(utbetalingSpørsmål)}
+  </>
+);
 
 export default Utbetaling;
