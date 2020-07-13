@@ -8,6 +8,11 @@ export interface RadioSpørsmålProps {
   tittel: string,
   name: string,
   spørsmålstekst: string,
-  hjelpetekst: string,
+  hjelpetekst?: string,
   svaralternativer: Svaralternativ[],
+}
+
+export interface CheckboxProps {
+  tittel: string;
+  svaralternativer: Svaralternativ[];
 }

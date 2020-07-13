@@ -1,9 +1,13 @@
-import { ReactElement } from 'react';
+import React from 'react';
 import RadioSpørsmål from '../../components/sporsmal/radioSpørsmål/RadioSpørsmål';
-import { offentligPrivatSpørsmål } from '../../components/sporsmal/radioSpørsmål/radioSpørsmålTekster';
+import CheckboxSpørsmål from '../../components/sporsmal/checkboxSpørsmål/CheckboxSpørsmål';
+import { offentligPrivatSpørsmål, transportAlternativerPrivat } from '../../components/sporsmal/spørsmålTekster';
 
-function DagensTransportmiddel(): ReactElement {
-  return RadioSpørsmål(offentligPrivatSpørsmål);
-}
+const DagensTransportmiddel = () => (
+  <>
+    {RadioSpørsmål(offentligPrivatSpørsmål)}
+    {CheckboxSpørsmål(transportAlternativerPrivat)}
+  </>
+);
 
 export default DagensTransportmiddel;

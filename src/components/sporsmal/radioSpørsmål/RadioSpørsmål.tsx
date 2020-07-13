@@ -1,17 +1,16 @@
-import 'nav-frontend-skjema-style';
-import React, { useState, ReactElement } from 'react';
+import React, { useState } from 'react';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import './RadioSpørsmål.less';
 import { Undertittel } from 'nav-frontend-typografi';
 import { RadioSpørsmålProps } from '../../../types/types';
+import './RadioSpørsmål.less';
 
-function RadioSpørsmål({
+const RadioSpørsmål = ({
   tittel, name, spørsmålstekst, svaralternativer,
-}: RadioSpørsmålProps): ReactElement {
+}: RadioSpørsmålProps) => {
   const [active, setActive] = useState();
 
   return (
-    <div>
+    <div className="horisontal-radio">
       <Undertittel>
         {tittel}
       </Undertittel>
@@ -26,6 +25,6 @@ function RadioSpørsmål({
       />
     </div>
   );
-}
+};
 
 export default RadioSpørsmål;
