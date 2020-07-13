@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState, useCallback } from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
@@ -13,47 +12,51 @@ import OpplastedeFiler from './OpplastedeFiler';
 import ReisetilskuddDatovelger from '../dato/ReisetilskuddDatovelger';
 import './Filopplaster.less';
 import env from '../../utils/environment';
+import { logger } from '../../utils/logger';
 
 interface Props {
   tillatteFiltyper?: string[];
   maxFilstørrelse?: number;
 }
 
-async function get<T>(
-  path: string,
-  args: RequestInit = { method: 'get' },
-): Promise<HttpResponse<T>> {
-  return await fetcher<T>(new Request(path, args));
-}
-
-async function post<T>(
-  path: string,
-  body: any,
-  args: RequestInit = { method: 'post', body: JSON.stringify(body) },
-): Promise<HttpResponse<T>> {
-  return await fetcher<T>(new Request(path, args));
-}
-
-interface HttpResponse<T> extends Response {
-  parsedBody?: T;
-}
-
 async function fetcher<T>(
   request: RequestInfo,
 ): Promise<HttpResponse<T>> {
-  const response : HttpResponse<T> = await fetch(request);
+  const response: HttpResponse<T> = await fetch(request);
   try {
     response.parsedBody = await response.json();
-  } catch (ex) {}
+  } catch (ex) { logger.error(ex); }
   if (!response.ok) {
     throw new Error(response.statusText);
   }
   return response;
 }
 
+// eslint-disable-next-line
+async function get<T>(
+  path: string,
+  args: RequestInit = { method: 'get' },
+): Promise<HttpResponse<T>> {
+  return fetcher<T>(new Request(path, args));
+}
+
+async function post<T>(
+  path: string,
+  // eslint-disable-next-line
+  body: any,
+  args: RequestInit = { method: 'post', body: JSON.stringify(body) },
+): Promise<HttpResponse<T>> {
+  return fetcher<T>(new Request(path, args));
+}
+
+interface HttpResponse<T> extends Response {
+  parsedBody?: T;
+}
+
 const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) => {
   const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
   const [vedlegg, settVedlegg] = useState<IVedlegg[]>([]);
+  const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [åpenModal, settÅpenModal] = useState<boolean>(false);
 
   const lukkModal = () => {
@@ -62,9 +65,8 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
 
   const onDropCallback = useCallback(
     (filer) => {
-      const nyeVedlegg: IVedlegg[] = [];
-
       filer.forEach((fil: File) => {
+        settUopplastetFil(fil);
         if (maxFilstørrelse && fil.size > maxFilstørrelse) {
           const maks = formaterFilstørrelse(maxFilstørrelse);
           settFeilmeldinger([...feilmeldinger, `Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}`]);
@@ -76,36 +78,36 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
           return;
         }
 
-        const requestData = new FormData();
-        requestData.append('file', fil);
-
-        post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvitteringer`, requestData)
-          .then((response) => {
-            console.log('Response', response);
-            if (response.parsedBody?.dokumentId) {
-              console.log('Mottok dokumentId', response.parsedBody.dokumentId);
-              nyeVedlegg.push({
-                navn: fil.name,
-                størrelse: fil.size,
-                dokumentId: response.parsedBody?.dokumentId,
-              });
-            } else {
-              console.log('Response does not contain dokumentId');
-            }
-          })
-          .catch((error) => {
-            console.log('Vi får en feil');
-            console.log(error);
-          });
-
         settFeilmeldinger([]);
-        settVedlegg((gamleVedlegg) => [...gamleVedlegg, ...nyeVedlegg]);
+        // settVedlegg((gamleVedlegg) => [...gamleVedlegg]);
         settÅpenModal(true);
       });
     },
     // eslint-disable-next-line
     []
   );
+
+  const lagreVedlegg = (fil: File) => {
+    const requestData = new FormData();
+    requestData.append('file', fil);
+    post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvitteringer`, requestData)
+      .then((response) => {
+        if (response.parsedBody?.dokumentId) {
+          logger.info('Mottok dokumentId', response.parsedBody.dokumentId);
+          settVedlegg((gamleVedlegg) => [...gamleVedlegg, {
+            navn: fil.name,
+            størrelse: fil.size,
+            dokumentId: response.parsedBody?.dokumentId,
+          }]);
+        } else {
+          logger.warn('Response does not contain dokumentId');
+        }
+      })
+      .catch((error) => {
+        logger.error('Vi får en feil');
+        logger.error(error);
+      });
+  };
 
   const slettVedlegg = (fil: IVedlegg) => {
     const opplastedeVedlegg = vedlegg;
@@ -140,7 +142,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
               <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" />
             </div>
             <OpplastedeFiler className="opplastede-filer" filliste={vedlegg} />
-            <Knapp className="lagre-kvittering">
+            <Knapp className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
               Lagre kvittering
             </Knapp>
           </div>
