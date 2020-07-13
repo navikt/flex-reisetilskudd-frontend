@@ -63,10 +63,6 @@ function App() : ReactElement {
           }
         </div>
         <Brodsmuler aktivtSteg={getBrødsmuleHjelpetekst()} />
-        <Filopplaster
-          tillatteFiltyper={['image/png', 'image/jpeg']}
-          maxFilstørrelse={1024 * 1024}
-        />
 
         <Lenkepanel href="#" border tittelProps="innholdstittel">
           Lenketekst
@@ -76,6 +72,10 @@ function App() : ReactElement {
           Utbetaling
         </Undertittel>
         <RadioPG />
+        <Filopplaster
+          tillatteFiltyper={['image/png', 'image/jpeg']}
+          maxFilstørrelse={1024 * 1024}
+        />
 
       </header>
     </div>
