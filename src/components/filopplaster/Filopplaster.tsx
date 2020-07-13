@@ -179,7 +179,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
             )}
         </div>
 
-        <div className="feilmeldinger">
+        <div className="feilmeldinger" aria-live="polite">
           {feilmeldinger.map((feilmelding) => (
             <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
               {feilmelding}
