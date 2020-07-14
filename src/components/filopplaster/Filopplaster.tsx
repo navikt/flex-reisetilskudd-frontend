@@ -1,12 +1,18 @@
 import React, { useState, useCallback } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDropzone } from 'react-dropzone';
+import { Input } from 'nav-frontend-skjema';
+import { Knapp } from 'nav-frontend-knapper';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import opplasting from '../../assets/opplasting.svg';
 import formaterFilstørrelse from './utils';
-import { IVedlegg } from '../../models/vedlegg';
+import { IVedlegg, IOpplastetVedlegg } from '../../models/vedlegg';
 import OpplastedeFiler from './OpplastedeFiler';
+import Fil from './Fil';
+import ReisetilskuddDatovelger from '../dato/ReisetilskuddDatovelger';
+import './Filopplaster.less';
+import env from '../../utils/environment';
 import { logger } from '../../utils/logger';
 
 interface Props {
@@ -14,51 +20,95 @@ interface Props {
   maxFilstørrelse?: number;
 }
 
+async function fetcher<T>(
+  request: RequestInfo,
+): Promise<HttpResponse<T>> {
+  const response: HttpResponse<T> = await fetch(request);
+  try {
+    response.parsedBody = await response.json();
+  } catch (ex) { logger.error(ex); }
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  return response;
+}
+
+// eslint-disable-next-line
+async function get<T>(
+  path: string,
+  args: RequestInit = { method: 'get' },
+): Promise<HttpResponse<T>> {
+  return fetcher<T>(new Request(path, args));
+}
+
+async function post<T>(
+  path: string,
+  // eslint-disable-next-line
+  body: any,
+  args: RequestInit = { method: 'post', body: JSON.stringify(body) },
+): Promise<HttpResponse<T>> {
+  return fetcher<T>(new Request(path, args));
+}
+
+interface HttpResponse<T> extends Response {
+  parsedBody?: T;
+}
+
 const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) => {
   const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
   const [vedlegg, settVedlegg] = useState<IVedlegg[]>([]);
+  const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [åpenModal, settÅpenModal] = useState<boolean>(false);
 
   const lukkModal = () => {
+    settUopplastetFil(null);
     settÅpenModal(false);
   };
 
-  const onDrop = useCallback(
+  const onDropCallback = useCallback(
     (filer) => {
-      const feilmeldingsliste: string[] = [];
-      const nyeVedlegg : IVedlegg[] = [];
-
       filer.forEach((fil: File) => {
-        logger.info(`Prøver å laste opp fil ${fil.name}`);
+        settUopplastetFil(fil);
         if (maxFilstørrelse && fil.size > maxFilstørrelse) {
           const maks = formaterFilstørrelse(maxFilstørrelse);
-          feilmeldingsliste.push(`Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}`);
-          settFeilmeldinger(feilmeldingsliste);
-          settÅpenModal(true);
+          settFeilmeldinger([...feilmeldinger, `Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}`]);
           return;
         }
 
         if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-          feilmeldingsliste.push(`Filtypen til ${fil.name} er ugyldig. Gyldige typer er ${tillatteFiltyper}`);
-          settFeilmeldinger(feilmeldingsliste);
-          settÅpenModal(true);
+          settFeilmeldinger([...feilmeldinger, `Filtypen til ${fil.name} er ugyldig. Gyldige typer er ${tillatteFiltyper}`]);
           return;
         }
 
-        const requestData = new FormData();
-        requestData.append('file', fil);
-
-        nyeVedlegg.push({
-          navn: fil.name,
-          størrelse: fil.size,
-        });
-
-        settVedlegg([...vedlegg, ...nyeVedlegg]);
+        settFeilmeldinger([]);
+        // settVedlegg((gamleVedlegg) => [...gamleVedlegg]);
+        settÅpenModal(true);
       });
     },
     // eslint-disable-next-line
     []
   );
+
+  const lagreVedlegg = (fil: File) => {
+    const requestData = new FormData();
+    requestData.append('file', fil);
+    post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvitteringer`, requestData)
+      .then((response) => {
+        if (response.parsedBody?.dokumentId) {
+          settVedlegg((gamleVedlegg) => [...gamleVedlegg, {
+            navn: fil.name,
+            størrelse: fil.size,
+            dokumentId: response.parsedBody?.dokumentId,
+          }]);
+        } else {
+          logger.warn('Responsen inneholder ikke noen dokumentId', response.parsedBody);
+        }
+      })
+      .then(() => lukkModal())
+      .catch((error) => {
+        logger.error('Feil under opplasting av kvittering', error);
+      });
+  };
 
   const slettVedlegg = (fil: IVedlegg) => {
     const opplastedeVedlegg = vedlegg;
@@ -66,31 +116,36 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
     settVedlegg(nyVedleggsliste);
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: onDropCallback,
+    multiple: false,
+  });
 
   return (
     <div className="filopplaster-wrapper">
-      <div className="tittel-wrapper">
-        <div className="opplastede-filer">
-          <OpplastedeFiler
-            filliste={vedlegg}
-            slettVedlegg={slettVedlegg}
-          />
-        </div>
-      </div>
+      <OpplastedeFiler
+        className="opplastede-filer"
+        filliste={vedlegg}
+        slettVedlegg={slettVedlegg}
+      />
       <div className="filopplaster">
         <Modal
           isOpen={åpenModal}
           onRequestClose={() => lukkModal()}
           closeButton
           contentLabel="Modal"
+          className="filopplaster-modal"
         >
-          <div className="feilmelding">
-            {feilmeldinger.map((feilmelding) => (
-              <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
-                {feilmelding}
-              </AlertStripeFeil>
-            ))}
+          <div className="modal-content">
+            <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
+            <div className="input-rad">
+              <ReisetilskuddDatovelger label="Dato" />
+              <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" />
+            </div>
+            <Fil fil={uopplastetFil} className="opplastede-filer" />
+            <Knapp className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
+              Lagre kvittering
+            </Knapp>
           </div>
         </Modal>
         <div {...getRootProps()}>
@@ -119,6 +174,15 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
             </>
           )}
         </div>
+
+        <div className="feilmeldinger" aria-live="polite">
+          {feilmeldinger.map((feilmelding) => (
+            <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
+              {feilmelding}
+            </AlertStripeFeil>
+          ))}
+        </div>
+
       </div>
     </div>
   );

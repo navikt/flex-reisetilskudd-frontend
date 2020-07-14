@@ -10,6 +10,10 @@ class Environment {
     return this.env.API_URL;
   }
 
+  get mockApiUrl() {
+    return this.env.MOCK_API_URL;
+  }
+
   get isQ1() {
     return this.env.IS_Q1 === 'TRUE';
   }
