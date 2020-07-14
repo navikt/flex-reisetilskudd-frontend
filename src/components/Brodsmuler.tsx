@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
 import Stegindikator from 'nav-frontend-stegindikator';
 import { useHistory } from 'react-router-dom';
-import { sideHjelpetekster } from '../constants/sideIDKonstanter';
+import { sideTitler } from '../constants/sideTitler';
 import { SEPARATOR } from '../utils/constants';
-
-type Brodsmuleprops = {aktivtSteg: number};
+import { AktivtStegProps } from '../types/navigasjonTypes';
 
 export const pathUtenSteg = (pathname: string) : string => {
   const arr: string[] = pathname.split(SEPARATOR);
@@ -12,8 +11,8 @@ export const pathUtenSteg = (pathname: string) : string => {
   return arr.join(SEPARATOR);
 };
 
-function Brodsmuler({ aktivtSteg } : Brodsmuleprops) : ReactElement {
-  const generteSteg = Object.entries(sideHjelpetekster).map(([, verdi], index) => ({ label: `${verdi}`, index }));
+function Brodsmuler({ aktivtSteg } : AktivtStegProps) : ReactElement {
+  const genererteSteg = Object.entries(sideTitler).map(([, verdi], index) => ({ label: `${verdi}`, index }));
   const history = useHistory();
 
   function goTo(idx: number) {
@@ -22,7 +21,7 @@ function Brodsmuler({ aktivtSteg } : Brodsmuleprops) : ReactElement {
 
   return (
     <Stegindikator
-      steg={generteSteg}
+      steg={genererteSteg}
       onChange={(id) => {
         goTo(id + 1);
       }}

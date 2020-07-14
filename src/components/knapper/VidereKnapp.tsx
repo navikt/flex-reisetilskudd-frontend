@@ -1,27 +1,19 @@
 import React, { ReactElement } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { useHistory } from 'react-router-dom';
-import { sideHjelpetekster } from '../../constants/sideIDKonstanter';
-import { SEPARATOR } from '../../utils/constants';
+import { getAntallSider } from '../../constants/sideTitler';
+import { pathTilSide } from '../../utils/navigasjon';
+import { AktivtStegProps } from '../../types/navigasjonTypes';
 
-type Brodsmuleprops = {aktivtSteg: number};
-
-export const pathUtenSteg = (pathname: string) : string => {
-  const arr: string[] = pathname.split(SEPARATOR);
-  arr.pop();
-  return arr.join(SEPARATOR);
-};
-
-function VidereKnapp({ aktivtSteg } : Brodsmuleprops): ReactElement {
+function VidereKnapp({ aktivtSteg } : AktivtStegProps): ReactElement {
   const history = useHistory();
 
   function goTo(idx: number) {
-    history.push(pathUtenSteg(history.location.pathname) + SEPARATOR + (idx));
+    history.push(pathTilSide(idx, history));
   }
 
   function handleClick() {
-    const antallSider = Object.keys(sideHjelpetekster).length;
-    if (aktivtSteg + 1 <= antallSider && aktivtSteg + 1 > 1) {
+    if (aktivtSteg + 1 <= getAntallSider() && aktivtSteg + 1 > 1) {
       goTo(aktivtSteg + 1);
     }
   }
