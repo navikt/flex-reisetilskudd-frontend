@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { getAntallSider } from '../../constants/sideTitler';
 import { pathTilSide } from '../../utils/navigasjon';
 import { AktivtStegProps } from '../../types/navigasjonTypes';
+import './knapper.less'
 
 function VidereKnapp({ aktivtSteg } : AktivtStegProps): ReactElement {
   const history = useHistory();
@@ -19,7 +20,7 @@ function VidereKnapp({ aktivtSteg } : AktivtStegProps): ReactElement {
   }
 
   return (
-    <div>
+    <div className="videre-knapp">
       <Knapp type="hoved" onClick={() => handleClick()}>Gå videre</Knapp>
     </div>
   );
