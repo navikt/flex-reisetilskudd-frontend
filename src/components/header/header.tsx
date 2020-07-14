@@ -1,11 +1,23 @@
 import React, { ReactElement } from 'react';
-
+import { Systemtittel } from 'nav-frontend-typografi';
 import './header.less';
+import busImg from '../../assets/buss.png';
+import treImg from '../../assets/tre.png';
 
 function Header():ReactElement {
   return (
     <div className="header">
-      <h1>morra di</h1>
+      <div className="content-wrapper">
+        <Systemtittel> Morra di søker om reisetilskudd</Systemtittel>
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <img src={busImg} alt="bussikon" width="40" />
+        <span />
+        <img className="treIkon" src={treImg} alt="treikon" width="15" />
+      </div>
     </div>
   );
 }
