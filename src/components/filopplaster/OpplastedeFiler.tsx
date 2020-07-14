@@ -1,6 +1,7 @@
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import slett from '../../assets/slett.svg';
+import { Fareknapp } from 'nav-frontend-knapper';
+import SlettIkon from '../../assets/slett';
 import vedlegg from '../../assets/vedlegg.svg';
 import formaterFilstørrelse from './utils';
 import { IVedlegg } from '../../models/vedlegg';
@@ -31,16 +32,10 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg, className })
           </div>
           {slettVedlegg
             ? (
-              <button
-                className="slett"
-                onClick={() => {
-                  slettVedlegg(fil);
-                }}
-                type="submit"
-              >
-                <Normaltekst>slett</Normaltekst>
-                <img className="slettikon" src={slett} alt="Rødt kryss" />
-              </button>
+              <Fareknapp mini onClick={() => { slettVedlegg(fil); }}>
+                <SlettIkon />
+                <span>slett</span>
+              </Fareknapp>
             )
             : <></>}
         </div>
