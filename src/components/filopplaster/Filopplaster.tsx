@@ -55,6 +55,8 @@ interface HttpResponse<T> extends Response {
 }
 
 const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) => {
+  Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
+
   const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
   const [vedlegg, settVedlegg] = useState<IVedlegg[]>([]);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
