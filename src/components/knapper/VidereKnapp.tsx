@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { getAntallSider } from '../../constants/sideTitler';
 import { SEPARATOR } from '../../utils/constants';
 
-type Brodsmuleprops = {aktivtSteg: number};
+type VidereknappProps = {aktivtSteg: number};
 
 export const pathUtenSteg = (pathname: string) : string => {
   const arr: string[] = pathname.split(SEPARATOR);
@@ -12,7 +12,7 @@ export const pathUtenSteg = (pathname: string) : string => {
   return arr.join(SEPARATOR);
 };
 
-function VidereKnapp({ aktivtSteg } : Brodsmuleprops): ReactElement {
+function VidereKnapp({ aktivtSteg } : VidereknappProps): ReactElement {
   const history = useHistory();
 
   function goTo(idx: number) {

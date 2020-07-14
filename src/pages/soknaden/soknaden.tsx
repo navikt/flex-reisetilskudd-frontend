@@ -19,7 +19,7 @@ function Soknaden():ReactElement {
   return (
     <div>
       <Brodsmuler aktivtSteg={idNum} />
-      <TilbakeKnapp />
+      <TilbakeKnapp aktivtSteg={idNum} />
       <Vis hvis={idNum === 1}>
         <Utbetaling />
       </Vis>
