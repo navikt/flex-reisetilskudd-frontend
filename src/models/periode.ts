@@ -3,7 +3,10 @@ import { IVedlegg } from './vedlegg';
 export interface IPeriode {
   id: string;
   vedlegg: Array<IVedlegg>;
-  transportMiddel? : Transportmiddel
+  transportMiddel?:
+  Transportmiddel.taxi |
+  Transportmiddel.kollektiv |
+  Transportmiddel.egenBil;
   fraDato?: Date;
   tilDato?: Date;
 }
