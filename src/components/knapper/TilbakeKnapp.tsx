@@ -4,18 +4,12 @@ import Chevron from 'nav-frontend-chevron';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { useHistory } from 'react-router-dom';
 import Vis from '../Vis';
-import { SEPARATOR } from '../../utils/constants';
+import { pathTilSide } from '../../utils/navigasjon';
+import { AktivtStegProps } from '../../types/navigasjonTypes';
 
-type TilbakeknappProps = {aktivtSteg: number};
-
-export const pathUtenSteg = (pathname: string) : string => {
-  const arr: string[] = pathname.split(SEPARATOR);
-  arr.pop();
-  return arr.join(SEPARATOR);
-};
-
-function TilbakeKnapp({ aktivtSteg } : TilbakeknappProps): ReactElement {
+function TilbakeKnapp({ aktivtSteg } : AktivtStegProps): ReactElement {
   const history = useHistory();
+
   return (
     <div className="tilbakeKnapp">
       <Normaltekst>
@@ -27,7 +21,7 @@ function TilbakeKnapp({ aktivtSteg } : TilbakeknappProps): ReactElement {
           </Lenke>
         </Vis>
         <Vis hvis={aktivtSteg > 1}>
-          <Lenke href={pathUtenSteg(history.location.pathname) + SEPARATOR + (aktivtSteg - 1)}>
+          <Lenke href={pathTilSide(aktivtSteg - 1, history)}>
             <Chevron type="venstre" />
             <span>Tilbake</span>
           </Lenke>
