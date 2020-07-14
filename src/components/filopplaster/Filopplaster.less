@@ -22,9 +22,6 @@
       max-width: 575px;
       color: @navBla;
       margin: 0 auto;
-      /*display: flex;
-      justify-content: center;
-      align-items: center;*/
     }
   
       .tekst {
@@ -98,15 +95,22 @@
     .slett {
       position: relative;
       top: 5px;
-      color: @navBla;
+      padding: 1px 10px;
       cursor: pointer;
 
-      p {
-        text-decoration: underline;
-      }
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: normal;
+
+      background-color: white;
+      border-radius: 10px;
+      border-color: black;
+      border-width: 1px;
 
       .slettikon {
         margin-left: 10px;
+        margin-bottom: 3px;
       }
     }
   }
