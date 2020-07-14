@@ -16,3 +16,14 @@ export interface CheckboxProps {
   tittel: string;
   svaralternativer: Svaralternativ[];
 }
+
+export interface InputProps {
+  tittel: string;
+  inputMode: 'numeric';
+  feil?: string;
+  bredde: 'S';
+}
+
+export interface VeilederProps {
+  hjelpetekst: string;
+}
