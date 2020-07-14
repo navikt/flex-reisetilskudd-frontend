@@ -8,17 +8,22 @@ import {
   offentligPrivatSpørsmål, transportAlternativerPrivat,
   antallKilometerSpørsmål, månedligeUtgifterSpørsmål, transportVeileder,
 } from '../../components/sporsmal/spørsmålTekster';
+import { useAppStore } from '../../data/stores/app-store';
 
-const DagensTransportmiddel = (): ReactElement => (
-  <>
-    {RadioSpørsmål(offentligPrivatSpørsmål)}
-    {Veileder(transportVeileder)}
-    <Vis hvis>
-      {CheckboxSpørsmål(transportAlternativerPrivat)}
-    </Vis>
-    {InputSpørsmål(månedligeUtgifterSpørsmål)}
-    {InputSpørsmål(antallKilometerSpørsmål)}
-  </>
-);
+const DagensTransportmiddel = (): ReactElement => {
+  const { activeOffentligPrivat } = useAppStore();
+
+  return (
+    <>
+      {RadioSpørsmål(offentligPrivatSpørsmål)}
+      {Veileder(transportVeileder)}
+      <Vis hvis={activeOffentligPrivat === 'PRIVAT'}>
+        {CheckboxSpørsmål(transportAlternativerPrivat)}
+      </Vis>
+      {InputSpørsmål(månedligeUtgifterSpørsmål)}
+      {InputSpørsmål(antallKilometerSpørsmål)}
+    </>
+  );
+};
 
 export default DagensTransportmiddel;
