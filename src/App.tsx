@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import Soknaden from './pages/soknaden/soknaden';
 import KvitteringSide from './pages/kvittering-side/kvittering-side';
-import ReiseTilskuddPeriode from './pages/reisetilskudd-periode/reisetilskudd-periode';
+import ReisetilskuddPeriodeSide from './pages/reisetilskudd-periode/reisetilskudd-periode';
 
 function App() : ReactElement {
   return (
@@ -14,7 +14,7 @@ function App() : ReactElement {
           <Soknaden />
         </Route>
         <Route path="/perioder">
-          <ReiseTilskuddPeriode />
+          <ReisetilskuddPeriodeSide />
         </Route>
         <Route path="/kvittering">
           <KvitteringSide />
