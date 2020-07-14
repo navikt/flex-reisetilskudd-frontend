@@ -1,7 +1,7 @@
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Fareknapp } from 'nav-frontend-knapper';
-import SlettIkon from '../../assets/slett';
+import { SlettIkon } from '../../assets/ikoner';
 import vedlegg from '../../assets/vedlegg.svg';
 import formaterFilstørrelse from './utils';
 import { IVedlegg } from '../../models/vedlegg';

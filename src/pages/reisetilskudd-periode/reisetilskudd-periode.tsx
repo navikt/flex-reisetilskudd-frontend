@@ -3,27 +3,40 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import {
   Innholdstittel, Undertittel, Normaltekst, Ingress,
 } from 'nav-frontend-typografi';
+import { Knapp } from 'nav-frontend-knapper';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import Filopplaster from '../../components/filopplaster/Filopplaster';
 import { IPeriode, Transportmiddel } from '../../models/periode';
 import './reisetilskudd-periode.less';
 import ReisetilskuddDatovelger from '../../components/dato/ReisetilskuddDatovelger';
+import { PlussIkon } from '../../assets/ikoner';
+import { generateId } from '../../utils/random';
 
 const mockPerioder = [
   {
-    id: '123123',
+    id: generateId(),
+    vedlegg: [],
     fraDato: new Date(),
     tilDato: new Date(),
     transportMiddel: Transportmiddel.taxi,
   },
   {
-    id: 'asdasdasd',
+    id: generateId(),
+    vedlegg: [],
     transportMiddel: Transportmiddel.egenBil,
   }];
+
 const ReisetilskuddPeriodeSide = () : ReactElement => {
-  // eslint-disable-next-line
   const [perioder, settPerioder] = useState<IPeriode[]>(mockPerioder);
   const [transportMiddel, settTransportMiddel] = useState();
+
+  const leggTilTomPeriode = () => {
+    const tomPeriode = {
+      id: generateId(),
+      vedlegg: [],
+    };
+    settPerioder((gamlePerioder) => [...gamlePerioder, tomPeriode]);
+  };
 
   return (
     <div className="perioder-wrapper">
@@ -87,6 +100,10 @@ const ReisetilskuddPeriodeSide = () : ReactElement => {
           />
         </Ekspanderbartpanel>
       ))}
+      <Knapp kompakt onClick={() => leggTilTomPeriode()}>
+        <PlussIkon />
+        <span>Legg til periode</span>
+      </Knapp>
     </div>
   );
 };
