@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { useHistory } from 'react-router-dom';
-import { sideHjelpetekster } from '../../constants/sideIDKonstanter';
+import { getAntallSider } from '../../constants/sideTitler';
 import { SEPARATOR } from '../../utils/constants';
 
 type Brodsmuleprops = {aktivtSteg: number};
@@ -20,8 +20,7 @@ function VidereKnapp({ aktivtSteg } : Brodsmuleprops): ReactElement {
   }
 
   function handleClick() {
-    const antallSider = Object.keys(sideHjelpetekster).length;
-    if (aktivtSteg + 1 <= antallSider && aktivtSteg + 1 > 1) {
+    if (aktivtSteg + 1 <= getAntallSider() && aktivtSteg + 1 > 1) {
       goTo(aktivtSteg + 1);
     }
   }

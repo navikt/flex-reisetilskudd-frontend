@@ -9,6 +9,8 @@ import TilbakeKnapp from '../../components/knapper/TilbakeKnapp';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
 import DagensTransportmiddel from '../dagens-transportmiddel/dagens-transportmiddel';
 import Vis from '../../components/Vis';
+import Oppsummering from '../oppsummering/Oppsummering';
+import { getAntallSider } from '../../constants/sideTitler';
 
 function Soknaden():ReactElement {
   const { id } = useParams();
@@ -27,7 +29,12 @@ function Soknaden():ReactElement {
       <Vis hvis={idNum === 3}>
         <ReiseTilskuddPeriode />
       </Vis>
-      <VidereKnapp aktivtSteg={idNum} />
+      <Vis hvis={idNum === 4}>
+        <Oppsummering />
+      </Vis>
+      <Vis hvis={idNum < getAntallSider()}>
+        <VidereKnapp aktivtSteg={idNum} />
+      </Vis>
     </div>
   );
 }
