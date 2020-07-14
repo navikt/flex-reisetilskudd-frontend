@@ -39,7 +39,7 @@ export const offentligPrivatSpørsmål: RadioSpørsmålProps = {
 };
 
 export const transportAlternativerPrivat: CheckboxProps = {
-  tittel: 'Fremkomstmiddel',
+  tittel: 'Velg fremkomstmiddel',
   svaralternativer: [
     {
       label: 'Går',
