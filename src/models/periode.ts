@@ -1,8 +1,8 @@
 export interface IPeriode {
   id: string;
-  fraDato: Date;
-  tilDato: Date;
-  transportMiddel : Transportmiddel
+  transportMiddel? : Transportmiddel
+  fraDato?: Date;
+  tilDato?: Date;
 }
 
 export enum Transportmiddel {

@@ -19,9 +19,10 @@ import { post } from '../../data/fetcher/fetcher';
 interface Props {
   tillatteFiltyper?: string[];
   maxFilstørrelse?: number;
+  className?: string;
 }
 
-const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) => {
+const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, className }) => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
   const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
@@ -91,7 +92,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
   });
 
   return (
-    <div className="filopplaster-wrapper">
+    <div className={`filopplaster-wrapper ${className}`}>
       <OpplastedeFiler
         className="opplastede-filer"
         filliste={vedlegg}
