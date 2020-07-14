@@ -3,6 +3,7 @@ import RadioSpørsmål from '../../components/sporsmal/radioSpørsmål/RadioSpø
 import Veileder from '../../components/sporsmal/Veileder';
 import CheckboxSpørsmål from '../../components/sporsmal/checkboxSpørsmål/CheckboxSpørsmål';
 import InputSpørsmål from '../../components/sporsmal/inputSpørsmål/InputSpørsmål';
+import Vis from '../../components/Vis';
 import {
   offentligPrivatSpørsmål, transportAlternativerPrivat,
   antallKilometerSpørsmål, månedligeUtgifterSpørsmål, transportVeileder,
@@ -12,7 +13,9 @@ const DagensTransportmiddel = (): ReactElement => (
   <>
     {RadioSpørsmål(offentligPrivatSpørsmål)}
     {Veileder(transportVeileder)}
-    {CheckboxSpørsmål(transportAlternativerPrivat)}
+    <Vis hvis>
+      {CheckboxSpørsmål(transportAlternativerPrivat)}
+    </Vis>
     {InputSpørsmål(månedligeUtgifterSpørsmål)}
     {InputSpørsmål(antallKilometerSpørsmål)}
   </>
