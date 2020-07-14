@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import RadioSpørsmål from '../../components/sporsmal/radioSpørsmål/RadioSpørsmål';
 import { utbetalingSpørsmål } from '../../components/sporsmal/spørsmålTekster';
 
-const Utbetaling = () => (
+const Utbetaling = (): ReactElement => (
   <>
     {RadioSpørsmål(utbetalingSpørsmål)}
   </>

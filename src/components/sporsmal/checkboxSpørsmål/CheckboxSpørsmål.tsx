@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import { CheckboxProps } from '../../../types/types';
 import 'nav-frontend-skjema-style';
 
-const checkboxSpørsmål = ({ tittel, svaralternativer }: CheckboxProps) => (
+const checkboxSpørsmål = ({ tittel, svaralternativer }: CheckboxProps) : ReactElement => (
   <CheckboksPanelGruppe
     legend={tittel}
     checkboxes={
