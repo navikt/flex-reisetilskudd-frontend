@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { Normaltekst } from 'nav-frontend-typografi';
 import RadioSpørsmål from '../../components/sporsmal/radioSpørsmål/RadioSpørsmål';
 import Veileder from '../../components/sporsmal/Veileder';
 import CheckboxSpørsmål from '../../components/sporsmal/checkboxSpørsmål/CheckboxSpørsmål';
@@ -11,7 +12,9 @@ import {
 const DagensTransportmiddel = (): ReactElement => (
   <>
     {RadioSpørsmål(offentligPrivatSpørsmål)}
-    {Veileder(transportVeileder)}
+    <Normaltekst>
+      {Veileder(transportVeileder)}
+    </Normaltekst>
     {CheckboxSpørsmål(transportAlternativerPrivat)}
     {InputSpørsmål(månedligeUtgifterSpørsmål)}
     {InputSpørsmål(antallKilometerSpørsmål)}
