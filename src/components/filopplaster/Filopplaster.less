@@ -1,9 +1,7 @@
 @import "../../../node_modules/nav-frontend-core/less/_variabler";
 
 .filopplaster-wrapper {
-    max-width: 775px;
-    min-height: 68px;
-    border-radius: 4px;
+    justify-content: center;
   
     ul.opplasting-liste {
       padding-inline-start: 1.3em;
@@ -24,6 +22,10 @@
       max-width: 575px;
       color: @navBla;
       margin: 0 auto;
+      /*display: flex;
+      justify-content: center;
+      align-items: center;*/
+    }
   
       .tekst {
         line-height: 64px;
@@ -35,9 +37,7 @@
         margin: 1rem 0 0 0;
         text-align: left;
       }
-
-    }
-  
+      
     .opplastingsikon {
       display: inline-block;
     }
@@ -108,6 +108,17 @@
       .slettikon {
         margin-left: 10px;
       }
+    }
+  }
+  
+  .feilmelding-alert {
+    background: none !important;
+    border: none !important;
+    padding: 0;
+    font-weight: bold;
+  
+    div {
+      font-weight: bold;
     }
   }
 
