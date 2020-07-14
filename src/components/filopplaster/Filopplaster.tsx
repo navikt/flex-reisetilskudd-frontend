@@ -9,6 +9,7 @@ import opplasting from '../../assets/opplasting.svg';
 import formaterFilstørrelse from './utils';
 import { IVedlegg, IOpplastetVedlegg } from '../../models/vedlegg';
 import OpplastedeFiler from './OpplastedeFiler';
+import Fil from './Fil';
 import ReisetilskuddDatovelger from '../dato/ReisetilskuddDatovelger';
 import './Filopplaster.less';
 import env from '../../utils/environment';
@@ -60,6 +61,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
   const [åpenModal, settÅpenModal] = useState<boolean>(false);
 
   const lukkModal = () => {
+    settUopplastetFil(null);
     settÅpenModal(false);
   };
 
@@ -93,19 +95,18 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
     post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvitteringer`, requestData)
       .then((response) => {
         if (response.parsedBody?.dokumentId) {
-          logger.info('Mottok dokumentId', response.parsedBody.dokumentId);
           settVedlegg((gamleVedlegg) => [...gamleVedlegg, {
             navn: fil.name,
             størrelse: fil.size,
             dokumentId: response.parsedBody?.dokumentId,
           }]);
         } else {
-          logger.warn('Response does not contain dokumentId');
+          logger.warn('Responsen inneholder ikke noen dokumentId', response.parsedBody);
         }
       })
+      .then(() => lukkModal())
       .catch((error) => {
-        logger.error('Vi får en feil');
-        logger.error(error);
+        logger.error('Feil under opplasting av kvittering', error);
       });
   };
 
@@ -136,12 +137,12 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse }) =
           className="filopplaster-modal"
         >
           <div className="modal-content">
-            <Undertittel className="kvittering-header"> Ny kvittering</Undertittel>
+            <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
             <div className="input-rad">
               <ReisetilskuddDatovelger label="Dato" />
               <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" />
             </div>
-            <OpplastedeFiler className="opplastede-filer" filliste={vedlegg} />
+            <Fil fil={uopplastetFil} className="opplastede-filer" />
             <Knapp className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
               Lagre kvittering
             </Knapp>
