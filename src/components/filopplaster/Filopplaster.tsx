@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState, useCallback } from 'react';
-import { Normaltekst, Undertittel, Feilmelding } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel, Feilmelding, Ingress } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { useDropzone } from 'react-dropzone';
 import { Input } from 'nav-frontend-skjema';
@@ -29,6 +29,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
 
   const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
   const [vedlegg, settVedlegg] = useState<IVedlegg[]>([]);
+  const [laster, settLaster] = useState<boolean>(false);
 
   const [åpenModal, settÅpenModal] = useState<boolean>(false);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
@@ -98,6 +99,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
       requestData.append('dato', dato!.toString());
       requestData.append('beløp', beløp!.toString());
 
+      settLaster(true)
       post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvittering`, requestData)
       .then((response) => {
         if (response.parsedBody?.dokumentId) {
@@ -111,6 +113,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
         }
       })
       .then(() => { 
+        settLaster(false)
         lukkModal()
       })
       .catch((error) => {
@@ -162,6 +165,11 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
           className="filopplaster-modal"
         >
           <div className="modal-content">
+            { laster? 
+              (<Ingress>Laster siden</Ingress>)
+              :
+              (<></>)
+            }
             <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
             <div className="input-rad">
               <ReisetilskuddDatovelger label="Dato" onChange={(dato) => oppdaterDato(dato)}/>
