@@ -1,13 +1,34 @@
-import React, { useState, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import { RadioSpørsmålProps } from '../../../types/types';
 import './RadioSpørsmål.less';
+import { useAppStore } from '../../../data/stores/app-store';
+import { offentligPrivatVerdier } from '../spørsmålTekster';
 
 const RadioSpørsmål = ({
   tittel, name, spørsmålstekst, svaralternativer,
 }: RadioSpørsmålProps): ReactElement => {
-  const [active, setActive] = useState();
+  const {
+    setActiveOffentligPrivat,
+    activeOffentligPrivat,
+    setEgenBilChecked,
+    setSyklerChecked,
+    setGårChecked,
+  } = useAppStore();
+
+  const skrivEndringTilGlobalState = (nyValgt: string) => {
+    /* For endringer på spørsmålet "offentlig eller privat transportmiddel",
+     som skal ha underspørsmål:  */
+    if (name === offentligPrivatVerdier.NAME) {
+      setActiveOffentligPrivat(nyValgt);
+      if (nyValgt === offentligPrivatVerdier.OFFENTLIG) {
+        setEgenBilChecked(false);
+        setSyklerChecked(false);
+        setGårChecked(false);
+      }
+    }
+  };
 
   return (
     <div className="horisontal-radio">
@@ -20,8 +41,10 @@ const RadioSpørsmål = ({
         radios={
           svaralternativer
         }
-        checked={active}
-        onChange={(_, e) => setActive(e)}
+        checked={activeOffentligPrivat}
+        onChange={(_, nyVerdi) => {
+          skrivEndringTilGlobalState(nyVerdi);
+        }}
       />
     </div>
   );
