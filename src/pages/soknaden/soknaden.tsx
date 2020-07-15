@@ -7,6 +7,7 @@ import ReiseTilskuddPeriode from '../reisetilskudd-periode/reisetilskudd-periode
 import Utbetaling from '../utbetaling/utbetaling';
 import TilbakeKnapp from '../../components/knapper/TilbakeKnapp';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
+import SendKnapp from '../../components/knapper/SendKnapp';
 import DagensTransportmiddel from '../dagens-transportmiddel/dagens-transportmiddel';
 import Vis from '../../components/Vis';
 import Oppsummering from '../oppsummering/Oppsummering';
@@ -33,6 +34,7 @@ function Soknaden():ReactElement {
         </Vis>
         <Vis hvis={idNum === 4}>
           <Oppsummering />
+          <SendKnapp />
         </Vis>
         <Vis hvis={idNum < getAntallSider()}>
           <VidereKnapp aktivtSteg={idNum} />
