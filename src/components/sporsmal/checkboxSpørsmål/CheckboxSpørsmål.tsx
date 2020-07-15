@@ -18,11 +18,29 @@ const CheckboxSpørsmål = ({ tittel, svaralternativer }: CheckboxProps) : React
       setGårChecked(!gårChecked);
     }
   };
+
+  const erChecked = (alternativ : string) => {
+    if (alternativ === transportalternativerPrivatVerdier.EGEN_BIL) {
+      return egenBilChecked;
+    }
+    if (alternativ === transportalternativerPrivatVerdier.SYKLER) {
+      return syklerChecked;
+    }
+    if (alternativ === transportalternativerPrivatVerdier.GÅR) {
+      return gårChecked;
+    }
+    return false;
+  };
+
+  const endraAlternativer = svaralternativer.map(
+    (alternativ) => ({ ...alternativ, ...{ checked: erChecked(alternativ.value) } }),
+  );
+
   return (
     <CheckboksPanelGruppe
       legend={tittel}
       checkboxes={
-        svaralternativer
+        endraAlternativer
     }
       onChange={(_, nyVerdi) => {
         skrivEndringTilGlobalState(nyVerdi);
