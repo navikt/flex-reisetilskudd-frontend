@@ -11,17 +11,22 @@ import {
 import { useAppStore } from '../../data/stores/app-store';
 
 const DagensTransportmiddel = (): ReactElement => {
-  const { activeOffentligPrivat } = useAppStore();
+  const { activeOffentligPrivat, egenBilChecked } = useAppStore();
 
   return (
     <>
       {RadioSpørsmål(offentligPrivatSpørsmål)}
       {Veileder(transportVeileder)}
+      <Vis hvis={activeOffentligPrivat === 'OFFENTLIG'}>
+        {InputSpørsmål(månedligeUtgifterSpørsmål)}
+      </Vis>
       <Vis hvis={activeOffentligPrivat === 'PRIVAT'}>
         {CheckboxSpørsmål(transportAlternativerPrivat)}
+        <Vis hvis={egenBilChecked === true}>
+          {InputSpørsmål(antallKilometerSpørsmål)}
+        </Vis>
       </Vis>
-      {InputSpørsmål(månedligeUtgifterSpørsmål)}
-      {InputSpørsmål(antallKilometerSpørsmål)}
+
     </>
   );
 };

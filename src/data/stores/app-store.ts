@@ -3,11 +3,15 @@ import constate from 'constate';
 import { useState } from 'react';
 
 export const [AppStoreProvider, useAppStore] = constate(() => {
-  const [activeOffentligPrivat, setActiveOffentligPrivat] = useState<string>('OFFENTLIG');
-  const [top, setTop] = useState<number>(0);
+  const [activeOffentligPrivat, setActiveOffentligPrivat] = useState<string>('');
+  const [egenBilChecked, setEgenBilChecked] = useState<boolean>();
+  const [syklerChecked, setSyklerChecked] = useState<boolean>();
+  const [gårChecked, setGårChecked] = useState<boolean>();
 
   return {
     activeOffentligPrivat, setActiveOffentligPrivat,
-    top, setTop,
+    egenBilChecked, setEgenBilChecked,
+    syklerChecked, setSyklerChecked,
+    gårChecked, setGårChecked,
   };
 });

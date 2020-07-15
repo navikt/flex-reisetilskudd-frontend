@@ -9,11 +9,18 @@ const RadioSpørsmål = ({
   tittel, name, spørsmålstekst, svaralternativer,
 }: RadioSpørsmålProps): ReactElement => {
   const [active, setActive] = useState();
-  const { setActiveOffentligPrivat } = useAppStore();
+  const {
+    setActiveOffentligPrivat, setEgenBilChecked, setSyklerChecked, setGårChecked,
+  } = useAppStore();
 
   const skrivEndringTilGlobalState = (nyValgt: string) => {
     if (name === 'Transportmiddel') {
       setActiveOffentligPrivat(nyValgt);
+      if (nyValgt === 'OFFENTLIG') {
+        setEgenBilChecked(false);
+        setSyklerChecked(false);
+        setGårChecked(false);
+      }
     }
   };
 
@@ -29,9 +36,9 @@ const RadioSpørsmål = ({
           svaralternativer
         }
         checked={active}
-        onChange={(_, e) => {
-          setActive(e);
-          skrivEndringTilGlobalState(e);
+        onChange={(_, nyVerdi) => {
+          setActive(nyVerdi);
+          skrivEndringTilGlobalState(nyVerdi);
         }}
       />
     </div>
