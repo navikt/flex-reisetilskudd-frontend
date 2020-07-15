@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import './kvittering-side.less';
+import './bekreftelsesside.less';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
 function ListeTekstbox():ReactElement {

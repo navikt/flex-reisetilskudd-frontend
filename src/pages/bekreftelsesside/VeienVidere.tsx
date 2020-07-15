@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
-import './kvittering-side.less';
+import './bekreftelsesside.less';
 import { Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 

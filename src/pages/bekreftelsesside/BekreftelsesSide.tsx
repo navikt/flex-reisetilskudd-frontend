@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
-import './kvittering-side.less';
-import ListeTekstbox from './liste-tekstbox';
-import VeienVidereBox from './veien-viderebox';
+import './bekreftelsesside.less';
+import ListeTekstbox from './ListeTekstbox';
+import VeienVidereBox from './VeienVidere';
 
-function KvitteringSide():ReactElement {
+function BekreftelsesSide():ReactElement {
   return (
     <div className="page-wrapper">
       <div className="content-wrapper">
@@ -14,4 +14,4 @@ function KvitteringSide():ReactElement {
   );
 }
 
-export default KvitteringSide;
+export default BekreftelsesSide;

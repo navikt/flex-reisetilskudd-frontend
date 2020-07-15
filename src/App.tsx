@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router, Switch, Route, Redirect,
 } from 'react-router-dom';
 import Soknaden from './pages/soknaden/soknaden';
-import KvitteringSide from './pages/kvittering-side/kvittering-side';
+import BekreftelsesSide from './pages/bekreftelsesside/BekreftelsesSide';
 import ReiseTilskuddPeriode from './pages/reisetilskudd-periode/reisetilskudd-periode';
 import Header from './components/header/Header';
 
@@ -19,8 +19,8 @@ function App() : ReactElement {
           <Route path="/perioder">
             <ReiseTilskuddPeriode />
           </Route>
-          <Route path="/kvittering">
-            <KvitteringSide />
+          <Route path="/bekreftelse">
+            <BekreftelsesSide />
           </Route>
           <Route path="/">
             <Redirect to="/soknaden/1" />
