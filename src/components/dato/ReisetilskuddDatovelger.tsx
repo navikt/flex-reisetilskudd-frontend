@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import Flatpickr from 'react-flatpickr';
 import { Norwegian } from 'flatpickr/dist/l10n/no';
 import './flatpickr.less';
 import './ReisetilskuddDatovelger.less';
-import { Element } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 
 export interface IDatovelgerProps {
-  label?: string;
+  label?: ReactNode;
   className?: string;
 }
 
@@ -22,9 +22,7 @@ const ReisetilskuddDatovelger: React.FC<IDatovelgerProps> = ({
 
   return (
     <div className={`datovelger-wrapper ${className}`}>
-      <Element className="label">
-        {label}
-      </Element>
+      <Undertittel className="label">{label}</Undertittel>
       <Flatpickr
         name="datoTest"
         className="skjemaelement__input input--m"

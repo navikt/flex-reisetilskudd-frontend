@@ -1,6 +1,7 @@
 export interface IVedlegg {
   navn: string;
   størrelse: number;
+  beløp?: number;
   dokumentId?: string;
 }
 

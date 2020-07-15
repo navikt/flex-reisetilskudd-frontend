@@ -4,7 +4,6 @@ import {
 } from 'react-router-dom';
 import Soknaden from './pages/soknaden/soknaden';
 import BekreftelsesSide from './pages/bekreftelsesside/BekreftelsesSide';
-import ReiseTilskuddPeriode from './pages/reisetilskudd-periode/reisetilskudd-periode';
 import StoreProvider from './data/stores/StoreProvider';
 import Header from './components/header/Header';
 
@@ -16,9 +15,6 @@ function App() : ReactElement {
         <Switch>
           <Route path="/soknaden/:id">
             <Soknaden />
-          </Route>
-          <Route path="/perioder">
-            <ReiseTilskuddPeriode />
           </Route>
           <Route path="/kvittering">
             <BekreftelsesSide />
