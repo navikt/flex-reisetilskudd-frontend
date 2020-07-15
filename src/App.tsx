@@ -3,13 +3,15 @@ import {
   BrowserRouter as Router, Switch, Route, Redirect,
 } from 'react-router-dom';
 import Soknaden from './pages/soknaden/soknaden';
-import KvitteringSide from './pages/kvittering-side/kvittering-side';
+import BekreftelsesSide from './pages/bekreftelsesside/BekreftelsesSide';
 import ReiseTilskuddPeriode from './pages/reisetilskudd-periode/reisetilskudd-periode';
 import StoreProvider from './data/stores/StoreProvider';
+import Header from './components/header/Header';
 
 function App() : ReactElement {
   return (
     <StoreProvider>
+      <Header />
       <Router>
         <Switch>
           <Route path="/soknaden/:id">
@@ -19,7 +21,10 @@ function App() : ReactElement {
             <ReiseTilskuddPeriode />
           </Route>
           <Route path="/kvittering">
-            <KvitteringSide />
+            <BekreftelsesSide />
+          </Route>
+          <Route path="/bekreftelse">
+            <BekreftelsesSide />
           </Route>
           <Route path="/">
             <Redirect to="/soknaden/1" />

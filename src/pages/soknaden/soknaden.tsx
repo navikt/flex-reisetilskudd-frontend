@@ -11,30 +11,33 @@ import DagensTransportmiddel from '../dagens-transportmiddel/dagens-transportmid
 import Vis from '../../components/Vis';
 import Oppsummering from '../oppsummering/Oppsummering';
 import { getAntallSider } from '../../constants/sideTitler';
+import './soknaden.less';
 
 function Soknaden():ReactElement {
   const { id } = useParams();
   const idNum = Number(id);
 
   return (
-    <div>
+    <div className="soknadSider">
       <Brodsmuler aktivtSteg={idNum} />
       <TilbakeKnapp aktivtSteg={idNum} />
-      <Vis hvis={idNum === 1}>
-        <Utbetaling />
-      </Vis>
-      <Vis hvis={idNum === 2}>
-        <DagensTransportmiddel />
-      </Vis>
-      <Vis hvis={idNum === 3}>
-        <ReiseTilskuddPeriode />
-      </Vis>
-      <Vis hvis={idNum === 4}>
-        <Oppsummering />
-      </Vis>
-      <Vis hvis={idNum < getAntallSider()}>
-        <VidereKnapp aktivtSteg={idNum} />
-      </Vis>
+      <div className="sporsmal-wrapper">
+        <Vis hvis={idNum === 1}>
+          <Utbetaling />
+        </Vis>
+        <Vis hvis={idNum === 2}>
+          <DagensTransportmiddel />
+        </Vis>
+        <Vis hvis={idNum === 3}>
+          <ReiseTilskuddPeriode />
+        </Vis>
+        <Vis hvis={idNum === 4}>
+          <Oppsummering />
+        </Vis>
+        <Vis hvis={idNum < getAntallSider()}>
+          <VidereKnapp aktivtSteg={idNum} />
+        </Vis>
+      </div>
     </div>
   );
 }

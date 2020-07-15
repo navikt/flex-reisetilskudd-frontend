@@ -26,7 +26,6 @@ const DagensTransportmiddel = (): ReactElement => {
           {InputSpørsmål(antallKilometerSpørsmål)}
         </Vis>
       </Vis>
-
     </>
   );
 };

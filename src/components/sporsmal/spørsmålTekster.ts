@@ -53,7 +53,7 @@ export const transportalternativerPrivatVerdier = {
 };
 
 export const transportalternativerPrivat: CheckboxProps = {
-  tittel: 'Fremkomstmiddel',
+  tittel: 'Velg fremkomstmiddel',
   svaralternativer: [
     {
       label: 'Går',
