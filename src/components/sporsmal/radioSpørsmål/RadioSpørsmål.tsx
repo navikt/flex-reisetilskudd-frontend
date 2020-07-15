@@ -16,7 +16,7 @@ const RadioSpørsmål = ({
       </Undertittel>
       <RadioPanelGruppe
         name={name}
-        legend={spørsmålstekst}
+        description={spørsmålstekst}
         radios={
           svaralternativer
         }

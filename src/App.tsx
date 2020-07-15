@@ -4,25 +4,25 @@ import {
 } from 'react-router-dom';
 import Soknaden from './pages/soknaden/soknaden';
 import KvitteringSide from './pages/kvittering-side/kvittering-side';
-import ReisetilskuddPeriodeSide from './pages/reisetilskudd-periode/reisetilskudd-periode';
+import Header from './components/header/Header';
 
 function App() : ReactElement {
   return (
     <Router>
-      <Switch>
-        <Route path="/soknaden/:id">
-          <Soknaden />
-        </Route>
-        <Route path="/perioder">
-          <ReisetilskuddPeriodeSide />
-        </Route>
-        <Route path="/kvittering">
-          <KvitteringSide />
-        </Route>
-        <Route path="/">
-          <Redirect to="/soknaden/1" />
-        </Route>
-      </Switch>
+      <Header />
+      <div className="main">
+        <Switch>
+          <Route path="/soknaden/:id">
+            <Soknaden />
+          </Route>
+          <Route path="/kvittering">
+            <KvitteringSide />
+          </Route>
+          <Route path="/">
+            <Redirect to="/soknaden/1" />
+          </Route>
+        </Switch>
+      </div>
     </Router>
   );
 }
