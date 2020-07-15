@@ -15,8 +15,8 @@ const DagensTransportmiddel = (): ReactElement => {
 
   return (
     <>
-      {RadioSpørsmål(offentligPrivatSpørsmål)}
       {Veileder(transportVeileder)}
+      {RadioSpørsmål(offentligPrivatSpørsmål)}
       <Vis hvis={activeOffentligPrivat === 'OFFENTLIG'}>
         {InputSpørsmål(månedligeUtgifterSpørsmål)}
       </Vis>
