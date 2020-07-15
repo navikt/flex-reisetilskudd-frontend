@@ -29,6 +29,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
 
   const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
   const [vedlegg, settVedlegg] = useState<IVedlegg[]>([]);
+
   const [åpenModal, settÅpenModal] = useState<boolean>(false);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [dato, settDato] = useState<Date | null >(null);
@@ -62,8 +63,15 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
     []
   );
 
+  const oppdaterDato = (dato: Date) : void => {
+    if (validerDato(dato)){
+      settFeilmeldinger([]);
+    }
+    settDato(dato)
+  }
+
   const validerDato = (dato: Date | null) : boolean => {
-    if (dato || dato !== null){
+    if (!dato || dato === null){
       settFeilmeldinger([`Vennligst velg en gyldig dato`])
       return false
     }
@@ -90,7 +98,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
       requestData.append('dato', dato!.toString());
       requestData.append('beløp', beløp!.toString());
 
-      post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvitteringer`, requestData)
+      post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvittering`, requestData)
       .then((response) => {
         if (response.parsedBody?.dokumentId) {
           settVedlegg((gamleVedlegg) => [...gamleVedlegg, {
@@ -102,7 +110,9 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
           logger.warn('Responsen inneholder ikke noen dokumentId', response.parsedBody);
         }
       })
-      .then(() => lukkModal())
+      .then(() => { 
+        lukkModal()
+      })
       .catch((error) => {
         logger.error('Feil under opplasting av kvittering', error);
       });
@@ -124,7 +134,6 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
     try{
       const kommaTilPunktum = belopString.replace(",", ".");
       const inputBelop = parseFloat(kommaTilPunktum);
-      console.log("Inputbeløp", inputBelop, typeof inputBelop)
       if (validerBeløp(inputBelop)){
         settFeilmeldinger([]);
         settBeløp(inputBelop);
@@ -155,11 +164,11 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
           <div className="modal-content">
             <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
             <div className="input-rad">
-              <ReisetilskuddDatovelger label="Dato" />
+              <ReisetilskuddDatovelger label="Dato" onChange={(dato) => oppdaterDato(dato)}/>
               <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value) } />
             </div>
             <Fil fil={uopplastetFil} className="opplastede-filer" />
-            <Knapp className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
+            <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
               Lagre kvittering
             </Knapp>
             <div className="feilmeldinger" aria-live="polite">
@@ -168,7 +177,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
                   {feilmelding}
                 </AlertStripeFeil>
               ))}
-        </div>
+          </div>
           </div>
         </Modal>
         <div {...getRootProps()}>
