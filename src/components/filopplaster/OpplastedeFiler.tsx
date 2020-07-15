@@ -34,7 +34,7 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg, className })
             ? (
               <Fareknapp mini onClick={() => { slettVedlegg(fil); }}>
                 <SlettIkon />
-                <span>slett</span>
+                <span>SLETT</span>
               </Fareknapp>
             )
             : <></>}
