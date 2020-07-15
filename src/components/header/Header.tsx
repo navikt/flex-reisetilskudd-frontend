@@ -7,7 +7,7 @@ import treImg from '../../assets/tre.png';
 function Header():ReactElement {
   return (
     <div className="header">
-      <div className="content-wrapper">
+      <div className="header-content-wrapper">
         <Systemtittel> Søknad om reisetilskudd</Systemtittel>
         <span />
         <span />

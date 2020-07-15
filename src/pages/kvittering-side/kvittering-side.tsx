@@ -6,7 +6,7 @@ import VeienVidereBox from './veien-viderebox';
 function KvitteringSide():ReactElement {
   return (
     <div className="page-wrapper">
-      <div className="content-wrapper">
+      <div className="bekreftelse-content-wrapper">
         <ListeTekstbox />
         <VeienVidereBox />
       </div>
