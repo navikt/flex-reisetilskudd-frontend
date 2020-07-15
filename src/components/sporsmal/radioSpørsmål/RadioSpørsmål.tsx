@@ -1,4 +1,4 @@
-import React, { useState, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import { RadioSpørsmålProps } from '../../../types/types';
@@ -9,9 +9,12 @@ import { offentligPrivatVerdier } from '../spørsmålTekster';
 const RadioSpørsmål = ({
   tittel, name, spørsmålstekst, svaralternativer,
 }: RadioSpørsmålProps): ReactElement => {
-  const [active, setActive] = useState();
   const {
-    setActiveOffentligPrivat, setEgenBilChecked, setSyklerChecked, setGårChecked,
+    setActiveOffentligPrivat,
+    activeOffentligPrivat,
+    setEgenBilChecked,
+    setSyklerChecked,
+    setGårChecked,
   } = useAppStore();
 
   const skrivEndringTilGlobalState = (nyValgt: string) => {
@@ -38,9 +41,8 @@ const RadioSpørsmål = ({
         radios={
           svaralternativer
         }
-        checked={active}
+        checked={activeOffentligPrivat}
         onChange={(_, nyVerdi) => {
-          setActive(nyVerdi);
           skrivEndringTilGlobalState(nyVerdi);
         }}
       />
