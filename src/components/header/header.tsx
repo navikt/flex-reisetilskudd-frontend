@@ -8,7 +8,7 @@ function Header():ReactElement {
   return (
     <div className="header">
       <div className="content-wrapper">
-        <Systemtittel> Morra di søker om reisetilskudd</Systemtittel>
+        <Systemtittel> Søknad om reisetilskudd</Systemtittel>
         <span />
         <span />
         <span />
