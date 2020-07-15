@@ -4,6 +4,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { RadioSpørsmålProps } from '../../../types/types';
 import './RadioSpørsmål.less';
 import { useAppStore } from '../../../data/stores/app-store';
+import { offentligPrivatVerdier } from '../spørsmålTekster';
 
 const RadioSpørsmål = ({
   tittel, name, spørsmålstekst, svaralternativer,
@@ -14,9 +15,11 @@ const RadioSpørsmål = ({
   } = useAppStore();
 
   const skrivEndringTilGlobalState = (nyValgt: string) => {
-    if (name === 'Transportmiddel') {
+    /* For endringer på spørsmålet "offentlig eller privat transportmiddel",
+     som skal ha underspørsmål:  */
+    if (name === offentligPrivatVerdier.NAME) {
       setActiveOffentligPrivat(nyValgt);
-      if (nyValgt === 'OFFENTLIG') {
+      if (nyValgt === offentligPrivatVerdier.OFFENTLIG) {
         setEgenBilChecked(false);
         setSyklerChecked(false);
         setGårChecked(false);

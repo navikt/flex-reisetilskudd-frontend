@@ -2,59 +2,70 @@ import {
   RadioSpørsmålProps, CheckboxProps, InputProps, VeilederProps,
 } from '../../types/types';
 
+export const utbetalingSpørsmålVerdier = {
+  NAME: 'UTBETALINGARBEIDSGIVER',
+  MEG: 'MEG',
+  ARBEIDSGIVER: 'ARBEIDSGIVER',
+};
+
 export const utbetalingSpørsmål: RadioSpørsmålProps = {
   tittel: 'Utbetaling til arbeidsgiver',
-  name: 'UtbetalingArbeidsgiver',
+  name: utbetalingSpørsmålVerdier.NAME,
   spørsmålstekst: 'Skal reisetilskuddet utbetales til deg eller til <SETT-INN-ARBEIDSGIVER>?',
   svaralternativer: [
     {
       label: 'Meg',
-      value: 'MEG',
-      id: 'Meg',
+      value: utbetalingSpørsmålVerdier.MEG,
     },
     {
       label: '<SETT-INN-ARBEIDSGIVER>',
-      value: 'ARBEIDSGIVER',
-      id: 'Arbeidsgiver',
+      value: utbetalingSpørsmålVerdier.ARBEIDSGIVER,
     },
   ],
+};
+
+export const offentligPrivatVerdier = {
+  NAME: 'TRANSPORTMIDDEL',
+  OFFENTLIG: 'OFFENTLIG',
+  PRIVAT: 'PRIVAT',
 };
 
 export const offentligPrivatSpørsmål: RadioSpørsmålProps = {
   tittel: 'Transportmiddel til daglig',
-  name: 'Transportmiddel',
+  name: offentligPrivatVerdier.NAME,
   spørsmålstekst: 'Hva slags transportmiddel bruker du til daglig?',
   svaralternativer: [
     {
       label: 'Offentlig',
-      value: 'OFFENTLIG',
-      id: 'Offentlig',
+      value: offentligPrivatVerdier.OFFENTLIG,
     },
     {
       label: 'Privat',
-      value: 'PRIVAT',
-      id: 'Privat',
+      value: offentligPrivatVerdier.PRIVAT,
     },
   ],
 };
 
-export const transportAlternativerPrivat: CheckboxProps = {
+export const transportalternativerPrivatVerdier = {
+  GÅR: 'GÅR',
+  SYKLER: 'SYKLER',
+  EGEN_BIL: 'EGEN BIL',
+};
+
+export const transportalternativerPrivat: CheckboxProps = {
   tittel: 'Fremkomstmiddel',
   svaralternativer: [
     {
       label: 'Går',
-      value: 'GÅR',
-      id: 'Går',
+      value: transportalternativerPrivatVerdier.GÅR,
     },
     {
       label: 'Sykler',
-      value: 'SYKLER',
-      id: 'Sykler',
+      value: transportalternativerPrivatVerdier.SYKLER,
     },
     {
       label: 'Egen bil',
-      value: 'EGEN BIL',
-      id: 'EgenBil',
+      value: transportalternativerPrivatVerdier.EGEN_BIL,
     },
   ],
 };

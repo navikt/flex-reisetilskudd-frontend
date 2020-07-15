@@ -5,7 +5,7 @@ import CheckboxSpørsmål from '../../components/sporsmal/checkboxSpørsmål/Che
 import InputSpørsmål from '../../components/sporsmal/inputSpørsmål/InputSpørsmål';
 import Vis from '../../components/Vis';
 import {
-  offentligPrivatSpørsmål, transportAlternativerPrivat,
+  offentligPrivatSpørsmål, transportalternativerPrivat,
   antallKilometerSpørsmål, månedligeUtgifterSpørsmål, transportVeileder,
 } from '../../components/sporsmal/spørsmålTekster';
 import { useAppStore } from '../../data/stores/app-store';
@@ -21,7 +21,7 @@ const DagensTransportmiddel = (): ReactElement => {
         {InputSpørsmål(månedligeUtgifterSpørsmål)}
       </Vis>
       <Vis hvis={activeOffentligPrivat === 'PRIVAT'}>
-        {CheckboxSpørsmål(transportAlternativerPrivat)}
+        {CheckboxSpørsmål(transportalternativerPrivat)}
         <Vis hvis={egenBilChecked === true}>
           {InputSpørsmål(antallKilometerSpørsmål)}
         </Vis>
