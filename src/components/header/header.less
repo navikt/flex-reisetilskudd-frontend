@@ -2,8 +2,6 @@
     padding: 2em;
     text-align: center;
     position: top;
-    width: 100%;
-
     background-color: rgb(201, 223, 242);
     border-bottom: 0.25em solid rgb(46, 102, 168);
 }
@@ -12,9 +10,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 10rem;
+    margin-left: 20rem;
 }
 
 .header-icons{
-   padding-left: 10rem;
+    padding-left: 20rem;
+}
+
+@media screen and (max-width: 1048px){
+    .header-content-wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0rem;
+    }
+    .header-icons{
+        padding-left: 2rem;
+    }
 }
