@@ -28,7 +28,7 @@ function VeienVidereBox():ReactElement {
             Dette sykefraværet er kortere, derfor trenger du ikke søke.
           </p>
           <p>
-            Les gjerne om
+            Les gjerne om &nbsp;
             <a href="www.nav.no">sykepenger til selvstendig næringsdrivende og frilansere</a>
           </p>
         </p>
