@@ -25,7 +25,7 @@ const Fil: React.FC<Props> = ({ fil, href, className }) => (
               />
               { href
                 ? (
-                  <Lenke href={href}>
+                  <Lenke href={href} target="_blank">
                     <Normaltekst className="fil-lenke filnavn">{fil.name}</Normaltekst>
                   </Lenke>
                 )
