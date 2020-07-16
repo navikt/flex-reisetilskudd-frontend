@@ -1,11 +1,11 @@
-/* eslint-disable */
 import React, { useState, useCallback } from 'react';
-import { Normaltekst, Undertittel, Feilmelding, Ingress } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { useDropzone } from 'react-dropzone';
 import { Input } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 import opplasting from '../../assets/opplasting.svg';
 import formaterFilstørrelse from './utils';
 import { IVedlegg, IOpplastetVedlegg } from '../../models/vedlegg';
@@ -16,7 +16,6 @@ import './Filopplaster.less';
 import env from '../../utils/environment';
 import { logger } from '../../utils/logger';
 import { post } from '../../data/fetcher/fetcher';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 
 interface Props {
   tillatteFiltyper?: string[];
@@ -34,7 +33,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
   const [åpenModal, settÅpenModal] = useState<boolean>(false);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [dato, settDato] = useState<Date | null >(null);
-  const [beløp, settBeløp] = useState<number | null>(null);
+  const [beløp, settBeløp] = useState<number | null>(null);
 
   const lukkModal = () => {
     settUopplastetFil(null);
@@ -64,61 +63,63 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
     []
   );
 
-  const oppdaterDato = (dato: Date) : void => {
-    if (validerDato(dato)){
-      settFeilmeldinger([]);
+  const validerBeløp = (_beløp: number | null) : boolean => {
+    if (!_beløp || _beløp === null) {
+      settFeilmeldinger(['Vennligst skriv inn et gyldig beløp']);
+      return false;
     }
-    settDato(dato)
-  }
-
-  const validerDato = (dato: Date | null) : boolean => {
-    if (!dato || dato === null){
-      settFeilmeldinger([`Vennligst velg en gyldig dato`])
-      return false
-    }
-    return true;
-  }
-  
-  const validerBeløp = (beløp: number | null) : boolean => {
-    if (!beløp || beløp === null){
-      settFeilmeldinger([`Vennligst skriv inn et gyldig beløp`])
-      return false
-    }
-    if (beløp! <= 0){
-      settFeilmeldinger([`Vennligst skriv inn et positivt beløp`])
+    if (_beløp <= 0) {
+      settFeilmeldinger(['Vennligst skriv inn et positivt beløp']);
       return false;
     }
     return true;
-  }
+  };
+
+  const validerDato = (_dato: Date | null) : boolean => {
+    if (!_dato || _dato === null) {
+      settFeilmeldinger(['Vennligst velg en gyldig dato']);
+      return false;
+    }
+    return true;
+  };
+
+  const oppdaterDato = (_dato: Date) : void => {
+    if (validerDato(_dato)) {
+      settFeilmeldinger([]);
+    }
+    settDato(_dato);
+  };
 
   const lagreVedlegg = (fil: File) => {
     const requestData = new FormData();
     requestData.append('file', fil);
 
     if (validerDato(dato) && validerBeløp(beløp)) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       requestData.append('dato', dato!.toString());
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       requestData.append('beløp', beløp!.toString());
 
-      settLaster(true)
+      settLaster(true);
       post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvittering`, requestData)
-      .then((response) => {
-        if (response.parsedBody?.dokumentId) {
-          settVedlegg((gamleVedlegg) => [...gamleVedlegg, {
-            navn: fil.name,
-            størrelse: fil.size,
-            dokumentId: response.parsedBody?.dokumentId,
-          }]);
-        } else {
-          logger.warn('Responsen inneholder ikke noen dokumentId', response.parsedBody);
-        }
-      })
-      .then(() => { 
-        settLaster(false)
-        lukkModal()
-      })
-      .catch((error) => {
-        logger.error('Feil under opplasting av kvittering', error);
-      });
+        .then((response) => {
+          if (response.parsedBody?.dokumentId) {
+            settVedlegg((gamleVedlegg) => [...gamleVedlegg, {
+              navn: fil.name,
+              størrelse: fil.size,
+              dokumentId: response.parsedBody?.dokumentId,
+            }]);
+          } else {
+            logger.warn('Responsen inneholder ikke noen dokumentId', response.parsedBody);
+          }
+        })
+        .then(() => {
+          settLaster(false);
+          lukkModal();
+        })
+        .catch((error) => {
+          logger.error('Feil under opplasting av kvittering', error);
+        });
     }
   };
 
@@ -134,20 +135,17 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
   });
 
   const parseBelopInput = (belopString: string) => {
-    try{
-      const kommaTilPunktum = belopString.replace(",", ".");
+    try {
+      const kommaTilPunktum = belopString.replace(',', '.');
       const inputBelop = parseFloat(kommaTilPunktum);
-      if (validerBeløp(inputBelop)){
+      if (validerBeløp(inputBelop)) {
         settFeilmeldinger([]);
         settBeløp(inputBelop);
       }
+    } catch {
+      settFeilmeldinger(['Vennligst bruk tall i inputfeltet']);
     }
-    catch{
-      settFeilmeldinger(['Vennligst bruk tall i inputfeltet' ]);
-    }
-    return;
-    
-  }
+  };
 
   return (
     <div className={`filopplaster-wrapper ${className}`}>
@@ -167,26 +165,24 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
           <div className="modal-content">
             <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
             <div className="input-rad">
-              <ReisetilskuddDatovelger label="Dato" onChange={(dato) => oppdaterDato(dato)}/>
-              <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value) } />
+              <ReisetilskuddDatovelger label="Dato" onChange={(_dato) => oppdaterDato(_dato)} />
+              <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
             </div>
             <Fil fil={uopplastetFil} className="opplastede-filer" />
-            { laster? 
-              (<NavFrontendSpinner className="lagre-kvittering-spinner"/>)
-              :
-              ( 
+            { laster
+              ? (<NavFrontendSpinner className="lagre-kvittering-spinner" />)
+              : (
                 <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
                   Lagre kvittering
                 </Knapp>
-              )
-            }
+              )}
             <div className="feilmeldinger" aria-live="polite">
               {feilmeldinger.map((feilmelding) => (
                 <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
                   {feilmelding}
                 </AlertStripeFeil>
               ))}
-          </div>
+            </div>
           </div>
         </Modal>
         <div {...getRootProps()}>
