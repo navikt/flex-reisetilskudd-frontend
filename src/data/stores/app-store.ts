@@ -4,9 +4,9 @@ import { useState } from 'react';
 
 export const [AppStoreProvider, useAppStore] = constate(() => {
   const [activeOffentligPrivat, setActiveOffentligPrivat] = useState<string>('');
-  const [egenBilChecked, setEgenBilChecked] = useState<boolean>();
-  const [syklerChecked, setSyklerChecked] = useState<boolean>();
-  const [gårChecked, setGårChecked] = useState<boolean>();
+  const [egenBilChecked, setEgenBilChecked] = useState<boolean>(false);
+  const [syklerChecked, setSyklerChecked] = useState<boolean>(false);
+  const [gårChecked, setGårChecked] = useState<boolean>(false);
 
   return {
     activeOffentligPrivat, setActiveOffentligPrivat,
