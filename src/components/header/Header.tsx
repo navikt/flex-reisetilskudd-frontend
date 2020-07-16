@@ -9,14 +9,10 @@ function Header():ReactElement {
     <div className="header">
       <div className="header-content-wrapper">
         <Systemtittel> Søknad om reisetilskudd</Systemtittel>
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <img src={busImg} alt="bussikon" width="40" />
-        <span />
-        <img className="treIkon" src={treImg} alt="treikon" width="15" />
+        <div className="header-icons">
+          <img src={busImg} alt="bussikon" width="40" />
+          <img className="treIkon" src={treImg} alt="treikon" width="15" />
+        </div>
       </div>
     </div>
   );
