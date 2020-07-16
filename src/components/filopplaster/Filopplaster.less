@@ -19,7 +19,6 @@
       border-radius: 4px;
       background-color: rgba(204, 222, 230, 0.5);
       height: 64px;
-      max-width: 575px;
       color: @navBla;
       margin: 0 auto;
     }
@@ -65,11 +64,20 @@
 }
 
 .opplastede-filer {
-  max-width: 575px;
   margin: 0 auto;
 
   hr {
     border: 1px solid #b7b1a9;
+  }
+
+  .kvitteringsinfo-tittel{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 25%;
+    
+    .typo-undertittel{
+      display: inline-block;
+    }
   }
 }
 
@@ -79,14 +87,16 @@
 }
 
 .fil {
-  position: relative;
-  margin-top: 1rem;
   margin-bottom: 1.5rem;
   display: flex;
-  justify-content: space-between;
 
   .typo-normal {
-    display: inline-block;
+    display: inline;
+  }
+  
+  .kvittering{
+    flex-grow: 1;
+    flex-basis: 45%;
   }
 
   .filstørrelse {
@@ -95,10 +105,23 @@
 
   .filnavn {
     margin-left: 1rem;
+
+  }
+
+  .beløp{
+    padding: 0.3rem;
+    flex-grow: 1;
+    flex-basis: 25%;
+  }
+
+  .dato {
+    padding: 0.3rem;
+    flex-grow: 1;
+    flex-basis: 25%;
   }
 
   .vedleggsikon {
-    position: relative;
-    top: 5px;
+
   }
+
 }
