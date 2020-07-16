@@ -8,18 +8,18 @@ import { Undertittel } from 'nav-frontend-typografi';
 interface Props {
   label?: ReactNode;
   className?: string;
-  onChange?: (d : Date) => void;
+  onChange?: (d: Date[]) => void;
   mode?: 'single' | 'multiple' | 'range' | 'time';
 }
 
 const Datovelger: React.FC<Props> = ({
   label = '',
   className = '',
-  onChange = () => {},
+  onChange = () => { },
   mode = 'single',
 }) => {
-  const validerDato = (d : Date[]) => {
-    onChange(d[0]);
+  const validerDato = (d: Date[]) => {
+    onChange(d);
   };
 
   return (

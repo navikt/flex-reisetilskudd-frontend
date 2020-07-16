@@ -6,13 +6,14 @@ import Filopplaster from '../filopplaster/Filopplaster';
 import { IPeriode, Transportmiddel } from '../../models/periode';
 import './Periode.less';
 import Datovelger from '../datovelger/Datovelger';
+import { formatertDato, DatoFormat } from '../../utils/dato';
 
 interface Props {
   periode: IPeriode,
   index?: number
 }
 
-const Periode : React.FC<Props> = ({ periode, index }) => {
+const Periode: React.FC<Props> = ({ periode, index }) => {
   const [transportMiddel, settTransportMiddel] = useState();
   return (
     <Ekspanderbartpanel
@@ -21,14 +22,14 @@ const Periode : React.FC<Props> = ({ periode, index }) => {
       tittel={(
         <div>
           <Undertittel>{`Periode ${(index !== undefined ? index + 1 : '')}`}</Undertittel>
-          { (periode.fraDato && periode.tilDato)
+          {(periode.fraDato && periode.tilDato)
             ? (
               <Normaltekst>
-                {periode.fraDato.toDateString()}
+                {formatertDato(periode.fraDato, DatoFormat.NATURLIG_LANG)}
                 {' '}
                 -
                 {' '}
-                {periode.tilDato.toDateString()}
+                {formatertDato(periode.tilDato, DatoFormat.NATURLIG_LANG)}
               </Normaltekst>
             )
             : (
@@ -37,10 +38,10 @@ const Periode : React.FC<Props> = ({ periode, index }) => {
               </Normaltekst>
             )}
         </div>
-        )}
+      )}
     >
       <hr />
-      <Datovelger className="periode-element" label="Dato" mode="single" />
+      <Datovelger className="periode-element" label="Dato" mode="range" onChange={() => { }} />
       <RadioPanelGruppe
         key={periode.id}
         className="periode-element"
