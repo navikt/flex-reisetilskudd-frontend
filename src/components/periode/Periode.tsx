@@ -6,7 +6,7 @@ import Filopplaster from '../filopplaster/Filopplaster';
 import { IPeriode, Transportmiddel } from '../../models/periode';
 import { IVedlegg } from '../../models/vedlegg';
 import './Periode.less';
-import ReisetilskuddDatovelger from '../dato/ReisetilskuddDatovelger';
+import Datovelger from '../datovelger/Datovelger';
 
 interface Props {
   periode: IPeriode,
@@ -53,7 +53,7 @@ const Periode : React.FC<Props> = ({ periode, index, onChange }) => {
         )}
     >
       <hr />
-      <ReisetilskuddDatovelger className="periode-element" label="Dato" />
+      <Datovelger className="periode-element" label="Dato" mode="single" />
       <RadioPanelGruppe
         key={periode.id}
         className="periode-element"

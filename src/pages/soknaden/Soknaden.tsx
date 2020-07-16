@@ -3,12 +3,12 @@ import {
   useParams,
 } from 'react-router-dom';
 import Brodsmuler from '../../components/Brodsmuler';
-import ReiseTilskuddPeriode from '../reisetilskudd-periode/reisetilskudd-periode';
-import Utbetaling from '../utbetaling/utbetaling';
+import ReiseTilskuddPeriode from '../reisetilskudd-periode/ReisetilskuddPeriode';
+import Utbetaling from '../utbetaling/Utbetaling';
 import TilbakeKnapp from '../../components/knapper/TilbakeKnapp';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
 import SendKnapp from '../../components/knapper/SendKnapp';
-import DagensTransportmiddel from '../dagens-transportmiddel/dagens-transportmiddel';
+import DagensTransportmiddel from '../dagens-transportmiddel/DagensTransportmiddel';
 import Vis from '../../components/Vis';
 import Oppsummering from '../oppsummering/Oppsummering';
 import { getAntallSider } from '../../constants/sideTitler';

@@ -11,11 +11,11 @@ import formaterFilstørrelse from './utils';
 import { IVedlegg, IOpplastetVedlegg } from '../../models/vedlegg';
 import OpplastedeFiler from './OpplastedeFiler';
 import Fil from './Fil';
-import ReisetilskuddDatovelger from '../dato/ReisetilskuddDatovelger';
 import './Filopplaster.less';
 import env from '../../utils/environment';
 import { logger } from '../../utils/logger';
 import { post } from '../../data/fetcher/fetcher';
+import Datovelger from '../datovelger/Datovelger';
 
 interface Props {
   vedlegg: IVedlegg[];
@@ -180,7 +180,7 @@ const Filopplaster: React.FC<Props> = ({
           <div className="modal-content">
             <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
             <div className="input-rad">
-              <ReisetilskuddDatovelger label="Dato" onChange={(_dato) => oppdaterDato(_dato)} />
+              <Datovelger className="periode-element" label="Dato" mode="single" onChange={(_dato) => oppdaterDato(_dato)} />
               <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
             </div>
             <Fil fil={uopplastetFil} className="opplastede-filer" />

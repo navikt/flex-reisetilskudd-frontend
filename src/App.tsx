@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import {
   BrowserRouter as Router, Switch, Route, Redirect,
 } from 'react-router-dom';
-import Soknaden from './pages/soknaden/soknaden';
+import Soknaden from './pages/soknaden/Soknaden';
 import BekreftelsesSide from './pages/bekreftelsesside/BekreftelsesSide';
 import StoreProvider from './data/stores/StoreProvider';
 import Header from './components/header/Header';
