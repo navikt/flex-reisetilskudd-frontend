@@ -69,6 +69,7 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
       settFeilmeldinger([]);
     }
     settDato(dato)
+
   }
 
   const validerDato = (dato: Date | null) : boolean => {
@@ -106,6 +107,8 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
           settVedlegg((gamleVedlegg) => [...gamleVedlegg, {
             navn: fil.name,
             størrelse: fil.size,
+            beløp: beløp!,
+            dato: dato!,
             dokumentId: response.parsedBody?.dokumentId,
           }]);
         } else {

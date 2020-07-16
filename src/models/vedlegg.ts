@@ -3,6 +3,7 @@ export interface IVedlegg {
   størrelse: number;
   beløp?: number;
   dokumentId?: string;
+  dato?: Date;
 }
 
 export interface IOpplastetVedlegg {
