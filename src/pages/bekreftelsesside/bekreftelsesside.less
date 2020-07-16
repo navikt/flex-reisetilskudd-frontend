@@ -1,9 +1,14 @@
-.page-wrapper{
+.bekreftelsesside-page-wrapper{
     background-color: rgb(238, 238, 238);
     padding-top: 5rem;
     display: flex;
     justify-content: center;
-    
+
+    span:before{
+        content:" "; 
+        display:inline-block; 
+        width:32px;
+    }
 }
 
 .liste-wrapper{
@@ -23,13 +28,11 @@
     justify-content: center;
 }
 
-.veien-videre-wrapper{
+.veien-videre-wrapper {
     padding-top: 3rem ;
     padding-left: 10rem;
     padding-right: 10rem;
     padding-bottom: 10rem;
-    min-width: 40em;
-    max-width: 40em;
 }
 
 .gronn-checkbox{
@@ -61,10 +64,4 @@
     display:flex;
     flex-direction:row;
     vertical-align: text-top;
-}
-
-span:before{
-    content:" "; 
-    //display:inline-block; 
-    width:32px;
 }
