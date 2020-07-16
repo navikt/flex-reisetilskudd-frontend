@@ -16,7 +16,7 @@ import './Filopplaster.less';
 import env from '../../utils/environment';
 import { logger } from '../../utils/logger';
 import { post } from '../../data/fetcher/fetcher';
-import { func } from 'prop-types';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 interface Props {
   tillatteFiltyper?: string[];
@@ -165,20 +165,21 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
           className="filopplaster-modal"
         >
           <div className="modal-content">
-            { laster? 
-              (<Ingress>Laster siden</Ingress>)
-              :
-              (<></>)
-            }
             <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
             <div className="input-rad">
               <ReisetilskuddDatovelger label="Dato" onChange={(dato) => oppdaterDato(dato)}/>
               <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value) } />
             </div>
             <Fil fil={uopplastetFil} className="opplastede-filer" />
-            <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
-              Lagre kvittering
-            </Knapp>
+            { laster? 
+              (<NavFrontendSpinner className="lagre-kvittering-spinner"/>)
+              :
+              ( 
+                <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
+                  Lagre kvittering
+                </Knapp>
+              )
+            }
             <div className="feilmeldinger" aria-live="polite">
               {feilmeldinger.map((feilmelding) => (
                 <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
