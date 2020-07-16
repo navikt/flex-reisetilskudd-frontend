@@ -18,16 +18,25 @@ import { logger } from '../../utils/logger';
 import { post } from '../../data/fetcher/fetcher';
 
 interface Props {
+  vedlegg: IVedlegg[];
   tillatteFiltyper?: string[];
   maxFilstørrelse?: number;
   className?: string;
+  nårNyttVedlegg?: (vedlegg : IVedlegg) => void;
+  nårSlettVedlegg?: (vedlegg : IVedlegg) => void;
 }
 
-const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, className }) => {
+const Filopplaster: React.FC<Props> = ({
+  vedlegg,
+  tillatteFiltyper,
+  maxFilstørrelse,
+  className,
+  nårNyttVedlegg,
+  nårSlettVedlegg,
+}) => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
   const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
-  const [vedlegg, settVedlegg] = useState<IVedlegg[]>([]);
   const [laster, settLaster] = useState<boolean>(false);
 
   const [åpenModal, settÅpenModal] = useState<boolean>(false);
@@ -104,11 +113,17 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
       post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvittering`, requestData)
         .then((response) => {
           if (response.parsedBody?.dokumentId) {
-            settVedlegg((gamleVedlegg) => [...gamleVedlegg, {
+            const nyttVedlegg : IVedlegg = {
               navn: fil.name,
               størrelse: fil.size,
-              dokumentId: response.parsedBody?.dokumentId,
-            }]);
+              beløp: (beløp || 0.0),
+              dato: (dato || new Date()),
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              dokumentId: response.parsedBody!.dokumentId,
+            };
+            if (nårNyttVedlegg) {
+              nårNyttVedlegg(nyttVedlegg);
+            }
           } else {
             logger.warn('Responsen inneholder ikke noen dokumentId', response.parsedBody);
           }
@@ -124,9 +139,9 @@ const Filopplaster: React.FC<Props> = ({ tillatteFiltyper, maxFilstørrelse, cla
   };
 
   const slettVedlegg = (fil: IVedlegg) => {
-    const opplastedeVedlegg = vedlegg;
-    const nyVedleggsliste = opplastedeVedlegg.filter((obj: IVedlegg) => obj.navn !== fil.navn);
-    settVedlegg(nyVedleggsliste);
+    if (nårSlettVedlegg) {
+      nårSlettVedlegg(fil);
+    }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
