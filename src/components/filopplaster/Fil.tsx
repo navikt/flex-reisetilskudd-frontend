@@ -9,7 +9,7 @@ interface Props {
   className?: string;
 }
 
-const Fil: React.FC<Props> = ({ fil, className }) => (
+const Fil: React.FC<Props> = ({ fil }) => (
   <div>
     {fil
       ? (
