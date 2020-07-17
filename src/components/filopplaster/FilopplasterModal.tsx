@@ -6,7 +6,6 @@ import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { IVedlegg, IOpplastetVedlegg } from '../../models/vedlegg';
-import OpplastedeFiler from './OpplastedeFiler';
 import Fil from './Fil';
 import './Filopplaster.less';
 import env from '../../utils/environment';
@@ -14,24 +13,13 @@ import { logger } from '../../utils/logger';
 import { post } from '../../data/fetcher/fetcher';
 import Datovelger from '../datovelger/Datovelger';
 import { useAppStore } from '../../data/stores/app-store';
-import DragAndDrop from './DragAndDrop';
 
 interface Props {
-  vedlegg: IVedlegg[];
-  tillatteFiltyper?: string[];
-  maxFilstørrelse?: number;
-  className?: string;
   nårNyttVedlegg?: (vedlegg: IVedlegg) => void;
-  nårSlettVedlegg?: (vedlegg: IVedlegg) => void;
 }
 
-const Filopplaster: React.FC<Props> = ({
-  vedlegg,
-  tillatteFiltyper,
-  maxFilstørrelse,
-  className,
+const FilopplasterModal: React.FC<Props> = ({
   nårNyttVedlegg,
-  nårSlettVedlegg,
 }) => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
@@ -116,12 +104,6 @@ const Filopplaster: React.FC<Props> = ({
     }
   };
 
-  const slettVedlegg = (fil: IVedlegg) => {
-    if (nårSlettVedlegg) {
-      nårSlettVedlegg(fil);
-    }
-  };
-
   const parseBelopInput = (belopString: string) => {
     try {
       const kommaTilPunktum = belopString.replace(',', '.');
@@ -136,47 +118,37 @@ const Filopplaster: React.FC<Props> = ({
   };
 
   return (
-    <div className={`filopplaster-wrapper ${className}`}>
-      <OpplastedeFiler
-        className="opplastede-filer"
-        filliste={vedlegg}
-        slettVedlegg={slettVedlegg}
-      />
-      <div className="filopplaster">
-        <Modal
-          isOpen={åpenFilopplasterModal}
-          onRequestClose={() => lukkModal()}
-          closeButton
-          contentLabel="Modal"
-          className="filopplaster-modal"
-        >
-          <div className="modal-content">
-            <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
-            <div className="input-rad">
-              <Datovelger className="periode-element" label="Dato" mode="single" onChange={(_dato) => oppdaterDato(_dato[0])} />
-              <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
-            </div>
-            <Fil fil={uopplastetFil} className="opplastede-filer" />
-            {laster
-              ? (<NavFrontendSpinner className="lagre-kvittering-spinner" />)
-              : (
-                <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
-                  Lagre kvittering
-                </Knapp>
-              )}
-            <div className="filopplasterFeilmeldinger" aria-live="polite">
-              {filopplasterFeilmeldinger.map((feilmelding) => (
-                <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
-                  {feilmelding}
-                </AlertStripeFeil>
-              ))}
-            </div>
-          </div>
-        </Modal>
-        <DragAndDrop tillatteFiltyper={tillatteFiltyper} maxFilstørrelse={maxFilstørrelse} />
+    <Modal
+      isOpen={åpenFilopplasterModal}
+      onRequestClose={() => lukkModal()}
+      closeButton
+      contentLabel="Modal"
+      className="filopplaster-modal"
+    >
+      <div className="modal-content">
+        <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
+        <div className="input-rad">
+          <Datovelger className="periode-element" label="Dato" mode="single" onChange={(_dato) => oppdaterDato(_dato[0])} />
+          <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
+        </div>
+        <Fil fil={uopplastetFil} className="opplastede-filer" />
+        {laster
+          ? (<NavFrontendSpinner className="lagre-kvittering-spinner" />)
+          : (
+            <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
+              Lagre kvittering
+            </Knapp>
+          )}
+        <div className="filopplasterFeilmeldinger" aria-live="polite">
+          {filopplasterFeilmeldinger.map((feilmelding) => (
+            <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
+              {feilmelding}
+            </AlertStripeFeil>
+          ))}
+        </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 
-export default Filopplaster;
+export default FilopplasterModal;
