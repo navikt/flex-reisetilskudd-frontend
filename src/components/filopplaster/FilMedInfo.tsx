@@ -12,25 +12,24 @@ interface Props {
 }
 
 const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => (
-  <div className="fil">
+  <div className="kvittering-info">
     <div className="kvittering">
       <img
-        className="vedleggsikon"
         src={vedlegg}
         alt="Vedleggsikon"
       />
       <Normaltekst className="filnavn">{fil.navn}</Normaltekst>
-      <Normaltekst className="filstørrelse">
+      <Normaltekst className="filstorrelse">
         (
         {formaterFilstørrelse(fil.størrelse)}
         )
       </Normaltekst>
-      </div>
-        <Normaltekst className="beløp">{fil.beløp}</Normaltekst>
-        <Normaltekst className="dato">{fil.dato?.toDateString()}</Normaltekst>
+    </div>
+    <Normaltekst className="belop">{fil.beløp}</Normaltekst>
+    <Normaltekst className="dato">{fil.dato?.toDateString()}</Normaltekst>
     {slettVedlegg
       ? (
-        <Fareknapp mini onClick={() => { slettVedlegg(fil); }}>
+        <Fareknapp className="slett-knapp" mini onClick={() => { slettVedlegg(fil); }}>
           <SlettIkon />
           <span>SLETT</span>
         </Fareknapp>

@@ -1,9 +1,8 @@
 import React from 'react';
+import { Undertittel } from 'nav-frontend-typografi';
 import FilMedInfo from './FilMedInfo';
 import { IVedlegg } from '../../models/vedlegg';
-import { Undertittel } from 'nav-frontend-typografi';
-import Vis from '../../components/Vis';
-import './Filopplaster'
+import Vis from '../Vis';
 
 interface Props {
   filliste: IVedlegg[];
@@ -15,9 +14,9 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg, className })
   <div className={className}>
     <Vis hvis={filliste.length > 0}>
       <div className="kvitteringsinfo-tittel">
-        <Undertittel>Kvittering</Undertittel>
-        <Undertittel>Beløp</Undertittel>
-        <Undertittel>Dato</Undertittel>
+        <Undertittel className="kvittering-tittel">Kvittering</Undertittel>
+        <Undertittel className="belop-tittel">Beløp</Undertittel>
+        <Undertittel className="dato-tittel">Dato</Undertittel>
       </div>
     </Vis>
 

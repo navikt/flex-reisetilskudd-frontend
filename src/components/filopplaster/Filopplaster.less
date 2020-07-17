@@ -61,6 +61,10 @@
     justify-content: space-between;
     align-items: end;
   }
+
+  .feilmelding-alert {
+    margin-top: 1rem;
+  }
 }
 
 .opplastede-filer {
@@ -69,59 +73,69 @@
   hr {
     border: 1px solid #b7b1a9;
   }
+  .typo-undertittel{
+    margin: 0;
+  }
 
   .kvitteringsinfo-tittel{
     display: flex;
-    justify-content: space-between;
-    margin-right: 25%;
+
+    .kvittering-tittel{
+      flex-basis: 39%;
+    }
+
+    .belop-tittel{
+      flex-basis: 22.5%;
+    }
+
+    .dato-tittel{
+      flex-basis: 20%;
+    }
+  }
+
+  .kvittering-info{
+    display: flex;
+    margin: 1rem 0rem;
+
+    .typo-normal {
+      display: inline;
+    }
     
-    .typo-undertittel{
-      display: inline-block;
+    .kvittering{
+      flex-basis: 45%;
+    }
+  
+    .belop{
+      padding: 0.3rem;
+      flex-basis: 25%;
+    }
+  
+    .dato {
+      padding: 0.3rem;
+      flex-basis: 25%;
+    }
+  
+    .slett-knapp{
+      max-height: 2rem;
     }
   }
 }
 
-
-.feilmelding-alert {
-  margin-top: 1rem;
-}
-
-.fil {
-  margin-bottom: 1.5rem;
+.modal-fil {
+  margin: 1.5rem 0rem;
   display: flex;
+  justify-content: left;
 
   .typo-normal {
     display: inline;
   }
-  
-  .kvittering{
-    flex-grow: 1;
-    flex-basis: 45%;
-  }
 
-  .filstørrelse {
-    margin-left: 10px;
-  }
+}
 
-  .filnavn {
-    margin-left: 1rem;
+.filstorrelse {
+  margin-left:0.5rem;
+}
 
-  }
-
-  .beløp{
-    padding: 0.3rem;
-    flex-grow: 1;
-    flex-basis: 25%;
-  }
-
-  .dato {
-    padding: 0.3rem;
-    flex-grow: 1;
-    flex-basis: 25%;
-  }
-
-  .vedleggsikon {
-
-  }
-
+.filnavn {
+  margin-left: 1rem;
 }

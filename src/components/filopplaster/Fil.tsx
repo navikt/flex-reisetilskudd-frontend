@@ -10,11 +10,11 @@ interface Props {
 }
 
 const Fil: React.FC<Props> = ({ fil, className }) => (
-  <div className={className}>
+  <div>
     {fil
       ? (
         <div key={fil.name}>
-          <div className="fil">
+          <div className="modal-fil">
             <div>
               <img
                 className="vedleggsikon"
@@ -22,7 +22,7 @@ const Fil: React.FC<Props> = ({ fil, className }) => (
                 alt="Vedleggsikon"
               />
               <Normaltekst className="filnavn">{fil.name}</Normaltekst>
-              <Normaltekst className="filstørrelse">
+              <Normaltekst className="filstorrelse">
                 (
                 {formaterFilstørrelse(fil.size)}
                 )
