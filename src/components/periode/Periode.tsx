@@ -4,16 +4,29 @@ import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import Filopplaster from '../filopplaster/Filopplaster';
 import { IPeriode, Transportmiddel } from '../../models/periode';
+import { IVedlegg } from '../../models/vedlegg';
 import './Periode.less';
 import Datovelger from '../datovelger/Datovelger';
 
 interface Props {
   periode: IPeriode,
-  index?: number
+  index?: number,
+  onChange?: () => void
 }
 
-const Periode : React.FC<Props> = ({ periode, index }) => {
+const Periode : React.FC<Props> = ({ periode, index, onChange }) => {
   const [transportMiddel, settTransportMiddel] = useState();
+
+  const totaltBeløp = periode.vedlegg
+    ? (
+      periode.vedlegg
+        .filter((vedlegg) => vedlegg.beløp)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        .map((vedlegg) => vedlegg.beløp!)
+        .reduce((a, b) => a + b, 0.0)
+    )
+    : (0.0);
+
   return (
     <Ekspanderbartpanel
       className="periode-panel"
@@ -68,10 +81,29 @@ const Periode : React.FC<Props> = ({ periode, index }) => {
           settTransportMiddel(e);
         }}
       />
+      <Normaltekst>
+        {`Totalt beløp: ${totaltBeløp}`}
+      </Normaltekst>
       <Filopplaster
+        vedlegg={periode.vedlegg}
         className="periode-element"
         tillatteFiltyper={['image/png', 'image/jpeg']}
         maxFilstørrelse={1024 * 1024}
+        nårNyttVedlegg={(vedlegg) => {
+          periode.vedlegg.push(vedlegg);
+          if (onChange) {
+            onChange();
+          }
+        }}
+
+        nårSlettVedlegg={(vedleggSomSkalSlettes) => {
+          // eslint-disable-next-line no-param-reassign
+          periode.vedlegg = periode.vedlegg
+            .filter((_vedlegg: IVedlegg) => _vedlegg.navn !== vedleggSomSkalSlettes.navn);
+          if (onChange) {
+            onChange();
+          }
+        }}
       />
     </Ekspanderbartpanel>
   );
