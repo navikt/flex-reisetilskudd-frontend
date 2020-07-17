@@ -1,13 +1,10 @@
-import React, { useState, useCallback } from 'react';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import React, { useState } from 'react';
+import { Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { useDropzone } from 'react-dropzone';
 import { Input } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import opplasting from '../../assets/opplasting.svg';
-import formaterFilstørrelse from './utils';
 import { IVedlegg, IOpplastetVedlegg } from '../../models/vedlegg';
 import OpplastedeFiler from './OpplastedeFiler';
 import Fil from './Fil';
@@ -16,14 +13,16 @@ import env from '../../utils/environment';
 import { logger } from '../../utils/logger';
 import { post } from '../../data/fetcher/fetcher';
 import Datovelger from '../datovelger/Datovelger';
+import { useAppStore } from '../../data/stores/app-store';
+import DragAndDrop from './DragAndDrop';
 
 interface Props {
   vedlegg: IVedlegg[];
   tillatteFiltyper?: string[];
   maxFilstørrelse?: number;
   className?: string;
-  nårNyttVedlegg?: (vedlegg : IVedlegg) => void;
-  nårSlettVedlegg?: (vedlegg : IVedlegg) => void;
+  nårNyttVedlegg?: (vedlegg: IVedlegg) => void;
+  nårSlettVedlegg?: (vedlegg: IVedlegg) => void;
 }
 
 const Filopplaster: React.FC<Props> = ({
@@ -36,49 +35,28 @@ const Filopplaster: React.FC<Props> = ({
 }) => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
-  const [feilmeldinger, settFeilmeldinger] = useState<string[]>([]);
   const [laster, settLaster] = useState<boolean>(false);
-
-  const [åpenModal, settÅpenModal] = useState<boolean>(false);
-  const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<number | null>(null);
 
+  const {
+    uopplastetFil, settUopplastetFil,
+    filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
+    åpenFilopplasterModal, settÅpenFilopplasterModal,
+  } = useAppStore();
+
   const lukkModal = () => {
     settUopplastetFil(null);
-    settÅpenModal(false);
+    settÅpenFilopplasterModal(false);
   };
-
-  const onDropCallback = useCallback(
-    (filer) => {
-      filer.forEach((fil: File) => {
-        settUopplastetFil(fil);
-        if (maxFilstørrelse && fil.size > maxFilstørrelse) {
-          const maks = formaterFilstørrelse(maxFilstørrelse);
-          settFeilmeldinger([...feilmeldinger, `Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}`]);
-          return;
-        }
-
-        if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-          settFeilmeldinger([...feilmeldinger, `Filtypen til ${fil.name} er ugyldig. Gyldige typer er ${tillatteFiltyper}`]);
-          return;
-        }
-
-        settFeilmeldinger([]);
-        settÅpenModal(true);
-      });
-    },
-    // eslint-disable-next-line
-    []
-  );
 
   const validerBeløp = (_beløp: number | null): boolean => {
     if (!_beløp || _beløp === null) {
-      settFeilmeldinger(['Vennligst skriv inn et gyldig beløp']);
+      settFilopplasterFeilmeldinger(['Vennligst skriv inn et gyldig beløp']);
       return false;
     }
     if (_beløp <= 0) {
-      settFeilmeldinger(['Vennligst skriv inn et positivt beløp']);
+      settFilopplasterFeilmeldinger(['Vennligst skriv inn et positivt beløp']);
       return false;
     }
     return true;
@@ -86,7 +64,7 @@ const Filopplaster: React.FC<Props> = ({
 
   const validerDato = (_dato: Date | null): boolean => {
     if (!_dato || _dato === null) {
-      settFeilmeldinger(['Vennligst velg en gyldig dato']);
+      settFilopplasterFeilmeldinger(['Vennligst velg en gyldig dato']);
       return false;
     }
     return true;
@@ -94,7 +72,7 @@ const Filopplaster: React.FC<Props> = ({
 
   const oppdaterDato = (_dato: Date): void => {
     if (validerDato(_dato)) {
-      settFeilmeldinger([]);
+      settFilopplasterFeilmeldinger([]);
     }
     settDato(_dato);
   };
@@ -113,7 +91,7 @@ const Filopplaster: React.FC<Props> = ({
       post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvittering`, requestData)
         .then((response) => {
           if (response.parsedBody?.dokumentId) {
-            const nyttVedlegg : IVedlegg = {
+            const nyttVedlegg: IVedlegg = {
               navn: fil.name,
               størrelse: fil.size,
               beløp: (beløp || 0.0),
@@ -144,21 +122,16 @@ const Filopplaster: React.FC<Props> = ({
     }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: onDropCallback,
-    multiple: false,
-  });
-
   const parseBelopInput = (belopString: string) => {
     try {
       const kommaTilPunktum = belopString.replace(',', '.');
       const inputBelop = parseFloat(kommaTilPunktum);
       if (validerBeløp(inputBelop)) {
-        settFeilmeldinger([]);
+        settFilopplasterFeilmeldinger([]);
         settBeløp(inputBelop);
       }
     } catch {
-      settFeilmeldinger(['Vennligst bruk tall i inputfeltet']);
+      settFilopplasterFeilmeldinger(['Vennligst bruk tall i inputfeltet']);
     }
   };
 
@@ -171,7 +144,7 @@ const Filopplaster: React.FC<Props> = ({
       />
       <div className="filopplaster">
         <Modal
-          isOpen={åpenModal}
+          isOpen={åpenFilopplasterModal}
           onRequestClose={() => lukkModal()}
           closeButton
           contentLabel="Modal"
@@ -191,8 +164,8 @@ const Filopplaster: React.FC<Props> = ({
                   Lagre kvittering
                 </Knapp>
               )}
-            <div className="feilmeldinger" aria-live="polite">
-              {feilmeldinger.map((feilmelding) => (
+            <div className="filopplasterFeilmeldinger" aria-live="polite">
+              {filopplasterFeilmeldinger.map((feilmelding) => (
                 <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
                   {feilmelding}
                 </AlertStripeFeil>
@@ -200,33 +173,7 @@ const Filopplaster: React.FC<Props> = ({
             </div>
           </div>
         </Modal>
-        <div {...getRootProps()}>
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <>
-              <img
-                src={opplasting}
-                className="opplastingsikon"
-                alt="Opplastingsikon"
-              />
-              <Normaltekst className="tekst">
-                Slipp filen her...
-              </Normaltekst>
-            </>
-          ) : (
-            <>
-              <img
-                src={opplasting}
-                className="opplastingsikon"
-                alt="Opplastingsikon"
-              />
-              <Normaltekst className="tekst">
-                Last opp dokumentasjon
-              </Normaltekst>
-            </>
-          )}
-        </div>
-
+        <DragAndDrop tillatteFiltyper={tillatteFiltyper} maxFilstørrelse={maxFilstørrelse} />
       </div>
     </div>
   );
