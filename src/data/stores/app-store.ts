@@ -26,6 +26,9 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   const [syklerChecked, setSyklerChecked] = useState<boolean>(false);
   const [gårChecked, setGårChecked] = useState<boolean>(false);
   const [perioder, settPerioder] = useState<IPeriode[]>(mockPerioder);
+  const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
+  const [filopplasterFeilmeldinger, settFilopplasterFeilmeldinger] = useState<string[]>([]);
+  const [åpenFilopplasterModal, settÅpenFilopplasterModal] = useState<boolean>(false);
 
   return {
     activeOffentligPrivat, setActiveOffentligPrivat,
@@ -33,5 +36,8 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     syklerChecked, setSyklerChecked,
     gårChecked, setGårChecked,
     perioder, settPerioder,
+    uopplastetFil, settUopplastetFil,
+    filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
+    åpenFilopplasterModal, settÅpenFilopplasterModal,
   };
 });
