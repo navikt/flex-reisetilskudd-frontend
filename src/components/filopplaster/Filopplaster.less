@@ -19,7 +19,6 @@
       border-radius: 4px;
       background-color: rgba(204, 222, 230, 0.5);
       height: 64px;
-      max-width: 575px;
       color: @navBla;
       margin: 0 auto;
     }
@@ -66,30 +65,43 @@
     justify-content: space-between;
     align-items: end;
   }
+
+  .feilmelding-alert {
+    margin-top: 1rem;
+  }
 }
 
 .opplastede-filer {
-  max-width: 575px;
   margin: 0 auto;
 
-  .fil {
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
+  hr {
+    border: 1px solid #b7b1a9;
+  }
+  
+  .typo-undertittel{
+    margin: 0;
+  }
+
+  .kvitteringsinfo-tittel{
     display: flex;
-    justify-content: space-between;
 
-    .typo-normal {
-      display: inline-block;
+    .kvittering-tittel{
+      flex-basis: 39%;
     }
 
-    .filstørrelse {
-      margin-left: 10px;
+    .belop-tittel{
+      flex-basis: 22.5%;
     }
 
-    .filnavn {
-      margin-left: 1rem;
+    .dato-tittel{
+      flex-basis: 20%;
     }
+  }
+
+  .kvittering-info{
+    display: flex;
+    margin: 1rem 0rem;
+    
     .fil-lenke {
       text-decoration: underline;
       &:hover {
@@ -97,18 +109,45 @@
       }
     }
 
-    .vedleggsikon {
-      position: relative;
-      top: 5px;
+    .typo-normal {
+      display: inline;
     }
-  }
-
-  hr {
-    border: 1px solid #b7b1a9;
+    
+    .kvittering{
+      flex-basis: 45%;
+    }
+  
+    .belop{
+      padding: 0.3rem;
+      flex-basis: 25%;
+    }
+  
+    .dato {
+      padding: 0.3rem;
+      flex-basis: 25%;
+    }
+  
+    .slett-knapp{
+      max-height: 2rem;
+    }
   }
 }
 
+.modal-fil {
+  margin: 1.5rem 0rem;
+  display: flex;
+  justify-content: left;
 
-.feilmelding-alert {
-  margin-top: 1rem;
+  .typo-normal {
+    display: inline;
+  }
+
+}
+
+.filstorrelse {
+  margin-left:0.5rem;
+}
+
+.filnavn {
+  margin-left: 1rem;
 }

@@ -2,7 +2,8 @@ import React, { ReactElement } from 'react';
 
 function Oppsummering():ReactElement {
   return (
-    <></>
+    <>
+    </>
   );
 }
 

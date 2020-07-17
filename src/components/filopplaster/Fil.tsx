@@ -11,12 +11,12 @@ interface Props {
   className?: string;
 }
 
-const Fil: React.FC<Props> = ({ fil, href, className }) => (
-  <div className={className}>
+const Fil: React.FC<Props> = ({ fil, href }) => (
+  <div>
     {fil
       ? (
         <div key={fil.name}>
-          <div className="fil">
+          <div className="modal-fil">
             <div>
               <img
                 className="vedleggsikon"

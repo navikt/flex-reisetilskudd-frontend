@@ -1,10 +1,8 @@
 import React from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { Fareknapp } from 'nav-frontend-knapper';
-import { SlettIkon } from '../../assets/ikoner';
-import vedlegg from '../../assets/vedlegg.svg';
-import formaterFilstørrelse from './utils';
+import { Undertittel } from 'nav-frontend-typografi';
+import FilMedInfo from './FilMedInfo';
 import { IVedlegg } from '../../models/vedlegg';
+import Vis from '../Vis';
 
 interface Props {
   filliste: IVedlegg[];
@@ -14,31 +12,17 @@ interface Props {
 
 const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg, className }) => (
   <div className={className}>
+    <Vis hvis={filliste.length > 0}>
+      <div className="kvitteringsinfo-tittel">
+        <Undertittel className="kvittering-tittel">Kvittering</Undertittel>
+        <Undertittel className="belop-tittel">Beløp</Undertittel>
+        <Undertittel className="dato-tittel">Dato</Undertittel>
+      </div>
+    </Vis>
+
     {filliste.map((fil: IVedlegg, index: number) => (
       <div key={fil.navn}>
-        <div className="fil">
-          <div>
-            <img
-              className="vedleggsikon"
-              src={vedlegg}
-              alt="Vedleggsikon"
-            />
-            <Normaltekst className="filnavn">{fil.navn}</Normaltekst>
-            <Normaltekst className="filstørrelse">
-              (
-              {formaterFilstørrelse(fil.størrelse)}
-              )
-            </Normaltekst>
-          </div>
-          {slettVedlegg
-            ? (
-              <Fareknapp mini onClick={() => { slettVedlegg(fil); }}>
-                <SlettIkon />
-                <span>SLETT</span>
-              </Fareknapp>
-            )
-            : <></>}
-        </div>
+        <FilMedInfo fil={fil} slettVedlegg={slettVedlegg} />
         {index === filliste.length - 1 ? '' : <hr />}
       </div>
     ))}
