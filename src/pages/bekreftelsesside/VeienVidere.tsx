@@ -2,21 +2,20 @@ import React, { ReactElement } from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
 import './bekreftelsesside.less';
 import { Undertittel } from 'nav-frontend-typografi';
-import moment from 'moment';
+import { DatoFormat, getIDag, getNåTid } from '../../utils/dato';
 
 function VeienVidereBox():ReactElement {
-  const today = moment().format('\tDD.MM.YYYY');
-  const time = moment().format('\tHH:mm');
-
   return (
     <div className="veien-videre-wrapper">
       <AlertStripe className="gronn-checkbox" type="suksess">
         <Undertittel>Sykemeldingen er sendt til NAV</Undertittel>
         <p>
-          Dato sendt:
-          {today}
+          Sendt:
+          {' '}
+          {getIDag(DatoFormat.NATURLIG_FULL)}
           , kl:
-          {time}
+          {' '}
+          {getNåTid()}
         </p>
       </AlertStripe>
       <AlertStripe className="bla-info" type="info">
@@ -28,7 +27,7 @@ function VeienVidereBox():ReactElement {
             Dette sykefraværet er kortere, derfor trenger du ikke søke.
           </p>
           <p>
-            Les gjerne om
+            Les gjerne om &nbsp;
             <a href="www.nav.no">sykepenger til selvstendig næringsdrivende og frilansere</a>
           </p>
         </p>

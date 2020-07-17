@@ -2,8 +2,8 @@ export interface IVedlegg {
   navn: string;
   størrelse: number;
   beløp?: number;
-  dokumentId?: string;
   dato?: Date;
+  dokumentId?: string;
 }
 
 export interface IOpplastetVedlegg {

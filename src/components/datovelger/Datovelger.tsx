@@ -2,22 +2,24 @@ import React, { ReactNode } from 'react';
 import Flatpickr from 'react-flatpickr';
 import { Norwegian } from 'flatpickr/dist/l10n/no';
 import './flatpickr.less';
-import './ReisetilskuddDatovelger.less';
+import './Datovelger.less';
 import { Undertittel } from 'nav-frontend-typografi';
 
 interface Props {
   label?: ReactNode;
   className?: string;
-  onChange?: (d : Date) => void
+  onChange?: (d: Date[]) => void;
+  mode?: 'single' | 'multiple' | 'range' | 'time';
 }
 
-const ReisetilskuddDatovelger: React.FC<Props> = ({
+const Datovelger: React.FC<Props> = ({
   label = '',
   className = '',
-  onChange = () => {},
+  onChange = () => { },
+  mode = 'single',
 }) => {
-  const validerDato = (d : Date[]) => {
-    onChange(d[0]);
+  const validerDato = (d: Date[]) => {
+    onChange(d);
   };
 
   return (
@@ -28,7 +30,7 @@ const ReisetilskuddDatovelger: React.FC<Props> = ({
         className="skjemaelement__input input--m"
         placeholder="dd.mm.åååå"
         options={{
-          mode: 'single',
+          mode,
           enableTime: false,
           dateFormat: 'Y-m-d',
           altInput: true,
@@ -43,4 +45,4 @@ const ReisetilskuddDatovelger: React.FC<Props> = ({
   );
 };
 
-export default ReisetilskuddDatovelger;
+export default Datovelger;

@@ -1,15 +1,17 @@
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import Lenke from 'nav-frontend-lenker';
 import vedlegg from '../../assets/vedlegg.svg';
 import formaterFilstørrelse from './utils';
 
 interface Props {
   fil: File | null;
+  href?: string;
   className?: string;
 }
 
-const Fil: React.FC<Props> = ({ fil }) => (
+const Fil: React.FC<Props> = ({ fil, href }) => (
   <div>
     {fil
       ? (
@@ -21,8 +23,16 @@ const Fil: React.FC<Props> = ({ fil }) => (
                 src={vedlegg}
                 alt="Vedleggsikon"
               />
-              <Normaltekst className="filnavn">{fil.name}</Normaltekst>
-              <Normaltekst className="filstorrelse">
+              { href
+                ? (
+                  <Lenke href={href} target="_blank">
+                    <Normaltekst className="fil-lenke filnavn">{fil.name}</Normaltekst>
+                  </Lenke>
+                )
+                : (
+                  <Normaltekst className="filnavn">{fil.name}</Normaltekst>
+                )}
+              <Normaltekst className="filstørrelse">
                 (
                 {formaterFilstørrelse(fil.size)}
                 )
