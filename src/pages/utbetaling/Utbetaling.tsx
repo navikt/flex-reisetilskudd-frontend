@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
-import RadioSpørsmål from '../../components/sporsmal/radioSpørsmål/RadioSpørsmål';
+import RadioSpørsmålUtbetaling from '../../components/sporsmal/radioSpørsmål/RadioSpørsmålUtbetaling';
 import { utbetalingSpørsmål } from '../../components/sporsmal/spørsmålTekster';
 
 const Utbetaling = (): ReactElement => (
   <>
-    {RadioSpørsmål(utbetalingSpørsmål)}
+    {RadioSpørsmålUtbetaling(utbetalingSpørsmål)}
   </>
 );
 
