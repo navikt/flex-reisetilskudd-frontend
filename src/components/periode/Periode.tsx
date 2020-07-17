@@ -7,6 +7,7 @@ import { IPeriode, Transportmiddel } from '../../models/periode';
 import { IVedlegg } from '../../models/vedlegg';
 import './Periode.less';
 import Datovelger from '../datovelger/Datovelger';
+import { formatertDato, DatoFormat } from '../../utils/dato';
 
 interface Props {
   periode: IPeriode,
@@ -14,7 +15,7 @@ interface Props {
   onChange?: () => void
 }
 
-const Periode : React.FC<Props> = ({ periode, index, onChange }) => {
+const Periode: React.FC<Props> = ({ periode, index, onChange }) => {
   const [transportMiddel, settTransportMiddel] = useState();
 
   const totaltBeløp = periode.vedlegg
@@ -34,14 +35,14 @@ const Periode : React.FC<Props> = ({ periode, index, onChange }) => {
       tittel={(
         <div>
           <Undertittel>{`Periode ${(index !== undefined ? index + 1 : '')}`}</Undertittel>
-          { (periode.fraDato && periode.tilDato)
+          {(periode.fraDato && periode.tilDato)
             ? (
               <Normaltekst>
-                {periode.fraDato.toDateString()}
+                {formatertDato(periode.fraDato, DatoFormat.NATURLIG_LANG)}
                 {' '}
                 -
                 {' '}
-                {periode.tilDato.toDateString()}
+                {formatertDato(periode.tilDato, DatoFormat.NATURLIG_LANG)}
               </Normaltekst>
             )
             : (
@@ -50,10 +51,10 @@ const Periode : React.FC<Props> = ({ periode, index, onChange }) => {
               </Normaltekst>
             )}
         </div>
-        )}
+      )}
     >
       <hr />
-      <Datovelger className="periode-element" label="Dato" mode="single" />
+      <Datovelger className="periode-element" label="Dato" mode="range" onChange={() => { }} />
       <RadioPanelGruppe
         key={periode.id}
         className="periode-element"

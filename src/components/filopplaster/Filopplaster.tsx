@@ -41,7 +41,7 @@ const Filopplaster: React.FC<Props> = ({
 
   const [åpenModal, settÅpenModal] = useState<boolean>(false);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
-  const [dato, settDato] = useState<Date | null >(null);
+  const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<number | null>(null);
 
   const lukkModal = () => {
@@ -72,7 +72,7 @@ const Filopplaster: React.FC<Props> = ({
     []
   );
 
-  const validerBeløp = (_beløp: number | null) : boolean => {
+  const validerBeløp = (_beløp: number | null): boolean => {
     if (!_beløp || _beløp === null) {
       settFeilmeldinger(['Vennligst skriv inn et gyldig beløp']);
       return false;
@@ -84,7 +84,7 @@ const Filopplaster: React.FC<Props> = ({
     return true;
   };
 
-  const validerDato = (_dato: Date | null) : boolean => {
+  const validerDato = (_dato: Date | null): boolean => {
     if (!_dato || _dato === null) {
       settFeilmeldinger(['Vennligst velg en gyldig dato']);
       return false;
@@ -92,7 +92,7 @@ const Filopplaster: React.FC<Props> = ({
     return true;
   };
 
-  const oppdaterDato = (_dato: Date) : void => {
+  const oppdaterDato = (_dato: Date): void => {
     if (validerDato(_dato)) {
       settFeilmeldinger([]);
     }
@@ -180,11 +180,11 @@ const Filopplaster: React.FC<Props> = ({
           <div className="modal-content">
             <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
             <div className="input-rad">
-              <Datovelger className="periode-element" label="Dato" mode="single" onChange={(_dato) => oppdaterDato(_dato)} />
+              <Datovelger className="periode-element" label="Dato" mode="single" onChange={(_dato) => oppdaterDato(_dato[0])} />
               <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
             </div>
             <Fil fil={uopplastetFil} className="opplastede-filer" />
-            { laster
+            {laster
               ? (<NavFrontendSpinner className="lagre-kvittering-spinner" />)
               : (
                 <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
