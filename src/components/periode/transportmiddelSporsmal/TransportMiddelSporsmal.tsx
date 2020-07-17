@@ -1,15 +1,15 @@
 import { Undertittel } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import React, { Dispatch, ReactElement } from 'react';
-import { IPeriode, Transportmiddel } from '../../../models/periode';
+import { PeriodeInterface, Transportmiddel } from '../../../models/periode';
 
 interface Props {
-  periode: IPeriode,
+  periode: PeriodeInterface,
   transportMiddel: string,
   settTransportMiddel: Dispatch<string>,
 }
 
-const TransportMiddelSporsmal = (props: Props) : ReactElement => {
+const TransportMiddelSporsmal = (props: Props): ReactElement => {
   const { periode, transportMiddel, settTransportMiddel } = props;
   return (
     <RadioPanelGruppe

@@ -5,7 +5,7 @@ import { Input } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { IVedlegg, IOpplastetVedlegg } from '../../models/vedlegg';
+import { Vedlegg, OpplastetVedlegg } from '../../models/vedlegg';
 import Fil from './Fil';
 import './Filopplaster.less';
 import env from '../../utils/environment';
@@ -15,7 +15,7 @@ import Datovelger from '../datovelger/Datovelger';
 import { useAppStore } from '../../data/stores/app-store';
 
 interface Props {
-  nårNyttVedlegg?: (vedlegg: IVedlegg) => void;
+  nårNyttVedlegg?: (vedlegg: Vedlegg) => void;
 }
 
 const FilopplasterModal: React.FC<Props> = ({
@@ -76,10 +76,10 @@ const FilopplasterModal: React.FC<Props> = ({
       requestData.append('beløp', beløp!.toString());
 
       settLaster(true);
-      post<IOpplastetVedlegg>(`${env.mockApiUrl}/kvittering`, requestData)
+      post<OpplastetVedlegg>(`${env.mockApiUrl}/kvittering`, requestData)
         .then((response) => {
           if (response.parsedBody?.dokumentId) {
-            const nyttVedlegg: IVedlegg = {
+            const nyttVedlegg: Vedlegg = {
               navn: fil.name,
               størrelse: fil.size,
               beløp: (beløp || 0.0),

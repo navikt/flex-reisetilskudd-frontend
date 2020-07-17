@@ -1,7 +1,7 @@
 /* eslint-disable object-property-newline */
 import constate from 'constate';
 import { useState } from 'react';
-import { IPeriode, Transportmiddel } from '../../models/periode';
+import { PeriodeInterface, Transportmiddel } from '../../models/periode';
 
 import { generateId } from '../../utils/random';
 
@@ -25,7 +25,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   const [egenBilChecked, setEgenBilChecked] = useState<boolean>(false);
   const [syklerChecked, setSyklerChecked] = useState<boolean>(false);
   const [gårChecked, setGårChecked] = useState<boolean>(false);
-  const [perioder, settPerioder] = useState<IPeriode[]>(mockPerioder);
+  const [perioder, settPerioder] = useState<PeriodeInterface[]>(mockPerioder);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [filopplasterFeilmeldinger, settFilopplasterFeilmeldinger] = useState<string[]>([]);
   const [åpenFilopplasterModal, settÅpenFilopplasterModal] = useState<boolean>(false);

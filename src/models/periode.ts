@@ -1,8 +1,8 @@
-import { IVedlegg } from './vedlegg';
+import { Vedlegg } from './vedlegg';
 
-export interface IPeriode {
+export interface PeriodeInterface {
   id: string;
-  vedlegg: Array<IVedlegg>;
+  vedlegg: Array<Vedlegg>;
   transportMiddel?:
   Transportmiddel.taxi |
   Transportmiddel.kollektiv |

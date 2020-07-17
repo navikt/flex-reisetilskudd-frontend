@@ -1,12 +1,12 @@
 import React from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import FilMedInfo from './FilMedInfo';
-import { IVedlegg } from '../../models/vedlegg';
+import { Vedlegg } from '../../models/vedlegg';
 import Vis from '../Vis';
 
 interface Props {
-  filliste: IVedlegg[];
-  slettVedlegg?: (vedlegg: IVedlegg) => void;
+  filliste: Vedlegg[];
+  slettVedlegg?: (vedlegg: Vedlegg) => void;
   className?: string;
 }
 
@@ -20,7 +20,7 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg, className })
       </div>
     </Vis>
 
-    {filliste.map((fil: IVedlegg, index: number) => (
+    {filliste.map((fil: Vedlegg, index: number) => (
       <div key={fil.navn}>
         <FilMedInfo fil={fil} slettVedlegg={slettVedlegg} />
         {index === filliste.length - 1 ? '' : <hr />}
