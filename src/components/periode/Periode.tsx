@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import FilopplasterModal from '../filopplaster/FilopplasterModal';
-import { IPeriode } from '../../models/periode';
-import { IVedlegg } from '../../models/vedlegg';
+import { PeriodeInterface } from '../../models/periode';
+import { Vedlegg } from '../../models/vedlegg';
 import './Periode.less';
 import Datovelger from '../datovelger/Datovelger';
 import OpplastedeFiler from '../filopplaster/OpplastedeFiler';
@@ -12,7 +12,7 @@ import PeriodeTittel from './periodeTittel/PeriodeTittel';
 import TransportMiddelSporsmal from './transportmiddelSporsmal/TransportMiddelSporsmal';
 
 interface Props {
-  periode: IPeriode,
+  periode: PeriodeInterface,
   index?: number,
   onChange?: () => void
 }
@@ -32,17 +32,17 @@ const Periode: React.FC<Props> = ({ periode, index, onChange }) => {
     }
   };
 
-  const nårNyttVedlegg = (vedlegg: IVedlegg) => {
+  const nårNyttVedlegg = (vedlegg: Vedlegg) => {
     periode.vedlegg.push(vedlegg);
     if (onChange) {
       onChange();
     }
   };
 
-  const nårSlettVedlegg = (vedleggSomSkalSlettes: IVedlegg) => {
+  const nårSlettVedlegg = (vedleggSomSkalSlettes: Vedlegg) => {
     // eslint-disable-next-line no-param-reassign
     periode.vedlegg = periode.vedlegg
-      .filter((_vedlegg: IVedlegg) => _vedlegg.navn !== vedleggSomSkalSlettes.navn);
+      .filter((_vedlegg: Vedlegg) => _vedlegg.navn !== vedleggSomSkalSlettes.navn);
     if (onChange) {
       onChange();
     }

@@ -1,8 +1,8 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement } from 'react';
-import { IPeriode } from '../../../models/periode';
+import { PeriodeInterface } from '../../../models/periode';
 
-const TotalBelop = (periode : IPeriode) : ReactElement => {
+const TotalBelop = (periode: PeriodeInterface): ReactElement => {
   const totaltBeløp = periode.vedlegg
     ? (
       periode.vedlegg
