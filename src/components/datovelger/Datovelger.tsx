@@ -28,7 +28,7 @@ const Datovelger: React.FC<Props> = ({
       <Flatpickr
         name="datoTest"
         className="skjemaelement__input input--m"
-        placeholder="dd.mm.åååå"
+        placeholder={(mode === 'range') ? 'dd.mm.åååå til dd.mm.åååå' : 'dd.mm.åååå'}
         options={{
           mode,
           enableTime: false,

@@ -22,6 +22,15 @@ const maxFilstørrelse = 1024 * 1024;
 
 const Periode: React.FC<Props> = ({ periode, index, onChange }) => {
   const [transportMiddel, settTransportMiddel] = useState();
+  const [fraDato, settFraDato] = useState<Date | undefined>(periode.fraDato);
+  const [tilDato, settTilDato] = useState<Date | undefined>(periode.tilDato);
+
+  const oppdaterDato = (datoer: Date[]) => {
+    if (datoer.length === 2) {
+      settFraDato(datoer[0]);
+      settTilDato(datoer[1]);
+    }
+  };
 
   const nårNyttVedlegg = (vedlegg: IVedlegg) => {
     periode.vedlegg.push(vedlegg);
@@ -43,10 +52,10 @@ const Periode: React.FC<Props> = ({ periode, index, onChange }) => {
     <Ekspanderbartpanel
       className="periode-panel"
       key={periode.id}
-      tittel={<PeriodeTittel periode={periode} index={index} />}
+      tittel={<PeriodeTittel fraDato={fraDato} tilDato={tilDato} index={index} />}
     >
       <hr />
-      <Datovelger className="periode-element" label="Dato" mode="range" onChange={() => { }} />
+      <Datovelger className="periode-element" label="Dato" mode="range" onChange={(datoer) => { oppdaterDato(datoer); }} />
       <TransportMiddelSporsmal
         periode={periode}
         settTransportMiddel={settTransportMiddel}
