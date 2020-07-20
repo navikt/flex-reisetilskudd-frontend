@@ -23,7 +23,7 @@ const RadioSpørsmål = ({
     if (name === offentligPrivatVerdier.NAME) {
       setActiveOffentligPrivat(nyValgt);
       if (nyValgt === offentligPrivatVerdier.OFFENTLIG) {
-        // Clear disse på ny måte
+        // TODO: Clear disse på ny måte
         setEgenBilChecked(false);
         setSyklerChecked(false);
         setGårChecked(false);
