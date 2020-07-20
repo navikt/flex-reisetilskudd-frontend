@@ -1,10 +1,58 @@
+@import (reference) '~nav-frontend-knapper-style/src/index';
+
 .slett-periode-knapp {
   margin-top: 2em;
 }
 
-.slett-periode-modal {
-  .slett-periode-modal-content {
+.slett-periode-modal-content{
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
+  width: 30rem;
+  height: 13rem;
+  .slett-periode-modal-header{
+    margin-top: 0.3rem;
+    margin-bottom: 2.5rem;
   }
+  .slett-periode-knapp-bekreft {
+    margin-top: 3rem;
+    margin-right: 0.2em;
+  }
+  .slett-periode-knapp-avbryt{
+    margin-top: 3rem;
+    background-color: white;
+    color: @navBla;
+  }
+}
 
-
+@media only screen and (max-width: 600px) {
+  .slett-periode-modal-content {
+    width: 18rem;
+    height: 18rem;
+    padding-top: 0.2rem;
+    padding-left: 1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0rem;
+    display: block;
+    align-content: center;
+    .slett-periode-modal-header{
+      margin-bottom: 2rem;
+    }
+    .slett-periode-knapp-bekreft{
+      width: 17rem;
+      margin-right: 2rem;
+      margin-top: 2.5rem;
+      margin-bottom: 0rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    .slett-periode-knapp-avbryt{
+      width: 17rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+  }
+}
 }
