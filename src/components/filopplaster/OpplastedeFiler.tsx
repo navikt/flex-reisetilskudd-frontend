@@ -12,13 +12,13 @@ interface Props {
 
 const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg, className }) => (
   <div className={className}>
+    <div className="kvitterings-tittler">
     <Vis hvis={filliste.length > 0}>
-      <div className="kvitteringsinfo-tittel">
         <Undertittel className="kvittering-tittel">Kvittering</Undertittel>
         <Undertittel className="belop-tittel">Beløp</Undertittel>
         <Undertittel className="dato-tittel">Dato</Undertittel>
-      </div>
     </Vis>
+    </div>
 
     {filliste.map((fil: Vedlegg, index: number) => (
       <div key={fil.navn}>
