@@ -13,6 +13,7 @@ import { logger } from '../../utils/logger';
 import { post } from '../../data/fetcher/fetcher';
 import Datovelger from '../datovelger/Datovelger';
 import { useAppStore } from '../../data/stores/app-store';
+import {generateId} from '../../utils/random';
 
 interface Props {
   nårNyttVedlegg?: (vedlegg: Vedlegg) => void;
@@ -80,6 +81,7 @@ const FilopplasterModal: React.FC<Props> = ({
         .then((response) => {
           if (response.parsedBody?.dokumentId) {
             const nyttVedlegg: Vedlegg = {
+              id: generateId(),
               navn: fil.name,
               størrelse: fil.size,
               beløp: (beløp || 0.0),

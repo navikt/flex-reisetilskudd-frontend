@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Fareknapp } from 'nav-frontend-knapper';
 import { SlettIkon } from '../../assets/ikoner';
@@ -12,8 +12,18 @@ interface Props {
   slettVedlegg?: (vedlegg: Vedlegg) => void;
 }
 
-const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => (
-  <div className="kvittering-info">
+const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
+  const [spinnerAktiv, settSpinnerAktiv] = useState<boolean>(false);
+
+  const håndterKlikk = () => {
+    settSpinnerAktiv(true);
+    if (slettVedlegg) {
+      slettVedlegg(fil);
+    }
+  };
+
+  return (
+    <div className="kvittering-info">
     <div className="kvittering">
       <img
         src={vedlegg}
@@ -30,7 +40,7 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => (
     <Normaltekst className="dato">{fil.dato ? formatertDato(fil.dato, DatoFormat.NATURLIG_LANG) : ''}</Normaltekst>
     {slettVedlegg
       ? (
-        <Fareknapp className="slett-knapp" mini onClick={() => { slettVedlegg(fil); }}>
+        <Fareknapp className="slett-knapp" mini onClick={håndterKlikk} spinner={spinnerAktiv}>
           <SlettIkon />
           <span>SLETT</span>
         </Fareknapp>
@@ -38,5 +48,6 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => (
       : <></>}
   </div>
 );
+};
 
 export default FilMedInfo;

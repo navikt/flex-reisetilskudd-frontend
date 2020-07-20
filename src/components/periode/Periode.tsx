@@ -42,7 +42,7 @@ const Periode: React.FC<Props> = ({ periode, index, onChange }) => {
   const nårSlettVedlegg = (vedleggSomSkalSlettes: Vedlegg) => {
     // eslint-disable-next-line no-param-reassign
     periode.vedlegg = periode.vedlegg
-      .filter((_vedlegg: Vedlegg) => _vedlegg.navn !== vedleggSomSkalSlettes.navn);
+      .filter((_vedlegg: Vedlegg) => _vedlegg.id !== vedleggSomSkalSlettes.id);
     if (onChange) {
       onChange();
     }
