@@ -8,14 +8,28 @@ import { generateId } from '../../utils/random';
 const mockPerioder = [
   {
     id: generateId(),
-    vedlegg: [],
+    vedlegg: [
+      {
+        navn: 'foo.txt', størrelse: 1024 * 920, beløp: 32.2, dato: new Date(),
+      },
+      {
+        navn: 'bar.jpg', størrelse: 812 * 920, beløp: 2.2, dato: new Date(),
+      },
+    ],
     fraDato: new Date(),
     tilDato: new Date(),
     transportMiddel: Transportmiddel.taxi,
   },
   {
     id: generateId(),
-    vedlegg: [],
+    vedlegg: [
+      {
+        navn: 'foo.txt', størrelse: 1024 * 920, beløp: 32.2, dato: new Date(),
+      },
+      {
+        navn: 'bar.jpg', størrelse: 812 * 920, beløp: 2.2, dato: new Date(),
+      },
+    ],
     transportMiddel: Transportmiddel.egenBil,
   },
 ];
