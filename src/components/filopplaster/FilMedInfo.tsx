@@ -4,12 +4,12 @@ import { Fareknapp } from 'nav-frontend-knapper';
 import { SlettIkon } from '../../assets/ikoner';
 import vedlegg from '../../assets/vedlegg.svg';
 import formaterFilstørrelse from './utils';
-import { Vedlegg } from '../../models/vedlegg';
+import { VedleggInterface } from '../../models/vedlegg';
 import { formatertDato, DatoFormat } from '../../utils/dato';
 
 interface Props {
-  fil: Vedlegg;
-  slettVedlegg?: (vedlegg: Vedlegg) => void;
+  fil: VedleggInterface;
+  slettVedlegg?: (vedlegg: VedleggInterface) => void;
 }
 
 const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {

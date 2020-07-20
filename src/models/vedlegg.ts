@@ -1,4 +1,4 @@
-export interface Vedlegg {
+export interface VedleggInterface {
   id: string;
   navn: string;
   størrelse: number;
@@ -7,6 +7,6 @@ export interface Vedlegg {
   dokumentId?: string;
 }
 
-export interface OpplastetVedlegg {
+export interface OpplastetVedleggInterface {
   dokumentId: string;
 }
