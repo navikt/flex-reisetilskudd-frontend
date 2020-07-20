@@ -10,10 +10,10 @@ const mockPerioder = [
     id: generateId(),
     vedlegg: [
       {
-        navn: 'foo.txt', størrelse: 1024 * 920, beløp: 32.2, dato: new Date(),
+        id: 'tetstsgddgsdsdsdsdsdgsdg', navn: 'foo.txt', størrelse: 1024 * 920, beløp: 32.2, dato: new Date(),
       },
       {
-        navn: 'bar.jpg', størrelse: 812 * 920, beløp: 2.2, dato: new Date(),
+        id: 'dhdywdjdjsjdsjdscehshdsd', navn: 'bar.jpg', størrelse: 812 * 920, beløp: 2.2, dato: new Date(),
       },
     ],
     fraDato: new Date(),
@@ -24,10 +24,10 @@ const mockPerioder = [
     id: generateId(),
     vedlegg: [
       {
-        navn: 'foo.txt', størrelse: 1024 * 920, beløp: 32.2, dato: new Date(),
+        id: 'sdjjdskdfhhfsdksdwewien', navn: 'foo.txt', størrelse: 1024 * 920, beløp: 32.2, dato: new Date(),
       },
       {
-        navn: 'bar.jpg', størrelse: 812 * 920, beløp: 2.2, dato: new Date(),
+        id: 'dsjsdjdsdjsdjjdsjdjshhf', navn: 'bar.jpg', størrelse: 812 * 920, beløp: 2.2, dato: new Date(),
       },
     ],
     transportMiddel: Transportmiddel.egenBil,
