@@ -85,5 +85,5 @@ export const månedligeUtgifterSpørsmål: InputProps = {
 };
 
 export const transportVeileder: VeilederProps = {
-  hjelpetekst: 'Offentlig transport regnes som kollektiv transport, taxi, bysykler, el-scooter.',
+  hjelpetekst: 'Offentlig transport regnes som kollektiv transport, taxi, bysykler, elsparkesykkel.',
 };
