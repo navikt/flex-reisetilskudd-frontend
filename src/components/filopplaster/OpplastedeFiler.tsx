@@ -3,6 +3,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import FilMedInfo from './FilMedInfo';
 import { Vedlegg } from '../../models/vedlegg';
 import Vis from '../Vis';
+import { generateId } from '../../utils/random';
 
 interface Props {
   filliste: Vedlegg[];
@@ -21,7 +22,7 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg, className })
     </Vis>
 
     {filliste.map((fil: Vedlegg, index: number) => (
-      <div key={fil.navn}>
+      <div key={generateId()}>
         <FilMedInfo fil={fil} slettVedlegg={slettVedlegg} />
         {index === filliste.length - 1 ? '' : <hr />}
       </div>
