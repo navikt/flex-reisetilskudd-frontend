@@ -10,6 +10,7 @@ import DragAndDrop from '../filopplaster/DragAndDrop';
 import TotalBelop from './totaltBelop/TotaltBelop';
 import PeriodeTittel from './periodeTittel/PeriodeTittel';
 import TransportMiddelSporsmal from './transportmiddelSporsmal/TransportMiddelSporsmal';
+import SlettPeriode from './slettPeriode/SlettPeriode';
 
 interface Props {
   periode: PeriodeInterface,
@@ -73,6 +74,7 @@ const Periode: React.FC<Props> = ({ periode, index, onChange }) => {
           <DragAndDrop tillatteFiltyper={tillatteFiltyper} maxFilstørrelse={maxFilstørrelse} />
         </div>
       </div>
+      <SlettPeriode slettPeriode={() => {}} periode={periode} />
     </Ekspanderbartpanel>
   );
 };
