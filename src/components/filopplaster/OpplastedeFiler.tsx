@@ -13,7 +13,7 @@ interface Props {
 const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg, className }) => (
   <div className={className}>
     <Vis hvis={filliste.length > 0}>
-      <div className="kvitteringsinfo-tittel">
+      <div className="kvitteringstitler">
         <Element className="kvittering-tittel">Kvittering</Element>
         <Element className="belop-tittel">Beløp</Element>
         <Element className="dato-tittel">Dato</Element>

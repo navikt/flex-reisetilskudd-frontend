@@ -23,9 +23,10 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
   };
 
   return (
-    <div className="kvittering-info">
+    <div className="fil-med-info">
       <div className="kvittering">
         <img
+          className="vedleggsikon"
           src={vedlegg}
           alt="Vedleggsikon"
         />
@@ -36,7 +37,11 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
           )
         </Normaltekst>
       </div>
-      <Normaltekst className="belop">{fil.beløp}</Normaltekst>
+      <Normaltekst className="belop">
+        {fil.beløp}
+        {' '}
+        kr
+      </Normaltekst>
       <Normaltekst className="dato">{fil.dato ? formatertDato(fil.dato, DatoFormat.NATURLIG_LANG) : ''}</Normaltekst>
       {slettVedlegg
         ? (
