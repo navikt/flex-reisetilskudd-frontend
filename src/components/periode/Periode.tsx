@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import FilopplasterModal from '../filopplaster/FilopplasterModal';
 import { PeriodeInterface } from '../../models/periode';
-import { Vedlegg } from '../../models/vedlegg';
+import { VedleggInterface } from '../../models/vedlegg';
 import './Periode.less';
 import Datovelger from '../datovelger/Datovelger';
 import OpplastedeFiler from '../filopplaster/OpplastedeFiler';
@@ -32,17 +32,17 @@ const Periode: React.FC<Props> = ({ periode, index, onChange }) => {
     }
   };
 
-  const nårNyttVedlegg = (vedlegg: Vedlegg) => {
+  const nårNyttVedlegg = (vedlegg: VedleggInterface) => {
     periode.vedlegg.push(vedlegg);
     if (onChange) {
       onChange();
     }
   };
 
-  const nårSlettVedlegg = (vedleggSomSkalSlettes: Vedlegg) => {
+  const nårSlettVedlegg = (vedleggSomSkalSlettes: VedleggInterface) => {
     // eslint-disable-next-line no-param-reassign
     periode.vedlegg = periode.vedlegg
-      .filter((_vedlegg: Vedlegg) => _vedlegg.navn !== vedleggSomSkalSlettes.navn);
+      .filter((_vedlegg: VedleggInterface) => _vedlegg.navn !== vedleggSomSkalSlettes.navn);
     if (onChange) {
       onChange();
     }
