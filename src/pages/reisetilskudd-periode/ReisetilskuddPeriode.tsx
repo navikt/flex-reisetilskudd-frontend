@@ -24,6 +24,10 @@ const ReisetilskuddPeriodeSide = () : ReactElement => {
     settPerioder([...perioder]);
   };
 
+  const slettPeriode = (key: string) => {
+    settPerioder(perioder.filter((periode) => periode.id !== key));
+  };
+
   return (
     <div className="perioder-wrapper">
       <Innholdstittel className="perioder-overskrift">Opplasting av kvitteringer</Innholdstittel>
@@ -34,6 +38,7 @@ const ReisetilskuddPeriodeSide = () : ReactElement => {
           key={periode.id}
           index={index}
           onChange={oppdaterPerioder}
+          nårSlettPeriode={() => { slettPeriode(periode.id); }}
         />
       ))}
       <Knapp kompakt onClick={() => leggTilTomPeriode()}>

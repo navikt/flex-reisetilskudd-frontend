@@ -15,13 +15,16 @@ import SlettPeriode from './slettPeriode/SlettPeriode';
 interface Props {
   periode: PeriodeInterface,
   index?: number,
-  onChange?: () => void
+  onChange?: () => void,
+  nårSlettPeriode: () => void
 }
 
 const tillatteFiltyper = ['image/png', 'image/jpeg'];
 const maxFilstørrelse = 1024 * 1024;
 
-const Periode: React.FC<Props> = ({ periode, index, onChange }) => {
+const Periode: React.FC<Props> = ({
+  periode, index, onChange, nårSlettPeriode,
+}) => {
   const [transportMiddel, settTransportMiddel] = useState();
   const [fraDato, settFraDato] = useState<Date | undefined>(periode.fraDato);
   const [tilDato, settTilDato] = useState<Date | undefined>(periode.tilDato);
@@ -75,7 +78,7 @@ const Periode: React.FC<Props> = ({ periode, index, onChange }) => {
           <DragAndDrop tillatteFiltyper={tillatteFiltyper} maxFilstørrelse={maxFilstørrelse} />
         </div>
       </div>
-      <SlettPeriode slettPeriode={() => { }} periode={periode} />
+      <SlettPeriode slettPeriode={nårSlettPeriode} periode={periode} />
     </Ekspanderbartpanel>
   );
 };
