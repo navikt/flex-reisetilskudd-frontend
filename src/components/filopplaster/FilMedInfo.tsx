@@ -22,6 +22,23 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
     }
   };
 
+  function truncate(fullString:string, stringLen:number, separator:string) {
+    if (fullString.length <= stringLen) {
+      return fullString;
+    }
+
+    const sepLen = separator.length;
+    const charsToShow:number = stringLen - sepLen;
+    const frontChars = Math.ceil(charsToShow / 2);
+    const backChars = Math.floor(charsToShow / 2);
+
+    return fullString.substr(0, frontChars)
+    + separator
+    // bare de 3 siste karakterene
+    // fullString.substr(-3)
+    + fullString.substr(fullString.length - backChars);
+  }
+
   return (
     <div className="fil-med-info">
       <div className="kvittering">
@@ -30,13 +47,13 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
           src={vedlegg}
           alt="Vedleggsikon"
         />
-        <Normaltekst className="filnavn">{fil.navn}</Normaltekst>
-        <Normaltekst className="filstorrelse">
-          (
-          {formaterFilstørrelse(fil.størrelse)}
-          )
-        </Normaltekst>
+        <Normaltekst className="filnavn">{truncate(fil.navn, 15, '...')}</Normaltekst>
       </div>
+      <Normaltekst className="filstorrelse">
+        (
+        {formaterFilstørrelse(fil.størrelse)}
+        )
+      </Normaltekst>
       <Normaltekst className="belop">
         {fil.beløp}
         {' '}

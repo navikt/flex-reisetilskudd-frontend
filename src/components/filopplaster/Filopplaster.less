@@ -76,8 +76,8 @@
   display: grid;
   margin: 0 auto;
   grid-template-areas:
-  'kvitteringTittel belopTittel datoTittel';
-  grid-template-columns: 35% 20% 25%;
+  'kvitteringTittel storrelse belopTittel datoTittel';
+  grid-template-columns: 20% 15% 20% 25%;
   grid-gap: 10px;
   margin-bottom: 1rem;
 
@@ -117,9 +117,9 @@
   display: grid;
   margin: 0 auto;
   grid-template-areas:
-  'kvittering belop dato slett';
+  'kvittering storrelse belop dato slett';
   grid-gap: 10px;
-  grid-template-columns: 35% 20% 25% 15%;
+  grid-template-columns: 20% 15% 20% 25% 15%;
 
   .typo-normal {
     display: inline;
@@ -127,6 +127,8 @@
 
   .kvittering{
     grid-area: kvittering;
+    display: flex;
+    align-items: center;
   }
 
   .belop{
@@ -158,11 +160,16 @@
 }
 
 .filstorrelse {
+  grid-area: storrelse;
   margin-left:0.5rem;
 }
 
 .filnavn {
   margin-left: 0.5rem;
+  background-color: lightgreen;
+  //max-width: 18ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .vedleggsikon{
