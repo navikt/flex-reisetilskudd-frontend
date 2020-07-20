@@ -14,7 +14,7 @@ import Oppsummering from '../oppsummering/Oppsummering';
 import { getAntallSider } from '../../constants/sideTitler';
 import './soknaden.less';
 
-function Soknaden():ReactElement {
+function Soknaden(): ReactElement {
   const { id } = useParams();
   const idNum = Number(id);
 

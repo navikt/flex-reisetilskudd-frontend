@@ -39,6 +39,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   const [egenBilChecked, setEgenBilChecked] = useState<boolean>(false);
   const [syklerChecked, setSyklerChecked] = useState<boolean>(false);
   const [gårChecked, setGårChecked] = useState<boolean>(false);
+  const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
   const [perioder, settPerioder] = useState<PeriodeInterface[]>(mockPerioder);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [filopplasterFeilmeldinger, settFilopplasterFeilmeldinger] = useState<string[]>([]);
@@ -49,6 +50,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     egenBilChecked, setEgenBilChecked,
     syklerChecked, setSyklerChecked,
     gårChecked, setGårChecked,
+    activeMegArbeidsgiver, setActiveMegArbeidsgiver,
     perioder, settPerioder,
     uopplastetFil, settUopplastetFil,
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
