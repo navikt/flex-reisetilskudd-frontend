@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Fareknapp } from 'nav-frontend-knapper';
 import { SlettIkon } from '../../assets/ikoner';
@@ -24,30 +24,30 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
 
   return (
     <div className="kvittering-info">
-    <div className="kvittering">
-      <img
-        src={vedlegg}
-        alt="Vedleggsikon"
-      />
-      <Normaltekst className="filnavn">{fil.navn}</Normaltekst>
-      <Normaltekst className="filstorrelse">
-        (
-        {formaterFilstørrelse(fil.størrelse)}
+      <div className="kvittering">
+        <img
+          src={vedlegg}
+          alt="Vedleggsikon"
+        />
+        <Normaltekst className="filnavn">{fil.navn}</Normaltekst>
+        <Normaltekst className="filstorrelse">
+          (
+          {formaterFilstørrelse(fil.størrelse)}
+          )
+        </Normaltekst>
+      </div>
+      <Normaltekst className="belop">{fil.beløp}</Normaltekst>
+      <Normaltekst className="dato">{fil.dato ? formatertDato(fil.dato, DatoFormat.NATURLIG_LANG) : ''}</Normaltekst>
+      {slettVedlegg
+        ? (
+          <Fareknapp className="slett-knapp" mini onClick={håndterKlikk} spinner={spinnerAktiv}>
+            <SlettIkon />
+            <span>SLETT</span>
+          </Fareknapp>
         )
-      </Normaltekst>
+        : <></>}
     </div>
-    <Normaltekst className="belop">{fil.beløp}</Normaltekst>
-    <Normaltekst className="dato">{fil.dato ? formatertDato(fil.dato, DatoFormat.NATURLIG_LANG) : ''}</Normaltekst>
-    {slettVedlegg
-      ? (
-        <Fareknapp className="slett-knapp" mini onClick={håndterKlikk} spinner={spinnerAktiv}>
-          <SlettIkon />
-          <span>SLETT</span>
-        </Fareknapp>
-      )
-      : <></>}
-  </div>
-);
+  );
 };
 
 export default FilMedInfo;

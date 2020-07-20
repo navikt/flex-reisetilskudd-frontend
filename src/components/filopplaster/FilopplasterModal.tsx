@@ -13,7 +13,7 @@ import { logger } from '../../utils/logger';
 import { post } from '../../data/fetcher/fetcher';
 import Datovelger from '../datovelger/Datovelger';
 import { useAppStore } from '../../data/stores/app-store';
-import {generateId} from '../../utils/random';
+import { generateId } from '../../utils/random';
 
 interface Props {
   nårNyttVedlegg?: (vedlegg: Vedlegg) => void;
