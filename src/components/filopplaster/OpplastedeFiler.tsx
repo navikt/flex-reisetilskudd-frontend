@@ -21,7 +21,7 @@ const OpplastedeFiler: React.FC<Props> = ({ filliste, slettVedlegg, className })
     </Vis>
 
     {filliste.map((fil: Vedlegg, index: number) => (
-      <div key={fil.navn}>
+      <div key={fil.id}>
         <FilMedInfo fil={fil} slettVedlegg={slettVedlegg} />
         {index === filliste.length - 1 ? '' : <hr />}
       </div>

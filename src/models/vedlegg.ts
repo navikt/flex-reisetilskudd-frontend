@@ -1,4 +1,5 @@
 export interface Vedlegg {
+  id: string;
   navn: string;
   størrelse: number;
   beløp?: number;
