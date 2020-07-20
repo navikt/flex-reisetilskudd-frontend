@@ -5,6 +5,17 @@ import { PeriodeInterface, Transportmiddel } from '../../models/periode';
 
 import { generateId } from '../../utils/random';
 
+export interface DagensTransportmiddelSvarInterface {
+  offentligPrivatSpørsmål: string | undefined,
+  månedligeUtgifterSpørsmål: number | undefined,
+  transportalternativerPrivat: {
+    egenBilChecked: boolean,
+    syklerChecked: boolean,
+    gårChecked: boolean
+  },
+  antallKilometerSpørsmål: number | undefined,
+}
+
 const mockPerioder = [
   {
     id: generateId(),
@@ -34,11 +45,24 @@ const mockPerioder = [
   },
 ];
 
+const dagensTransportmiddelStateDefault : DagensTransportmiddelSvarInterface = {
+  offentligPrivatSpørsmål: undefined,
+  månedligeUtgifterSpørsmål: undefined,
+  transportalternativerPrivat: {
+    egenBilChecked: false,
+    syklerChecked: false,
+    gårChecked: false,
+  },
+  antallKilometerSpørsmål: undefined,
+};
+
 export const [AppStoreProvider, useAppStore] = constate(() => {
   const [activeOffentligPrivat, setActiveOffentligPrivat] = useState<string>('');
   const [egenBilChecked, setEgenBilChecked] = useState<boolean>(false);
   const [syklerChecked, setSyklerChecked] = useState<boolean>(false);
   const [gårChecked, setGårChecked] = useState<boolean>(false);
+  // eslint-disable-next-line max-len
+  const [dagensTransportmiddelState, settDagensTransportmiddelState] = useState<DagensTransportmiddelSvarInterface>(dagensTransportmiddelStateDefault);
   const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
   const [perioder, settPerioder] = useState<PeriodeInterface[]>(mockPerioder);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
@@ -50,6 +74,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     egenBilChecked, setEgenBilChecked,
     syklerChecked, setSyklerChecked,
     gårChecked, setGårChecked,
+    dagensTransportmiddelState, settDagensTransportmiddelState,
     activeMegArbeidsgiver, setActiveMegArbeidsgiver,
     perioder, settPerioder,
     uopplastetFil, settUopplastetFil,

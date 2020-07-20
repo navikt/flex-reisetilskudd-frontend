@@ -11,7 +11,7 @@ import {
 import { useAppStore } from '../../data/stores/app-store';
 
 const DagensTransportmiddel = (): ReactElement => {
-  const { activeOffentligPrivat, egenBilChecked } = useAppStore();
+  const { activeOffentligPrivat, dagensTransportmiddelState } = useAppStore();
 
   return (
     <>
@@ -22,7 +22,7 @@ const DagensTransportmiddel = (): ReactElement => {
       </Vis>
       <Vis hvis={activeOffentligPrivat === 'PRIVAT'}>
         {CheckboxSpørsmål(transportalternativerPrivat)}
-        <Vis hvis={egenBilChecked === true}>
+        <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked === true}>
           {InputSpørsmål(antallKilometerSpørsmål)}
         </Vis>
       </Vis>

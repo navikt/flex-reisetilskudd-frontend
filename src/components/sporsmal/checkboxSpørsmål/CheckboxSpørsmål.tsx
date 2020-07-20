@@ -7,27 +7,46 @@ import { transportalternativerPrivatVerdier } from '../spørsmålTekster';
 
 const CheckboxSpørsmål = ({ tittel, svaralternativer }: CheckboxProps) : ReactElement => {
   const {
-    egenBilChecked, setEgenBilChecked, syklerChecked, setSyklerChecked, gårChecked, setGårChecked,
+    dagensTransportmiddelState, settDagensTransportmiddelState,
   } = useAppStore();
+
+  enum DagensTransportmiddelCheckboxEnum {
+    egenBilChecked = 'egenBilChecked',
+    syklerChecked = 'syklerChecked',
+    gårChecked = 'gårChecked',
+  }
+
+  const fåKopiState = () => ({ ...dagensTransportmiddelState });
+
+  const oppdaterVerdi = (checkBoxVerdi : DagensTransportmiddelCheckboxEnum) => {
+    const nyState = fåKopiState();
+    // eslint-disable-next-line max-len
+    nyState.transportalternativerPrivat[checkBoxVerdi] = !dagensTransportmiddelState.transportalternativerPrivat[checkBoxVerdi];
+    settDagensTransportmiddelState(nyState);
+  };
+
   const skrivEndringTilGlobalState = (nyValgt: string) => {
     if (nyValgt === transportalternativerPrivatVerdier.EGEN_BIL) {
-      setEgenBilChecked(!egenBilChecked);
+      oppdaterVerdi(DagensTransportmiddelCheckboxEnum.egenBilChecked);
     } else if (nyValgt === transportalternativerPrivatVerdier.SYKLER) {
-      setSyklerChecked(!syklerChecked);
+      oppdaterVerdi(DagensTransportmiddelCheckboxEnum.syklerChecked);
     } else if (nyValgt === transportalternativerPrivatVerdier.GÅR) {
-      setGårChecked(!gårChecked);
+      oppdaterVerdi(DagensTransportmiddelCheckboxEnum.gårChecked);
     }
   };
 
   const erChecked = (alternativ : string) => {
     if (alternativ === transportalternativerPrivatVerdier.EGEN_BIL) {
-      return egenBilChecked;
+      // return egenBilChecked;
+      return dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked;
     }
     if (alternativ === transportalternativerPrivatVerdier.SYKLER) {
-      return syklerChecked;
+      // return syklerChecked;
+      return dagensTransportmiddelState.transportalternativerPrivat.syklerChecked;
     }
     if (alternativ === transportalternativerPrivatVerdier.GÅR) {
-      return gårChecked;
+      // return gårChecked;
+      return dagensTransportmiddelState.transportalternativerPrivat.gårChecked;
     }
     return false;
   };
