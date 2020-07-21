@@ -5,7 +5,7 @@ import 'nav-frontend-skjema-style';
 import { useAppStore } from '../../../data/stores/app-store';
 import { transportalternativerPrivatVerdier } from '../spørsmålTekster';
 import { DagensTransportmiddelCheckboxStateEnum } from '../../../models/dagenstransportmiddel';
-import endreCheckboxVerdi from './utils';
+import { endreCheckboxVerdi } from '../sporsmalsUtils';
 
 const DagensTransportmiddelCheckbox = (
   { tittel, svaralternativer }: CheckboxProps,

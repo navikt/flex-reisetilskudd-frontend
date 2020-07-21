@@ -4,42 +4,15 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { RadioSpørsmålProps } from '../../../types/types';
 import './RadioSpørsmål.less';
 import { useAppStore } from '../../../data/stores/app-store';
-import { offentligPrivatVerdier } from '../spørsmålTekster';
-import endreCheckboxVerdi from '../dagensTransportmiddelCheckbox/utils';
-import { DagensTransportmiddelCheckboxStateEnum } from '../../../models/dagenstransportmiddel';
+import { endreOffentligPrivatRadioVerdi } from '../sporsmalsUtils';
 
 const RadioSporsmalOffentligPrivat = ({
   tittel, name, spørsmålstekst, svaralternativer,
 }: RadioSpørsmålProps): ReactElement => {
   const {
-    setActiveOffentligPrivat,
-    activeOffentligPrivat,
     dagensTransportmiddelState,
     settDagensTransportmiddelState,
   } = useAppStore();
-
-  const clearCheckbox = (hvilkenCheckbox : DagensTransportmiddelCheckboxStateEnum) => {
-    endreCheckboxVerdi(
-      hvilkenCheckbox,
-      false,
-      dagensTransportmiddelState,
-      settDagensTransportmiddelState,
-    );
-  };
-
-  const skrivEndringTilGlobalState = (nyValgt: string) => {
-    /* For endringer på spørsmålet "offentlig eller privat transportmiddel",
-     som skal ha underspørsmål:  */
-    if (name === offentligPrivatVerdier.NAME) {
-      setActiveOffentligPrivat(nyValgt);
-      if (nyValgt === offentligPrivatVerdier.OFFENTLIG) {
-        // TODO: Clear disse på ny måte
-        clearCheckbox(DagensTransportmiddelCheckboxStateEnum.egenBilChecked);
-        clearCheckbox(DagensTransportmiddelCheckboxStateEnum.gårChecked);
-        clearCheckbox(DagensTransportmiddelCheckboxStateEnum.syklerChecked);
-      }
-    }
-  };
 
   return (
     <div className="horisontal-radio">
@@ -52,9 +25,13 @@ const RadioSporsmalOffentligPrivat = ({
         radios={
           svaralternativer
         }
-        checked={activeOffentligPrivat}
+        checked={dagensTransportmiddelState.offentligPrivatSpørsmål}
         onChange={(_, nyVerdi) => {
-          skrivEndringTilGlobalState(nyVerdi);
+          endreOffentligPrivatRadioVerdi(
+            nyVerdi,
+            dagensTransportmiddelState,
+            settDagensTransportmiddelState,
+          );
         }}
       />
     </div>

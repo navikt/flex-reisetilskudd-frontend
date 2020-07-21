@@ -1,27 +1,32 @@
 export interface DagensTransportmiddelSvarInterface {
   offentligPrivatSpørsmål: string | undefined,
-  månedligeUtgifterSpørsmål: number | undefined,
+  månedligeUtgifterSpørsmål: number | string,
   transportalternativerPrivat: {
     egenBilChecked: boolean,
     syklerChecked: boolean,
     gårChecked: boolean
   },
-  antallKilometerSpørsmål: number | undefined,
+  antallKilometerSpørsmål: number | string,
 }
 
 export const dagensTransportmiddelStateDefault : DagensTransportmiddelSvarInterface = {
   offentligPrivatSpørsmål: undefined,
-  månedligeUtgifterSpørsmål: undefined,
+  månedligeUtgifterSpørsmål: '',
   transportalternativerPrivat: {
     egenBilChecked: false,
     gårChecked: false,
     syklerChecked: false,
   },
-  antallKilometerSpørsmål: undefined,
+  antallKilometerSpørsmål: '',
 };
 
 export enum DagensTransportmiddelCheckboxStateEnum {
   egenBilChecked = 'egenBilChecked',
   syklerChecked = 'syklerChecked',
   gårChecked = 'gårChecked',
+}
+
+export enum NummerInputStateEnum {
+  antallKilometerSpørsmål = 'antallKilometerSpørsmål',
+  månedligeUtgifterSpørsmål = 'månedligeUtgifterSpørsmål',
 }
