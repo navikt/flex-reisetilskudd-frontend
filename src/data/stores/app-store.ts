@@ -39,10 +39,6 @@ const mockPerioder = [
 ];
 
 export const [AppStoreProvider, useAppStore] = constate(() => {
-  const [activeOffentligPrivat, setActiveOffentligPrivat] = useState<string>('');
-  const [egenBilChecked, setEgenBilChecked] = useState<boolean>(false);
-  const [syklerChecked, setSyklerChecked] = useState<boolean>(false);
-  const [gårChecked, setGårChecked] = useState<boolean>(false);
   const [
     dagensTransportmiddelState, settDagensTransportmiddelState,
   ] = useState<DagensTransportmiddelSvarInterface>(dagensTransportmiddelStateDefault);
@@ -53,10 +49,6 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   const [åpenFilopplasterModal, settÅpenFilopplasterModal] = useState<boolean>(false);
 
   return {
-    activeOffentligPrivat, setActiveOffentligPrivat,
-    egenBilChecked, setEgenBilChecked,
-    syklerChecked, setSyklerChecked,
-    gårChecked, setGårChecked,
     dagensTransportmiddelState, settDagensTransportmiddelState,
     activeMegArbeidsgiver, setActiveMegArbeidsgiver,
     perioder, settPerioder,
