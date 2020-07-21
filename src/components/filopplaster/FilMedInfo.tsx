@@ -26,17 +26,14 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
     if (fullString.length <= stringLen) {
       return fullString;
     }
-
-    const sepLen = separator.length;
+    /* const sepLen = separator.length;
     const charsToShow:number = stringLen - sepLen;
     const frontChars = Math.ceil(charsToShow / 2);
     const backChars = Math.floor(charsToShow / 2);
-
     return fullString.substr(0, frontChars)
     + separator
-    // bare de 3 siste karakterene
-    // fullString.substr(-3)
-    + fullString.substr(fullString.length - backChars);
+    + fullString.substr(fullString.length - backChars); */
+    return fullString.substr(0, 2) + separator + fullString.substr(-3);
   }
 
   return (
