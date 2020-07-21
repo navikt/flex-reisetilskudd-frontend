@@ -166,12 +166,27 @@
 
 .filnavn {
   margin-left: 0.5rem;
-  background-color: lightgreen;
-  //max-width: 18ch;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .vedleggsikon{
   width: 1.2rem;
+}
+
+@media screen and (max-width: 390px){
+  .slett-knapp{
+      justify-self: center;
+  } 
+  .fil-med-info{
+    grid-template-areas:
+    'kvittering belop dato'
+    'slett slett slett';
+    grid-gap: 10px;
+    grid-template-columns: 40% 25% 30%; 
+  }
+
+  .kvitteringstitler {
+    grid-template-columns: 40% 25% 30%;
+  }
 }

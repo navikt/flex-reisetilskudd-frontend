@@ -41,7 +41,7 @@ const ReisetilskuddPeriodeSide = () : ReactElement => {
           nårSlettPeriode={() => { slettPeriode(periode.id); }}
         />
       ))}
-      <Knapp kompakt onClick={() => leggTilTomPeriode()}>
+      <Knapp className="ny-periode-knapp" kompakt onClick={() => leggTilTomPeriode()}>
         <PlussIkon />
         <span>Legg til periode</span>
       </Knapp>
