@@ -21,6 +21,7 @@
       height: 64px;
       color: @navBla;
       margin: 0 auto;
+      margin-top: 1rem;
     }
   
       .tekst {
@@ -71,8 +72,14 @@
   }
 }
 
-.opplastede-filer {
+.kvitteringstitler {
+  display: grid;
   margin: 0 auto;
+  grid-template-areas:
+  'kvitteringTittel belopTittel datoTittel';
+  grid-template-columns: 35% 20% 25%;
+  grid-gap: 10px;
+  margin-bottom: 1rem;
 
   hr {
     border: 1px solid #b7b1a9;
@@ -82,54 +89,60 @@
     margin: 0;
   }
 
-  .kvitteringsinfo-tittel{
-    display: flex;
 
-    .kvittering-tittel{
-      flex-basis: 39%;
-    }
-
-    .belop-tittel{
-      flex-basis: 22.5%;
-    }
-
-    .dato-tittel{
-      flex-basis: 20%;
-    }
+  .kvittering-tittel{
+    grid-area: kvitteringTittel;
   }
 
-  .kvittering-info{
-    display: flex;
-    margin: 1rem 0rem;
-    
-    .fil-lenke {
-      text-decoration: underline;
-      &:hover {
-        text-decoration: none;
-      }
-    }
+  .belop-tittel{
+    grid-area: belopTittel;
+  }
 
-    .typo-normal {
-      display: inline;
+  .dato-tittel{
+    grid-area: datoTittel;
+  }
+
+
+  .fil-lenke {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
     }
-    
-    .kvittering{
-      flex-basis: 45%;
-    }
+  }
   
-    .belop{
-      padding: 0.3rem;
-      flex-basis: 25%;
-    }
   
-    .dato {
-      padding: 0.3rem;
-      flex-basis: 25%;
-    }
-  
-    .slett-knapp{
-      max-height: 2rem;
-    }
+}
+
+.fil-med-info{
+  display: grid;
+  margin: 0 auto;
+  grid-template-areas:
+  'kvittering belop dato slett';
+  grid-gap: 10px;
+  grid-template-columns: 35% 20% 25% 15%;
+
+  .typo-normal {
+    display: inline;
+  }
+
+  .kvittering{
+    grid-area: kvittering;
+  }
+
+  .belop{
+    padding-top: 0.3rem;
+    grid-area: belop;
+  }
+
+  .dato {
+    padding-top: 0.3rem;
+    grid-area: dato;
+  }
+
+  .slett-knapp{
+    max-height: 2rem;
+    grid-area: slett;
+    max-width: 8rem;
   }
 }
 
@@ -149,5 +162,26 @@
 }
 
 .filnavn {
-  margin-left: 1rem;
+  margin-left: 0.5rem;
+}
+
+.vedleggsikon{
+  width: 1.2rem;
+}
+
+@media screen and (max-width: 390px){
+  .slett-knapp{
+      justify-self: center;
+  } 
+  .fil-med-info{
+    grid-template-areas:
+    'kvittering belop dato'
+    'slett slett slett';
+    grid-gap: 10px;
+    grid-template-columns: 40% 25% 30%; 
+  }
+
+  .kvitteringstitler {
+    grid-template-columns: 40% 25% 30%;
+  }
 }
