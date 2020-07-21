@@ -17,16 +17,10 @@ const Utbetaling = (): ReactElement => {
     arbeidsgiverOrgNrPlaceHolder, getArbeidsgiver().orgNr,
   );
 
-  const byttUtSpørsmålsTekster = (svaralternativer : Svaralternativ[]) : Svaralternativ[] => {
-    const nyeAlternativer = [...svaralternativer];
-    nyeAlternativer.forEach((svaralternativ : Svaralternativ) => {
-      // TODO: Finne ut hvordan man kan gjøre dette uten å suppresse no-param-reassign
-      // return {...svaralternativ, label: leggInnArbeidsGiverIString(svaralternativ.label)};
-      // eslint-disable-next-line no-param-reassign
-      svaralternativ.label = leggInnArbeidsGiverIString(svaralternativ.label);
-    });
-    return nyeAlternativer;
-  };
+  const byttUtSpørsmålsTekster = (svaralternativer : Svaralternativ[]) : Svaralternativ[] => (
+    [...svaralternativer].map((svaralternativ : Svaralternativ) => (
+      { ...svaralternativ, label: leggInnArbeidsGiverIString(svaralternativ.label) }
+    )));
 
   return (
     <RadioSpørsmålUtbetaling
