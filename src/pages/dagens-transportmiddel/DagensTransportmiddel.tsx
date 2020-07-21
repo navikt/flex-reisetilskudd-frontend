@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
-import RadioSpørsmål from '../../components/sporsmal/radioSpørsmål/RadioSpørsmål';
+import RadioSporsmalOffentligPrivat from '../../components/sporsmal/radioSporsmal/RadioSporsmalOffentligPrivat';
 import Veileder from '../../components/sporsmal/Veileder';
-import CheckboxSpørsmål from '../../components/sporsmal/checkboxSpørsmål/CheckboxSpørsmål';
+import DagensTransportmiddelCheckbox from '../../components/sporsmal/dagensTransportmiddelCheckbox/dagensTransportmiddelCheckbox';
 import InputSpørsmål from '../../components/sporsmal/inputSpørsmål/InputSpørsmål';
 import Vis from '../../components/Vis';
 import {
@@ -16,12 +16,12 @@ const DagensTransportmiddel = (): ReactElement => {
   return (
     <>
       {Veileder(transportVeileder)}
-      {RadioSpørsmål(offentligPrivatSpørsmål)}
+      {RadioSporsmalOffentligPrivat(offentligPrivatSpørsmål)}
       <Vis hvis={activeOffentligPrivat === 'OFFENTLIG'}>
         {InputSpørsmål(månedligeUtgifterSpørsmål)}
       </Vis>
       <Vis hvis={activeOffentligPrivat === 'PRIVAT'}>
-        {CheckboxSpørsmål(transportalternativerPrivat)}
+        {DagensTransportmiddelCheckbox(transportalternativerPrivat)}
         <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked === true}>
           {InputSpørsmål(antallKilometerSpørsmål)}
         </Vis>

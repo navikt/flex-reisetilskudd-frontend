@@ -4,48 +4,43 @@ import { CheckboxProps } from '../../../types/types';
 import 'nav-frontend-skjema-style';
 import { useAppStore } from '../../../data/stores/app-store';
 import { transportalternativerPrivatVerdier } from '../spørsmålTekster';
+import { DagensTransportmiddelCheckboxStateEnum } from '../../../models/dagenstransportmiddel';
+import endreCheckboxVerdi from './utils';
 
-const CheckboxSpørsmål = ({ tittel, svaralternativer }: CheckboxProps) : ReactElement => {
+const DagensTransportmiddelCheckbox = (
+  { tittel, svaralternativer }: CheckboxProps,
+) : ReactElement => {
   const {
     dagensTransportmiddelState, settDagensTransportmiddelState,
   } = useAppStore();
 
-  enum DagensTransportmiddelCheckboxEnum {
-    egenBilChecked = 'egenBilChecked',
-    syklerChecked = 'syklerChecked',
-    gårChecked = 'gårChecked',
-  }
-
-  const fåKopiState = () => ({ ...dagensTransportmiddelState });
-
-  const oppdaterVerdi = (checkBoxVerdi : DagensTransportmiddelCheckboxEnum) => {
-    const nyState = fåKopiState();
-    // eslint-disable-next-line max-len
-    nyState.transportalternativerPrivat[checkBoxVerdi] = !dagensTransportmiddelState.transportalternativerPrivat[checkBoxVerdi];
-    settDagensTransportmiddelState(nyState);
+  const flipStateVerdi = (hvilkenCheckbox : DagensTransportmiddelCheckboxStateEnum) => {
+    endreCheckboxVerdi(
+      hvilkenCheckbox,
+      !dagensTransportmiddelState.transportalternativerPrivat[hvilkenCheckbox],
+      dagensTransportmiddelState,
+      settDagensTransportmiddelState,
+    );
   };
 
   const skrivEndringTilGlobalState = (nyValgt: string) => {
     if (nyValgt === transportalternativerPrivatVerdier.EGEN_BIL) {
-      oppdaterVerdi(DagensTransportmiddelCheckboxEnum.egenBilChecked);
+      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.egenBilChecked);
     } else if (nyValgt === transportalternativerPrivatVerdier.SYKLER) {
-      oppdaterVerdi(DagensTransportmiddelCheckboxEnum.syklerChecked);
+      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.syklerChecked);
     } else if (nyValgt === transportalternativerPrivatVerdier.GÅR) {
-      oppdaterVerdi(DagensTransportmiddelCheckboxEnum.gårChecked);
+      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.gårChecked);
     }
   };
 
   const erChecked = (alternativ : string) => {
     if (alternativ === transportalternativerPrivatVerdier.EGEN_BIL) {
-      // return egenBilChecked;
       return dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked;
     }
     if (alternativ === transportalternativerPrivatVerdier.SYKLER) {
-      // return syklerChecked;
       return dagensTransportmiddelState.transportalternativerPrivat.syklerChecked;
     }
     if (alternativ === transportalternativerPrivatVerdier.GÅR) {
-      // return gårChecked;
       return dagensTransportmiddelState.transportalternativerPrivat.gårChecked;
     }
     return false;
@@ -68,4 +63,4 @@ const CheckboxSpørsmål = ({ tittel, svaralternativer }: CheckboxProps) : React
   );
 };
 
-export default CheckboxSpørsmål;
+export default DagensTransportmiddelCheckbox;

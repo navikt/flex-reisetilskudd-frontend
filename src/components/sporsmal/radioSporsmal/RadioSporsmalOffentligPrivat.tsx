@@ -5,17 +5,27 @@ import { RadioSpørsmålProps } from '../../../types/types';
 import './RadioSpørsmål.less';
 import { useAppStore } from '../../../data/stores/app-store';
 import { offentligPrivatVerdier } from '../spørsmålTekster';
+import endreCheckboxVerdi from '../dagensTransportmiddelCheckbox/utils';
+import { DagensTransportmiddelCheckboxStateEnum } from '../../../models/dagenstransportmiddel';
 
-const RadioSpørsmål = ({
+const RadioSporsmalOffentligPrivat = ({
   tittel, name, spørsmålstekst, svaralternativer,
 }: RadioSpørsmålProps): ReactElement => {
   const {
     setActiveOffentligPrivat,
     activeOffentligPrivat,
-    setEgenBilChecked,
-    setSyklerChecked,
-    setGårChecked,
+    dagensTransportmiddelState,
+    settDagensTransportmiddelState,
   } = useAppStore();
+
+  const clearCheckbox = (hvilkenCheckbox : DagensTransportmiddelCheckboxStateEnum) => {
+    endreCheckboxVerdi(
+      hvilkenCheckbox,
+      false,
+      dagensTransportmiddelState,
+      settDagensTransportmiddelState,
+    );
+  };
 
   const skrivEndringTilGlobalState = (nyValgt: string) => {
     /* For endringer på spørsmålet "offentlig eller privat transportmiddel",
@@ -24,9 +34,9 @@ const RadioSpørsmål = ({
       setActiveOffentligPrivat(nyValgt);
       if (nyValgt === offentligPrivatVerdier.OFFENTLIG) {
         // TODO: Clear disse på ny måte
-        setEgenBilChecked(false);
-        setSyklerChecked(false);
-        setGårChecked(false);
+        clearCheckbox(DagensTransportmiddelCheckboxStateEnum.egenBilChecked);
+        clearCheckbox(DagensTransportmiddelCheckboxStateEnum.gårChecked);
+        clearCheckbox(DagensTransportmiddelCheckboxStateEnum.syklerChecked);
       }
     }
   };
@@ -51,4 +61,4 @@ const RadioSpørsmål = ({
   );
 };
 
-export default RadioSpørsmål;
+export default RadioSporsmalOffentligPrivat;
