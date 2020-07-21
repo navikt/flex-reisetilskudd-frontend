@@ -21,6 +21,8 @@ export interface InputProps {
   inputMode: 'numeric';
   feil?: string;
   bredde: 'S';
+  value?: number | string | undefined;
+  onChange?: (s : string) => void;
 }
 
 export interface VeilederProps {
