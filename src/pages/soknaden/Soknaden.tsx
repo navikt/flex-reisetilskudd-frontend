@@ -12,6 +12,7 @@ import DagensTransportmiddel from '../dagens-transportmiddel/DagensTransportmidd
 import Vis from '../../components/Vis';
 import Oppsummering from '../oppsummering/Oppsummering';
 import { getAntallSider } from '../../constants/sideTitler';
+import SykmeldingPanel from '../../components/sykmeldingOpplysninger/SykmeldingPanel';
 import './soknaden.less';
 
 function Soknaden(): ReactElement {
@@ -22,6 +23,7 @@ function Soknaden(): ReactElement {
     <div className="soknadSider">
       <Brodsmuler aktivtSteg={idNum} />
       <TilbakeKnapp aktivtSteg={idNum} />
+      <SykmeldingPanel />
       <div className="sporsmal-wrapper">
         <Vis hvis={idNum === 1}>
           <Utbetaling />
