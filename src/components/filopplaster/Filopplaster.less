@@ -76,9 +76,9 @@
   display: grid;
   margin: 0 auto;
   grid-template-areas:
-  'kvitteringTittel storrelse belopTittel datoTittel';
-  grid-template-columns: 20% 15% 20% 25%;
-  grid-gap: 10px;
+  'kvitteringTittel storrelse belopTittel datoTittel slett';
+  grid-template-columns: 15% 25% 15% 10% 30%;
+  grid-gap: 5px;
   margin-bottom: 1rem;
 
   hr {
@@ -118,8 +118,8 @@
   margin: 0 auto;
   grid-template-areas:
   'kvittering storrelse belop dato slett';
-  grid-gap: 10px;
-  grid-template-columns: 20% 15% 20% 25% 15%;
+  grid-gap: 5px;
+  grid-template-columns: 15% 25% 15% 10% 30%;
 
   .typo-normal {
     display: inline;
@@ -145,6 +145,8 @@
     max-height: 2rem;
     grid-area: slett;
     max-width: 8rem;
+    margin-left: auto;
+    margin-right: 0;
   }
 }
 
@@ -161,7 +163,7 @@
 
 .filstorrelse {
   grid-area: storrelse;
-  margin-left:0.5rem;
+  padding-top: 0.3rem;
 }
 
 .filnavn {
@@ -176,17 +178,25 @@
 
 @media screen and (max-width: 390px){
   .slett-knapp{
-      justify-self: center;
+      transform: scale(0.70);
+      margin-left: auto;
+      margin-right: 2rem;
+      padding-right: 1rem;
+    
   } 
   .fil-med-info{
     grid-template-areas:
-    'kvittering belop dato'
-    'slett slett slett';
-    grid-gap: 10px;
-    grid-template-columns: 40% 25% 30%; 
+    //'kvittering belop dato'
+    //'slett slett slett';
+    'kvittering storrelse belop dato slett';
+    grid-gap: 5px;
+    //grid-template-columns: 40% 25% 30%; 
+    grid-template-columns: 25% 15% 15% 10% 30%;
   }
 
   .kvitteringstitler {
-    grid-template-columns: 40% 25% 30%;
+    //grid-template-columns: 40% 25% 30%;
+    grid-template-columns: 25% 15% 15% 10% 30%;
+    grid-gap: 5px;
   }
 }
