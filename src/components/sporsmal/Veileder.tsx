@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import Veileder from 'nav-frontend-veileder';
 import { VeilederProps } from '../../types/types';
-import './Veileder.less';
 
 const VeilederSpørsmål = ({ hjelpetekst }: VeilederProps): ReactElement => (
   <Veileder
