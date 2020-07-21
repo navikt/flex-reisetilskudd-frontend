@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import './slettPeriode.less';
-import { Fareknapp, Knapp } from 'nav-frontend-knapper';
+import { Fareknapp, Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { SlettIkon } from '../../../assets/ikoner';
@@ -12,7 +12,7 @@ interface Props {
   periode: PeriodeInterface;
 }
 
-const SlettPeriode = ({ slettPeriode, periode } : Props) : ReactElement => {
+const SlettPeriode = ({ slettPeriode, periode }: Props): ReactElement => {
   const [åpenSlettPeriodeModal, settÅpenSlettPeriodeModal] = useState<boolean>(false);
 
   const lukkModal = () => {
@@ -62,9 +62,9 @@ const SlettPeriode = ({ slettPeriode, periode } : Props) : ReactElement => {
             <SlettIkon />
             <span>SLETT PERIODE</span>
           </Fareknapp>
-          <Knapp className="slett-periode-knapp-avbryt" mini onClick={lukkModal}>
+          <Hovedknapp className="slett-periode-knapp-avbryt" mini onClick={lukkModal}>
             <span>AVBRYT</span>
-          </Knapp>
+          </Hovedknapp>
         </div>
       </Modal>
     </>
