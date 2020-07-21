@@ -178,17 +178,25 @@
 
 @media screen and (max-width: 390px){
   .slett-knapp{
-      justify-self: center;
+      transform: scale(0.70);
+      margin-left: auto;
+      margin-right: 2rem;
+      padding-right: 1rem;
+    
   } 
   .fil-med-info{
     grid-template-areas:
-    'kvittering belop dato'
-    'slett slett slett';
-    grid-gap: 10px;
-    grid-template-columns: 40% 25% 30%; 
+    //'kvittering belop dato'
+    //'slett slett slett';
+    'kvittering storrelse belop dato slett';
+    grid-gap: 5px;
+    //grid-template-columns: 40% 25% 30%; 
+    grid-template-columns: 25% 15% 15% 10% 30%;
   }
 
   .kvitteringstitler {
-    grid-template-columns: 40% 25% 30%;
+    //grid-template-columns: 40% 25% 30%;
+    grid-template-columns: 25% 15% 15% 10% 30%;
+    grid-gap: 5px;
   }
 }
