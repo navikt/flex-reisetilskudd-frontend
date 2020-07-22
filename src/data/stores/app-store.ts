@@ -5,6 +5,10 @@ import { PeriodeInterface, Transportmiddel } from '../../models/periode';
 import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
 
 import { generateId } from '../../utils/random';
+import {
+  dagensTransportmiddelStateDefault,
+  DagensTransportmiddelSvarInterface,
+} from '../../models/dagenstransportmiddel';
 
 const mockPerioder = [
   {
@@ -47,10 +51,9 @@ const mockSykmelding = [{
 ];
 
 export const [AppStoreProvider, useAppStore] = constate(() => {
-  const [activeOffentligPrivat, setActiveOffentligPrivat] = useState<string>('');
-  const [egenBilChecked, setEgenBilChecked] = useState<boolean>(false);
-  const [syklerChecked, setSyklerChecked] = useState<boolean>(false);
-  const [gårChecked, setGårChecked] = useState<boolean>(false);
+  const [
+    dagensTransportmiddelState, settDagensTransportmiddelState,
+  ] = useState<DagensTransportmiddelSvarInterface>(dagensTransportmiddelStateDefault);
   const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
   const [perioder, settPerioder] = useState<PeriodeInterface[]>(mockPerioder);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
@@ -60,10 +63,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     settOpplysningerSykmeldinger] = useState<SykmeldingOpplysningInterface[]>(mockSykmelding);
 
   return {
-    activeOffentligPrivat, setActiveOffentligPrivat,
-    egenBilChecked, setEgenBilChecked,
-    syklerChecked, setSyklerChecked,
-    gårChecked, setGårChecked,
+    dagensTransportmiddelState, settDagensTransportmiddelState,
     activeMegArbeidsgiver, setActiveMegArbeidsgiver,
     perioder, settPerioder,
     uopplastetFil, settUopplastetFil,

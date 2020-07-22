@@ -4,30 +4,44 @@ import { CheckboxProps } from '../../../types/types';
 import 'nav-frontend-skjema-style';
 import { useAppStore } from '../../../data/stores/app-store';
 import { transportalternativerPrivatVerdier } from '../spørsmålTekster';
+import { DagensTransportmiddelCheckboxStateEnum } from '../../../models/dagenstransportmiddel';
+import { endreCheckboxVerdi } from '../sporsmalsUtils';
 
-const CheckboxSpørsmål = ({ tittel, svaralternativer }: CheckboxProps) : ReactElement => {
+const DagensTransportmiddelCheckbox = (
+  { tittel, svaralternativer }: CheckboxProps,
+) : ReactElement => {
   const {
-    egenBilChecked, setEgenBilChecked, syklerChecked, setSyklerChecked, gårChecked, setGårChecked,
+    dagensTransportmiddelState, settDagensTransportmiddelState,
   } = useAppStore();
+
+  const flipStateVerdi = (hvilkenCheckbox : DagensTransportmiddelCheckboxStateEnum) => {
+    endreCheckboxVerdi(
+      hvilkenCheckbox,
+      !dagensTransportmiddelState.transportalternativerPrivat[hvilkenCheckbox],
+      dagensTransportmiddelState,
+      settDagensTransportmiddelState,
+    );
+  };
+
   const skrivEndringTilGlobalState = (nyValgt: string) => {
     if (nyValgt === transportalternativerPrivatVerdier.EGEN_BIL) {
-      setEgenBilChecked(!egenBilChecked);
+      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.egenBilChecked);
     } else if (nyValgt === transportalternativerPrivatVerdier.SYKLER) {
-      setSyklerChecked(!syklerChecked);
+      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.syklerChecked);
     } else if (nyValgt === transportalternativerPrivatVerdier.GÅR) {
-      setGårChecked(!gårChecked);
+      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.gårChecked);
     }
   };
 
   const erChecked = (alternativ : string) => {
     if (alternativ === transportalternativerPrivatVerdier.EGEN_BIL) {
-      return egenBilChecked;
+      return dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked;
     }
     if (alternativ === transportalternativerPrivatVerdier.SYKLER) {
-      return syklerChecked;
+      return dagensTransportmiddelState.transportalternativerPrivat.syklerChecked;
     }
     if (alternativ === transportalternativerPrivatVerdier.GÅR) {
-      return gårChecked;
+      return dagensTransportmiddelState.transportalternativerPrivat.gårChecked;
     }
     return false;
   };
@@ -49,4 +63,4 @@ const CheckboxSpørsmål = ({ tittel, svaralternativer }: CheckboxProps) : React
   );
 };
 
-export default CheckboxSpørsmål;
+export default DagensTransportmiddelCheckbox;
