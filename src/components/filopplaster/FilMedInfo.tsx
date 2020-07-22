@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { Fareknapp } from 'nav-frontend-knapper';
 import { SlettIkon } from '../../assets/ikoner';
 import vedlegg from '../../assets/vedlegg.svg';
@@ -65,6 +65,8 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
           </Fareknapp>
         )
         : <></>}
+      <Element className="mobil-belop">Beløp</Element>
+      <Element className="mobil-dato">Dato</Element>
     </div>
   );
 };

@@ -176,14 +176,21 @@
   width: 1.2rem;
 }
 
+.mobil-belop{
+  display: none;
+}
+.mobil-dato{
+  display: none;
+}
+
 @media screen and (max-width: 390px){
-  .slett-knapp{
+  .slett-knapp{ //displayet riktig
       transform: scale(0.60);
       margin-left: auto;
       margin-right: 0;
-      margin-top: 1rem;
-      
+      margin-top: 1.5rem;
   } 
+
   .fil-med-info{
     border: 1px solid #78706A;
     border-radius: 0.3rem;
@@ -192,51 +199,54 @@
     'beloptittel 1 2'
     'belop 1 2'
     'datotittel 1 2'
-    'dato 1 2'
+    'dato dato 2'
     ;
     grid-gap: 5px;
-    grid-template-columns: 30% 30% 40%; 
-    background-color: lightblue;
+    grid-template-columns: 30% 30% 36%; 
   }
 
-  
-  .kvitteringstitler {
-    display: none; //gjemmer denne
-    grid-template-columns: 70% 30%;
-    grid-gap: 5px;
+  .mobil-belop{
+    display: flex;
+    padding-left: 2.2rem;
+    grid-area: beloptittel;
+  }
+  .mobil-dato{
+    display: flex;
+    padding-left: 2.2rem;
+    grid-area: datotittel;
+  }
+
+  .kvitteringstitler{
+    display: none;
   }
 
   .kvittering{
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     grid-area: kvittering;
     margin-left: 0.5rem;
   }
   
   .filstorrelse {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     grid-area: storrelse;
     padding-top: 0.3rem;
   }
 
-  .belop-tittel{
-    margin-top: 1rem;
-    grid-area: beloptittel;
-  }
-
   .belop{
     padding-top: 0.3rem;
+    padding-bottom: 0.5rem;
+    //padding-left: 1.7rem;
     grid-area: belop;
+    text-align: center;
+    margin-left: 1.7rem;
   }
 
   .dato {
-    margin-top: 1rem;
     padding-top: 0.3rem;
     grid-area: dato;
-    margin-left: 0.5rem;
-  }
-
-  .dato-tittel{
-    grid-area: datotittel;
+    padding-left: 2.25rem;
+    justify-self: left;
+    padding-bottom: 1rem;
   }
 
 }
