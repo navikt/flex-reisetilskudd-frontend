@@ -45,7 +45,7 @@ const DagensTransportmiddel = (): ReactElement => {
   const validerOffentlig = (nyeValideringsFeil : FeiloppsummeringFeil[]) => {
     if (!validerKroner(dagensTransportmiddelState.månedligeUtgifterSpørsmål)) {
       nyeValideringsFeil.push(
-        { skjemaelementId: 'jkl', feilmelding: 'Ugyldig kroneverdi' },
+        { skjemaelementId: månedligeUtgifterSpørsmål.id, feilmelding: 'Ugyldig kroneverdi' },
       );
     }
   };
@@ -57,14 +57,14 @@ const DagensTransportmiddel = (): ReactElement => {
       && !dagensTransportmiddelState.transportalternativerPrivat.gårChecked
     ) {
       nyeValideringsFeil.push(
-        { skjemaelementId: 'jkl', feilmelding: 'Du må velge minst étt av alternativene for fremkomstmiddel' },
+        { skjemaelementId: transportalternativerPrivat.id, feilmelding: 'Du må velge minst étt av alternativene for fremkomstmiddel' },
       );
     }
 
     if (dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked) {
       if (!validerKilometer(dagensTransportmiddelState.antallKilometerSpørsmål)) {
         nyeValideringsFeil.push(
-          { skjemaelementId: 'jkl', feilmelding: 'Ugyldig kilometerverdi' },
+          { skjemaelementId: antallKilometerSpørsmål.id, feilmelding: 'Ugyldig kilometerverdi' },
         );
       }
     }
@@ -81,7 +81,7 @@ const DagensTransportmiddel = (): ReactElement => {
       validerPrivat(nyeValideringsFeil);
     } else {
       nyeValideringsFeil.push(
-        { skjemaelementId: 'jkl', feilmelding: 'Du må svare på om du reiser offentlig eller privat' },
+        { skjemaelementId: offentligPrivatSpørsmål.id, feilmelding: 'Du må svare på om du reiser offentlig eller privat' },
       );
     }
 

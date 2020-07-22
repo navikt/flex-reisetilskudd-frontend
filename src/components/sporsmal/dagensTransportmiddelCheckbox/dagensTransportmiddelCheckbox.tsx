@@ -8,7 +8,7 @@ import { DagensTransportmiddelCheckboxStateEnum } from '../../../models/dagenstr
 import { endreCheckboxVerdi } from '../sporsmalsUtils';
 
 const DagensTransportmiddelCheckbox = (
-  { tittel, svaralternativer }: CheckboxProps,
+  { tittel, svaralternativer, id }: CheckboxProps,
 ) : ReactElement => {
   const {
     dagensTransportmiddelState, settDagensTransportmiddelState,
@@ -52,16 +52,18 @@ const DagensTransportmiddelCheckbox = (
   );
 
   return (
-    <CheckboksPanelGruppe
-      legend={tittel}
-      checkboxes={
+    <div id={id}>
+      <CheckboksPanelGruppe
+        legend={tittel}
+        checkboxes={
         endraAlternativer
     }
-      onChange={(_, nyVerdi) => {
-        skrivEndringTilGlobalState(nyVerdi);
-        settDagensTransportMiddelValidert(undefined);
-      }}
-    />
+        onChange={(_, nyVerdi) => {
+          skrivEndringTilGlobalState(nyVerdi);
+          settDagensTransportMiddelValidert(undefined);
+        }}
+      />
+    </div>
   );
 };
 

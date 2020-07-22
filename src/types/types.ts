@@ -9,11 +9,13 @@ export interface RadioSpørsmålProps {
   spørsmålstekst: string,
   hjelpetekst?: string,
   svaralternativer: Svaralternativ[],
+  id: string,
 }
 
 export interface CheckboxProps {
   tittel: string;
   svaralternativer: Svaralternativ[];
+  id: string;
 }
 
 export interface InputProps {
@@ -23,6 +25,7 @@ export interface InputProps {
   bredde: 'S';
   value?: number | string | undefined;
   onChange?: (s : string) => void;
+  id: string;
 }
 
 export interface VeilederProps {

@@ -7,7 +7,7 @@ import { useAppStore } from '../../../data/stores/app-store';
 import { endreOffentligPrivatRadioVerdi } from '../sporsmalsUtils';
 
 const RadioSporsmalOffentligPrivat = ({
-  tittel, name, spørsmålstekst, svaralternativer,
+  tittel, name, spørsmålstekst, svaralternativer, id,
 }: RadioSpørsmålProps): ReactElement => {
   const {
     dagensTransportmiddelState,
@@ -16,7 +16,7 @@ const RadioSporsmalOffentligPrivat = ({
   } = useAppStore();
 
   return (
-    <div className="horisontal-radio">
+    <div className="horisontal-radio" id={id}>
       <Undertittel>
         {tittel}
       </Undertittel>
