@@ -1,7 +1,7 @@
-/* eslint-disable */
-// TODO: Fjern eslint-disable
-
-import { SykmeldingOpplysningInterface } from "../../models/sykmelding";
+// eslint-disable-next-line max-len
+/* eslint-disable @typescript-eslint/no-explicit-any, import/prefer-default-export, @typescript-eslint/explicit-module-boundary-types */
+import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
+import { logger } from '../../utils/logger';
 
 const fåSykmeldingOpplysningInterface = (response : any) : SykmeldingOpplysningInterface => {
   const sykmeldingOpplysninger = {
@@ -16,9 +16,7 @@ const fåSykmeldingOpplysningInterface = (response : any) : SykmeldingOpplysning
     aktivitetIkkeMulig434: 'a',
   };
 
-  console.log(sykmeldingOpplysninger);
-  console.log(response.mulighetForArbeid.perioder[0].fom);
-  return sykmeldingOpplysninger
+  return sykmeldingOpplysninger;
 };
 
 export const hentSykmeldinger = (settOpplysningerSykmeldinger : any) => {
@@ -30,12 +28,12 @@ export const hentSykmeldinger = (settOpplysningerSykmeldinger : any) => {
         if (!response.ok) {
           throw new Error(response.statusText);
         }
-        console.log(response);
         return response.json();
       },
     )
-    .then((response) => {
-      console.log(response);
-      settOpplysningerSykmeldinger([fåSykmeldingOpplysningInterface(response[0])]);
-    });
+    .then((response) => fåSykmeldingOpplysningInterface(response[0]))
+    .then((parsedOpplysninger : SykmeldingOpplysningInterface) => {
+      settOpplysningerSykmeldinger([parsedOpplysninger]);
+    })
+    .catch((err) => logger.error(err));
 };

@@ -10,7 +10,7 @@ const SykmeldingOpplysninger = () : ReactElement => {
 
   return (
     <div>
-      <Vis hvis={opplysningerSykmeldinger !== undefined && opplysningerSykmeldinger.length > 0}>
+      <Vis hvis={vårSykmelding !== undefined}>
         <Element>Periode</Element>
         {vårSykmelding ? vårSykmelding.fraDato : ''}
         {' '}
