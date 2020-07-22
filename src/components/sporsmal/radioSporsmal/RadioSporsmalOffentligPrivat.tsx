@@ -7,15 +7,16 @@ import { useAppStore } from '../../../data/stores/app-store';
 import { endreOffentligPrivatRadioVerdi } from '../sporsmalsUtils';
 
 const RadioSporsmalOffentligPrivat = ({
-  tittel, name, spørsmålstekst, svaralternativer,
+  tittel, name, spørsmålstekst, svaralternativer, id,
 }: RadioSpørsmålProps): ReactElement => {
   const {
     dagensTransportmiddelState,
     settDagensTransportmiddelState,
+    settDagensTransportMiddelValidert,
   } = useAppStore();
 
   return (
-    <div className="horisontal-radio">
+    <div className="horisontal-radio" id={id}>
       <Undertittel>
         {tittel}
       </Undertittel>
@@ -32,6 +33,7 @@ const RadioSporsmalOffentligPrivat = ({
             dagensTransportmiddelState,
             settDagensTransportmiddelState,
           );
+          settDagensTransportMiddelValidert(undefined);
         }}
       />
     </div>

@@ -23,6 +23,7 @@ export const utbetalingSpørsmål: RadioSpørsmålProps = {
       value: utbetalingSpørsmålVerdier.ARBEIDSGIVER,
     },
   ],
+  id: 'utbetaling-offentlig-privat-sporsmal',
 };
 
 export const offentligPrivatVerdier = {
@@ -45,6 +46,7 @@ export const offentligPrivatSpørsmål: RadioSpørsmålProps = {
       value: offentligPrivatVerdier.PRIVAT,
     },
   ],
+  id: 'dagens-transportmiddel-offentlig-privat-sporsmal',
 };
 
 export const transportalternativerPrivatVerdier = {
@@ -69,6 +71,7 @@ export const transportalternativerPrivat: CheckboxProps = {
       value: transportalternativerPrivatVerdier.EGEN_BIL,
     },
   ],
+  id: 'dagens-transportmiddel-transportalternativer-privat',
 };
 
 export const antallKilometerSpørsmål: InputProps = {
@@ -76,6 +79,7 @@ export const antallKilometerSpørsmål: InputProps = {
   inputMode: 'numeric',
   feil: 'Her er det noe feil',
   bredde: 'S',
+  id: 'dagens-transportmiddel-kilometer-input',
 };
 
 export const månedligeUtgifterSpørsmål: InputProps = {
@@ -83,6 +87,7 @@ export const månedligeUtgifterSpørsmål: InputProps = {
   inputMode: 'numeric',
   feil: 'Her er det noe feil',
   bredde: 'S',
+  id: 'dagens-transportmiddel-manedlige-utgifter-input',
 };
 
 export const transportVeileder: VeilederProps = {

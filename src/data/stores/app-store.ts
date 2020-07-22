@@ -54,6 +54,9 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   const [
     dagensTransportmiddelState, settDagensTransportmiddelState,
   ] = useState<DagensTransportmiddelSvarInterface>(dagensTransportmiddelStateDefault);
+  const [
+    dagensTransportMiddelValidert, settDagensTransportMiddelValidert,
+  ] = useState<boolean | undefined>(undefined);
   const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
   const [perioder, settPerioder] = useState<PeriodeInterface[]>(mockPerioder);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
@@ -64,6 +67,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
 
   return {
     dagensTransportmiddelState, settDagensTransportmiddelState,
+    dagensTransportMiddelValidert, settDagensTransportMiddelValidert,
     activeMegArbeidsgiver, setActiveMegArbeidsgiver,
     perioder, settPerioder,
     uopplastetFil, settUopplastetFil,

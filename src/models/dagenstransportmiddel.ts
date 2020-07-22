@@ -1,4 +1,5 @@
 export interface DagensTransportmiddelSvarInterface {
+  // TODO: få putta inn konstantene for offentligPrivatSpørsmål
   offentligPrivatSpørsmål: string | undefined,
   månedligeUtgifterSpørsmål: number | string,
   transportalternativerPrivat: {
