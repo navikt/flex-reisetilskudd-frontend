@@ -61,6 +61,5 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
     åpenFilopplasterModal, settÅpenFilopplasterModal,
     opplysningerSykmeldinger, settOpplysningerSykmeldinger,
-
   };
 });

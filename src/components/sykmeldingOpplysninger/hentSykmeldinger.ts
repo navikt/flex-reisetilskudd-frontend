@@ -13,6 +13,7 @@ const fåSykmeldingOpplysningInterface = (response : any) : SykmeldingOpplysning
     beskrivHensyn: 'Må ha eget toalett på jobb',
     arbeidsgiver: response.mottakendeArbeidsgiver.navn,
     sykmelder: response.bekreftelse.sykmelder,
+    aktivitetIkkeMulig434: 'a',
   };
 
   console.log(sykmeldingOpplysninger);
@@ -29,11 +30,12 @@ export const hentSykmeldinger = (settOpplysningerSykmeldinger : any) => {
         if (!response.ok) {
           throw new Error(response.statusText);
         }
+        console.log(response);
         return response.json();
       },
     )
     .then((response) => {
       console.log(response);
-      settOpplysningerSykmeldinger(fåSykmeldingOpplysningInterface(response[0]));
+      settOpplysningerSykmeldinger([fåSykmeldingOpplysningInterface(response[0])]);
     });
 };
