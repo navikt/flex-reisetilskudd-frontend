@@ -62,6 +62,8 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   const [opplysningerSykmeldinger,
     settOpplysningerSykmeldinger] = useState<SykmeldingOpplysningInterface[]>(mockSykmelding);
 
+  const [midlertidigOpplysningerSykmeldinger,
+    settMidlertidigOpplysningerSykmeldinger] = useState(undefined);
   return {
     dagensTransportmiddelState, settDagensTransportmiddelState,
     activeMegArbeidsgiver, setActiveMegArbeidsgiver,
@@ -70,6 +72,8 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
     åpenFilopplasterModal, settÅpenFilopplasterModal,
     opplysningerSykmeldinger, settOpplysningerSykmeldinger,
+    midlertidigOpplysningerSykmeldinger,
+    settMidlertidigOpplysningerSykmeldinger,
 
   };
 });

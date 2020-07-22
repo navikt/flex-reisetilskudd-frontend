@@ -4,12 +4,17 @@ import { Element } from 'nav-frontend-typografi';
 import { useAppStore } from '../../data/stores/app-store';
 
 const SykmeldingOpplysninger = () : ReactElement => {
-  const { opplysningerSykmeldinger } = useAppStore();
+  const { opplysningerSykmeldinger, midlertidigOpplysningerSykmeldinger } = useAppStore();
+  // eslint-disable-next-line no-console
+  console.log(midlertidigOpplysningerSykmeldinger);
 
   return (
     <div>
       <Element>Periode</Element>
-      {opplysningerSykmeldinger[0].periode}
+      {opplysningerSykmeldinger[0].fraDato}
+      {' '}
+      -
+      {opplysningerSykmeldinger[0].tilDato}
       <Element>Diagnose</Element>
       {opplysningerSykmeldinger[0].diagnose}
       <Element>Bidiagnose</Element>
