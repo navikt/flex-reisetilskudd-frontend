@@ -1,6 +1,7 @@
 import {
   RadioSpørsmålProps, CheckboxProps, InputProps, VeilederProps,
 } from '../../types/types';
+import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling/constants';
 
 export const utbetalingSpørsmålVerdier = {
   NAME: 'UTBETALINGARBEIDSGIVER',
@@ -11,14 +12,14 @@ export const utbetalingSpørsmålVerdier = {
 export const utbetalingSpørsmål: RadioSpørsmålProps = {
   tittel: 'Utbetaling til arbeidsgiver',
   name: utbetalingSpørsmålVerdier.NAME,
-  spørsmålstekst: 'Skal reisetilskuddet utbetales til deg eller til <SETT-INN-ARBEIDSGIVER>?',
+  spørsmålstekst: `Skal reisetilskuddet utbetales til deg eller til ${arbeidsgiverNavnPlaceHolder} (org.nr. ${arbeidsgiverOrgNrPlaceHolder})?`,
   svaralternativer: [
     {
       label: 'Meg',
       value: utbetalingSpørsmålVerdier.MEG,
     },
     {
-      label: '<SETT-INN-ARBEIDSGIVER>',
+      label: `${arbeidsgiverNavnPlaceHolder}`,
       value: utbetalingSpørsmålVerdier.ARBEIDSGIVER,
     },
   ],

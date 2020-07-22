@@ -2,6 +2,7 @@
 import constate from 'constate';
 import { useState } from 'react';
 import { PeriodeInterface, Transportmiddel } from '../../models/periode';
+import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
 
 import { generateId } from '../../utils/random';
 import {
@@ -38,6 +39,17 @@ const mockPerioder = [
   },
 ];
 
+const mockSykmelding = [{
+  periode: '25. mai - 7.juni 2020 - 14 dager',
+  diagnose: 'Diaré',
+  bidiagnose: 'ADHD',
+  beskrivFraver: 'Reisetilskudd',
+  beskrivHensyn: 'Må ha eget toalett på jobb',
+  arbeidsgiver: 'Donald Trump',
+  sykmelder: 'Dr. McDreamy',
+},
+];
+
 export const [AppStoreProvider, useAppStore] = constate(() => {
   const [
     dagensTransportmiddelState, settDagensTransportmiddelState,
@@ -50,6 +62,8 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [filopplasterFeilmeldinger, settFilopplasterFeilmeldinger] = useState<string[]>([]);
   const [åpenFilopplasterModal, settÅpenFilopplasterModal] = useState<boolean>(false);
+  const [opplysningerSykmeldinger,
+    settOpplysningerSykmeldinger] = useState<SykmeldingOpplysningInterface[]>(mockSykmelding);
 
   return {
     dagensTransportmiddelState, settDagensTransportmiddelState,
@@ -59,5 +73,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     uopplastetFil, settUopplastetFil,
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
     åpenFilopplasterModal, settÅpenFilopplasterModal,
+    opplysningerSykmeldinger, settOpplysningerSykmeldinger,
+
   };
 });

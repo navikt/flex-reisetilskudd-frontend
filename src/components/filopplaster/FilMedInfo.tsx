@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Fareknapp } from 'nav-frontend-knapper';
 import { SlettIkon } from '../../assets/ikoner';
-import vedlegg from '../../assets/vedlegg.svg';
+// import vedlegg from '../../assets/vedlegg.svg';
+import helsecannabis from '../../assets/helsecannabis.svg';
 import formaterFilstørrelse from './utils';
 import { VedleggInterface } from '../../models/vedlegg';
 import { formatertDato, DatoFormat } from '../../utils/dato';
@@ -44,7 +45,7 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
       <div className="kvittering">
         <img
           className="vedleggsikon"
-          src={vedlegg}
+          src={helsecannabis}
           alt="Vedleggsikon"
         />
         <Normaltekst className="filnavn">{truncate(fil.navn, 15, '...')}</Normaltekst>
