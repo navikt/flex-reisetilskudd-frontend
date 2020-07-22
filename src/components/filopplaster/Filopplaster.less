@@ -176,27 +176,92 @@
   width: 1.2rem;
 }
 
+.mobil-belop{
+  display: none;
+}
+.mobil-dato{
+  display: none;
+}
+
 @media screen and (max-width: 390px){
-  .slett-knapp{
-      transform: scale(0.70);
+  .slett-knapp{ //displayet riktig
+      transform: scale(0.60);
       margin-left: auto;
-      margin-right: 2rem;
-      padding-right: 1rem;
-    
+      margin-right: 0;
+      margin-top: 1.5rem;
   } 
+
+  /*
   .fil-med-info{
+    border: 1px solid #78706A;
+    border-radius: 0.3rem;
     grid-template-areas:
-    //'kvittering belop dato'
-    //'slett slett slett';
-    'kvittering storrelse belop dato slett';
+    'kvittering storrelse slett'
+    'beloptittel 1 2'
+    'belop 1 2'
+    'datotittel 1 2'
+    'dato dato 2'
+    ;
     grid-gap: 5px;
-    //grid-template-columns: 40% 25% 30%; 
-    grid-template-columns: 25% 15% 15% 10% 30%;
+    grid-template-columns: 30% 30% 36%; 
+  }*/
+  .fil-med-info{
+    border: 1px solid #78706A;
+    border-radius: 0.3rem;
+    grid-template-areas:
+    'kvittering storrelse slett'
+    'beloptittel belop 1'
+    'datotittel dato dato'
+    ;
+    grid-gap: 5px;
+    grid-template-columns: 30% 30% 36%; 
   }
 
-  .kvitteringstitler {
-    //grid-template-columns: 40% 25% 30%;
-    grid-template-columns: 25% 15% 15% 10% 30%;
-    grid-gap: 5px;
+  .mobil-belop{
+    margin-top: 0.5rem;
+    padding-top: 0.3rem;
+    display: flex;
+    padding-left: 2.2rem;
+    grid-area: beloptittel;
   }
+  .mobil-dato{
+    padding-top: 0.3rem;
+    display: flex;
+    padding-left: 2.2rem;
+    grid-area: datotittel;
+  }
+
+  .kvitteringstitler{
+    display: none;
+  }
+
+  .kvittering{
+    margin-top: 1.5rem;
+    grid-area: kvittering;
+    margin-left: 0.5rem;
+  }
+  
+  .filstorrelse {
+    margin-top: 1.5rem;
+    grid-area: storrelse;
+    padding-top: 0.3rem;
+  }
+
+  .belop{
+    margin-top: 0.5rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.5rem;
+    grid-area: belop;
+    text-align: left;
+    margin-left: 1rem;
+  }
+
+  .dato {
+    padding-top: 0.3rem;
+    grid-area: dato;
+    padding-left: 1rem;
+    justify-self: left;
+    padding-bottom: 1rem;
+  }
+
 }
