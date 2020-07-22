@@ -8,16 +8,19 @@ import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal
 import Vis from '../../components/Vis';
 import {
   offentligPrivatSpørsmål, transportalternativerPrivat,
-  antallKilometerSpørsmål, månedligeUtgifterSpørsmål, transportVeileder,
+  antallKilometerSpørsmål, månedligeUtgifterSpørsmål, transportVeileder, offentligPrivatVerdier,
 } from '../../components/sporsmal/spørsmålTekster';
 import { useAppStore } from '../../data/stores/app-store';
 import { endreInputVerdi } from '../../components/sporsmal/sporsmalsUtils';
 import { NummerInputStateEnum } from '../../models/dagenstransportmiddel';
+import { validerKilometer, validerKroner } from '../../utils/skjemavalidering';
 
 const DagensTransportmiddel = (): ReactElement => {
-  const [validert, settValidert] = useState<boolean | undefined>(undefined);
   const [valideringsFeil, settValideringsFeil] = useState<FeiloppsummeringFeil[]>([]);
-  const { dagensTransportmiddelState, settDagensTransportmiddelState } = useAppStore();
+  const {
+    dagensTransportmiddelState, settDagensTransportmiddelState,
+    dagensTransportMiddelValidert, settDagensTransportMiddelValidert,
+  } = useAppStore();
 
   const handleKilometerChange = (tekst: string) => {
     endreInputVerdi(
@@ -26,16 +29,7 @@ const DagensTransportmiddel = (): ReactElement => {
       dagensTransportmiddelState,
       settDagensTransportmiddelState,
     );
-  };
-
-  const validerSkjema = () => {
-    const nyeValideringsFeil : FeiloppsummeringFeil[] = [
-      { skjemaelementId: 'abc', feilmelding: 'Du må svare på bla' },
-      { skjemaelementId: 'def', feilmelding: 'Blabla må være en dings' },
-      { skjemaelementId: 'ghi', feilmelding: 'Abc må være x' },
-    ];
-    settValideringsFeil(nyeValideringsFeil);
-    settValidert(false);
+    settDagensTransportMiddelValidert(undefined);
   };
 
   const handleMånedligeUtgifterChange = (tekst: string) => {
@@ -45,6 +39,54 @@ const DagensTransportmiddel = (): ReactElement => {
       dagensTransportmiddelState,
       settDagensTransportmiddelState,
     );
+    settDagensTransportMiddelValidert(undefined);
+  };
+
+  const validerOffentlig = (nyeValideringsFeil : FeiloppsummeringFeil[]) => {
+    if (!validerKroner(dagensTransportmiddelState.månedligeUtgifterSpørsmål)) {
+      nyeValideringsFeil.push(
+        { skjemaelementId: 'jkl', feilmelding: 'Ugyldig kroneverdi' },
+      );
+    }
+  };
+
+  const validerPrivat = (nyeValideringsFeil : FeiloppsummeringFeil[]) => {
+    if (
+      !dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked
+      && !dagensTransportmiddelState.transportalternativerPrivat.syklerChecked
+      && !dagensTransportmiddelState.transportalternativerPrivat.gårChecked
+    ) {
+      nyeValideringsFeil.push(
+        { skjemaelementId: 'jkl', feilmelding: 'Du må velge minst étt av alternativene for fremkomstmiddel' },
+      );
+    }
+
+    if (dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked) {
+      if (!validerKilometer(dagensTransportmiddelState.antallKilometerSpørsmål)) {
+        nyeValideringsFeil.push(
+          { skjemaelementId: 'jkl', feilmelding: 'Ugyldig kilometerverdi' },
+        );
+      }
+    }
+  };
+
+  const validerSkjema = () => {
+    const nyeValideringsFeil : FeiloppsummeringFeil[] = [];
+
+    if (dagensTransportmiddelState.offentligPrivatSpørsmål === offentligPrivatVerdier.OFFENTLIG) {
+      validerOffentlig(nyeValideringsFeil);
+    } else if (
+      dagensTransportmiddelState.offentligPrivatSpørsmål === offentligPrivatVerdier.PRIVAT
+    ) {
+      validerPrivat(nyeValideringsFeil);
+    } else {
+      nyeValideringsFeil.push(
+        { skjemaelementId: 'jkl', feilmelding: 'Du må svare på om du reiser offentlig eller privat' },
+      );
+    }
+
+    settValideringsFeil(nyeValideringsFeil);
+    settDagensTransportMiddelValidert(nyeValideringsFeil.length < 1);
   };
 
   return (
@@ -77,10 +119,10 @@ const DagensTransportmiddel = (): ReactElement => {
         </Vis>
       </Vis>
       <Knapp type="hoved" onClick={validerSkjema}>Validér skjemaet</Knapp>
-      <Vis hvis={validert}>
+      <Vis hvis={dagensTransportMiddelValidert}>
         Skjemaet er validert, wohoo!
       </Vis>
-      <Vis hvis={validert === false}>
+      <Vis hvis={dagensTransportMiddelValidert === false}>
         <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={valideringsFeil} />
       </Vis>
     </>
