@@ -65,8 +65,8 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
           </Fareknapp>
         )
         : <></>}
-      <Element className="mobil-belop">Beløp</Element>
-      <Element className="mobil-dato">Dato</Element>
+      <Element className="mobil-belop">Beløp:</Element>
+      <Element className="mobil-dato">Dato:</Element>
     </div>
   );
 };

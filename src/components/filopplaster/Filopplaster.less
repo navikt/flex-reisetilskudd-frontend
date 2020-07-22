@@ -191,6 +191,7 @@
       margin-top: 1.5rem;
   } 
 
+  /*
   .fil-med-info{
     border: 1px solid #78706A;
     border-radius: 0.3rem;
@@ -203,14 +204,28 @@
     ;
     grid-gap: 5px;
     grid-template-columns: 30% 30% 36%; 
+  }*/
+  .fil-med-info{
+    border: 1px solid #78706A;
+    border-radius: 0.3rem;
+    grid-template-areas:
+    'kvittering storrelse slett'
+    'beloptittel belop 1'
+    'datotittel dato dato'
+    ;
+    grid-gap: 5px;
+    grid-template-columns: 30% 30% 36%; 
   }
 
   .mobil-belop{
+    margin-top: 0.5rem;
+    padding-top: 0.3rem;
     display: flex;
     padding-left: 2.2rem;
     grid-area: beloptittel;
   }
   .mobil-dato{
+    padding-top: 0.3rem;
     display: flex;
     padding-left: 2.2rem;
     grid-area: datotittel;
@@ -233,18 +248,18 @@
   }
 
   .belop{
+    margin-top: 0.5rem;
     padding-top: 0.3rem;
     padding-bottom: 0.5rem;
-    //padding-left: 1.7rem;
     grid-area: belop;
-    text-align: center;
-    margin-left: 1.7rem;
+    text-align: left;
+    margin-left: 1rem;
   }
 
   .dato {
     padding-top: 0.3rem;
     grid-area: dato;
-    padding-left: 2.25rem;
+    padding-left: 1rem;
     justify-self: left;
     padding-bottom: 1rem;
   }
