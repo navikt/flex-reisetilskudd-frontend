@@ -8,12 +8,12 @@ import { hentSykmeldinger } from './hentSykmeldinger';
 
 const SykmeldingPanel = () : ReactElement => {
   const {
-    midlertidigOpplysningerSykmeldinger,
-    settMidlertidigOpplysningerSykmeldinger,
+    opplysningerSykmeldinger,
+    settOpplysningerSykmeldinger,
   } = useAppStore();
 
-  if (midlertidigOpplysningerSykmeldinger === undefined) {
-    hentSykmeldinger(settMidlertidigOpplysningerSykmeldinger);
+  if (opplysningerSykmeldinger === undefined) {
+    hentSykmeldinger(settOpplysningerSykmeldinger);
   }
 
   return (

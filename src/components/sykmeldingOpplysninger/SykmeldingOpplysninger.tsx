@@ -1,32 +1,47 @@
+/* eslint-disable */
 import React, { ReactElement } from 'react';
 import './sykmeldingOpplysninger.less';
 import { Element } from 'nav-frontend-typografi';
 import { useAppStore } from '../../data/stores/app-store';
+import Vis from '../Vis';
+import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
 
 const SykmeldingOpplysninger = () : ReactElement => {
-  const { opplysningerSykmeldinger, midlertidigOpplysningerSykmeldinger } = useAppStore();
+  const { opplysningerSykmeldinger } = useAppStore();
   // eslint-disable-next-line no-console
-  console.log(midlertidigOpplysningerSykmeldinger);
+  console.log(opplysningerSykmeldinger);
+
+  const tryggHent = (verdi : keyof SykmeldingOpplysningInterface) : any => {
+    console.log('tryggHent:', opplysningerSykmeldinger);
+    if (opplysningerSykmeldinger !== undefined) {
+      const førsteSykmelding = opplysningerSykmeldinger;
+      console.log('passerte sjekken');
+      // console.log(opplysningerSykmeldinger[verdi])
+      console.log(verdi);
+      return 'dsdsd';
+    }
+    return '';
+  };
 
   return (
     <div>
       <Element>Periode</Element>
-      {opplysningerSykmeldinger[0].fraDato}
+      {tryggHent('fraDato')}
       {' '}
       -
-      {opplysningerSykmeldinger[0].tilDato}
+      {tryggHent('tilDato')}
       <Element>Diagnose</Element>
-      {opplysningerSykmeldinger[0].diagnose}
+      {tryggHent('diagnose')}
       <Element>Bidiagnose</Element>
-      {opplysningerSykmeldinger[0].bidiagnose}
+      {tryggHent('bidiagnose')}
       <Element>Beskriv fraværet</Element>
-      {opplysningerSykmeldinger[0].beskrivFraver}
+      {tryggHent('beskrivFraver')}
       <Element>Beskriv eventelle hesyn som må tas på arbeidsplassen</Element>
-      {opplysningerSykmeldinger[0].beskrivHensyn}
+      {tryggHent('beskrivHensyn')}
       <Element>Arbeidsgiver som legen har skrevet inn</Element>
-      {opplysningerSykmeldinger[0].arbeidsgiver}
+      {tryggHent('arbeidsgiver')}
       <Element>Lege/sykmelder</Element>
-      {opplysningerSykmeldinger[0].sykmelder}
+      {tryggHent('sykmelder')}
     </div>
   );
 };

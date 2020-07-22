@@ -1,7 +1,9 @@
 /* eslint-disable */
 // TODO: Fjern eslint-disable
 
-const fåSykmeldingOpplysningInterface = (response : any) => {
+import { SykmeldingOpplysningInterface } from "../../models/sykmelding";
+
+const fåSykmeldingOpplysningInterface = (response : any) : SykmeldingOpplysningInterface => {
   const sykmeldingOpplysninger = {
     fraDato: response.mulighetForArbeid.perioder[0].fom,
     tilDato: response.mulighetForArbeid.perioder[0].tom,
@@ -15,9 +17,10 @@ const fåSykmeldingOpplysningInterface = (response : any) => {
 
   console.log(sykmeldingOpplysninger);
   console.log(response.mulighetForArbeid.perioder[0].fom);
+  return sykmeldingOpplysninger
 };
 
-export const hentSykmeldinger = (settMidlertidigOpplysningerSykmeldinger : any) => {
+export const hentSykmeldinger = (settOpplysningerSykmeldinger : any) => {
   fetch('http://localhost:1993/syforest/sykmeldinger', {
     credentials: 'include',
   })
@@ -31,7 +34,6 @@ export const hentSykmeldinger = (settMidlertidigOpplysningerSykmeldinger : any) 
     )
     .then((response) => {
       console.log(response);
-      fåSykmeldingOpplysningInterface(response[0]);
-      settMidlertidigOpplysningerSykmeldinger(response);
+      settOpplysningerSykmeldinger(fåSykmeldingOpplysningInterface(response[0]));
     });
 };
