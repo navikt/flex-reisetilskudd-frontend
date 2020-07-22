@@ -139,6 +139,7 @@
   .dato {
     padding-top: 0.3rem;
     grid-area: dato;
+    white-space: nowrap;
   }
 
   .slett-knapp{
@@ -181,6 +182,12 @@
 }
 .mobil-dato{
   display: none;
+}
+
+@media screen and (max-width: 950px){
+  .slett-knapp {
+    transform: scale(0.8);
+  }  
 }
 
 @media screen and (max-width: 390px){
