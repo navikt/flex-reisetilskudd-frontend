@@ -28,6 +28,7 @@ const Utbetaling = (): ReactElement => {
       name={utbetalingSpørsmål.name}
       spørsmålstekst={leggInnArbeidsGiverIString(utbetalingSpørsmål.spørsmålstekst)}
       svaralternativer={byttUtSpørsmålsTekster(utbetalingSpørsmål.svaralternativer)}
+      id={utbetalingSpørsmål.id}
     />
   );
 };
