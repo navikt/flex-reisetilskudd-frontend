@@ -11,6 +11,14 @@ interface Props {
   className?: string;
 }
 
+function customTruncet(fullString:string, trimsize:number) {
+  const separator = '...';
+  if (fullString.length <= trimsize) {
+    return fullString;
+  }
+  return fullString.substr(0, trimsize) + separator + fullString.substr(-3);
+}
+
 const Fil: React.FC<Props> = ({ fil, href }) => (
   <div>
     {fil
@@ -26,11 +34,11 @@ const Fil: React.FC<Props> = ({ fil, href }) => (
               { href
                 ? (
                   <Lenke href={href} target="_blank">
-                    <Normaltekst className="fil-lenke filnavn">{fil.name}</Normaltekst>
+                    <Normaltekst className="fil-lenke filnavn">{customTruncet(fil.name, 20)}</Normaltekst>
                   </Lenke>
                 )
                 : (
-                  <Normaltekst className="filnavn">{fil.name}</Normaltekst>
+                  <Normaltekst className="filnavn">{customTruncet(fil.name, 20)}</Normaltekst>
                 )}
               <Normaltekst className="filstørrelse">
                 (
