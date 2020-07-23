@@ -1,15 +1,47 @@
-// eslint-disable-next-line max-len
-/* eslint-disable @typescript-eslint/no-explicit-any, import/prefer-default-export, @typescript-eslint/explicit-module-boundary-types */
 import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
 import { logger } from '../../utils/logger';
 
-const fåSykmeldingOpplysningInterface = (response : any) : SykmeldingOpplysningInterface => {
+interface Periode {
+  fom: string,
+  tom: string,
+  reisetilskudd: boolean,
+}
+
+interface Diagnose {
+  diagnose: string,
+  diagnosekode: string,
+  diagnosesystem: string,
+}
+
+interface Sykmelding {
+  mulighetForArbeid: {
+    perioder: Periode[],
+    aktivitetIkkeMulig433: string[],
+  },
+  diagnose: {
+    hoveddiagnose: Diagnose,
+    bidiagnoser: Diagnose[],
+  },
+  mottakendeArbeidsgiver : {
+    navn: string,
+    virksomhetsnummer: string
+  },
+  bekreftelse: {
+    sykmelder: string,
+  }
+}
+
+type SykMeldingAPI = Sykmelding[];
+
+const fåSykmeldingOpplysningSomInterface = (
+  response : Sykmelding,
+) : SykmeldingOpplysningInterface => {
   const sykmeldingOpplysninger = {
     fraDato: response?.mulighetForArbeid?.perioder[0]?.fom,
     tilDato: response?.mulighetForArbeid?.perioder[0]?.tom,
     diagnose: response?.diagnose?.hoveddiagnose?.diagnose,
-    bidiagnose: 'ADHD',
-    beskrivFraver: response?.mulighetForArbeid?.perioder[0]?.reisetilskudd ? 'Reisetilskudd' : 'Ikke reisetilskudd',
+    bidiagnoser: 'ADHD',
+    reisetilskudd: response?.mulighetForArbeid?.perioder[0]?.reisetilskudd ? 'Reisetilskudd' : 'Ikke reisetilskudd',
     beskrivHensyn: 'Må ha eget toalett på jobb',
     arbeidsgiver: response?.mottakendeArbeidsgiver?.navn,
     sykmelder: response?.bekreftelse?.sykmelder,
@@ -19,11 +51,13 @@ const fåSykmeldingOpplysningInterface = (response : any) : SykmeldingOpplysning
   return sykmeldingOpplysninger;
 };
 
-export const finnSykmeldingerMedReisetilskudd = (response : any) => {
-  const filtrerteSykmeldinger = response.filter((sykmelding : any) => {
+export const finnSykmeldingerMedReisetilskudd = (
+  response : SykMeldingAPI,
+) : SykMeldingAPI => {
+  const filtrerteSykmeldinger = response.filter((sykmelding : Sykmelding) => {
     const reisetilskuddPerioder = sykmelding?.mulighetForArbeid?.perioder?.filter(
       (
-        periode : any,
+        periode : Periode,
       ) => {
         if (periode?.reisetilskudd === true) {
           return true;
@@ -37,9 +71,13 @@ export const finnSykmeldingerMedReisetilskudd = (response : any) => {
 };
 
 // TODO: Hent aktiv sykmelding
-export const faaRiktigSykmelding = (response : any) => response[0];
+export const faaRiktigSykmelding = (
+  response : SykMeldingAPI,
+) : Sykmelding => response[0];
 
-export const hentSykmeldinger = (settOpplysningerSykmeldinger : any) => {
+export const hentSykmeldinger = (
+  settOpplysningerSykmeldinger : (s : SykmeldingOpplysningInterface[]) => void,
+) : void => {
   fetch('http://localhost:1993/syforest/sykmeldinger', {
     credentials: 'include',
   })
@@ -53,7 +91,7 @@ export const hentSykmeldinger = (settOpplysningerSykmeldinger : any) => {
     )
     .then((response) => finnSykmeldingerMedReisetilskudd(response))
     .then((sykmeldingerMedReisetilskudd) => faaRiktigSykmelding(sykmeldingerMedReisetilskudd))
-    .then((riktigSykmelding) => fåSykmeldingOpplysningInterface(riktigSykmelding))
+    .then((riktigSykmelding) => fåSykmeldingOpplysningSomInterface(riktigSykmelding))
     .then((parsedOpplysninger : SykmeldingOpplysningInterface) => {
       settOpplysningerSykmeldinger([parsedOpplysninger]);
     })

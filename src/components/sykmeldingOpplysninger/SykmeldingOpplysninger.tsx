@@ -26,9 +26,9 @@ const SykmeldingOpplysninger = () : ReactElement => {
         <Element>Diagnose</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.DIAGNOSE)}
         <Element>Bidiagnose</Element>
-        {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BI_DIAGNOSE)}
-        <Element>Beskrivelse av fraværet</Element>
-        {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BESKRIV_FRAVÆR)}
+        {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BI_DIAGNOSER)}
+        <Element>Reisetilskudd</Element>
+        {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.REISETILSKUDD)}
         <Element>Beskriv eventelle hesyn som må tas på arbeidsplassen</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
         <Element>Arbeidsgiver som legen har skrevet inn</Element>
