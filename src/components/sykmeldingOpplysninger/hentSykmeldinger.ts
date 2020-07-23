@@ -5,14 +5,14 @@ import { logger } from '../../utils/logger';
 
 const fåSykmeldingOpplysningInterface = (response : any) : SykmeldingOpplysningInterface => {
   const sykmeldingOpplysninger = {
-    fraDato: response.mulighetForArbeid.perioder[0].fom,
-    tilDato: response.mulighetForArbeid.perioder[0].tom,
-    diagnose: response.diagnose.hoveddiagnose.diagnose,
+    fraDato: response?.mulighetForArbeid?.perioder[0]?.fom,
+    tilDato: response?.mulighetForArbeid?.perioder[0]?.tom,
+    diagnose: response?.diagnose?.hoveddiagnose?.diagnose,
     bidiagnose: 'ADHD',
-    beskrivFraver: response.mulighetForArbeid.perioder[0].reisetilskudd ? 'Reisetilskudd' : 'Ikke reisetilskudd',
+    beskrivFraver: response?.mulighetForArbeid?.perioder[0]?.reisetilskudd ? 'Reisetilskudd' : 'Ikke reisetilskudd',
     beskrivHensyn: 'Må ha eget toalett på jobb',
-    arbeidsgiver: response.mottakendeArbeidsgiver.navn,
-    sykmelder: response.bekreftelse.sykmelder,
+    arbeidsgiver: response?.mottakendeArbeidsgiver?.navn,
+    sykmelder: response?.bekreftelse?.sykmelder,
     aktivitetIkkeMulig434: 'a',
   };
 
