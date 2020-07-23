@@ -19,6 +19,26 @@ const fåSykmeldingOpplysningInterface = (response : any) : SykmeldingOpplysning
   return sykmeldingOpplysninger;
 };
 
+export const finnSykmeldingerMedReisetilskudd = (response : any) => {
+  const filtrerteSykmeldinger = response.filter((sykmelding : any) => {
+    const reisetilskuddPerioder = sykmelding?.mulighetForArbeid?.perioder?.filter(
+      (
+        periode : any,
+      ) => {
+        if (periode?.reisetilskudd === true) {
+          return true;
+        }
+
+        return false;
+      });
+    return reisetilskuddPerioder.length > 0;
+  });
+  return filtrerteSykmeldinger;
+};
+
+// TODO: Hent aktiv sykmelding
+export const faaRiktigSykmelding = (response : any) => response[0];
+
 export const hentSykmeldinger = (settOpplysningerSykmeldinger : any) => {
   fetch('http://localhost:1993/syforest/sykmeldinger', {
     credentials: 'include',
@@ -31,7 +51,9 @@ export const hentSykmeldinger = (settOpplysningerSykmeldinger : any) => {
         return response.json();
       },
     )
-    .then((response) => fåSykmeldingOpplysningInterface(response[0]))
+    .then((response) => finnSykmeldingerMedReisetilskudd(response))
+    .then((sykmeldingerMedReisetilskudd) => faaRiktigSykmelding(sykmeldingerMedReisetilskudd))
+    .then((riktigSykmelding) => fåSykmeldingOpplysningInterface(riktigSykmelding))
     .then((parsedOpplysninger : SykmeldingOpplysningInterface) => {
       settOpplysningerSykmeldinger([parsedOpplysninger]);
     })
