@@ -1,3 +1,5 @@
+import { filstørrelseTilBytes } from '../components/filopplaster/utils';
+
 class Environment {
   /* eslint-disable-next-line */
   private env = (window as any)._env_;
@@ -24,6 +26,14 @@ class Environment {
 
   get loginServiceUrl() {
     return this.env.LOGIN_SERVICE_URL;
+  }
+
+  get maksFilstørrelse() {
+    return filstørrelseTilBytes(this.env.MAKS_FILSTORRELSE);
+  }
+
+  get tillatteFiltyper() {
+    return this.env.TILLATTE_FILTYPER.split(',');
   }
 }
 

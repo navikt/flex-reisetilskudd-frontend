@@ -5,21 +5,28 @@ import { SlettIkon } from '../../assets/ikoner';
 // import vedlegg from '../../assets/vedlegg.svg';
 import helsecannabis from '../../assets/helsecannabis.svg';
 import formaterFilstørrelse from './utils';
-import { VedleggInterface } from '../../models/vedlegg';
+import { KvitteringInterface } from '../../models/vedlegg';
 import { formatertDato, DatoFormat } from '../../utils/dato';
+import { useAppStore } from '../../data/stores/app-store';
 
 interface Props {
-  fil: VedleggInterface;
-  slettVedlegg?: (vedlegg: VedleggInterface) => void;
+  fil: KvitteringInterface;
 }
 
-const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
+const FilMedInfo: React.FC<Props> = ({ fil }) => {
   const [spinnerAktiv, settSpinnerAktiv] = useState<boolean>(false);
+  const { kvitteringer, settKvitteringer } = useAppStore();
+
+  const slettKvittering = (kvitteringSomSkalSlettes: KvitteringInterface) => {
+    settKvitteringer(kvitteringer.filter(
+      (kvittering) => kvittering.id !== kvitteringSomSkalSlettes.id,
+    ));
+  };
 
   const håndterKlikk = () => {
     settSpinnerAktiv(true);
-    if (slettVedlegg) {
-      slettVedlegg(fil);
+    if (slettKvittering) {
+      slettKvittering(fil);
     }
   };
 
@@ -57,15 +64,15 @@ const FilMedInfo: React.FC<Props> = ({ fil, slettVedlegg }) => {
         {' '}
         kr
       </Normaltekst>
-      <Normaltekst className="dato">{fil.dato ? formatertDato(fil.dato, DatoFormat.NATURLIG_LANG) : ''}</Normaltekst>
-      {slettVedlegg
-        ? (
-          <Fareknapp className="slett-knapp" mini onClick={håndterKlikk} spinner={spinnerAktiv}>
-            <SlettIkon />
-            <span>SLETT</span>
-          </Fareknapp>
-        )
-        : <></>}
+      <Normaltekst className="dato">
+        {fil.dato
+          ? formatertDato(fil.dato, DatoFormat.NATURLIG_LANG)
+          : ''}
+      </Normaltekst>
+      <Fareknapp className="slett-knapp" mini onClick={håndterKlikk} spinner={spinnerAktiv}>
+        <SlettIkon />
+        <span>SLETT</span>
+      </Fareknapp>
       <Element className="mobil-belop">Beløp:</Element>
       <Element className="mobil-dato">Dato:</Element>
     </div>

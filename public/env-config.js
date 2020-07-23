@@ -6,4 +6,6 @@ window._env_ = {
   IS_Q1: "FALSE",
   IS_PROD: "FALSE",
   LOGIN_SERVICE_URL: "http://localhost:5000",
+  TILLATTE_FILTYPER: "image/png,image/jpg",
+  MAKS_FILSTORRELSE: "1MB",
 };

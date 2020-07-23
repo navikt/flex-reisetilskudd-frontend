@@ -4,21 +4,17 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import opplasting from '../../assets/opplasting.svg';
 import { useAppStore } from '../../data/stores/app-store';
 import formaterFilstørrelse from './utils';
+import env from '../../utils/environment';
 
-interface Props {
-  tillatteFiltyper?: string[];
-  maxFilstørrelse?: number;
-}
-
-const DragAndDrop: React.FC<Props> = ({
-  tillatteFiltyper = [],
-  maxFilstørrelse = 1024 * 1024,
-}): ReactElement => {
+const DragAndDrop: React.FC = (): ReactElement => {
   const {
     settUopplastetFil,
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
     settÅpenFilopplasterModal,
   } = useAppStore();
+
+  const { tillatteFiltyper } = env;
+  const maxFilstørrelse = env.maksFilstørrelse;
 
   const onDropCallback = useCallback(
     (filer) => {

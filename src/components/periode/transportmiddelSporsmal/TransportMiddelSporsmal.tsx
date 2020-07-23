@@ -1,37 +1,32 @@
 import { Undertittel } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import React, { Dispatch, ReactElement } from 'react';
-import { PeriodeInterface, Transportmiddel } from '../../../models/periode';
+import React, { ReactElement, useState } from 'react';
+import { Transportmiddel } from '../../../models/vedlegg';
 
-interface Props {
-  periode: PeriodeInterface,
-  transportMiddel: string,
-  settTransportMiddel: Dispatch<string>,
-}
+const TransportMiddelSporsmal = (): ReactElement => {
+  const [transportMiddel, settTransportMiddel] = useState('');
 
-const TransportMiddelSporsmal = (props: Props): ReactElement => {
-  const { periode, transportMiddel, settTransportMiddel } = props;
   return (
     <RadioPanelGruppe
-      key={periode.id}
-      className="periode-element"
+      key={123}
+      className="kvittering-element"
       name="transportmiddel"
       legend={<Undertittel>Transportmiddel</Undertittel>}
       radios={[
         {
           label: Transportmiddel.taxi,
           value: Transportmiddel.taxi,
-          id: `${periode.id}-${Transportmiddel.taxi}`,
+          id: `-${Transportmiddel.taxi}`,
         },
         {
           label: Transportmiddel.egenBil,
           value: Transportmiddel.egenBil,
-          id: `${periode.id}-${Transportmiddel.egenBil}`,
+          id: `-${Transportmiddel.egenBil}`,
         },
         {
           label: Transportmiddel.kollektiv,
           value: Transportmiddel.kollektiv,
-          id: `${periode.id}-${Transportmiddel.kollektiv}`,
+          id: `-${Transportmiddel.kollektiv}`,
         },
       ]}
       checked={transportMiddel}
@@ -41,4 +36,5 @@ const TransportMiddelSporsmal = (props: Props): ReactElement => {
     />
   );
 };
+
 export default TransportMiddelSporsmal;
