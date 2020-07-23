@@ -4,33 +4,37 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { useAppStore } from '../../data/stores/app-store';
 import Vis from '../Vis';
 import { SykmeldingOpplysningEnum } from '../../models/sykmelding';
+import ManglendeOpplysninger from './ManglendeOpplysninger';
+import PeriodeTekst from './PeriodeTekst';
 
 const SykmeldingOpplysninger = () : ReactElement => {
   const { opplysningerSykmeldinger } = useAppStore();
   const vårSykmelding = opplysningerSykmeldinger ? opplysningerSykmeldinger[0] : undefined;
 
+  const fåVerdiEllerManglendeOpplysninger = (
+    hvilkenVerdi : SykmeldingOpplysningEnum,
+  ) => vårSykmelding?.[hvilkenVerdi] || <ManglendeOpplysninger />;
+
+  const fraDato : string = vårSykmelding?.[SykmeldingOpplysningEnum.FRA_DATO] || '';
+  const tilDato : string = vårSykmelding?.[SykmeldingOpplysningEnum.TIL_DATO] || '';
+
   return (
     <div>
       <Vis hvis={vårSykmelding !== undefined}>
         <Element>Periode</Element>
-        {vårSykmelding?.[SykmeldingOpplysningEnum.FRA_DATO]}
-        {' '}
-        -
-        {vårSykmelding?.[SykmeldingOpplysningEnum.TIL_DATO]}
+        <PeriodeTekst fraDato={fraDato} tilDato={tilDato} />
         <Element>Diagnose</Element>
-        {vårSykmelding?.[SykmeldingOpplysningEnum.DIAGNOSE]}
-        <Vis hvis={vårSykmelding?.[SykmeldingOpplysningEnum.BI_DIAGNOSE]}>
-          <Element>Bidiagnose</Element>
-          {vårSykmelding?.[SykmeldingOpplysningEnum.BI_DIAGNOSE]}
-        </Vis>
+        {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.DIAGNOSE)}
+        <Element>Bidiagnose</Element>
+        {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BI_DIAGNOSE)}
         <Element>Beskrivelse av fraværet</Element>
-        {vårSykmelding?.[SykmeldingOpplysningEnum.BESKRIV_FRAVÆR]}
+        {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BESKRIV_FRAVÆR)}
         <Element>Beskriv eventelle hesyn som må tas på arbeidsplassen</Element>
-        {vårSykmelding?.[SykmeldingOpplysningEnum.BESKRIV_HENSYN]}
+        {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
         <Element>Arbeidsgiver som legen har skrevet inn</Element>
-        {vårSykmelding?.[SykmeldingOpplysningEnum.ARBEIDSGIVER]}
+        {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.ARBEIDSGIVER)}
         <Element>Lege/sykmelder</Element>
-        {vårSykmelding?.[SykmeldingOpplysningEnum.SYKMELDER]}
+        {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.SYKMELDER)}
       </Vis>
       <Vis hvis={vårSykmelding === undefined}>
         <Normaltekst>
