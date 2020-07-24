@@ -5,7 +5,7 @@ import { Input } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { VedleggInterface, OpplastetVedleggInterface } from '../../models/vedlegg';
+import { KvitteringInterface, OpplastetVedleggInterface } from '../../models/vedlegg';
 import Fil from './Fil';
 import './Filopplaster.less';
 import env from '../../utils/environment';
@@ -15,24 +15,23 @@ import Datovelger from '../datovelger/Datovelger';
 import { useAppStore } from '../../data/stores/app-store';
 import { generateId } from '../../utils/random';
 
-interface Props {
-  nårNyttVedlegg?: (vedlegg: VedleggInterface) => void;
-}
-
-const FilopplasterModal: React.FC<Props> = ({
-  nårNyttVedlegg,
-}) => {
+const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
   const [laster, settLaster] = useState<boolean>(false);
   const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<number | null>(null);
+  const { kvitteringer, settKvitteringer } = useAppStore();
 
   const {
     uopplastetFil, settUopplastetFil,
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
     åpenFilopplasterModal, settÅpenFilopplasterModal,
   } = useAppStore();
+
+  const nyKvittering = (kvittering: KvitteringInterface) => {
+    settKvitteringer([...kvitteringer, kvittering]);
+  };
 
   const lukkModal = () => {
     settUopplastetFil(null);
@@ -66,7 +65,7 @@ const FilopplasterModal: React.FC<Props> = ({
     settDato(_dato);
   };
 
-  const lagreVedlegg = (fil: File) => {
+  const lagreKvittering = (fil: File) => {
     const requestData = new FormData();
     requestData.append('file', fil);
 
@@ -80,7 +79,7 @@ const FilopplasterModal: React.FC<Props> = ({
       post<OpplastetVedleggInterface>(`${env.mockApiUrl}/kvittering`, requestData)
         .then((response) => {
           if (response.parsedBody?.dokumentId) {
-            const nyttVedlegg: VedleggInterface = {
+            const kvittering: KvitteringInterface = {
               id: generateId(),
               navn: fil.name,
               størrelse: fil.size,
@@ -89,9 +88,7 @@ const FilopplasterModal: React.FC<Props> = ({
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               dokumentId: response.parsedBody!.dokumentId,
             };
-            if (nårNyttVedlegg) {
-              nårNyttVedlegg(nyttVedlegg);
-            }
+            nyKvittering(kvittering);
           } else {
             logger.warn('Responsen inneholder ikke noen dokumentId', response.parsedBody);
           }
@@ -137,7 +134,7 @@ const FilopplasterModal: React.FC<Props> = ({
         {laster
           ? (<NavFrontendSpinner className="lagre-kvittering-spinner" />)
           : (
-            <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreVedlegg(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
+            <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreKvittering(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
               Lagre kvittering
             </Knapp>
           )}

@@ -3,7 +3,7 @@ import {
   useParams,
 } from 'react-router-dom';
 import Brodsmuler from '../../components/Brodsmuler';
-import ReiseTilskuddPeriode from '../reisetilskudd-periode/ReisetilskuddPeriode';
+import Kvitteringsopplasting from '../reisetilskudd-periode/Kvitteringsopplasting';
 import Utbetaling from '../utbetaling/Utbetaling';
 import TilbakeKnapp from '../../components/knapper/TilbakeKnapp';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
@@ -32,7 +32,7 @@ function Soknaden(): ReactElement {
           <DagensTransportmiddel />
         </Vis>
         <Vis hvis={idNum === 3}>
-          <ReiseTilskuddPeriode />
+          <Kvitteringsopplasting />
         </Vis>
         <Vis hvis={idNum === 4}>
           <Oppsummering />

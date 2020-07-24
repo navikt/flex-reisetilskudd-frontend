@@ -1,12 +1,25 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement } from 'react';
-import { PeriodeInterface } from '../../../models/periode';
-import totaltBeløp from './totalBelop';
+import { useAppStore } from '../../../data/stores/app-store';
 
-const TotalBelop = (periode: PeriodeInterface): ReactElement => (
-  <Normaltekst>
-    {`Totalt beløp: ${totaltBeløp(periode).toFixed(2)}`}
-  </Normaltekst>
-);
+const TotalBelop = (): ReactElement => {
+  const { kvitteringer } = useAppStore();
+
+  const totaltBeløp = (): number => (kvitteringer
+    ? (
+      kvitteringer
+        .filter((kvittering) => kvittering.beløp)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        .map((kvittering) => kvittering.beløp!)
+        .reduce((a, b) => a + b, 0.0)
+    )
+    : (0.0));
+
+  return (
+    <Normaltekst>
+      {`Totalt beløp: ${totaltBeløp().toFixed(2)}`}
+    </Normaltekst>
+  );
+};
 
 export default TotalBelop;
