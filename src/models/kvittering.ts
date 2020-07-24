@@ -5,13 +5,13 @@ export interface KvitteringInterface {
   beløp?: number;
   dato?: Date;
   dokumentId?: string;
-  transportMiddel?:
+  transportmiddel?:
   Transportmiddel.TAXI |
   Transportmiddel.KOLLEKTIV |
   Transportmiddel.EGEN_BIL;
 }
 
-export interface OpplastetVedleggInterface {
+export interface OpplastetKvitteringInterface {
   dokumentId: string;
 }
 
@@ -21,3 +21,6 @@ export enum Transportmiddel {
   KOLLEKTIV = 'Kollektivtransport',
   EGEN_BIL = 'Egen bil'
 }
+
+export type TransportmiddelAlternativer = Transportmiddel.EGEN_BIL | Transportmiddel.KOLLEKTIV
+| Transportmiddel.TAXI | undefined;

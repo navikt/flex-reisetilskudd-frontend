@@ -12,7 +12,7 @@ const RadioSporsmalOffentligPrivat = ({
   const {
     dagensTransportmiddelState,
     settDagensTransportmiddelState,
-    settDagensTransportMiddelValidert,
+    settDagensTransportmiddelValidert,
   } = useAppStore();
 
   return (
@@ -33,7 +33,7 @@ const RadioSporsmalOffentligPrivat = ({
             dagensTransportmiddelState,
             settDagensTransportmiddelState,
           );
-          settDagensTransportMiddelValidert(undefined);
+          settDagensTransportmiddelValidert(undefined);
         }}
       />
     </div>

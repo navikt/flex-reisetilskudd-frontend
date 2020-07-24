@@ -11,7 +11,6 @@ const SykmeldingPanel = () : ReactElement => {
     opplysningerSykmeldinger,
     settOpplysningerSykmeldinger,
   } = useAppStore();
-
   if (opplysningerSykmeldinger === undefined) {
     hentSykmeldinger(settOpplysningerSykmeldinger);
   }
