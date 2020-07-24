@@ -18,22 +18,26 @@ const SykmeldingOpplysninger = () : ReactElement => {
   const fraDato : string = vårSykmelding?.[SykmeldingOpplysningEnum.FRA_DATO] || '';
   const tilDato : string = vårSykmelding?.[SykmeldingOpplysningEnum.TIL_DATO] || '';
 
+  const tittelKlasseNavn = 'soknad-tittel';
+
   return (
-    <div>
+    <div className="sykmelding-opplysninger-wrapper">
       <Vis hvis={vårSykmelding !== undefined}>
-        <Element>Periode</Element>
+        <Element className={tittelKlasseNavn}>Periode</Element>
         <PeriodeTekst fraDato={fraDato} tilDato={tilDato} />
-        <Element>Diagnose</Element>
+        <Element className={tittelKlasseNavn}>Diagnose</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.DIAGNOSE)}
-        <Element>Bidiagnose</Element>
+        <Element className={tittelKlasseNavn}>Bidiagnose</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BI_DIAGNOSER)}
-        <Element>Reisetilskudd</Element>
+        <Element className={tittelKlasseNavn}>Reisetilskudd</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.REISETILSKUDD)}
-        <Element>Beskriv eventelle hesyn som må tas på arbeidsplassen</Element>
+        <Element className={tittelKlasseNavn}>
+          Beskriv eventelle hesyn som må tas på arbeidsplassen
+        </Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
-        <Element>Arbeidsgiver som legen har skrevet inn</Element>
+        <Element className={tittelKlasseNavn}>Arbeidsgiver som legen har skrevet inn</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.ARBEIDSGIVER)}
-        <Element>Lege/sykmelder</Element>
+        <Element className={tittelKlasseNavn}>Lege/sykmelder</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.SYKMELDER)}
       </Vis>
       <Vis hvis={vårSykmelding === undefined}>
