@@ -5,7 +5,7 @@ import totaltBeløp from './totalBelop';
 
 const TotalBelop = (periode: PeriodeInterface): ReactElement => (
   <Normaltekst>
-    {`Totalt beløp: ${totaltBeløp(periode)}`}
+    {`Totalt beløp: ${totaltBeløp(periode).toFixed(2)}`}
   </Normaltekst>
 );
 
