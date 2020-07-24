@@ -1,19 +1,23 @@
 import React, { ReactElement, useState } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import RadioSporsmalOffentligPrivat from '../../components/sporsmal/radioSporsmal/RadioSporsmalOffentligPrivat';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Veileder from '../../components/sporsmal/Veileder';
 import DagensTransportmiddelCheckbox from '../../components/sporsmal/dagensTransportmiddelCheckbox/dagensTransportmiddelCheckbox';
-import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal';
 import Vis from '../../components/Vis';
 import {
-  offentligPrivatSpørsmål, transportalternativerPrivat,
-  antallKilometerSpørsmål, månedligeUtgifterSpørsmål, transportVeileder, offentligPrivatVerdier,
+  transportalternativer,
+  antallKilometerSpørsmål,
+  månedligeUtgifterSpørsmål,
+  transportVeileder,
+  transportalternativerKollektivt,
 } from '../../components/sporsmal/spørsmålTekster';
 import { useAppStore } from '../../data/stores/app-store';
+import { validerKilometer, validerKroner } from '../../utils/skjemavalidering';
+import './dagens-transportmiddel.less';
+import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal';
 import { endreInputVerdi } from '../../components/sporsmal/sporsmalsUtils';
 import { NummerInputStateEnum } from '../../models/dagenstransportmiddel';
-import { validerKilometer, validerKroner } from '../../utils/skjemavalidering';
 
 const DagensTransportmiddel = (): ReactElement => {
   const [valideringsFeil, settValideringsFeil] = useState<FeiloppsummeringFeil[]>([]);
@@ -21,6 +25,14 @@ const DagensTransportmiddel = (): ReactElement => {
     dagensTransportmiddelState, settDagensTransportmiddelState,
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
   } = useAppStore();
+
+  const validerMånedligeUtgifter = (nyeValideringsFeil: FeiloppsummeringFeil[]) => {
+    if (!validerKroner(dagensTransportmiddelState.månedligeUtgifterSpørsmål)) {
+      nyeValideringsFeil.push(
+        { skjemaelementId: månedligeUtgifterSpørsmål.id, feilmelding: 'Ugyldig kroneverdi' },
+      );
+    }
+  };
 
   const handleKilometerChange = (tekst: string) => {
     endreInputVerdi(
@@ -42,26 +54,19 @@ const DagensTransportmiddel = (): ReactElement => {
     settDagensTransportmiddelValidert(undefined);
   };
 
-  const validerOffentlig = (nyeValideringsFeil : FeiloppsummeringFeil[]) => {
-    if (!validerKroner(dagensTransportmiddelState.månedligeUtgifterSpørsmål)) {
-      nyeValideringsFeil.push(
-        { skjemaelementId: månedligeUtgifterSpørsmål.id, feilmelding: 'Ugyldig kroneverdi' },
-      );
-    }
-  };
-
-  const validerPrivat = (nyeValideringsFeil : FeiloppsummeringFeil[]) => {
+  const validerTransportmidler = (nyeValideringsFeil: FeiloppsummeringFeil[]) => {
     if (
-      !dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked
-      && !dagensTransportmiddelState.transportalternativerPrivat.syklerChecked
-      && !dagensTransportmiddelState.transportalternativerPrivat.gårChecked
+      !dagensTransportmiddelState.transportalternativer.egenBilChecked
+      && !dagensTransportmiddelState.transportalternativer.syklerChecked
+      && !dagensTransportmiddelState.transportalternativer.gårChecked
+      && !dagensTransportmiddelState.transportalternativer.kollektivtransportChecked
     ) {
       nyeValideringsFeil.push(
-        { skjemaelementId: transportalternativerPrivat.id, feilmelding: 'Du må velge minst étt av alternativene for fremkomstmiddel' },
+        { skjemaelementId: transportalternativer.id, feilmelding: 'Du må velge minst étt av alternativene for fremkomstmiddel' },
       );
     }
 
-    if (dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked) {
+    if (dagensTransportmiddelState.transportalternativer.egenBilChecked) {
       if (!validerKilometer(dagensTransportmiddelState.antallKilometerSpørsmål)) {
         nyeValideringsFeil.push(
           { skjemaelementId: antallKilometerSpørsmål.id, feilmelding: 'Ugyldig kilometerverdi' },
@@ -71,53 +76,49 @@ const DagensTransportmiddel = (): ReactElement => {
   };
 
   const validerSkjema = () => {
-    const nyeValideringsFeil : FeiloppsummeringFeil[] = [];
-
-    if (dagensTransportmiddelState.offentligPrivatSpørsmål === offentligPrivatVerdier.OFFENTLIG) {
-      validerOffentlig(nyeValideringsFeil);
-    } else if (
-      dagensTransportmiddelState.offentligPrivatSpørsmål === offentligPrivatVerdier.PRIVAT
-    ) {
-      validerPrivat(nyeValideringsFeil);
-    } else {
-      nyeValideringsFeil.push(
-        { skjemaelementId: offentligPrivatSpørsmål.id, feilmelding: 'Du må svare på om du reiser offentlig eller privat' },
-      );
-    }
+    const nyeValideringsFeil: FeiloppsummeringFeil[] = [];
 
     settValideringsFeil(nyeValideringsFeil);
     settDagensTransportmiddelValidert(nyeValideringsFeil.length < 1);
+    validerTransportmidler(nyeValideringsFeil);
+    validerMånedligeUtgifter(nyeValideringsFeil);
   };
 
   return (
     <>
+      <Undertittel> Transportmiddel til daglig </Undertittel>
+      <Normaltekst> Hva slags transportmiddel bruker du til daglig? </Normaltekst>
       {Veileder(transportVeileder)}
-      {RadioSporsmalOffentligPrivat(offentligPrivatSpørsmål)}
-      <Vis hvis={dagensTransportmiddelState.offentligPrivatSpørsmål === 'OFFENTLIG'}>
+      {DagensTransportmiddelCheckbox(transportalternativer)}
+      <Vis
+        hvis={dagensTransportmiddelState.transportalternativer.egenBilChecked === true}
+      >
         {InputSporsmal(
           {
             ...{
-              onChange: handleMånedligeUtgifterChange,
-              value: dagensTransportmiddelState.månedligeUtgifterSpørsmål,
+              onChange: handleKilometerChange,
+              value: dagensTransportmiddelState.antallKilometerSpørsmål,
             },
-            ...månedligeUtgifterSpørsmål,
+            ...antallKilometerSpørsmål,
           },
         )}
       </Vis>
-      <Vis hvis={dagensTransportmiddelState.offentligPrivatSpørsmål === 'PRIVAT'}>
-        {DagensTransportmiddelCheckbox(transportalternativerPrivat)}
-        <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked === true}>
+      <div className="transportalternativerKollektivt">
+        {DagensTransportmiddelCheckbox(transportalternativerKollektivt)}
+        <Vis
+          hvis={dagensTransportmiddelState.transportalternativer.kollektivtransportChecked === true}
+        >
           {InputSporsmal(
             {
               ...{
-                onChange: handleKilometerChange,
-                value: dagensTransportmiddelState.antallKilometerSpørsmål,
+                onChange: handleMånedligeUtgifterChange,
+                value: dagensTransportmiddelState.månedligeUtgifterSpørsmål,
               },
-              ...antallKilometerSpørsmål,
+              ...månedligeUtgifterSpørsmål,
             },
           )}
         </Vis>
-      </Vis>
+      </div>
       <Knapp type="hoved" onClick={validerSkjema}>Validér skjemaet</Knapp>
       <Vis hvis={dagensTransportmiddelValidert}>
         Skjemaet er validert, wohoo!

@@ -11,8 +11,7 @@ const PeriodeTekst = ({ fraDato, tilDato } : PeriodeTekstProps) : ReactElement =
   <span className="sykmelding-periode-tekst">
     <Vis hvis={fraDato !== '' && tilDato !== ''}>
       {formatertDato(new Date(fraDato), DatoFormat.NATURLIG_LANG)}
-      {' '}
-      til
+      {' til '}
       {formatertDato(new Date(tilDato), DatoFormat.NATURLIG_LANG)}
     </Vis>
 
