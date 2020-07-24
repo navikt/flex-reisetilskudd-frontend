@@ -14,13 +14,13 @@ const Kvitteringsopplasting: React.FC = () : ReactElement => (
     <Innholdstittel className="perioder-overskrift">Opplasting av kvitteringer</Innholdstittel>
     <Ingress className="perioder-overskrift"> Legg inn dine perioder og kvitteringer </Ingress>
     <TransportMiddelSporsmal />
-    <TotalBelop />
     <div className="filopplaster-wrapper periode-element">
-      <OpplastedeFiler />
       <div className="filopplaster">
         <FilopplasterModal />
         <DragAndDrop />
       </div>
+      <OpplastedeFiler />
+      <TotalBelop />
     </div>
   </div>
 );
