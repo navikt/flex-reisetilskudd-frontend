@@ -18,22 +18,26 @@ const SykmeldingOpplysninger = () : ReactElement => {
   const fraDato : string = vårSykmelding?.[SykmeldingOpplysningEnum.FRA_DATO] || '';
   const tilDato : string = vårSykmelding?.[SykmeldingOpplysningEnum.TIL_DATO] || '';
 
+  const tittelKlasseNavn = 'soknad-tittel';
+
   return (
     <div className="sykmelding-opplysninger-wrapper">
       <Vis hvis={vårSykmelding !== undefined}>
-        <Element className="soknad-tittel">Periode</Element>
+        <Element className={tittelKlasseNavn}>Periode</Element>
         <PeriodeTekst fraDato={fraDato} tilDato={tilDato} />
-        <Element className="soknad-tittel">Diagnose</Element>
+        <Element className={tittelKlasseNavn}>Diagnose</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.DIAGNOSE)}
-        <Element className="soknad-tittel">Bidiagnose</Element>
+        <Element className={tittelKlasseNavn}>Bidiagnose</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BI_DIAGNOSER)}
-        <Element className="soknad-tittel">Reisetilskudd</Element>
+        <Element className={tittelKlasseNavn}>Reisetilskudd</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.REISETILSKUDD)}
-        <Element className="soknad-tittel">Beskriv eventelle hesyn som må tas på arbeidsplassen</Element>
+        <Element className={tittelKlasseNavn}>
+          Beskriv eventelle hesyn som må tas på arbeidsplassen
+        </Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
-        <Element className="soknad-tittel">Arbeidsgiver som legen har skrevet inn</Element>
+        <Element className={tittelKlasseNavn}>Arbeidsgiver som legen har skrevet inn</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.ARBEIDSGIVER)}
-        <Element className="soknad-tittel">Lege/sykmelder</Element>
+        <Element className={tittelKlasseNavn}>Lege/sykmelder</Element>
         {fåVerdiEllerManglendeOpplysninger(SykmeldingOpplysningEnum.SYKMELDER)}
       </Vis>
       <Vis hvis={vårSykmelding === undefined}>
