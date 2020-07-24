@@ -7,8 +7,8 @@ import CheckedMedTekst from '../common/checkedMedTekst/CheckedMedTekst';
 const OppsummeringDagensTransportmiddel = () : ReactElement => {
   const { dagensTransportmiddelState } = useAppStore();
   return (
-    <div className="oppsummering-dagens-transportmiddel">
-      <Undertittel className="oppsummering-underoverskrift">Dagens transportmiddel</Undertittel>
+    <div className="oppsummering-element oppsummering-dagens-transportmiddel">
+      <Undertittel className="oppsummering-underoverskrift">Hvordan reiste du før sykmeldingen?</Undertittel>
       <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked}>
         <CheckedMedTekst tekst={`Kjører egen bil, ${dagensTransportmiddelState.antallKilometerSpørsmål} kilometer`} />
       </Vis>
@@ -22,7 +22,7 @@ const OppsummeringDagensTransportmiddel = () : ReactElement => {
         // eslint-disable-next-line max-len
         /* <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.kollektivChecked && dagensTransportmiddelState.månedligeUtgifterSpørsmål > 0}> */}
       <Vis hvis={dagensTransportmiddelState.månedligeUtgifterSpørsmål > 0}>
-        <CheckedMedTekst tekst={`Reiser kollektivt med ${dagensTransportmiddelState.månedligeUtgifterSpørsmål} kroner i månedlige utgifter.`} />
+        <CheckedMedTekst tekst={`Reiser kollektivt med ${dagensTransportmiddelState.månedligeUtgifterSpørsmål} kroner i månedlige utgifter`} />
       </Vis>
     </div>
   );

@@ -11,8 +11,8 @@ const Oppsummering = () : ReactElement => (
     <Innholdstittel className="oppsummering-overskrift">Oppsummering av søknaden</Innholdstittel>
     <OppsummeringUtbetaling />
     <OppsummeringDagensTransportmiddel />
-    <div className="oppsummering-vedlegg">
-      <Undertittel className="oppsummering-underoverskrift">Opplastede vedlegg</Undertittel>
+    <div className="oppsummering-element oppsummering-vedlegg">
+      <Undertittel className="oppsummering-underoverskrift">Opplastede kvitteringer</Undertittel>
       <OpplastedeFiler />
       <TotalBelop />
     </div>
