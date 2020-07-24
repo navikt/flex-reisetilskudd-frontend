@@ -52,6 +52,7 @@ export const offentligPrivatSpørsmål: RadioSpørsmålProps = {
 export const transportalternativerPrivatVerdier = {
   GÅR: 'GÅR',
   SYKLER: 'SYKLER',
+  KOLLEKTIVTRANSPORT: 'KOLLEKTIVTRANSPORT',
   EGEN_BIL: 'EGEN BIL',
 };
 
@@ -65,6 +66,10 @@ export const transportalternativerPrivat: CheckboxProps = {
     {
       label: 'Sykler',
       value: transportalternativerPrivatVerdier.SYKLER,
+    },
+    {
+      label: 'Kollektivtransport',
+      value: transportalternativerPrivatVerdier.KOLLEKTIVTRANSPORT,
     },
     {
       label: 'Egen bil',

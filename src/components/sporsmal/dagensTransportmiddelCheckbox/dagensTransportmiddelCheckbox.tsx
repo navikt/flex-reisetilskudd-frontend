@@ -9,13 +9,13 @@ import { endreCheckboxVerdi } from '../sporsmalsUtils';
 
 const DagensTransportmiddelCheckbox = (
   { tittel, svaralternativer, id }: CheckboxProps,
-) : ReactElement => {
+): ReactElement => {
   const {
     dagensTransportmiddelState, settDagensTransportmiddelState,
     settDagensTransportMiddelValidert,
   } = useAppStore();
 
-  const flipStateVerdi = (hvilkenCheckbox : DagensTransportmiddelCheckboxStateEnum) => {
+  const flipStateVerdi = (hvilkenCheckbox: DagensTransportmiddelCheckboxStateEnum) => {
     endreCheckboxVerdi(
       hvilkenCheckbox,
       !dagensTransportmiddelState.transportalternativerPrivat[hvilkenCheckbox],
@@ -31,10 +31,12 @@ const DagensTransportmiddelCheckbox = (
       flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.syklerChecked);
     } else if (nyValgt === transportalternativerPrivatVerdier.GÅR) {
       flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.gårChecked);
+    } else if (nyValgt === transportalternativerPrivatVerdier.KOLLEKTIVTRANSPORT) {
+      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.kollektivtransportChecked);
     }
   };
 
-  const erChecked = (alternativ : string) => {
+  const erChecked = (alternativ: string) => {
     if (alternativ === transportalternativerPrivatVerdier.EGEN_BIL) {
       return dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked;
     }
@@ -43,6 +45,9 @@ const DagensTransportmiddelCheckbox = (
     }
     if (alternativ === transportalternativerPrivatVerdier.GÅR) {
       return dagensTransportmiddelState.transportalternativerPrivat.gårChecked;
+    }
+    if (alternativ === transportalternativerPrivatVerdier.KOLLEKTIVTRANSPORT) {
+      return dagensTransportmiddelState.transportalternativerPrivat.kollektivtransportChecked;
     }
     return false;
   };
@@ -56,8 +61,8 @@ const DagensTransportmiddelCheckbox = (
       <CheckboksPanelGruppe
         legend={tittel}
         checkboxes={
-        endraAlternativer
-    }
+          endraAlternativer
+        }
         onChange={(_, nyVerdi) => {
           skrivEndringTilGlobalState(nyVerdi);
           settDagensTransportMiddelValidert(undefined);

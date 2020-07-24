@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import RadioSporsmalOffentligPrivat from '../../components/sporsmal/radioSporsmal/RadioSporsmalOffentligPrivat';
 import Veileder from '../../components/sporsmal/Veileder';
 import DagensTransportmiddelCheckbox from '../../components/sporsmal/dagensTransportmiddelCheckbox/dagensTransportmiddelCheckbox';
 import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal';
@@ -32,7 +31,7 @@ const DagensTransportmiddel = (): ReactElement => {
     settDagensTransportMiddelValidert(undefined);
   };
 
-  const handleMånedligeUtgifterChange = (tekst: string) => {
+  /* const handleMånedligeUtgifterChange = (tekst: string) => {
     endreInputVerdi(
       NummerInputStateEnum.månedligeUtgifterSpørsmål,
       tekst,
@@ -40,9 +39,9 @@ const DagensTransportmiddel = (): ReactElement => {
       settDagensTransportmiddelState,
     );
     settDagensTransportMiddelValidert(undefined);
-  };
+  }; */
 
-  const validerOffentlig = (nyeValideringsFeil : FeiloppsummeringFeil[]) => {
+  const validerOffentlig = (nyeValideringsFeil: FeiloppsummeringFeil[]) => {
     if (!validerKroner(dagensTransportmiddelState.månedligeUtgifterSpørsmål)) {
       nyeValideringsFeil.push(
         { skjemaelementId: månedligeUtgifterSpørsmål.id, feilmelding: 'Ugyldig kroneverdi' },
@@ -50,11 +49,12 @@ const DagensTransportmiddel = (): ReactElement => {
     }
   };
 
-  const validerPrivat = (nyeValideringsFeil : FeiloppsummeringFeil[]) => {
+  const validerPrivat = (nyeValideringsFeil: FeiloppsummeringFeil[]) => {
     if (
       !dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked
       && !dagensTransportmiddelState.transportalternativerPrivat.syklerChecked
       && !dagensTransportmiddelState.transportalternativerPrivat.gårChecked
+      && !dagensTransportmiddelState.transportalternativerPrivat.kollektivtransportChecked
     ) {
       nyeValideringsFeil.push(
         { skjemaelementId: transportalternativerPrivat.id, feilmelding: 'Du må velge minst étt av alternativene for fremkomstmiddel' },
@@ -71,7 +71,7 @@ const DagensTransportmiddel = (): ReactElement => {
   };
 
   const validerSkjema = () => {
-    const nyeValideringsFeil : FeiloppsummeringFeil[] = [];
+    const nyeValideringsFeil: FeiloppsummeringFeil[] = [];
 
     if (dagensTransportmiddelState.offentligPrivatSpørsmål === offentligPrivatVerdier.OFFENTLIG) {
       validerOffentlig(nyeValideringsFeil);
@@ -92,31 +92,17 @@ const DagensTransportmiddel = (): ReactElement => {
   return (
     <>
       {Veileder(transportVeileder)}
-      {RadioSporsmalOffentligPrivat(offentligPrivatSpørsmål)}
-      <Vis hvis={dagensTransportmiddelState.offentligPrivatSpørsmål === 'OFFENTLIG'}>
+      {DagensTransportmiddelCheckbox(transportalternativerPrivat)}
+      <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked === true}>
         {InputSporsmal(
           {
             ...{
-              onChange: handleMånedligeUtgifterChange,
-              value: dagensTransportmiddelState.månedligeUtgifterSpørsmål,
+              onChange: handleKilometerChange,
+              value: dagensTransportmiddelState.antallKilometerSpørsmål,
             },
-            ...månedligeUtgifterSpørsmål,
+            ...antallKilometerSpørsmål,
           },
         )}
-      </Vis>
-      <Vis hvis={dagensTransportmiddelState.offentligPrivatSpørsmål === 'PRIVAT'}>
-        {DagensTransportmiddelCheckbox(transportalternativerPrivat)}
-        <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked === true}>
-          {InputSporsmal(
-            {
-              ...{
-                onChange: handleKilometerChange,
-                value: dagensTransportmiddelState.antallKilometerSpørsmål,
-              },
-              ...antallKilometerSpørsmål,
-            },
-          )}
-        </Vis>
       </Vis>
       <Knapp type="hoved" onClick={validerSkjema}>Validér skjemaet</Knapp>
       <Vis hvis={dagensTransportMiddelValidert}>

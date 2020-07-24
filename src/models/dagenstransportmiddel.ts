@@ -5,18 +5,20 @@ export interface DagensTransportmiddelSvarInterface {
   transportalternativerPrivat: {
     egenBilChecked: boolean,
     syklerChecked: boolean,
-    gårChecked: boolean
+    gårChecked: boolean,
+    kollektivtransportChecked: boolean
   },
   antallKilometerSpørsmål: number | string,
 }
 
-export const dagensTransportmiddelStateDefault : DagensTransportmiddelSvarInterface = {
+export const dagensTransportmiddelStateDefault: DagensTransportmiddelSvarInterface = {
   offentligPrivatSpørsmål: undefined,
   månedligeUtgifterSpørsmål: '',
   transportalternativerPrivat: {
     egenBilChecked: false,
     gårChecked: false,
     syklerChecked: false,
+    kollektivtransportChecked: false,
   },
   antallKilometerSpørsmål: '',
 };
@@ -25,6 +27,7 @@ export enum DagensTransportmiddelCheckboxStateEnum {
   egenBilChecked = 'egenBilChecked',
   syklerChecked = 'syklerChecked',
   gårChecked = 'gårChecked',
+  kollektivtransportChecked = 'kollektivtransportChecked',
 }
 
 export enum NummerInputStateEnum {
