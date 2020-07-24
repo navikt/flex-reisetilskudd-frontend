@@ -4,6 +4,7 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { utbetalingSpørsmålVerdier } from '../spørsmålTekster';
 import { useAppStore } from '../../../data/stores/app-store';
 import { RadioSpørsmålProps } from '../../../types/types';
+import './radiosporsmal-utbetaling.less';
 
 const RadioSpørsmålUtbetaling = ({
   tittel, name, spørsmålstekst, svaralternativer,
@@ -28,8 +29,8 @@ const RadioSpørsmålUtbetaling = ({
         name={name}
         description={spørsmålstekst}
         radios={
-                    svaralternativer
-                }
+          svaralternativer
+        }
         checked={activeMegArbeidsgiver}
         onChange={(_, nyVerdi) => {
           skrivEndringTilGlobalState(nyVerdi);
