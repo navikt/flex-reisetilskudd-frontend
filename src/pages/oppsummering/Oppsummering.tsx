@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import './oppsummering.less';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
 import OpplastedeFiler from '../../components/filopplaster/OpplastedeFiler';
-import TotalBelop from '../../components/periode/totaltBelop/TotaltBelop';
+import TotalBelop from '../../components/kvittering/totaltBelop/TotaltBelop';
 import OppsummeringDagensTransportmiddel from '../../components/oppsummering/OppsummeringDagensTransportMiddel';
 import OppsummeringUtbetaling from '../../components/oppsummering/OppsummeringUtbetaling';
 

@@ -12,7 +12,7 @@ const DagensTransportmiddelCheckbox = (
 ): ReactElement => {
   const {
     dagensTransportmiddelState, settDagensTransportmiddelState,
-    settDagensTransportMiddelValidert,
+    settDagensTransportmiddelValidert,
   } = useAppStore();
 
   const flipStateVerdi = (hvilkenCheckbox: DagensTransportmiddelCheckboxStateEnum) => {
@@ -65,7 +65,7 @@ const DagensTransportmiddelCheckbox = (
         }
         onChange={(_, nyVerdi) => {
           skrivEndringTilGlobalState(nyVerdi);
-          settDagensTransportMiddelValidert(undefined);
+          settDagensTransportmiddelValidert(undefined);
         }}
       />
     </div>

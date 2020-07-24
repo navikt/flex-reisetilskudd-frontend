@@ -5,7 +5,7 @@ import { SlettIkon } from '../../assets/ikoner';
 // import vedlegg from '../../assets/vedlegg.svg';
 import helsecannabis from '../../assets/helsecannabis.svg';
 import formaterFilstørrelse from './utils';
-import { KvitteringInterface } from '../../models/vedlegg';
+import { KvitteringInterface } from '../../models/kvittering';
 import { formatertDato, DatoFormat } from '../../utils/dato';
 import { useAppStore } from '../../data/stores/app-store';
 

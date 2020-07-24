@@ -23,7 +23,7 @@ const DagensTransportmiddel = (): ReactElement => {
   const [valideringsFeil, settValideringsFeil] = useState<FeiloppsummeringFeil[]>([]);
   const {
     dagensTransportmiddelState, settDagensTransportmiddelState,
-    dagensTransportMiddelValidert, settDagensTransportMiddelValidert,
+    dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
   } = useAppStore();
 
   const validerMånedligeUtgifter = (nyeValideringsFeil: FeiloppsummeringFeil[]) => {
@@ -41,7 +41,7 @@ const DagensTransportmiddel = (): ReactElement => {
       dagensTransportmiddelState,
       settDagensTransportmiddelState,
     );
-    settDagensTransportMiddelValidert(undefined);
+    settDagensTransportmiddelValidert(undefined);
   };
 
   const handleMånedligeUtgifterChange = (tekst: string) => {
@@ -51,7 +51,7 @@ const DagensTransportmiddel = (): ReactElement => {
       dagensTransportmiddelState,
       settDagensTransportmiddelState,
     );
-    settDagensTransportMiddelValidert(undefined);
+    settDagensTransportmiddelValidert(undefined);
   };
 
   const validerTransportmidler = (nyeValideringsFeil: FeiloppsummeringFeil[]) => {
@@ -79,7 +79,7 @@ const DagensTransportmiddel = (): ReactElement => {
     const nyeValideringsFeil: FeiloppsummeringFeil[] = [];
 
     settValideringsFeil(nyeValideringsFeil);
-    settDagensTransportMiddelValidert(nyeValideringsFeil.length < 1);
+    settDagensTransportmiddelValidert(nyeValideringsFeil.length < 1);
     validerTransportmidler(nyeValideringsFeil);
     validerMånedligeUtgifter(nyeValideringsFeil);
   };
@@ -120,10 +120,10 @@ const DagensTransportmiddel = (): ReactElement => {
         </Vis>
       </div>
       <Knapp type="hoved" onClick={validerSkjema}>Validér skjemaet</Knapp>
-      <Vis hvis={dagensTransportMiddelValidert}>
+      <Vis hvis={dagensTransportmiddelValidert}>
         Skjemaet er validert, wohoo!
       </Vis>
-      <Vis hvis={dagensTransportMiddelValidert === false}>
+      <Vis hvis={dagensTransportmiddelValidert === false}>
         <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={valideringsFeil} />
       </Vis>
     </>
