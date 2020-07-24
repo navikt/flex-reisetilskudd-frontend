@@ -43,7 +43,7 @@ const FilMedInfo: React.FC<Props> = ({ fil }) => {
     + fullString.substr(fullString.length - backChars); */
     return fullString.substr(0, 2) + separator + fullString.substr(-3);
   }
- 
+
   return (
     <div className="fil-med-info">
       <div className="kvittering">
