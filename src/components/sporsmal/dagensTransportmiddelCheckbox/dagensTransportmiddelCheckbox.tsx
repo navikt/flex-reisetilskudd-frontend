@@ -3,7 +3,7 @@ import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import { CheckboxProps } from '../../../types/types';
 import 'nav-frontend-skjema-style';
 import { useAppStore } from '../../../data/stores/app-store';
-import { transportalternativerPrivatVerdier } from '../spørsmålTekster';
+import { transportalternativerVerdier } from '../spørsmålTekster';
 import { DagensTransportmiddelCheckboxStateEnum } from '../../../models/dagenstransportmiddel';
 import { endreCheckboxVerdi } from '../sporsmalsUtils';
 
@@ -18,36 +18,36 @@ const DagensTransportmiddelCheckbox = (
   const flipStateVerdi = (hvilkenCheckbox: DagensTransportmiddelCheckboxStateEnum) => {
     endreCheckboxVerdi(
       hvilkenCheckbox,
-      !dagensTransportmiddelState.transportalternativerPrivat[hvilkenCheckbox],
+      !dagensTransportmiddelState.transportalternativer[hvilkenCheckbox],
       dagensTransportmiddelState,
       settDagensTransportmiddelState,
     );
   };
 
   const skrivEndringTilGlobalState = (nyValgt: string) => {
-    if (nyValgt === transportalternativerPrivatVerdier.EGEN_BIL) {
+    if (nyValgt === transportalternativerVerdier.EGEN_BIL) {
       flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.egenBilChecked);
-    } else if (nyValgt === transportalternativerPrivatVerdier.SYKLER) {
+    } else if (nyValgt === transportalternativerVerdier.SYKLER) {
       flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.syklerChecked);
-    } else if (nyValgt === transportalternativerPrivatVerdier.GÅR) {
+    } else if (nyValgt === transportalternativerVerdier.GÅR) {
       flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.gårChecked);
-    } else if (nyValgt === transportalternativerPrivatVerdier.KOLLEKTIVTRANSPORT) {
+    } else if (nyValgt === transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
       flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.kollektivtransportChecked);
     }
   };
 
   const erChecked = (alternativ: string) => {
-    if (alternativ === transportalternativerPrivatVerdier.EGEN_BIL) {
-      return dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked;
+    if (alternativ === transportalternativerVerdier.EGEN_BIL) {
+      return dagensTransportmiddelState.transportalternativer.egenBilChecked;
     }
-    if (alternativ === transportalternativerPrivatVerdier.SYKLER) {
-      return dagensTransportmiddelState.transportalternativerPrivat.syklerChecked;
+    if (alternativ === transportalternativerVerdier.SYKLER) {
+      return dagensTransportmiddelState.transportalternativer.syklerChecked;
     }
-    if (alternativ === transportalternativerPrivatVerdier.GÅR) {
-      return dagensTransportmiddelState.transportalternativerPrivat.gårChecked;
+    if (alternativ === transportalternativerVerdier.GÅR) {
+      return dagensTransportmiddelState.transportalternativer.gårChecked;
     }
-    if (alternativ === transportalternativerPrivatVerdier.KOLLEKTIVTRANSPORT) {
-      return dagensTransportmiddelState.transportalternativerPrivat.kollektivtransportChecked;
+    if (alternativ === transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
+      return dagensTransportmiddelState.transportalternativer.kollektivtransportChecked;
     }
     return false;
   };
