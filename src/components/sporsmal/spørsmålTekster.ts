@@ -80,5 +80,5 @@ export const månedligeUtgifterSpørsmål: InputProps = {
 };
 
 export const transportVeileder: VeilederProps = {
-  hjelpetekst: 'Kollektiv transport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykler, elsparkesykkel.',
+  hjelpetekst: 'Kollektiv transport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.',
 };

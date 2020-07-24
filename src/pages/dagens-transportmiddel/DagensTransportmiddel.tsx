@@ -81,9 +81,7 @@ const DagensTransportmiddel = (): ReactElement => {
     settValideringsFeil(nyeValideringsFeil);
     settDagensTransportMiddelValidert(nyeValideringsFeil.length < 1);
     validerTransportmidler(nyeValideringsFeil);
-    if (dagensTransportmiddelState.transportalternativer.kollektivtransportChecked) {
-      validerMånedligeUtgifter(nyeValideringsFeil);
-    }
+    validerMånedligeUtgifter(nyeValideringsFeil);
   };
 
   return (
@@ -92,7 +90,9 @@ const DagensTransportmiddel = (): ReactElement => {
       <Normaltekst> Hva slags transportmiddel bruker du til daglig? </Normaltekst>
       {Veileder(transportVeileder)}
       {DagensTransportmiddelCheckbox(transportalternativer)}
-      <Vis hvis={dagensTransportmiddelState.transportalternativer.egenBilChecked === true}>
+      <Vis
+        hvis={dagensTransportmiddelState.transportalternativer.egenBilChecked === true}
+      >
         {InputSporsmal(
           {
             ...{
