@@ -17,7 +17,7 @@ const TotalBelop = (): ReactElement => {
 
   return (
     <Normaltekst>
-      {`Totalt beløp: ${totaltBeløp()}`}
+      {`Totalt beløp: ${totaltBeløp().toFixed(2)}`}
     </Normaltekst>
   );
 };
