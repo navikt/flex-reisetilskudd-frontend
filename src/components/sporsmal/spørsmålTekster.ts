@@ -26,52 +26,41 @@ export const utbetalingSpørsmål: RadioSpørsmålProps = {
   id: 'utbetaling-offentlig-privat-sporsmal',
 };
 
-export const offentligPrivatVerdier = {
-  NAME: 'TRANSPORTMIDDEL',
-  OFFENTLIG: 'OFFENTLIG',
-  PRIVAT: 'PRIVAT',
-};
-
-export const offentligPrivatSpørsmål: RadioSpørsmålProps = {
-  tittel: 'Transportmiddel til daglig',
-  name: offentligPrivatVerdier.NAME,
-  spørsmålstekst: 'Hva slags transportmiddel bruker du til daglig?',
-  svaralternativer: [
-    {
-      label: 'Offentlig',
-      value: offentligPrivatVerdier.OFFENTLIG,
-    },
-    {
-      label: 'Privat',
-      value: offentligPrivatVerdier.PRIVAT,
-    },
-  ],
-  id: 'dagens-transportmiddel-offentlig-privat-sporsmal',
-};
-
-export const transportalternativerPrivatVerdier = {
+export const transportalternativerVerdier = {
   GÅR: 'GÅR',
   SYKLER: 'SYKLER',
+  KOLLEKTIVTRANSPORT: 'KOLLEKTIVTRANSPORT',
   EGEN_BIL: 'EGEN BIL',
 };
 
-export const transportalternativerPrivat: CheckboxProps = {
+export const transportalternativer: CheckboxProps = {
   tittel: 'Velg fremkomstmiddel',
   svaralternativer: [
     {
       label: 'Går',
-      value: transportalternativerPrivatVerdier.GÅR,
+      value: transportalternativerVerdier.GÅR,
     },
     {
       label: 'Sykler',
-      value: transportalternativerPrivatVerdier.SYKLER,
+      value: transportalternativerVerdier.SYKLER,
     },
     {
       label: 'Egen bil',
-      value: transportalternativerPrivatVerdier.EGEN_BIL,
+      value: transportalternativerVerdier.EGEN_BIL,
     },
   ],
-  id: 'dagens-transportmiddel-transportalternativer-privat',
+  id: 'dagens-transportmiddel-transportalternativer',
+};
+
+export const transportalternativerKollektivt: CheckboxProps = {
+  tittel: '',
+  svaralternativer: [
+    {
+      label: 'Kollektivtransport',
+      value: transportalternativerVerdier.KOLLEKTIVTRANSPORT,
+    },
+  ],
+  id: 'dagens-transportmiddel-transportalternativer-kollektivt',
 };
 
 export const antallKilometerSpørsmål: InputProps = {
@@ -91,5 +80,5 @@ export const månedligeUtgifterSpørsmål: InputProps = {
 };
 
 export const transportVeileder: VeilederProps = {
-  hjelpetekst: 'Offentlig transport regnes som kollektiv transport, taxi, bysykler, elsparkesykkel.',
+  hjelpetekst: 'Kollektiv transport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.',
 };
