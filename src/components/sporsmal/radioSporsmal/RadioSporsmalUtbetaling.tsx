@@ -4,7 +4,7 @@ import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { utbetalingSpørsmålVerdier } from '../spørsmålTekster';
 import { useAppStore } from '../../../data/stores/app-store';
 import { RadioSpørsmålProps } from '../../../types/types';
-import './radiosporsmal.less';
+import './radiosporsmal-utbetaling.less';
 
 const RadioSpørsmålUtbetaling = ({
   tittel, name, spørsmålstekst, svaralternativer,
