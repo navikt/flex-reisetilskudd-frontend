@@ -9,13 +9,13 @@ const OppsummeringDagensTransportmiddel = () : ReactElement => {
   return (
     <div className="oppsummering-element oppsummering-dagens-transportmiddel">
       <Undertittel className="oppsummering-underoverskrift">Hvordan reiste du før sykmeldingen?</Undertittel>
-      <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.egenBilChecked}>
+      <Vis hvis={dagensTransportmiddelState.transportalternativer.egenBilChecked}>
         <CheckedMedTekst tekst={`Kjører egen bil, ${dagensTransportmiddelState.antallKilometerSpørsmål} kilometer`} />
       </Vis>
-      <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.gårChecked}>
+      <Vis hvis={dagensTransportmiddelState.transportalternativer.gårChecked}>
         <CheckedMedTekst tekst="Går" />
       </Vis>
-      <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.syklerChecked}>
+      <Vis hvis={dagensTransportmiddelState.transportalternativer.syklerChecked}>
         <CheckedMedTekst tekst="Sykler" />
       </Vis>
       { // TODO: Når checkbox for kollektiv er på plass, bytt ut linja:
