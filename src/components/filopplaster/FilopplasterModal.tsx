@@ -5,7 +5,7 @@ import { Input } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { KvitteringInterface, OpplastetKvitteringInterface } from '../../models/kvittering';
+import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../models/kvittering';
 import Fil from './Fil';
 import './Filopplaster.less';
 import env from '../../utils/environment';
@@ -59,6 +59,14 @@ const FilopplasterModal: React.FC = () => {
     return true;
   };
 
+  const validerTransportmiddel = (nyttTransportmiddel: TransportmiddelAlternativer) => {
+    if (nyttTransportmiddel === undefined) {
+      settFilopplasterFeilmeldinger(['Vennligst velg et transportmiddel']);
+      return false;
+    }
+    return true;
+  };
+
   const oppdaterDato = (nyDato: Date): void => {
     if (validerDato(nyDato)) {
       settFilopplasterFeilmeldinger([]);
@@ -70,7 +78,7 @@ const FilopplasterModal: React.FC = () => {
     const requestData = new FormData();
     requestData.append('file', fil);
 
-    if (validerDato(dato) && validerBeløp(beløp)) {
+    if (validerDato(dato) && validerBeløp(beløp) && validerTransportmiddel(transportmiddel)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       requestData.append('dato', dato!.toString());
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

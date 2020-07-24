@@ -16,7 +16,7 @@ export interface OpplastetKvitteringInterface {
 }
 
 export enum Transportmiddel {
-  SPØRSMÅLS_KEY = 'vedlegg-transportmiddel-spørsmål',
+  SPØRSMÅLS_KEY = 'kvittering-transportmiddel-spørsmål',
   TAXI = 'Taxi',
   KOLLEKTIV = 'Kollektivtransport',
   EGEN_BIL = 'Egen bil'
