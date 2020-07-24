@@ -1,24 +1,24 @@
 import React, { ReactElement } from 'react';
-import RadioSpørsmålUtbetaling from '../../components/sporsmal/radioSporsmal/RadioSpørsmålUtbetaling';
+import RadioSpørsmålUtbetaling from '../../components/sporsmal/radioSporsmal/RadioSporsmalUtbetaling';
 import { utbetalingSpørsmål } from '../../components/sporsmal/spørsmålTekster';
 import { ArbeidsgiverInterface } from '../../models/arbeidsgiver';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from './constants';
 import { Svaralternativ } from '../../types/types';
 
 const Utbetaling = (): ReactElement => {
-  const getArbeidsgiver = () : ArbeidsgiverInterface => ({
+  const getArbeidsgiver = (): ArbeidsgiverInterface => ({
     navn: 'Arbeids- og velferdsetaten',
     orgNr: '392392482849',
   });
 
-  const leggInnArbeidsGiverIString = (tekstStreng : string) => tekstStreng.replace(
+  const leggInnArbeidsGiverIString = (tekstStreng: string) => tekstStreng.replace(
     arbeidsgiverNavnPlaceHolder, getArbeidsgiver().navn,
   ).replace(
     arbeidsgiverOrgNrPlaceHolder, getArbeidsgiver().orgNr,
   );
 
-  const byttUtSpørsmålsTekster = (svaralternativer : Svaralternativ[]) : Svaralternativ[] => (
-    [...svaralternativer].map((svaralternativ : Svaralternativ) => (
+  const byttUtSpørsmålsTekster = (svaralternativer: Svaralternativ[]): Svaralternativ[] => (
+    [...svaralternativer].map((svaralternativ: Svaralternativ) => (
       { ...svaralternativ, label: leggInnArbeidsGiverIString(svaralternativ.label) }
     )));
 
