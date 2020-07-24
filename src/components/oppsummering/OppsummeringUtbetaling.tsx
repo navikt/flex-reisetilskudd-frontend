@@ -18,19 +18,12 @@ const OppsummeringUtbetaling = () : ReactElement => {
       <Undertittel className="oppsummering-underoverskrift">Hvem skal pengene utbetales til?</Undertittel>
       <Vis hvis={activeMegArbeidsgiver === utbetalingSpørsmålVerdier.MEG}>
         <Normaltekst>
-          Pengene skal utbetales til deg
+          Pengene skal utbetales til deg.
         </Normaltekst>
       </Vis>
       <Vis hvis={activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER}>
         <Normaltekst>
-          Pengene skal utbetales til
-          {' '}
-          {getArbeidsgiver().navn}
-          {' '}
-          (org.nr.
-          {' '}
-          {getArbeidsgiver().orgNr}
-          )
+          {`Pengene skal utbetales til ${getArbeidsgiver().navn} (org.nr. ${getArbeidsgiver().orgNr}).`}
         </Normaltekst>
       </Vis>
     </div>
