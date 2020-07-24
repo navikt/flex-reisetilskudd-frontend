@@ -9,7 +9,11 @@ const OppsummeringDagensTransportmiddel = () : ReactElement => {
   return (
     <div className="oppsummering-element oppsummering-dagens-transportmiddel">
       <Undertittel className="oppsummering-underoverskrift">Hvordan reiste du før sykmeldingen?</Undertittel>
-      <Vis hvis={dagensTransportmiddelState.transportalternativer.egenBilChecked}>
+      <Vis hvis={
+        dagensTransportmiddelState.transportalternativer.egenBilChecked
+        && dagensTransportmiddelState.antallKilometerSpørsmål > 0
+      }
+      >
         <CheckedMedTekst tekst={`Kjører egen bil, ${dagensTransportmiddelState.antallKilometerSpørsmål} kilometer`} />
       </Vis>
       <Vis hvis={dagensTransportmiddelState.transportalternativer.gårChecked}>
@@ -18,10 +22,11 @@ const OppsummeringDagensTransportmiddel = () : ReactElement => {
       <Vis hvis={dagensTransportmiddelState.transportalternativer.syklerChecked}>
         <CheckedMedTekst tekst="Sykler" />
       </Vis>
-      { // TODO: Når checkbox for kollektiv er på plass, bytt ut linja:
-        // eslint-disable-next-line max-len
-        /* <Vis hvis={dagensTransportmiddelState.transportalternativerPrivat.kollektivChecked && dagensTransportmiddelState.månedligeUtgifterSpørsmål > 0}> */}
-      <Vis hvis={dagensTransportmiddelState.månedligeUtgifterSpørsmål > 0}>
+      <Vis hvis={
+        dagensTransportmiddelState.transportalternativer.kollektivtransportChecked
+        && dagensTransportmiddelState.månedligeUtgifterSpørsmål > 0
+      }
+      >
         <CheckedMedTekst tekst={`Reiser kollektivt med ${dagensTransportmiddelState.månedligeUtgifterSpørsmål} kroner i månedlige utgifter`} />
       </Vis>
     </div>
