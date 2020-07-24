@@ -5,13 +5,13 @@ import CheckedMedTekst from '../common/checkedMedTekst/CheckedMedTekst';
 
 interface Props {
   hvilkenVerdi : SykmeldingOpplysningEnum,
-  vårSykmelding: SykmeldingOpplysningInterface,
+  vårSykmelding: SykmeldingOpplysningInterface | undefined,
 }
 
 const VisVerdi = ({ hvilkenVerdi, vårSykmelding } : Props) : ReactElement => (
-    vårSykmelding?.[hvilkenVerdi]
-      ? <CheckedMedTekst tekst={vårSykmelding?.[hvilkenVerdi]} />
-      : <ManglendeOpplysninger />
+  (vårSykmelding && vårSykmelding?.[hvilkenVerdi])
+    ? <CheckedMedTekst tekst={vårSykmelding?.[hvilkenVerdi]} />
+    : <ManglendeOpplysninger />
 );
 
 export default VisVerdi;
