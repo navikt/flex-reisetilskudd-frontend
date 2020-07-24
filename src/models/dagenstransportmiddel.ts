@@ -1,5 +1,4 @@
 export interface DagensTransportmiddelSvarInterface {
-  // TODO: få putta inn konstantene for offentligPrivatSpørsmål
   transportalternativer: {
     egenBilChecked: boolean,
     syklerChecked: boolean,
