@@ -6,9 +6,9 @@ export interface KvitteringInterface {
   dato?: Date;
   dokumentId?: string;
   transportMiddel?:
-  Transportmiddel.taxi |
-  Transportmiddel.kollektiv |
-  Transportmiddel.egenBil;
+  Transportmiddel.TAXI |
+  Transportmiddel.KOLLEKTIV |
+  Transportmiddel.EGEN_BIL;
 }
 
 export interface OpplastetVedleggInterface {
@@ -16,7 +16,8 @@ export interface OpplastetVedleggInterface {
 }
 
 export enum Transportmiddel {
-  taxi = 'Taxi',
-  kollektiv = 'Kollektivtransport',
-  egenBil = 'Egen bil'
+  SPØRSMÅLS_KEY = 'vedlegg-transportmiddel-spørsmål',
+  TAXI = 'Taxi',
+  KOLLEKTIV = 'Kollektivtransport',
+  EGEN_BIL = 'Egen bil'
 }

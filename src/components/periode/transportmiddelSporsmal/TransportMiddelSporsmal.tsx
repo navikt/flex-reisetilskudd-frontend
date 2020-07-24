@@ -8,25 +8,25 @@ const TransportMiddelSporsmal = (): ReactElement => {
 
   return (
     <RadioPanelGruppe
-      key={123}
+      key={Transportmiddel.SPØRSMÅLS_KEY}
       className="kvittering-element"
       name="transportmiddel"
       legend={<Undertittel>Transportmiddel</Undertittel>}
       radios={[
         {
-          label: Transportmiddel.taxi,
-          value: Transportmiddel.taxi,
-          id: `-${Transportmiddel.taxi}`,
+          label: Transportmiddel.TAXI,
+          value: Transportmiddel.TAXI,
+          id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.TAXI}`,
         },
         {
-          label: Transportmiddel.egenBil,
-          value: Transportmiddel.egenBil,
-          id: `-${Transportmiddel.egenBil}`,
+          label: Transportmiddel.EGEN_BIL,
+          value: Transportmiddel.EGEN_BIL,
+          id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.EGEN_BIL}`,
         },
         {
-          label: Transportmiddel.kollektiv,
-          value: Transportmiddel.kollektiv,
-          id: `-${Transportmiddel.kollektiv}`,
+          label: Transportmiddel.KOLLEKTIV,
+          value: Transportmiddel.KOLLEKTIV,
+          id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.KOLLEKTIV}`,
         },
       ]}
       checked={transportMiddel}
