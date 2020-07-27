@@ -14,17 +14,21 @@ const DagensTransportmiddelCheckbox = (
     dagensTransportMiddelGårChecked, settDagensTransportMiddelGårChecked,
     dagensTransportMiddelKollektivChecked, settDagensTransportMiddelKollektivChecked,
     settDagensTransportmiddelValidert,
+    settMånedligeUtgifterState,
+    settAntallKilometerState,
   } = useAppStore();
 
   const skrivEndringTilGlobalState = (nyValgt: string) => {
     if (nyValgt === transportalternativerVerdier.EGEN_BIL) {
       settDagensTransportMiddelEgenBilChecked(!dagensTransportMiddelEgenBilChecked);
+      settAntallKilometerState('');
     } else if (nyValgt === transportalternativerVerdier.SYKLER) {
       settDagensTransportMiddelSyklerChecked(!dagensTransportMiddelSyklerChecked);
     } else if (nyValgt === transportalternativerVerdier.GÅR) {
       settDagensTransportMiddelGårChecked(!dagensTransportMiddelGårChecked);
     } else if (nyValgt === transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
       settDagensTransportMiddelKollektivChecked(!dagensTransportMiddelKollektivChecked);
+      settMånedligeUtgifterState('');
     }
   };
 
