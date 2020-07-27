@@ -1,77 +1,5 @@
 @import "../../../node_modules/nav-frontend-core/less/_variabler";
 
-.filopplaster-wrapper {
-    justify-content: center;
-  
-    ul.opplasting-liste {
-      padding-inline-start: 1.3em;
-      line-height: 40px;
-    }
-  
-    li {
-      font-size: 25px;
-    }
-  
-    .filopplaster {
-      text-align: center;
-      font-weight: bold;
-      border: 2px dashed #59514b;
-      border-radius: 4px;
-      background-color: rgba(204, 222, 230, 0.5);
-      height: 64px;
-      color: @navBla;
-      margin: 0 auto;
-      margin-top: 1rem;
-    }
-  
-      .tekst {
-        line-height: 64px;
-        display: inline-block;
-        margin-left: 10px;
-      }
-
-      .feilmeldinger {
-        margin: 1rem 0 0 0;
-        text-align: left;
-      }
-      
-    .opplastingsikon {
-      display: inline-block;
-    }
-}
-
-.filopplaster-modal {
-  .modal-content {
-    min-width: 200px;
-    padding: 0 5%;
-    display: grid;
-
-    .lagre-kvittering {
-      place-self: center;
-    }
-
-    .lagre-kvittering-spinner {
-      place-self: center;
-    }
-  }
-  .kvittering-header {
-    margin-bottom: 30px;
-  }
-
-  .input-rad {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    grid-column-gap: 1em;
-    justify-content: space-between;
-    align-items: end;
-  }
-
-  .feilmelding-alert {
-    margin-top: 1rem;
-  }
-}
-
 .kvitteringstitler {
   display: grid;
   margin: 0 auto;
@@ -101,80 +29,11 @@
   .dato-tittel{
     grid-area: datoTittel;
   }
-
-
-  .fil-lenke {
-    text-decoration: underline;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-  
-  
-}
-
-.fil-med-info{
-  display: grid;
-  margin: 0 auto;
-  grid-template-areas:
-  'kvittering storrelse belop dato slett';
-  grid-gap: 5px;
-  grid-template-columns: 15% 25% 15% 10% 30%;
-
-  .typo-normal {
-    display: inline;
-  }
-
-  .kvittering{
-    grid-area: kvittering;
-    display: flex;
-    align-items: center;
-  }
-
-  .belop{
-    padding-top: 0.3rem;
-    grid-area: belop;
-  }
-
-  .dato {
-    padding-top: 0.3rem;
-    grid-area: dato;
-    white-space: nowrap;
-  }
-
-  .slett-knapp{
-    max-height: 2rem;
-    grid-area: slett;
-    max-width: 8rem;
-    margin-left: auto;
-    margin-right: 0;
-  }
-}
-
-.modal-fil {
-  margin: 1.5rem 0rem;
-  display: flex;
-  justify-content: left;
-
-  .typo-normal {
-    display: inline;
-  }
-
 }
 
 .filstorrelse {
   grid-area: storrelse;
   padding-top: 0.3rem;
-}
-
-.filnavn {
-  margin-left: 0.5rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.vedleggsikon{
-  width: 1.2rem;
 }
 
 .mobil-belop{
