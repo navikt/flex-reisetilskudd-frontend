@@ -4,55 +4,51 @@ import { CheckboxProps } from '../../../types/types';
 import 'nav-frontend-skjema-style';
 import { useAppStore } from '../../../data/stores/app-store';
 import { transportalternativerVerdier } from '../spørsmålTekster';
-import { DagensTransportmiddelCheckboxStateEnum } from '../../../models/dagenstransportmiddel';
-import { endreCheckboxVerdi } from '../sporsmalsUtils';
 
 const DagensTransportmiddelCheckbox = (
   { tittel, svaralternativer, id }: CheckboxProps,
 ): ReactElement => {
   const {
-    dagensTransportmiddelState, settDagensTransportmiddelState,
+    dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
+    dagensTransportMiddelSyklerChecked, settDagensTransportMiddelSyklerChecked,
+    dagensTransportMiddelGårChecked, settDagensTransportMiddelGårChecked,
+    dagensTransportMiddelKollektivChecked, settDagensTransportMiddelKollektivChecked,
     settDagensTransportmiddelValidert,
+    settMånedligeUtgifterState,
+    settAntallKilometerState,
   } = useAppStore();
-
-  const flipStateVerdi = (hvilkenCheckbox: DagensTransportmiddelCheckboxStateEnum) => {
-    endreCheckboxVerdi(
-      hvilkenCheckbox,
-      !dagensTransportmiddelState.transportalternativer[hvilkenCheckbox],
-      dagensTransportmiddelState,
-      settDagensTransportmiddelState,
-    );
-  };
 
   const skrivEndringTilGlobalState = (nyValgt: string) => {
     if (nyValgt === transportalternativerVerdier.EGEN_BIL) {
-      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.egenBilChecked);
+      settDagensTransportMiddelEgenBilChecked(!dagensTransportMiddelEgenBilChecked);
+      settAntallKilometerState('');
     } else if (nyValgt === transportalternativerVerdier.SYKLER) {
-      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.syklerChecked);
+      settDagensTransportMiddelSyklerChecked(!dagensTransportMiddelSyklerChecked);
     } else if (nyValgt === transportalternativerVerdier.GÅR) {
-      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.gårChecked);
+      settDagensTransportMiddelGårChecked(!dagensTransportMiddelGårChecked);
     } else if (nyValgt === transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
-      flipStateVerdi(DagensTransportmiddelCheckboxStateEnum.kollektivtransportChecked);
+      settDagensTransportMiddelKollektivChecked(!dagensTransportMiddelKollektivChecked);
+      settMånedligeUtgifterState('');
     }
   };
 
   const erChecked = (alternativ: string) => {
     if (alternativ === transportalternativerVerdier.EGEN_BIL) {
-      return dagensTransportmiddelState.transportalternativer.egenBilChecked;
+      return dagensTransportMiddelEgenBilChecked;
     }
     if (alternativ === transportalternativerVerdier.SYKLER) {
-      return dagensTransportmiddelState.transportalternativer.syklerChecked;
+      return dagensTransportMiddelSyklerChecked;
     }
     if (alternativ === transportalternativerVerdier.GÅR) {
-      return dagensTransportmiddelState.transportalternativer.gårChecked;
+      return dagensTransportMiddelGårChecked;
     }
     if (alternativ === transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
-      return dagensTransportmiddelState.transportalternativer.kollektivtransportChecked;
+      return dagensTransportMiddelKollektivChecked;
     }
     return false;
   };
 
-  const endraAlternativer = svaralternativer.map(
+  const checkboxesProps = svaralternativer.map(
     (alternativ) => ({ ...alternativ, ...{ checked: erChecked(alternativ.value) } }),
   );
 
@@ -61,7 +57,7 @@ const DagensTransportmiddelCheckbox = (
       <CheckboksPanelGruppe
         legend={tittel}
         checkboxes={
-          endraAlternativer
+          checkboxesProps
         }
         onChange={(_, nyVerdi) => {
           skrivEndringTilGlobalState(nyVerdi);

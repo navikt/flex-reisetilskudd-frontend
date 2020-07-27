@@ -40,12 +40,13 @@ const fåSykmeldingOpplysningSomInterface = (
     fraDato: response?.mulighetForArbeid?.perioder[0]?.fom,
     tilDato: response?.mulighetForArbeid?.perioder[0]?.tom,
     diagnose: response?.diagnose?.hoveddiagnose?.diagnose,
-    bidiagnoser: 'ADHD',
+    diagnosekode: response?.diagnose?.hoveddiagnose.diagnosekode,
+    bidiagnoser: response?.diagnose?.bidiagnoser[0]?.diagnose,
     reisetilskudd: response?.mulighetForArbeid?.perioder[0]?.reisetilskudd ? 'Reisetilskudd' : 'Ikke reisetilskudd',
-    beskrivHensyn: 'Må ha eget toalett på jobb',
+    beskrivHensyn: response?.mulighetForArbeid?.aktivitetIkkeMulig433[0],
     arbeidsgiver: response?.mottakendeArbeidsgiver?.navn,
     sykmelder: response?.bekreftelse?.sykmelder,
-    aktivitetIkkeMulig434: 'a',
+    aktivitetIkkeMulig434: response?.mulighetForArbeid?.aktivitetIkkeMulig433[0],
   };
 
   return sykmeldingOpplysninger;
@@ -86,6 +87,7 @@ export const hentSykmeldinger = (
         if (!response.ok) {
           throw new Error(response.statusText);
         }
+        // console.log("halla",response.json());
         return response.json();
       },
     )
