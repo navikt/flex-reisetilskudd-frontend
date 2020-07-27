@@ -22,7 +22,9 @@ const FilopplasterModal: React.FC = () => {
   const [laster, settLaster] = useState<boolean>(false);
   const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<number | null>(null);
-  const { kvitteringer, settKvitteringer, transportmiddel } = useAppStore();
+  const {
+    kvitteringer, settKvitteringer, transportmiddel, settTransportmiddel,
+  } = useAppStore();
 
   const {
     uopplastetFil, settUopplastetFil,
@@ -106,6 +108,7 @@ const FilopplasterModal: React.FC = () => {
         .then(() => {
           settLaster(false);
           lukkModal();
+          settTransportmiddel(undefined);
         })
         .catch((error) => {
           logger.error('Feil under opplasting av kvittering', error);
