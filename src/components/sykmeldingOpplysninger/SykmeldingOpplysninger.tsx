@@ -27,25 +27,27 @@ const SykmeldingOpplysninger = () : ReactElement => {
         <Element className={tittelKlasseNavn}>Periode</Element>
         <PeriodeTekst fraDato={fraDato} tilDato={tilDato} />
         <div className={diagnoseWrapper}>
-          <Element>
-            Diagnose
+          <div>
+            <Element>
+              Diagnose
+            </Element>
             {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSE)}
-          </Element>
-          <Element>
-            Diagnosekode
+          </div>
+          <div>
+            <Element>
+              Diagnosekode
+            </Element>
             {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSEKODE)}
-          </Element>
+          </div>
         </div>
         <Element className={tittelKlasseNavn}>Bidiagnose </Element>
         {visVårVerdi(SykmeldingOpplysningEnum.BI_DIAGNOSER)}
-        <Element className={tittelKlasseNavn}>
-          Reisetilskudd
-          {visVårVerdi(SykmeldingOpplysningEnum.REISETILSKUDD)}
-        </Element>
+        <Element className={tittelKlasseNavn}>Reisetilskudd</Element>
+        {visVårVerdi(SykmeldingOpplysningEnum.REISETILSKUDD)}
         <Element className={tittelKlasseNavn}>
           Beskriv eventelle hesyn som må tas på arbeidsplassen
-          {visVårVerdi(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
         </Element>
+        {visVårVerdi(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
         <Element className={tittelKlasseNavn}>
           Arbeidsgiver som legen har skrevet inn
         </Element>
