@@ -26,14 +26,6 @@ const DagensTransportmiddel = (): ReactElement => {
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
   } = useAppStore();
 
-  const validerMånedligeUtgifter = (nyeValideringsFeil: FeiloppsummeringFeil[]) => {
-    if (!validerKroner(dagensTransportmiddelState.månedligeUtgifterSpørsmål)) {
-      nyeValideringsFeil.push(
-        { skjemaelementId: månedligeUtgifterSpørsmål.id, feilmelding: 'Ugyldig kroneverdi' },
-      );
-    }
-  };
-
   const handleKilometerChange = (tekst: string) => {
     endreInputVerdi(
       NummerInputStateEnum.antallKilometerSpørsmål,
@@ -75,13 +67,25 @@ const DagensTransportmiddel = (): ReactElement => {
     }
   };
 
+  const validerMånedligeUtgifter = (nyeValideringsFeil: FeiloppsummeringFeil[]) => {
+    if (
+      dagensTransportmiddelState.transportalternativer.kollektivtransportChecked
+      && !validerKroner(dagensTransportmiddelState.månedligeUtgifterSpørsmål)
+    ) {
+      nyeValideringsFeil.push(
+        { skjemaelementId: månedligeUtgifterSpørsmål.id, feilmelding: 'Ugyldig kroneverdi' },
+      );
+    }
+  };
+
   const validerSkjema = () => {
     const nyeValideringsFeil: FeiloppsummeringFeil[] = [];
 
-    settValideringsFeil(nyeValideringsFeil);
-    settDagensTransportmiddelValidert(nyeValideringsFeil.length < 1);
     validerTransportmidler(nyeValideringsFeil);
     validerMånedligeUtgifter(nyeValideringsFeil);
+
+    settValideringsFeil(nyeValideringsFeil);
+    settDagensTransportmiddelValidert(nyeValideringsFeil.length < 1);
   };
 
   return (
