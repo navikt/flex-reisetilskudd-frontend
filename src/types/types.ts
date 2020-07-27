@@ -24,10 +24,6 @@ export interface InputProps {
   feil?: string;
   bredde: 'S';
   value?: number | string | undefined;
-  onChange?: (s : string) => void;
+  onChange?: (s: string) => void;
   id: string;
-}
-
-export interface VeilederProps {
-  hjelpetekst: string;
 }

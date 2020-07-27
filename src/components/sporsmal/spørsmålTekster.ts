@@ -1,5 +1,5 @@
 import {
-  RadioSpørsmålProps, CheckboxProps, InputProps, VeilederProps,
+  RadioSpørsmålProps, CheckboxProps, InputProps,
 } from '../../types/types';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling/constants';
 
@@ -77,8 +77,4 @@ export const månedligeUtgifterSpørsmål: InputProps = {
   feil: 'Her er det noe feil',
   bredde: 'S',
   id: 'dagens-transportmiddel-manedlige-utgifter-input',
-};
-
-export const transportVeileder: VeilederProps = {
-  hjelpetekst: 'Kollektiv transport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.',
 };
