@@ -3,7 +3,7 @@ import { Input } from 'nav-frontend-skjema';
 import { InputProps } from '../../../types/types';
 
 const InputSporsmal = ({
-  tittel, inputMode, bredde, value, onChange, id,
+  tittel, inputMode, bredde, value, onChange, id, feil,
 }: InputProps): ReactElement => (
   <Input
     label={tittel}
@@ -17,6 +17,7 @@ const InputSporsmal = ({
       }
     }}
     id={id}
+    feil={feil}
   />
 );
 

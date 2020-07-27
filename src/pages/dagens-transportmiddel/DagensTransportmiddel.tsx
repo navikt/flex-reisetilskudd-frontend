@@ -20,6 +20,8 @@ import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal
 
 const DagensTransportmiddel = (): ReactElement => {
   const [valideringsFeil, settValideringsFeil] = useState<FeiloppsummeringFeil[]>([]);
+  const [kilometerInputFeilmelding, settKilometerInputFeilmelding] = useState<string>('');
+
   const {
     dagensTransportMiddelEgenBilChecked,
     dagensTransportMiddelSyklerChecked,
@@ -63,6 +65,7 @@ const DagensTransportmiddel = (): ReactElement => {
             feilmelding: 'Ugyldig kilometerverdi',
           },
         );
+        settKilometerInputFeilmelding('Du må oppgi gyldig verdi for kilometer');
       }
     }
   };
@@ -105,6 +108,7 @@ const DagensTransportmiddel = (): ReactElement => {
             ...{
               onChange: handleKilometerChange,
               value: antallKilometerState,
+              feil: kilometerInputFeilmelding,
             },
             ...antallKilometerSpørsmål,
           },
