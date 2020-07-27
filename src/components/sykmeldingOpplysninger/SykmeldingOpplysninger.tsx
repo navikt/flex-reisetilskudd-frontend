@@ -15,6 +15,7 @@ const SykmeldingOpplysninger = () : ReactElement => {
   const tilDato : string = vårSykmelding?.[SykmeldingOpplysningEnum.TIL_DATO] || '';
 
   const tittelKlasseNavn = 'soknad-tittel';
+  const diagnoseWrapper = 'diagnose-wrapper';
 
   const visVårVerdi = (hvilkenVerdi : SykmeldingOpplysningEnum) => (
     <VisVerdi hvilkenVerdi={hvilkenVerdi} vårSykmelding={vårSykmelding} />
@@ -25,9 +26,21 @@ const SykmeldingOpplysninger = () : ReactElement => {
       <Vis hvis={vårSykmelding !== undefined}>
         <Element className={tittelKlasseNavn}>Periode</Element>
         <PeriodeTekst fraDato={fraDato} tilDato={tilDato} />
-        <Element className={tittelKlasseNavn}>Diagnose</Element>
-        {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSE)}
-        <Element className={tittelKlasseNavn}>Bidiagnose</Element>
+        <div className={diagnoseWrapper}>
+          <div>
+            <Element>
+              Diagnose
+            </Element>
+            {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSE)}
+          </div>
+          <div>
+            <Element>
+              Diagnosekode
+            </Element>
+            {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSEKODE)}
+          </div>
+        </div>
+        <Element className={tittelKlasseNavn}>Bidiagnose </Element>
         {visVårVerdi(SykmeldingOpplysningEnum.BI_DIAGNOSER)}
         <Element className={tittelKlasseNavn}>Reisetilskudd</Element>
         {visVårVerdi(SykmeldingOpplysningEnum.REISETILSKUDD)}
@@ -35,7 +48,9 @@ const SykmeldingOpplysninger = () : ReactElement => {
           Beskriv eventelle hesyn som må tas på arbeidsplassen
         </Element>
         {visVårVerdi(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
-        <Element className={tittelKlasseNavn}>Arbeidsgiver som legen har skrevet inn</Element>
+        <Element className={tittelKlasseNavn}>
+          Arbeidsgiver som legen har skrevet inn
+        </Element>
         {visVårVerdi(SykmeldingOpplysningEnum.ARBEIDSGIVER)}
         <Element className={tittelKlasseNavn}>Lege/sykmelder</Element>
         {visVårVerdi(SykmeldingOpplysningEnum.SYKMELDER)}

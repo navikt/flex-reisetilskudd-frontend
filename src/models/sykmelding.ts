@@ -3,6 +3,7 @@ export enum SykmeldingOpplysningEnum {
   TIL_DATO= 'tilDato',
   DIAGNOSE= 'diagnose',
   BI_DIAGNOSER= 'bidiagnoser',
+  DIAGNOSEKODE= 'diagnosekode',
   REISETILSKUDD= 'reisetilskudd',
   BESKRIV_HENSYN= 'beskrivHensyn',
   ARBEIDSGIVER= 'arbeidsgiver',
@@ -15,6 +16,7 @@ export interface SykmeldingOpplysningInterface {
   [SykmeldingOpplysningEnum.TIL_DATO]: string;
   [SykmeldingOpplysningEnum.DIAGNOSE]: string;
   [SykmeldingOpplysningEnum.BI_DIAGNOSER]: string;
+  [SykmeldingOpplysningEnum.DIAGNOSEKODE]: string;
   [SykmeldingOpplysningEnum.REISETILSKUDD]: string;
   [SykmeldingOpplysningEnum.BESKRIV_HENSYN]: string;
   [SykmeldingOpplysningEnum.ARBEIDSGIVER]: string;
