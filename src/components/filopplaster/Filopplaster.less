@@ -1,5 +1,5 @@
 @import "../../../node_modules/nav-frontend-core/less/_variabler";
-
+/*
 .kvitteringstitler {
   display: grid;
   margin: 0 auto;
@@ -22,6 +22,11 @@
     grid-area: kvitteringTittel;
   }
 
+  .filstorrelse {
+    grid-area: storrelse;
+    padding-top: 0.3rem;
+  }
+
   .belop-tittel{
     grid-area: belopTittel;
   }
@@ -31,10 +36,43 @@
   }
 }
 
-.filstorrelse {
-  grid-area: storrelse;
-  padding-top: 0.3rem;
-}
+.fil-med-info{
+    display: grid;
+    margin: 0 auto;
+    grid-template-areas:
+    'kvittering storrelse belop dato slett';
+    grid-gap: 5px;
+    grid-template-columns: 15% 25% 15% 10% 30%;
+  
+    .typo-normal {
+      display: inline;
+    }
+  
+    .kvittering{
+      grid-area: kvittering;
+      display: flex;
+      align-items: center;
+    }
+  
+    .belop{
+      padding-top: 0.3rem;
+      grid-area: belop;
+    }
+  
+    .dato {
+      padding-top: 0.3rem;
+      grid-area: dato;
+      white-space: nowrap;
+    }
+  
+    .slett-knapp{
+      max-height: 2rem;
+      grid-area: slett;
+      max-width: 8rem;
+      margin-left: auto;
+      margin-right: 0;
+    }
+  }
 
 .mobil-belop{
   display: none;
@@ -115,9 +153,5 @@
     justify-self: left;
     padding-bottom: 1rem;
   }
-
-  .modal-content{
-    transform: scale(0.85);
-    justify-content: center;
-  }
 }
+*/
