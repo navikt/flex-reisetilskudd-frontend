@@ -11,7 +11,7 @@ import TotalBelop from '../../components/kvittering/totaltBelop/TotaltBelop';
 const Kvitteringsopplasting: React.FC = () : ReactElement => (
   <div className="perioder-wrapper">
     <Innholdstittel className="perioder-overskrift">Opplasting av kvitteringer</Innholdstittel>
-    <Ingress className="perioder-overskrift"> Legg inn dine perioder og kvitteringer </Ingress>
+    <Ingress className="perioder-overskrift"> Legg inn dine kvitteringer </Ingress>
     <div className="filopplaster-wrapper periode-element">
       <div className="filopplaster">
         <FilopplasterModal />
