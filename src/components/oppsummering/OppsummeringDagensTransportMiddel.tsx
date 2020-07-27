@@ -5,29 +5,40 @@ import Vis from '../Vis';
 import CheckedMedTekst from '../common/checkedMedTekst/CheckedMedTekst';
 
 const OppsummeringDagensTransportmiddel = () : ReactElement => {
-  const { dagensTransportmiddelState } = useAppStore();
+  const {
+    dagensTransportMiddelEgenBilChecked,
+    dagensTransportMiddelSyklerChecked,
+    dagensTransportMiddelGårChecked,
+    dagensTransportMiddelKollektivChecked,
+    månedligeUtgifterState,
+    antallKilometerState,
+  } = useAppStore();
   return (
     <div className="oppsummering-element oppsummering-dagens-transportmiddel">
       <Undertittel className="oppsummering-underoverskrift">Hvordan reiste du før sykmeldingen?</Undertittel>
       <Vis hvis={
-        dagensTransportmiddelState.transportalternativer.egenBilChecked
-        && dagensTransportmiddelState.antallKilometerSpørsmål > 0
+        dagensTransportMiddelEgenBilChecked
+        /* TODO: Vurdere å fjerne sjekk på antallKilometerState,
+        man kan nok anta at verdien er validert */
+        && antallKilometerState !== ''
       }
       >
-        <CheckedMedTekst tekst={`Kjører egen bil, ${dagensTransportmiddelState.antallKilometerSpørsmål} kilometer`} />
+        <CheckedMedTekst tekst={`Kjører egen bil, ${antallKilometerState} kilometer`} />
       </Vis>
-      <Vis hvis={dagensTransportmiddelState.transportalternativer.gårChecked}>
+      <Vis hvis={dagensTransportMiddelGårChecked}>
         <CheckedMedTekst tekst="Går" />
       </Vis>
-      <Vis hvis={dagensTransportmiddelState.transportalternativer.syklerChecked}>
+      <Vis hvis={dagensTransportMiddelSyklerChecked}>
         <CheckedMedTekst tekst="Sykler" />
       </Vis>
       <Vis hvis={
-        dagensTransportmiddelState.transportalternativer.kollektivtransportChecked
-        && dagensTransportmiddelState.månedligeUtgifterSpørsmål > 0
+        dagensTransportMiddelKollektivChecked
+        /* TODO: Vurdere å fjerne sjekk på månedligeUtgifterState,
+        man kan nok anta at verdien er validert */
+        && månedligeUtgifterState !== ''
       }
       >
-        <CheckedMedTekst tekst={`Reiser kollektivt med ${dagensTransportmiddelState.månedligeUtgifterSpørsmål} kroner i månedlige utgifter`} />
+        <CheckedMedTekst tekst={`Reiser kollektivt med ${månedligeUtgifterState} kroner i månedlige utgifter`} />
       </Vis>
     </div>
   );
