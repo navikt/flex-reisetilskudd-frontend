@@ -1,10 +1,11 @@
 import { Undertittel } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import React, { ReactElement, useState } from 'react';
-import { Transportmiddel } from '../../../models/vedlegg';
+import React, { ReactElement } from 'react';
+import { Transportmiddel } from '../../models/kvittering';
+import { useAppStore } from '../../data/stores/app-store';
 
-const TransportMiddelSporsmal = (): ReactElement => {
-  const [transportMiddel, settTransportMiddel] = useState('');
+const TransportmiddelKvittering = (): ReactElement => {
+  const { transportmiddel, settTransportmiddel } = useAppStore();
 
   return (
     <RadioPanelGruppe
@@ -29,12 +30,12 @@ const TransportMiddelSporsmal = (): ReactElement => {
           id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.KOLLEKTIV}`,
         },
       ]}
-      checked={transportMiddel}
-      onChange={(_, e) => {
-        settTransportMiddel(e);
+      checked={transportmiddel}
+      onChange={(_, nyVerdi) => {
+        settTransportmiddel(nyVerdi);
       }}
     />
   );
 };
 
-export default TransportMiddelSporsmal;
+export default TransportmiddelKvittering;

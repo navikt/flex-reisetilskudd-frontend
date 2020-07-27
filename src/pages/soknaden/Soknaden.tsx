@@ -3,7 +3,7 @@ import {
   useParams,
 } from 'react-router-dom';
 import Brodsmuler from '../../components/Brodsmuler';
-import Kvitteringsopplasting from '../reisetilskudd-periode/Kvitteringsopplasting';
+import Kvitteringsopplasting from '../kvitteringsopplasting/Kvitteringsopplasting';
 import Utbetaling from '../utbetaling/Utbetaling';
 import TilbakeKnapp from '../../components/knapper/TilbakeKnapp';
 import VidereKnapp from '../../components/knapper/VidereKnapp';

@@ -5,15 +5,16 @@ import { Input } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { KvitteringInterface, OpplastetVedleggInterface } from '../../models/vedlegg';
+import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../models/kvittering';
 import Fil from './Fil';
 import './Filopplaster.less';
 import env from '../../utils/environment';
 import { logger } from '../../utils/logger';
 import { post } from '../../data/fetcher/fetcher';
-import Datovelger from '../datovelger/Datovelger';
+import Datovelger from '../kvittering/datovelger/Datovelger';
 import { useAppStore } from '../../data/stores/app-store';
 import { generateId } from '../../utils/random';
+import TransportmiddelKvittering from '../kvittering/TransportmiddelKvittering';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
@@ -21,7 +22,7 @@ const FilopplasterModal: React.FC = () => {
   const [laster, settLaster] = useState<boolean>(false);
   const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<number | null>(null);
-  const { kvitteringer, settKvitteringer } = useAppStore();
+  const { kvitteringer, settKvitteringer, transportmiddel } = useAppStore();
 
   const {
     uopplastetFil, settUopplastetFil,
@@ -38,45 +39,53 @@ const FilopplasterModal: React.FC = () => {
     settÅpenFilopplasterModal(false);
   };
 
-  const validerBeløp = (_beløp: number | null): boolean => {
-    if (!_beløp || _beløp === null) {
+  const validerBeløp = (nyttBeløp : number | null): boolean => {
+    if (!nyttBeløp || nyttBeløp === null) {
       settFilopplasterFeilmeldinger(['Vennligst skriv inn et gyldig beløp']);
       return false;
     }
-    if (_beløp <= 0) {
+    if (nyttBeløp <= 0) {
       settFilopplasterFeilmeldinger(['Vennligst skriv inn et positivt beløp']);
       return false;
     }
     return true;
   };
 
-  const validerDato = (_dato: Date | null): boolean => {
-    if (!_dato || _dato === null) {
+  const validerDato = (nyDato: Date | null): boolean => {
+    if (!nyDato || nyDato === null) {
       settFilopplasterFeilmeldinger(['Vennligst velg en gyldig dato']);
       return false;
     }
     return true;
   };
 
-  const oppdaterDato = (_dato: Date): void => {
-    if (validerDato(_dato)) {
+  const validerTransportmiddel = (nyttTransportmiddel: TransportmiddelAlternativer) => {
+    if (nyttTransportmiddel === undefined) {
+      settFilopplasterFeilmeldinger(['Vennligst velg et transportmiddel']);
+      return false;
+    }
+    return true;
+  };
+
+  const oppdaterDato = (nyDato: Date): void => {
+    if (validerDato(nyDato)) {
       settFilopplasterFeilmeldinger([]);
     }
-    settDato(_dato);
+    settDato(nyDato);
   };
 
   const lagreKvittering = (fil: File) => {
     const requestData = new FormData();
     requestData.append('file', fil);
 
-    if (validerDato(dato) && validerBeløp(beløp)) {
+    if (validerDato(dato) && validerBeløp(beløp) && validerTransportmiddel(transportmiddel)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       requestData.append('dato', dato!.toString());
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       requestData.append('beløp', beløp!.toString());
 
       settLaster(true);
-      post<OpplastetVedleggInterface>(`${env.mockApiUrl}/kvittering`, requestData)
+      post<OpplastetKvitteringInterface>(`${env.mockApiUrl}/kvittering`, requestData)
         .then((response) => {
           if (response.parsedBody?.dokumentId) {
             const kvittering: KvitteringInterface = {
@@ -87,6 +96,7 @@ const FilopplasterModal: React.FC = () => {
               dato: (dato || new Date()),
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               dokumentId: response.parsedBody!.dokumentId,
+              transportmiddel,
             };
             nyKvittering(kvittering);
           } else {
@@ -127,14 +137,23 @@ const FilopplasterModal: React.FC = () => {
       <div className="modal-content">
         <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
         <div className="input-rad">
-          <Datovelger className="periode-element" label="Dato" mode="single" onChange={(_dato) => oppdaterDato(_dato[0])} />
+          <Datovelger className="periode-element" label="Dato" mode="single" onChange={(nyDato) => oppdaterDato(nyDato[0])} />
           <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
+        </div>
+        <div>
+          <TransportmiddelKvittering />
         </div>
         <Fil fil={uopplastetFil} className="opplastede-filer" />
         {laster
           ? (<NavFrontendSpinner className="lagre-kvittering-spinner" />)
           : (
-            <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (uopplastetFil ? lagreKvittering(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil'))}>
+            <Knapp
+              htmlType="submit"
+              className="lagre-kvittering"
+              onClick={() => (
+                uopplastetFil ? lagreKvittering(uopplastetFil) : logger.info('Noen har prøvd å laste opp en tom fil')
+              )}
+            >
               Lagre kvittering
             </Knapp>
           )}
