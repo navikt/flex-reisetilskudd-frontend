@@ -5,7 +5,7 @@ import opplasting from '../../../assets/opplasting.svg';
 import { useAppStore } from '../../../data/stores/app-store';
 import formaterFilstørrelse from '../utils';
 import env from '../../../utils/environment';
-import './dragAndDrop.less'
+import './dragAndDrop.less';
 
 const DragAndDrop: React.FC = (): ReactElement => {
   const {
