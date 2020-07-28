@@ -22,7 +22,7 @@ export interface InputProps {
   tittel: string;
   inputMode: 'numeric';
   feil?: string;
-  bredde: 'S';
+  bredde: 'fullbredde' | 'XXL' | 'XL' | 'L' | 'M' | 'S' | 'XS' | 'XXS';
   value?: number | string | undefined;
   onChange?: (s : string) => void;
   id: string;
