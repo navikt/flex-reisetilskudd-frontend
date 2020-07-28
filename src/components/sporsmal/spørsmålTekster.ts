@@ -34,7 +34,7 @@ export const transportalternativerVerdier = {
 };
 
 export const transportalternativer: CheckboxProps = {
-  tittel: 'Velg fremkomstmiddel',
+  tittel: 'Velg transportmiddel',
   svaralternativer: [
     {
       label: 'Går',
@@ -76,5 +76,5 @@ export const månedligeUtgifterSpørsmål: InputProps = {
   inputMode: 'numeric',
   feil: 'Her er det noe feil',
   bredde: 'S',
-  id: 'dagens-transportmiddel-manedlige-utgifter-input',
+  id: 'dagens-transportmiddel-månedlige-utgifter-input',
 };

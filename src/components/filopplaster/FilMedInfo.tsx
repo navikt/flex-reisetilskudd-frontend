@@ -3,7 +3,7 @@ import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { Fareknapp } from 'nav-frontend-knapper';
 import { SlettIkon } from '../../assets/ikoner';
 // import vedlegg from '../../assets/vedlegg.svg';
-import helsecannabis from '../../assets/helsecannabis.svg';
+import vedlegg from '../../assets/vedlegg.svg';
 import formaterFilstørrelse from './utils';
 import { KvitteringInterface } from '../../models/kvittering';
 import { formatertDato, DatoFormat } from '../../utils/dato';
@@ -30,7 +30,7 @@ const FilMedInfo: React.FC<Props> = ({ fil }) => {
     }
   };
 
-  function truncate(fullString:string, stringLen:number, separator:string) {
+  function truncate(fullString: string, stringLen: number, separator: string) {
     if (fullString.length <= stringLen) {
       return fullString;
     }
@@ -49,7 +49,7 @@ const FilMedInfo: React.FC<Props> = ({ fil }) => {
       <div className="kvittering">
         <img
           className="vedleggsikon"
-          src={helsecannabis}
+          src={vedlegg}
           alt="Vedleggsikon"
         />
         <Normaltekst className="filnavn">{truncate(fil.navn, 15, '...')}</Normaltekst>
