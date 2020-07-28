@@ -15,7 +15,7 @@ const OpplastedeFiler: React.FC<Props> = ({ fjernKnapp }) => {
   return (
     <div className="opplastede-filer">
       <Vis hvis={kvitteringer.length > 0}>
-        <div className="kvitteringstitler">
+        <div className={` ${fjernKnapp ? 'kvitteringstitler' : 'kvitteringstitler-uten-slettknapp'}`}>
           <Element className="kvittering-tittel">Kvittering</Element>
           <Element className="belop-tittel">Beløp</Element>
           <Element className="dato-tittel">Dato</Element>
