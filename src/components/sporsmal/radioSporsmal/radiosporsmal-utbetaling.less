@@ -8,21 +8,31 @@
   display: flex;
   justify-content: space-evenly;
 }
+@media screen and (max-width: 620px){
+  .inputPanelGruppe__inner{
+    flex-direction: column;
+  }
+  .inputPanel.radioPanel{
+    display: table-cell;
+    position: relative;
+    width: 17.5rem;
+  }
+}
+
+@media screen and (max-width: 320px){
+  .inputPanelGruppe__inner{
+    flex-direction: column;
+  }
+  .inputPanel.radioPanel{
+    display: table-cell;
+    position: relative;
+    width: 14rem;
+  }
+}
 }
 
 h2.typo-undertittel{
   margin-bottom: 1rem;
 }
 
-@media screen and (max-width: 620px){
-  .skjemagruppe__description{
-    width: 20rem;
-  }
-  .inputPanelGruppe__inner{
-    flex-direction: column;
-  }
-  .inputPanel.radioPanel{
-    align-self: center;
-  }
-}
     
