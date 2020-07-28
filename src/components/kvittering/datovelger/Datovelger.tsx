@@ -24,15 +24,10 @@ const Datovelger: React.FC<Props> = ({
   };
 
   return (
-    <div className={`datovelger-wrapper ${className}`}>
+    <div className={`datovelger-wrapper ${className} ${feil ? 'datovelger-med-feil' : ''}`}>
       <Undertittel className="label">{label}</Undertittel>
       <Flatpickr
-          // className={`skjemaelement__input input--m`}
-          // className={`skjemaelement__input input--m skjemaelement__input--harFeil`}
-        className={`skjemaelement__input input--m 
-            ${feil ? 'datovelger-feil' : ''}
-          `}
-          // ${feil ? "skjemaelement__input--harFeil" : ""}
+        className="skjemaelement__input input--m"
         placeholder={(mode === 'range') ? 'dd.mm.åååå til dd.mm.åååå' : 'dd.mm.åååå'}
         options={{
           mode,
