@@ -1,15 +1,35 @@
 .horisontal-radio{
-.inputPanelGruppe__inner{
-    .inputPanel{
-      margin-right: 0.25rem;
-      margin-bottom: 0.5em;
-      width: 50%;
+  .inputPanelGruppe__inner{
+      .inputPanel{
+        margin-right: 0.25rem;
+        margin-bottom: 0.5em;
+        width: 50%;
+    }
+    display: flex;
+    justify-content: space-evenly;
   }
-  display: flex;
-  justify-content: space-evenly;
-}
-}
-
-h2.typo-undertittel{
-  margin-bottom: 1rem;
-}
+  @media screen and (max-width: 620px){
+    .inputPanelGruppe__inner{
+      flex-direction: column;
+    }
+    .inputPanel.radioPanel{
+      display: table-cell;
+      position: relative;
+      width: 17.5rem;
+    }
+  }
+  @media screen and (max-width: 320px){
+    .inputPanelGruppe__inner{
+      flex-direction: column;
+    }
+    .inputPanel.radioPanel{
+      display: table-cell;
+      position: relative;
+      width: 14rem;
+    }
+  }
+  }
+  h2.typo-undertittel{
+    margin-bottom: 1rem;
+  }
+  
