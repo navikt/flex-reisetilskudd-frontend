@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { Input } from 'nav-frontend-skjema';
+import { Input, Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import Vis from '../Vis';
+
 import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../models/kvittering';
 import Fil from './Fil';
 import './Filopplaster.less';
@@ -22,13 +23,11 @@ const FilopplasterModal: React.FC = () => {
   const [laster, settLaster] = useState<boolean>(false);
   const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<number | null>(null);
+  const [valideringsFeil, settValideringsFeil] = useState<FeiloppsummeringFeil[]>([]);
   const {
-    kvitteringer, settKvitteringer, transportmiddel, settTransportmiddel,
-  } = useAppStore();
-
-  const {
+    kvitteringer, settKvitteringer,
+    transportmiddelKvittering, settTransportmiddelKvittering,
     uopplastetFil, settUopplastetFil,
-    filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
     åpenFilopplasterModal, settÅpenFilopplasterModal,
   } = useAppStore();
 
@@ -41,46 +40,70 @@ const FilopplasterModal: React.FC = () => {
     settÅpenFilopplasterModal(false);
   };
 
-  const validerBeløp = (nyttBeløp : number | null): boolean => {
+  const validerBeløp = (nyttBeløp : number | null): FeiloppsummeringFeil[] => {
     if (!nyttBeløp || nyttBeløp === null) {
-      settFilopplasterFeilmeldinger(['Vennligst skriv inn et gyldig beløp']);
-      return false;
+      return [{
+        skjemaelementId: 'beløp',
+        feilmelding: 'Vennligst skriv inn et gyldig beløp',
+      }];
     }
     if (nyttBeløp <= 0) {
-      settFilopplasterFeilmeldinger(['Vennligst skriv inn et positivt beløp']);
-      return false;
+      return [{
+        skjemaelementId: 'beløp',
+        feilmelding: 'Vennligst skriv inn et positivt beløp',
+      }];
     }
-    return true;
+    return [];
   };
 
-  const validerDato = (nyDato: Date | null): boolean => {
+  const validerDato = (nyDato: Date | null): FeiloppsummeringFeil[] => {
     if (!nyDato || nyDato === null) {
-      settFilopplasterFeilmeldinger(['Vennligst velg en gyldig dato']);
-      return false;
+      return [
+        {
+          skjemaelementId: 'dato',
+          feilmelding: 'Vennligst velg en gyldig dato',
+        },
+      ];
     }
-    return true;
+    return [];
   };
 
-  const validerTransportmiddel = (nyttTransportmiddel: TransportmiddelAlternativer) => {
+  const validerTransportmiddel = (nyttTransportmiddel: TransportmiddelAlternativer)
+  : FeiloppsummeringFeil[] => {
     if (nyttTransportmiddel === undefined) {
-      settFilopplasterFeilmeldinger(['Vennligst velg et transportmiddel']);
-      return false;
+      return [
+        {
+          skjemaelementId: 'transportmiddel',
+          feilmelding: 'Vennligst velg minst ett transportmiddel',
+        },
+      ];
     }
-    return true;
+    return [];
   };
 
-  const oppdaterDato = (nyDato: Date): void => {
-    if (validerDato(nyDato)) {
-      settFilopplasterFeilmeldinger([]);
-    }
-    settDato(nyDato);
+  const validerKvittering = (
+    nyttBeløp: number | null = null,
+    nyDato : Date | null = null,
+    nyttTransportmiddel : TransportmiddelAlternativer | null = null,
+  ) => {
+    const datoFeil = validerDato(nyDato || dato);
+    const beløpFeil = validerBeløp(nyttBeløp || beløp);
+    const transportmiddelFeil = validerTransportmiddel(
+      nyttTransportmiddel
+      || transportmiddelKvittering,
+    );
+
+    const nyeValideringsFeil = [...datoFeil, ...beløpFeil, ...transportmiddelFeil];
+
+    settValideringsFeil(nyeValideringsFeil);
+    return nyeValideringsFeil.length === 0;
   };
 
   const lagreKvittering = (fil: File) => {
     const requestData = new FormData();
     requestData.append('file', fil);
 
-    if (validerDato(dato) && validerBeløp(beløp) && validerTransportmiddel(transportmiddel)) {
+    if (validerKvittering()) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       requestData.append('dato', dato!.toString());
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -98,7 +121,7 @@ const FilopplasterModal: React.FC = () => {
               dato: (dato || new Date()),
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               dokumentId: response.parsedBody!.dokumentId,
-              transportmiddel,
+              transportmiddel: transportmiddelKvittering,
             };
             nyKvittering(kvittering);
           } else {
@@ -108,7 +131,7 @@ const FilopplasterModal: React.FC = () => {
         .then(() => {
           settLaster(false);
           lukkModal();
-          settTransportmiddel(undefined);
+          settTransportmiddelKvittering(undefined);
         })
         .catch((error) => {
           logger.error('Feil under opplasting av kvittering', error);
@@ -120,13 +143,20 @@ const FilopplasterModal: React.FC = () => {
     try {
       const kommaTilPunktum = belopString.replace(',', '.');
       const inputBelop = parseFloat(kommaTilPunktum);
-      if (validerBeløp(inputBelop)) {
-        settFilopplasterFeilmeldinger([]);
-        settBeløp(inputBelop);
-      }
+      settBeløp(inputBelop);
+      validerKvittering(inputBelop, null, null);
     } catch {
-      settFilopplasterFeilmeldinger(['Vennligst bruk tall i inputfeltet']);
+      logger.error(`Fikk ikke til å parse beløp ${belopString}`);
     }
+  };
+
+  const oppdaterDato = (nyDato: Date): void => {
+    settDato(nyDato);
+    validerKvittering(null, nyDato, null);
+  };
+
+  const handleTransportmiddelChange = (transportmiddel : TransportmiddelAlternativer) => {
+    validerKvittering(null, null, transportmiddel);
   };
 
   return (
@@ -144,7 +174,10 @@ const FilopplasterModal: React.FC = () => {
           <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
         </div>
         <div>
-          <TransportmiddelKvittering />
+          <TransportmiddelKvittering handleChange={(
+            transportmiddel,
+          ) => handleTransportmiddelChange(transportmiddel)}
+          />
         </div>
         <Fil fil={uopplastetFil} className="opplastede-filer" />
         {laster
@@ -160,13 +193,9 @@ const FilopplasterModal: React.FC = () => {
               Lagre kvittering
             </Knapp>
           )}
-        <div className="filopplasterFeilmeldinger" aria-live="polite">
-          {filopplasterFeilmeldinger.map((feilmelding) => (
-            <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
-              {feilmelding}
-            </AlertStripeFeil>
-          ))}
-        </div>
+        <Vis hvis={valideringsFeil.length > 0}>
+          <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={valideringsFeil} />
+        </Vis>
       </div>
     </Modal>
   );
