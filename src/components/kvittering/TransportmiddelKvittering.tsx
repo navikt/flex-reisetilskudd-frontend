@@ -1,4 +1,4 @@
-import { Undertittel } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import React, { ReactElement } from 'react';
 import { Transportmiddel, TransportmiddelAlternativer } from '../../models/kvittering';
@@ -16,7 +16,7 @@ const TransportmiddelKvittering : React.FC<Props> = ({ handleChange }) : ReactEl
       key={Transportmiddel.SPØRSMÅLS_KEY}
       className="kvittering-element"
       name="transportmiddel"
-      legend={<Undertittel>Transportmiddel</Undertittel>}
+      legend={<Element>Transportmiddel</Element>}
       radios={[
         {
           label: Transportmiddel.TAXI,

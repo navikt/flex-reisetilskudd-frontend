@@ -228,7 +228,7 @@ const FilopplasterModal: React.FC = () => {
         </div>
         <Fil fil={uopplastetFil} className="opplastede-filer" />
         {laster
-          ? (<NavFrontendSpinner className="lagre-kvittering-spinner" />)
+          ? (<NavFrontendSpinner className="lagre-kvittering" />)
           : (
             <Knapp
               htmlType="submit"
