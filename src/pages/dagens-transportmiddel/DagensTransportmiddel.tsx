@@ -93,10 +93,12 @@ const DagensTransportmiddel = (): ReactElement => {
   return (
     <>
       <Undertittel> Transportmiddel til daglig </Undertittel>
-      <Normaltekst className="transportmiddel-spørsmål">
-        Hva slags transportmiddel bruker du til daglig?
+      <div className="transportmiddel-tekst">
+        <Normaltekst className="transportmiddel-spørsmål">
+          Hva slags transportmiddel bruker du til daglig?
+        </Normaltekst>
         <Hjelpetekst className="kollektivtransport-hjelpetekst">Kollektiv transport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.</Hjelpetekst>
-      </Normaltekst>
+      </div>
       {DagensTransportmiddelCheckbox(transportalternativer)}
       <Vis
         hvis={dagensTransportMiddelEgenBilChecked === true}
