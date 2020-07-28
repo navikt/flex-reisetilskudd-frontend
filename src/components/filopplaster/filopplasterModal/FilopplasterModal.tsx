@@ -33,6 +33,7 @@ const FilopplasterModal: React.FC = () => {
   const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<number | null>(null);
   const [valideringsFeil, settValideringsFeil] = useState<FeiloppsummeringFeil[]>([]);
+  const [harAlleredeBlittValidert, settHarAlleredeBlittValidert] = useState<boolean>(false);
   const {
     kvitteringer, settKvitteringer,
     transportmiddelKvittering, settTransportmiddelKvittering,
@@ -109,8 +110,8 @@ const FilopplasterModal: React.FC = () => {
     );
 
     const nyeValideringsFeil = [...datoFeil, ...beløpFeil, ...transportmiddelFeil];
-
     settValideringsFeil(nyeValideringsFeil);
+    settHarAlleredeBlittValidert(true);
     return nyeValideringsFeil.length === 0;
   };
 
@@ -145,8 +146,12 @@ const FilopplasterModal: React.FC = () => {
         })
         .then(() => {
           settLaster(false);
-          lukkModal();
+          settDato(null);
+          settBeløp(null);
           settTransportmiddelKvittering(undefined);
+          settUopplastetFil(null);
+          settHarAlleredeBlittValidert(false);
+          lukkModal();
         })
         .catch((error) => {
           logger.error('Feil under opplasting av kvittering', error);
@@ -159,7 +164,9 @@ const FilopplasterModal: React.FC = () => {
       const kommaTilPunktum = belopString.replace(',', '.');
       const inputBelop = parseFloat(kommaTilPunktum);
       settBeløp(inputBelop);
-      validerKvittering(inputBelop, null, null);
+      if (harAlleredeBlittValidert) {
+        validerKvittering(inputBelop, null, null);
+      }
     } catch {
       logger.error(`Fikk ikke til å parse beløp ${belopString}`);
     }
@@ -167,11 +174,15 @@ const FilopplasterModal: React.FC = () => {
 
   const oppdaterDato = (nyDato: Date): void => {
     settDato(nyDato);
-    validerKvittering(null, nyDato, null);
+    if (harAlleredeBlittValidert) {
+      validerKvittering(null, nyDato, null);
+    }
   };
 
   const handleTransportmiddelChange = (transportmiddel : TransportmiddelAlternativer) => {
-    validerKvittering(null, null, transportmiddel);
+    if (harAlleredeBlittValidert) {
+      validerKvittering(null, null, transportmiddel);
+    }
   };
 
   return (
