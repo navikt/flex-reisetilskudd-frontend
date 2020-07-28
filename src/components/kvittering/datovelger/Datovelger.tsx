@@ -3,7 +3,7 @@ import Flatpickr from 'react-flatpickr';
 import { Norwegian } from 'flatpickr/dist/l10n/no';
 import './flatpickr.less';
 import './Datovelger.less';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import { SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import Vis from '../../Vis';
 
@@ -25,7 +25,7 @@ const Datovelger: React.FC<Props> = ({
 
   return (
     <div className={`datovelger-wrapper ${className} ${feil ? 'datovelger-med-feil' : ''}`}>
-      <Undertittel className="label">{label}</Undertittel>
+      <Element className="label">{label}</Element>
       <Flatpickr
         className="skjemaelement__input input--m"
         placeholder={(mode === 'range') ? 'dd.mm.åååå til dd.mm.åååå' : 'dd.mm.åååå'}

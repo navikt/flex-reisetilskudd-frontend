@@ -87,7 +87,6 @@ export const hentSykmeldinger = (
         if (!response.ok) {
           throw new Error(response.statusText);
         }
-        // console.log("halla",response.json());
         return response.json();
       },
     )

@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import Veileder from '../../components/sporsmal/Veileder';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import DagensTransportmiddelCheckbox
   from '../../components/sporsmal/dagensTransportmiddelCheckbox/dagensTransportmiddelCheckbox';
 import Vis from '../../components/Vis';
@@ -10,7 +10,6 @@ import {
   transportalternativer,
   antallKilometerSpørsmål,
   månedligeUtgifterSpørsmål,
-  transportVeileder,
   transportalternativerKollektivt,
 } from '../../components/sporsmal/sporsmalTekster';
 import { useAppStore } from '../../data/stores/app-store';
@@ -94,8 +93,15 @@ const DagensTransportmiddel = (): ReactElement => {
   return (
     <>
       <Undertittel> Transportmiddel til daglig </Undertittel>
-      <Normaltekst> Hva slags transportmiddel bruker du til daglig? </Normaltekst>
-      {Veileder(transportVeileder)}
+      <div className="transportmiddel-tekst">
+        <Normaltekst className="transportmiddel-spørsmål">
+          Hvilke transportmidler brukte du til og fra jobb før du ble sykemeldt?
+        </Normaltekst>
+        <Hjelpetekst className="kollektivtransport-hjelpetekst">
+          Kollektivtransport regnes som buss, trikk,
+          t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.
+        </Hjelpetekst>
+      </div>
       {DagensTransportmiddelCheckbox(transportalternativer)}
       <Vis
         hvis={dagensTransportMiddelEgenBilChecked === true}

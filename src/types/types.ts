@@ -23,11 +23,7 @@ export interface InputProps {
   inputMode: 'numeric';
   bredde: 'fullbredde' | 'XXL' | 'XL' | 'L' | 'M' | 'S' | 'XS' | 'XXS';
   value?: number | string | undefined;
-  onChange?: (s : string) => void;
+  onChange?: (s: string) => void;
   id: string;
   feil?: string;
-}
-
-export interface VeilederProps {
-  hjelpetekst: string;
 }

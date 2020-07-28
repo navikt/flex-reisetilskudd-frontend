@@ -1,5 +1,5 @@
 import {
-  RadioSpørsmålProps, CheckboxProps, InputProps, VeilederProps,
+  RadioSpørsmålProps, CheckboxProps, InputProps,
 } from '../../types/types';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling/constants';
 import { Transportmiddel } from '../../models/kvittering';
@@ -35,7 +35,7 @@ export const transportalternativerVerdier = {
 };
 
 export const transportalternativer: CheckboxProps = {
-  tittel: 'Velg fremkomstmiddel',
+  tittel: 'Velg transportmiddel',
   svaralternativer: [
     {
       label: 'Går',
@@ -96,6 +96,6 @@ export const kvitteringTransportmiddelSpørsmål = {
   id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.TAXI}`,
 };
 
-export const transportVeileder: VeilederProps = {
+export const transportVeileder = {
   hjelpetekst: 'Kollektiv transport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.',
 };

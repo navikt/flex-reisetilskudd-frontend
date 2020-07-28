@@ -1,27 +1,30 @@
 import React, { useState } from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Undertittel, Element } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { Feiloppsummering, FeiloppsummeringFeil, SkjemaGruppe } from 'nav-frontend-skjema';
+import {
+  Feiloppsummering, FeiloppsummeringFeil, SkjemaGruppe, Input,
+} from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import Vis from '../Vis';
+import Vis from '../../Vis';
 
-import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../models/kvittering';
-import Fil from './Fil';
-import './Filopplaster.less';
-import env from '../../utils/environment';
-import { logger } from '../../utils/logger';
-import { post } from '../../data/fetcher/fetcher';
-import Datovelger from '../kvittering/datovelger/Datovelger';
-import { useAppStore } from '../../data/stores/app-store';
-import { generateId } from '../../utils/random';
-import TransportmiddelKvittering from '../kvittering/TransportmiddelKvittering';
-import InputSporsmal from '../sporsmal/inputSporsmal/InputSporsmal';
+import { useAppStore } from '../../../data/stores/app-store';
+import { generateId } from '../../../utils/random';
+import TransportmiddelKvittering from '../../kvittering/TransportmiddelKvittering';
 import {
   kvitteringTotaltBeløpSpørsmål,
   kvitteringDatoSpørsmål,
   kvitteringTransportmiddelSpørsmål,
-} from '../sporsmal/sporsmalTekster';
+} from '../../sporsmal/sporsmalTekster';
+
+import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../../models/kvittering';
+import Fil from '../fil/Fil';
+import '../filopplaster.less';
+import './filopplasterModal.less';
+import env from '../../../utils/environment';
+import { logger } from '../../../utils/logger';
+import { post } from '../../../data/fetcher/fetcher';
+import Datovelger from '../../kvittering/datovelger/Datovelger';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
@@ -190,14 +193,19 @@ const FilopplasterModal: React.FC = () => {
             onChange={(nyDato) => oppdaterDato(nyDato[0])}
             feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
           />
-          <InputSporsmal
-            tittel={kvitteringTotaltBeløpSpørsmål.tittel}
-            inputMode={kvitteringTotaltBeløpSpørsmål.inputMode}
-            bredde={kvitteringTotaltBeløpSpørsmål.bredde}
-            id={kvitteringTotaltBeløpSpørsmål.id}
-            onChange={(value) => parseBelopInput(value)}
-            feil={fåFeilmeldingTilInput(kvitteringTotaltBeløpSpørsmål.id)}
-          />
+          <div>
+            <Element className="kvittering-beløp-input">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>
+            <Input
+              inputMode={kvitteringTotaltBeløpSpørsmål.inputMode}
+              pattern="[0-9]*"
+              bredde={kvitteringTotaltBeløpSpørsmål.bredde}
+              onChange={(e) => {
+                parseBelopInput(e.target.value);
+              }}
+              id={kvitteringTotaltBeløpSpørsmål.id}
+              feil={fåFeilmeldingTilInput(kvitteringTotaltBeløpSpørsmål.id)}
+            />
+          </div>
         </div>
         <div>
           <SkjemaGruppe feil={fåFeilmeldingTilInput(kvitteringTransportmiddelSpørsmål.id)}>
