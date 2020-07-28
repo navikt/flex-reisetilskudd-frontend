@@ -38,7 +38,7 @@ function Soknaden(): ReactElement {
           <Oppsummering />
           <SendKnapp />
         </Vis>
-        <Vis hvis={idNum < getAntallSider()}>
+        <Vis hvis={idNum < getAntallSider() && idNum !== 2}>
           <VidereKnapp aktivtSteg={idNum} />
         </Vis>
       </div>

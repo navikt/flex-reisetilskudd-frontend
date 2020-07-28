@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Knapp } from 'nav-frontend-knapper';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Veileder from '../../components/sporsmal/Veileder';
@@ -17,6 +16,7 @@ import { useAppStore } from '../../data/stores/app-store';
 import { validerNumerisk, validerKroner } from '../../utils/skjemavalidering';
 import './dagens-transportmiddel.less';
 import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal';
+import VidereKnapp from '../../components/knapper/VidereKnapp';
 
 const DagensTransportmiddel = (): ReactElement => {
   const [
@@ -83,65 +83,74 @@ const DagensTransportmiddel = (): ReactElement => {
   const validerSkjema = (
     hvilkenInputID: string | null = null,
     nyesteVerdi : string | null = null,
-  ) => {
-    if (skalValidere) {
-      const nyeValideringsFeil: FeiloppsummeringFeil[] = [];
+  ) : boolean => {
+    const nyeValideringsFeil: FeiloppsummeringFeil[] = [];
+    nyeValideringsFeil.push(
+      ...validerCheckboxer(
+        hvilkenInputID === transportalternativer.id
+          ? nyesteVerdi
+          : null,
+      ),
+    );
+    if (
+    // Skal alltid kjøre med mindre tilhørende checkbox nettopp er endret:
+      !(
+        nyesteVerdi === transportalternativerVerdier.EGEN_BIL
+          && hvilkenInputID === transportalternativer.id
+      )
+    ) {
       nyeValideringsFeil.push(
-        ...validerCheckboxer(
-          hvilkenInputID === transportalternativer.id
+        ...validerAntallKilometerInput(
+          hvilkenInputID === antallKilometerSpørsmål.id
             ? nyesteVerdi
             : null,
         ),
       );
-      if (
-        // Skal alltid kjøre med mindre tilhørende checkbox nettopp er endret:
-        !(
-          nyesteVerdi === transportalternativerVerdier.EGEN_BIL
+    }
+    if (
+    // Skal alltid kjøre med mindre tilhørende checkbox nettopp er endret:
+      !(
+        nyesteVerdi === transportalternativerVerdier.KOLLEKTIVTRANSPORT
           && hvilkenInputID === transportalternativer.id
-        )
-      ) {
-        nyeValideringsFeil.push(
-          ...validerAntallKilometerInput(
-            hvilkenInputID === antallKilometerSpørsmål.id
-              ? nyesteVerdi
-              : null,
-          ),
-        );
-      }
-      if (
-        // Skal alltid kjøre med mindre tilhørende checkbox nettopp er endret:
-        !(
-          nyesteVerdi === transportalternativerVerdier.KOLLEKTIVTRANSPORT
-          && hvilkenInputID === transportalternativer.id
-        )
-      ) {
-        nyeValideringsFeil.push(
-          ...validerMånedligeUtgifter(
-            hvilkenInputID === månedligeUtgifterSpørsmål.id
-              ? nyesteVerdi
-              : null,
-          ),
-        );
-      }
+      )
+    ) {
+      nyeValideringsFeil.push(
+        ...validerMånedligeUtgifter(
+          hvilkenInputID === månedligeUtgifterSpørsmål.id
+            ? nyesteVerdi
+            : null,
+        ),
+      );
+    }
 
-      settValideringsFeilMeldinger(nyeValideringsFeil);
+    settValideringsFeilMeldinger(nyeValideringsFeil);
 
-      if (nyeValideringsFeil.length < 1) {
-        settSkalValidere(false);
-        settDagensTransportmiddelValidert(true);
-      } else {
-        settDagensTransportmiddelValidert(false);
-      }
+    if (nyeValideringsFeil.length < 1) {
+      settSkalValidere(false);
+      settDagensTransportmiddelValidert(true);
+      return true;
+    }
+    settDagensTransportmiddelValidert(false);
+
+    return false;
+  };
+
+  const kanskjeValiderSkjema = (
+    hvilkenInputID: string | null = null,
+    nyesteVerdi : string | null = null,
+  ) => {
+    if (skalValidere) {
+      validerSkjema(hvilkenInputID, nyesteVerdi);
     }
   };
 
   const handleKilometerChange = (nyInput: string) => {
-    validerSkjema(antallKilometerSpørsmål.id, nyInput);
+    kanskjeValiderSkjema(antallKilometerSpørsmål.id, nyInput);
     settAntallKilometerState(nyInput);
   };
 
   const handleMånedligeUtgifterChange = (nyInput: string) => {
-    validerSkjema(månedligeUtgifterSpørsmål.id, nyInput);
+    kanskjeValiderSkjema(månedligeUtgifterSpørsmål.id, nyInput);
     settMånedligeUtgifterState(nyInput);
   };
 
@@ -152,7 +161,7 @@ const DagensTransportmiddel = (): ReactElement => {
   )?.feilmelding;
 
   useEffect(() => {
-    validerSkjema();
+    kanskjeValiderSkjema();
   }, [skalValidere]);
 
   return (
@@ -202,24 +211,16 @@ const DagensTransportmiddel = (): ReactElement => {
           )}
         </Vis>
       </div>
-      <Knapp
-        type="hoved"
-        onClick={() => {
-          if (skalValidere) {
-            validerSkjema();
-          } else {
-            settSkalValidere(true);
-          }
-        }}
-      >
-        Validér skjemaet
-      </Knapp>
       <Vis hvis={dagensTransportmiddelValidert}>
         Skjemaet er validert, wohoo!
       </Vis>
       <Vis hvis={dagensTransportmiddelValidert === false}>
         <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={valideringsFeilMeldinger} />
       </Vis>
+      <VidereKnapp
+        aktivtSteg={2}
+        valideringsFunksjon={validerSkjema}
+      />
     </>
   );
 };

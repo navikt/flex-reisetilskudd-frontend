@@ -1,1 +1,4 @@
-export type AktivtStegProps = {aktivtSteg: number};
+export type AktivtStegProps = {
+  aktivtSteg: number,
+  valideringsFunksjon?: any,
+};
