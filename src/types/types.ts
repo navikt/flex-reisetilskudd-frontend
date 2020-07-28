@@ -16,6 +16,7 @@ export interface CheckboxProps {
   tittel: string;
   svaralternativer: Svaralternativ[];
   id: string;
+  validerSkjema?: (t?: string | null) => void;
 }
 
 export interface InputProps {

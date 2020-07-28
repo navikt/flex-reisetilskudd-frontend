@@ -7,7 +7,3 @@ export const validerKroner = (tekstInput : string | number) : boolean => {
   const kroneTall = /^[0-9]+([,.][0-9])?([0-9])?$/g;
   return kroneTall.test(tekstInput.toString());
 };
-
-export const validerKilometer = (
-  tekstInput : string | number,
-) : boolean => validerNumerisk(tekstInput);

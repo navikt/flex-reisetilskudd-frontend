@@ -6,7 +6,9 @@ import { useAppStore } from '../../../data/stores/app-store';
 import { transportalternativerVerdier } from '../spørsmålTekster';
 
 const DagensTransportmiddelCheckbox = (
-  { tittel, svaralternativer, id }: CheckboxProps,
+  {
+    tittel, svaralternativer, id, validerSkjema,
+  }: CheckboxProps,
 ): ReactElement => {
   const {
     dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
@@ -18,8 +20,21 @@ const DagensTransportmiddelCheckbox = (
     settAntallKilometerState,
   } = useAppStore();
 
+  const safeValiderSkjema = (nettoppChecked : string | null = null) => {
+    console.log('validerSkjema:', nettoppChecked);
+    if (validerSkjema) {
+      console.log('validerSkjema:', nettoppChecked);
+      validerSkjema(nettoppChecked);
+    }
+  };
+
   const skrivEndringTilGlobalState = (nyValgt: string) => {
     if (nyValgt === transportalternativerVerdier.EGEN_BIL) {
+      if (dagensTransportMiddelEgenBilChecked === false) {
+        safeValiderSkjema(transportalternativerVerdier.EGEN_BIL);
+      } else {
+        safeValiderSkjema();
+      }
       settDagensTransportMiddelEgenBilChecked(!dagensTransportMiddelEgenBilChecked);
       settAntallKilometerState('');
     } else if (nyValgt === transportalternativerVerdier.SYKLER) {
@@ -27,6 +42,13 @@ const DagensTransportmiddelCheckbox = (
     } else if (nyValgt === transportalternativerVerdier.GÅR) {
       settDagensTransportMiddelGårChecked(!dagensTransportMiddelGårChecked);
     } else if (nyValgt === transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
+      console.log('Trykket på kollektiv');
+      if (dagensTransportMiddelKollektivChecked === false) {
+        console.log('skrivEndringTilGlobalState:', transportalternativerVerdier.KOLLEKTIVTRANSPORT);
+        safeValiderSkjema(transportalternativerVerdier.KOLLEKTIVTRANSPORT);
+      } else {
+        safeValiderSkjema();
+      }
       settDagensTransportMiddelKollektivChecked(!dagensTransportMiddelKollektivChecked);
       settMånedligeUtgifterState('');
     }
