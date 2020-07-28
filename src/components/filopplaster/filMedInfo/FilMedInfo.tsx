@@ -1,11 +1,12 @@
 import React from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
-import vedlegg from '../../assets/vedlegg.svg';
-import formaterFilstørrelse from './utils';
-import { KvitteringInterface } from '../../models/kvittering';
-import { formatertDato, DatoFormat } from '../../utils/dato';
-import { useAppStore } from '../../data/stores/app-store';
+import vedlegg from '../../../assets/vedlegg.svg';
+import formaterFilstørrelse from '../utils';
+import { KvitteringInterface } from '../../../models/kvittering';
+import { formatertDato, DatoFormat } from '../../../utils/dato';
+import { useAppStore } from '../../../data/stores/app-store';
+import './filMedInfo.less';
 
 interface Props {
   fil: KvitteringInterface;
