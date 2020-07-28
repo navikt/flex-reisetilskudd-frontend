@@ -8,7 +8,7 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../../models/kvittering';
 import Fil from '../fil/Fil';
 import '../Filopplaster.less';
-import './FilopplasterModal.less';
+import './filopplasterModal.less';
 import env from '../../../utils/environment';
 import { logger } from '../../../utils/logger';
 import { post } from '../../../data/fetcher/fetcher';
