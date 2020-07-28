@@ -4,7 +4,7 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import vedlegg from '../../../assets/vedlegg.svg';
 import formaterFilstørrelse from '../utils';
-import './Fil.less';
+import './fil.less';
 
 interface Props {
   fil: File | null;
