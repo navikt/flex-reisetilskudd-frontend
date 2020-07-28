@@ -18,7 +18,7 @@ const Kvitteringsopplasting: React.FC = () : ReactElement => (
         <FilopplasterModal />
         <DragAndDrop />
       </div>
-      <OpplastedeFiler />
+      <OpplastedeFiler fjernKnapp />
       <TotalBelop />
     </div>
   </div>
