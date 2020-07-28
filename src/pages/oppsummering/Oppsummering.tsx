@@ -14,7 +14,9 @@ const Oppsummering = () : ReactElement => (
     <div className="oppsummering-element oppsummering-vedlegg">
       <Undertittel className="oppsummering-underoverskrift">Opplastede kvitteringer</Undertittel>
       <OpplastedeFiler />
-      <TotalBelop />
+      <div className="oppsummering-totalt-belop">
+        <TotalBelop />
+      </div>
     </div>
   </div>
 );

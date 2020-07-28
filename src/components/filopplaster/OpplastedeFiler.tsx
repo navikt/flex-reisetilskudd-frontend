@@ -5,7 +5,11 @@ import { KvitteringInterface } from '../../models/kvittering';
 import Vis from '../Vis';
 import { useAppStore } from '../../data/stores/app-store';
 
-const OpplastedeFiler: React.FC = () => {
+interface Props {
+  fjernKnapp?: boolean;
+}
+
+const OpplastedeFiler: React.FC<Props> = ({ fjernKnapp }) => {
   const { kvitteringer } = useAppStore();
 
   return (
@@ -17,10 +21,9 @@ const OpplastedeFiler: React.FC = () => {
           <Element className="dato-tittel">Dato</Element>
         </div>
       </Vis>
-
       {kvitteringer.map((fil: KvitteringInterface, index: number) => (
         <div key={fil.id}>
-          <FilMedInfo fil={fil} />
+          <FilMedInfo fil={fil} fjernKnapp={fjernKnapp} />
           {index === kvitteringer.length - 1 ? '' : <hr />}
         </div>
       ))}
