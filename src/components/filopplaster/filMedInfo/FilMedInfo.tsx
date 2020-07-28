@@ -8,7 +8,7 @@ import formaterFilstørrelse from '../utils';
 import { KvitteringInterface } from '../../../models/kvittering';
 import { formatertDato, DatoFormat } from '../../../utils/dato';
 import { useAppStore } from '../../../data/stores/app-store';
-import './FilMedInfo.less';
+import './filMedInfo.less';
 
 interface Props {
   fil: KvitteringInterface;
