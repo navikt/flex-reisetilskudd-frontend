@@ -188,7 +188,7 @@ const FilopplasterModal: React.FC = () => {
             label="Dato"
             mode="single"
             onChange={(nyDato) => oppdaterDato(nyDato[0])}
-
+            feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
           />
           <InputSporsmal
             tittel={kvitteringTotaltBeløpSpørsmål.tittel}
