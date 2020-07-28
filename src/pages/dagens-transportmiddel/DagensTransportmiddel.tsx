@@ -19,8 +19,9 @@ import './dagens-transportmiddel.less';
 import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal';
 
 const DagensTransportmiddel = (): ReactElement => {
-  const [valideringsFeil, settValideringsFeil] = useState<FeiloppsummeringFeil[]>([]);
-  const [kilometerInputFeilmelding, settKilometerInputFeilmelding] = useState<string>('');
+  const [
+    valideringsFeilMeldinger, settValideringsFeilMeldinger,
+  ] = useState<FeiloppsummeringFeil[]>([]);
 
   const {
     dagensTransportMiddelEgenBilChecked,
@@ -32,14 +33,15 @@ const DagensTransportmiddel = (): ReactElement => {
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
   } = useAppStore();
 
-  const validerAntallKilometerInput = (): FeiloppsummeringFeil[] => {
+  const validerAntallKilometerInput = (
+    nyesteVerdi : string | null = null,
+  ): FeiloppsummeringFeil[] => {
     if (dagensTransportMiddelEgenBilChecked) {
-      if (!validerNumerisk(antallKilometerState)) {
-        settKilometerInputFeilmelding('Du må oppgi gyldig verdi for kilometer');
+      if (!validerNumerisk(nyesteVerdi || antallKilometerState)) {
         return [
           {
             skjemaelementId: antallKilometerSpørsmål.id,
-            feilmelding: 'Ugyldig kilometerverdi',
+            feilmelding: 'Du må oppgi gyldig verdi for kilometer',
           },
         ];
       }
@@ -47,10 +49,10 @@ const DagensTransportmiddel = (): ReactElement => {
     return [];
   };
 
-  const validerMånedligeUtgifter = (): FeiloppsummeringFeil[] => {
+  const validerMånedligeUtgifter = (nyesteVerdi : string | null = null): FeiloppsummeringFeil[] => {
     if (
       dagensTransportMiddelKollektivChecked
-      && !validerKroner(månedligeUtgifterState)
+      && !validerKroner(nyesteVerdi || månedligeUtgifterState)
     ) {
       return [{ skjemaelementId: månedligeUtgifterSpørsmål.id, feilmelding: 'Ugyldig kroneverdi' }];
     }
@@ -74,30 +76,60 @@ const DagensTransportmiddel = (): ReactElement => {
     return [];
   };
 
-  const validerSkjema = (transportAlternativNettoppChecked : string | null = null) => {
-    console.log('validerSkjema:', transportAlternativNettoppChecked);
+  const validerSkjema = (
+    hvilkenInputID: string | null = null,
+    nyesteVerdi : string | null = null,
+  ) => {
     const nyeValideringsFeil: FeiloppsummeringFeil[] = [];
     nyeValideringsFeil.push(...validerCheckboxer());
-    if (transportAlternativNettoppChecked !== transportalternativerVerdier.EGEN_BIL) {
-      nyeValideringsFeil.push(...validerAntallKilometerInput());
+    if (
+      !(
+        nyesteVerdi === transportalternativerVerdier.EGEN_BIL
+        && hvilkenInputID === transportalternativer.id
+      )
+    ) {
+      nyeValideringsFeil.push(
+        ...validerAntallKilometerInput(
+          hvilkenInputID === antallKilometerSpørsmål.id
+            ? nyesteVerdi
+            : null,
+        ),
+      );
     }
-    if (transportAlternativNettoppChecked !== transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
-      nyeValideringsFeil.push(...validerMånedligeUtgifter());
+    if (
+      !(
+        nyesteVerdi === transportalternativerVerdier.KOLLEKTIVTRANSPORT
+        && hvilkenInputID === transportalternativer.id
+      )
+    ) {
+      nyeValideringsFeil.push(
+        ...validerMånedligeUtgifter(
+          hvilkenInputID === månedligeUtgifterSpørsmål.id
+            ? nyesteVerdi
+            : null,
+        ),
+      );
     }
 
-    settValideringsFeil(nyeValideringsFeil);
+    settValideringsFeilMeldinger(nyeValideringsFeil);
     settDagensTransportmiddelValidert(nyeValideringsFeil.length < 1);
   };
 
   const handleKilometerChange = (nyInput: string) => {
-    validerSkjema();
+    validerSkjema(antallKilometerSpørsmål.id, nyInput);
     settAntallKilometerState(nyInput);
   };
 
   const handleMånedligeUtgifterChange = (nyInput: string) => {
-    validerSkjema();
+    validerSkjema(månedligeUtgifterSpørsmål.id, nyInput);
     settMånedligeUtgifterState(nyInput);
   };
+
+  const fåFeilmeldingTilInput = (
+    hvilkenInput : string,
+  ) : string | undefined => valideringsFeilMeldinger.find(
+    (element) => element.skjemaelementId === hvilkenInput,
+  )?.feilmelding;
 
   return (
     <>
@@ -118,7 +150,7 @@ const DagensTransportmiddel = (): ReactElement => {
             ...{
               onChange: handleKilometerChange,
               value: antallKilometerState,
-              feil: kilometerInputFeilmelding,
+              feil: fåFeilmeldingTilInput(antallKilometerSpørsmål.id),
             },
             ...antallKilometerSpørsmål,
           },
@@ -139,6 +171,7 @@ const DagensTransportmiddel = (): ReactElement => {
               ...{
                 onChange: handleMånedligeUtgifterChange,
                 value: månedligeUtgifterState,
+                feil: fåFeilmeldingTilInput(månedligeUtgifterSpørsmål.id),
               },
               ...månedligeUtgifterSpørsmål,
             },
@@ -150,7 +183,7 @@ const DagensTransportmiddel = (): ReactElement => {
         Skjemaet er validert, wohoo!
       </Vis>
       <Vis hvis={dagensTransportmiddelValidert === false}>
-        <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={valideringsFeil} />
+        <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={valideringsFeilMeldinger} />
       </Vis>
     </>
   );

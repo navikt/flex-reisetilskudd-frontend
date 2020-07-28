@@ -3,7 +3,7 @@ import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import { CheckboxProps } from '../../../types/types';
 import 'nav-frontend-skjema-style';
 import { useAppStore } from '../../../data/stores/app-store';
-import { transportalternativerVerdier } from '../spørsmålTekster';
+import { transportalternativer, transportalternativerVerdier } from '../spørsmålTekster';
 
 const DagensTransportmiddelCheckbox = (
   {
@@ -21,10 +21,8 @@ const DagensTransportmiddelCheckbox = (
   } = useAppStore();
 
   const safeValiderSkjema = (nettoppChecked : string | null = null) => {
-    console.log('validerSkjema:', nettoppChecked);
     if (validerSkjema) {
-      console.log('validerSkjema:', nettoppChecked);
-      validerSkjema(nettoppChecked);
+      validerSkjema(transportalternativer.id, nettoppChecked);
     }
   };
 
@@ -42,9 +40,7 @@ const DagensTransportmiddelCheckbox = (
     } else if (nyValgt === transportalternativerVerdier.GÅR) {
       settDagensTransportMiddelGårChecked(!dagensTransportMiddelGårChecked);
     } else if (nyValgt === transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
-      console.log('Trykket på kollektiv');
       if (dagensTransportMiddelKollektivChecked === false) {
-        console.log('skrivEndringTilGlobalState:', transportalternativerVerdier.KOLLEKTIVTRANSPORT);
         safeValiderSkjema(transportalternativerVerdier.KOLLEKTIVTRANSPORT);
       } else {
         safeValiderSkjema();
