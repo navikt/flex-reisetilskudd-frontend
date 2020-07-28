@@ -21,7 +21,6 @@ const OpplastedeFiler: React.FC<Props> = ({ fjernKnapp }) => {
           <Element className="dato-tittel">Dato</Element>
         </div>
       </Vis>
-
       {kvitteringer.map((fil: KvitteringInterface, index: number) => (
         <div key={fil.id}>
           <FilMedInfo fil={fil} fjernKnapp={fjernKnapp} />
