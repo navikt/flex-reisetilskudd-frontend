@@ -17,7 +17,11 @@ import { useAppStore } from '../../data/stores/app-store';
 import { generateId } from '../../utils/random';
 import TransportmiddelKvittering from '../kvittering/TransportmiddelKvittering';
 import InputSporsmal from '../sporsmal/inputSporsmal/InputSporsmal';
-import { totaltBeløpSpørsmål } from '../sporsmal/sporsmalTekster';
+import {
+  kvitteringTotaltBeløpSpørsmål,
+  kvitteringDatoSpørsmål,
+  kvitteringTransportmiddelSpørsmål,
+} from '../sporsmal/sporsmalTekster';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
@@ -42,16 +46,22 @@ const FilopplasterModal: React.FC = () => {
     settÅpenFilopplasterModal(false);
   };
 
+  const fåFeilmeldingTilInput = (
+    hvilkenInput : string,
+  ) : string | undefined => valideringsFeil.find(
+    (element) => element.skjemaelementId === hvilkenInput,
+  )?.feilmelding;
+
   const validerBeløp = (nyttBeløp : number | null): FeiloppsummeringFeil[] => {
     if (!nyttBeløp || nyttBeløp === null) {
       return [{
-        skjemaelementId: 'beløp',
+        skjemaelementId: kvitteringTotaltBeløpSpørsmål.id,
         feilmelding: 'Vennligst skriv inn et gyldig beløp',
       }];
     }
     if (nyttBeløp <= 0) {
       return [{
-        skjemaelementId: totaltBeløpSpørsmål.id,
+        skjemaelementId: kvitteringTotaltBeløpSpørsmål.id,
         feilmelding: 'Vennligst skriv inn et positivt beløp',
       }];
     }
@@ -62,7 +72,7 @@ const FilopplasterModal: React.FC = () => {
     if (!nyDato || nyDato === null) {
       return [
         {
-          skjemaelementId: 'dato',
+          skjemaelementId: kvitteringDatoSpørsmål.id,
           feilmelding: 'Vennligst velg en gyldig dato',
         },
       ];
@@ -75,7 +85,7 @@ const FilopplasterModal: React.FC = () => {
     if (nyttTransportmiddel === undefined) {
       return [
         {
-          skjemaelementId: 'transportmiddel',
+          skjemaelementId: kvitteringTransportmiddelSpørsmål.id,
           feilmelding: 'Vennligst velg minst ett transportmiddel',
         },
       ];
@@ -172,13 +182,21 @@ const FilopplasterModal: React.FC = () => {
       <div className="modal-content">
         <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
         <div className="input-rad">
-          <Datovelger className="periode-element" label="Dato" mode="single" onChange={(nyDato) => oppdaterDato(nyDato[0])} />
+          <Datovelger
+            id={kvitteringDatoSpørsmål.id}
+            className="periode-element"
+            label="Dato"
+            mode="single"
+            onChange={(nyDato) => oppdaterDato(nyDato[0])}
+
+          />
           <InputSporsmal
-            tittel={totaltBeløpSpørsmål.tittel}
-            inputMode={totaltBeløpSpørsmål.inputMode}
-            bredde={totaltBeløpSpørsmål.bredde}
-            id={totaltBeløpSpørsmål.id}
+            tittel={kvitteringTotaltBeløpSpørsmål.tittel}
+            inputMode={kvitteringTotaltBeløpSpørsmål.inputMode}
+            bredde={kvitteringTotaltBeløpSpørsmål.bredde}
+            id={kvitteringTotaltBeløpSpørsmål.id}
             onChange={(value) => parseBelopInput(value)}
+            feil={fåFeilmeldingTilInput(kvitteringTotaltBeløpSpørsmål.id)}
           />
         </div>
         <div>

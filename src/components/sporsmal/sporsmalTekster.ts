@@ -2,6 +2,7 @@ import {
   RadioSpørsmålProps, CheckboxProps, InputProps, VeilederProps,
 } from '../../types/types';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling/constants';
+import { Transportmiddel } from '../../models/kvittering';
 
 export const utbetalingSpørsmålVerdier = {
   NAME: 'UTBETALINGARBEIDSGIVER',
@@ -79,12 +80,20 @@ export const månedligeUtgifterSpørsmål: InputProps = {
   id: 'dagens-transportmiddel-manedlige-utgifter-input',
 };
 
-export const totaltBeløpSpørsmål: InputProps = {
+export const kvitteringTotaltBeløpSpørsmål: InputProps = {
   tittel: 'Totalt beløp',
   inputMode: 'numeric',
   feil: 'Beløpet er ugyldig',
   bredde: 'fullbredde',
   id: 'filopplaster-totalt-beløp-input',
+};
+
+export const kvitteringDatoSpørsmål = {
+  id: 'filopplaster-dato-input',
+};
+
+export const kvitteringTransportmiddelSpørsmål = {
+  id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.TAXI}`,
 };
 
 export const transportVeileder: VeilederProps = {

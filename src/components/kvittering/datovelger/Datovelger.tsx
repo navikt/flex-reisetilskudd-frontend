@@ -10,6 +10,7 @@ interface Props {
   className?: string;
   onChange?: (d: Date[]) => void;
   mode?: 'single' | 'multiple' | 'range' | 'time';
+  id?: string;
 }
 
 const Datovelger: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const Datovelger: React.FC<Props> = ({
   className = '',
   onChange = () => { },
   mode = 'single',
+  id = '',
 }) => {
   const validerDato = (d: Date[]) => {
     onChange(d);
@@ -40,6 +42,7 @@ const Datovelger: React.FC<Props> = ({
           disableMobile: true,
         }}
         onChange={(date) => validerDato(date)}
+        id={id}
       />
     </div>
   );
