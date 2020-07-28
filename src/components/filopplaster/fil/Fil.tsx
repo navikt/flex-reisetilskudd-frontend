@@ -2,8 +2,9 @@ import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
-import vedlegg from '../../assets/vedlegg.svg';
-import formaterFilstørrelse from './utils';
+import vedlegg from '../../../assets/vedlegg.svg';
+import formaterFilstørrelse from '../utils';
+import './fil.less';
 
 interface Props {
   fil: File | null;

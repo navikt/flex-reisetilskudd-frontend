@@ -1,6 +1,6 @@
 import React from 'react';
 import { Element } from 'nav-frontend-typografi';
-import FilMedInfo from './FilMedInfo';
+import FilMedInfo from './filMedInfo/FilMedInfo';
 import { KvitteringInterface } from '../../models/kvittering';
 import Vis from '../Vis';
 import { useAppStore } from '../../data/stores/app-store';

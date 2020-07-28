@@ -1,10 +1,11 @@
 import React, { useCallback, ReactElement } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Normaltekst } from 'nav-frontend-typografi';
-import opplasting from '../../assets/opplasting.svg';
-import { useAppStore } from '../../data/stores/app-store';
-import formaterFilstørrelse from './utils';
-import env from '../../utils/environment';
+import opplasting from '../../../assets/opplasting.svg';
+import { useAppStore } from '../../../data/stores/app-store';
+import formaterFilstørrelse from '../utils';
+import env from '../../../utils/environment';
+import './dragAndDrop.less';
 
 const DragAndDrop: React.FC = (): ReactElement => {
   const {

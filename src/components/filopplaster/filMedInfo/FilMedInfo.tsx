@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { Fareknapp } from 'nav-frontend-knapper';
-import { SlettIkon } from '../../assets/ikoner';
+import { SlettIkon } from '../../../assets/ikoner';
 // import vedlegg from '../../assets/vedlegg.svg';
-import helsecannabis from '../../assets/helsecannabis.svg';
-import formaterFilstørrelse from './utils';
-import { KvitteringInterface } from '../../models/kvittering';
-import { formatertDato, DatoFormat } from '../../utils/dato';
-import { useAppStore } from '../../data/stores/app-store';
+import helsecannabis from '../../../assets/helsecannabis.svg';
+import formaterFilstørrelse from '../utils';
+import { KvitteringInterface } from '../../../models/kvittering';
+import { formatertDato, DatoFormat } from '../../../utils/dato';
+import { useAppStore } from '../../../data/stores/app-store';
+import './filMedInfo.less';
 
 interface Props {
   fil: KvitteringInterface;

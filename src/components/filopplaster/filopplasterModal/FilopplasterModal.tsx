@@ -5,16 +5,17 @@ import { Input } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../models/kvittering';
-import Fil from './Fil';
-import './Filopplaster.less';
-import env from '../../utils/environment';
-import { logger } from '../../utils/logger';
-import { post } from '../../data/fetcher/fetcher';
-import Datovelger from '../kvittering/datovelger/Datovelger';
-import { useAppStore } from '../../data/stores/app-store';
-import { generateId } from '../../utils/random';
-import TransportmiddelKvittering from '../kvittering/TransportmiddelKvittering';
+import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../../models/kvittering';
+import Fil from '../fil/Fil';
+import '../filopplaster.less';
+import './filopplasterModal.less';
+import env from '../../../utils/environment';
+import { logger } from '../../../utils/logger';
+import { post } from '../../../data/fetcher/fetcher';
+import Datovelger from '../../kvittering/datovelger/Datovelger';
+import { useAppStore } from '../../../data/stores/app-store';
+import { generateId } from '../../../utils/random';
+import TransportmiddelKvittering from '../../kvittering/TransportmiddelKvittering';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
