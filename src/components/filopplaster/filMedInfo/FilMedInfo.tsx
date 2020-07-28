@@ -33,7 +33,7 @@ const FilMedInfo: React.FC<Props> = ({ fil }) => {
     }
   };
 
-  function truncate(fullString:string, stringLen:number, separator:string) {
+  function truncate(fullString: string, stringLen: number, separator: string) {
     if (fullString.length <= stringLen) {
       return fullString;
     }
