@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
@@ -22,6 +22,7 @@ const DagensTransportmiddel = (): ReactElement => {
   const [
     valideringsFeilMeldinger, settValideringsFeilMeldinger,
   ] = useState<FeiloppsummeringFeil[]>([]);
+  const [skalValidere, settSkalValidere] = useState<boolean>(false);
 
   const {
     dagensTransportMiddelEgenBilChecked,
@@ -59,12 +60,15 @@ const DagensTransportmiddel = (): ReactElement => {
     return [];
   };
 
-  const validerCheckboxer = (): FeiloppsummeringFeil[] => {
+  const validerCheckboxer = (nyesteVerdi : string | null = null): FeiloppsummeringFeil[] => {
     if (
-      !dagensTransportMiddelEgenBilChecked
-      && !dagensTransportMiddelSyklerChecked
-      && !dagensTransportMiddelGårChecked
-      && !dagensTransportMiddelKollektivChecked
+      (
+        !dagensTransportMiddelEgenBilChecked
+        && !dagensTransportMiddelSyklerChecked
+        && !dagensTransportMiddelGårChecked
+        && !dagensTransportMiddelKollektivChecked
+      )
+      && nyesteVerdi === null
     ) {
       return [
         {
@@ -80,39 +84,55 @@ const DagensTransportmiddel = (): ReactElement => {
     hvilkenInputID: string | null = null,
     nyesteVerdi : string | null = null,
   ) => {
-    const nyeValideringsFeil: FeiloppsummeringFeil[] = [];
-    nyeValideringsFeil.push(...validerCheckboxer());
-    if (
-      !(
-        nyesteVerdi === transportalternativerVerdier.EGEN_BIL
-        && hvilkenInputID === transportalternativer.id
-      )
-    ) {
+    if (skalValidere) {
+      const nyeValideringsFeil: FeiloppsummeringFeil[] = [];
       nyeValideringsFeil.push(
-        ...validerAntallKilometerInput(
-          hvilkenInputID === antallKilometerSpørsmål.id
+        ...validerCheckboxer(
+          hvilkenInputID === transportalternativer.id
             ? nyesteVerdi
             : null,
         ),
       );
-    }
-    if (
-      !(
-        nyesteVerdi === transportalternativerVerdier.KOLLEKTIVTRANSPORT
-        && hvilkenInputID === transportalternativer.id
-      )
-    ) {
-      nyeValideringsFeil.push(
-        ...validerMånedligeUtgifter(
-          hvilkenInputID === månedligeUtgifterSpørsmål.id
-            ? nyesteVerdi
-            : null,
-        ),
-      );
-    }
+      if (
+        // Skal alltid kjøre med mindre tilhørende checkbox nettopp er endret:
+        !(
+          nyesteVerdi === transportalternativerVerdier.EGEN_BIL
+          && hvilkenInputID === transportalternativer.id
+        )
+      ) {
+        nyeValideringsFeil.push(
+          ...validerAntallKilometerInput(
+            hvilkenInputID === antallKilometerSpørsmål.id
+              ? nyesteVerdi
+              : null,
+          ),
+        );
+      }
+      if (
+        // Skal alltid kjøre med mindre tilhørende checkbox nettopp er endret:
+        !(
+          nyesteVerdi === transportalternativerVerdier.KOLLEKTIVTRANSPORT
+          && hvilkenInputID === transportalternativer.id
+        )
+      ) {
+        nyeValideringsFeil.push(
+          ...validerMånedligeUtgifter(
+            hvilkenInputID === månedligeUtgifterSpørsmål.id
+              ? nyesteVerdi
+              : null,
+          ),
+        );
+      }
 
-    settValideringsFeilMeldinger(nyeValideringsFeil);
-    settDagensTransportmiddelValidert(nyeValideringsFeil.length < 1);
+      settValideringsFeilMeldinger(nyeValideringsFeil);
+
+      if (nyeValideringsFeil.length < 1) {
+        settSkalValidere(false);
+        settDagensTransportmiddelValidert(true);
+      } else {
+        settDagensTransportmiddelValidert(false);
+      }
+    }
   };
 
   const handleKilometerChange = (nyInput: string) => {
@@ -130,6 +150,10 @@ const DagensTransportmiddel = (): ReactElement => {
   ) : string | undefined => valideringsFeilMeldinger.find(
     (element) => element.skjemaelementId === hvilkenInput,
   )?.feilmelding;
+
+  useEffect(() => {
+    validerSkjema();
+  }, [skalValidere]);
 
   return (
     <>
@@ -178,7 +202,18 @@ const DagensTransportmiddel = (): ReactElement => {
           )}
         </Vis>
       </div>
-      <Knapp type="hoved" onClick={() => { validerSkjema(); }}>Validér skjemaet</Knapp>
+      <Knapp
+        type="hoved"
+        onClick={() => {
+          if (skalValidere) {
+            validerSkjema();
+          } else {
+            settSkalValidere(true);
+          }
+        }}
+      >
+        Validér skjemaet
+      </Knapp>
       <Vis hvis={dagensTransportmiddelValidert}>
         Skjemaet er validert, wohoo!
       </Vis>

@@ -15,7 +15,6 @@ const DagensTransportmiddelCheckbox = (
     dagensTransportMiddelSyklerChecked, settDagensTransportMiddelSyklerChecked,
     dagensTransportMiddelGårChecked, settDagensTransportMiddelGårChecked,
     dagensTransportMiddelKollektivChecked, settDagensTransportMiddelKollektivChecked,
-    settDagensTransportmiddelValidert,
     settMånedligeUtgifterState,
     settAntallKilometerState,
   } = useAppStore();
@@ -28,23 +27,17 @@ const DagensTransportmiddelCheckbox = (
 
   const skrivEndringTilGlobalState = (nyValgt: string) => {
     if (nyValgt === transportalternativerVerdier.EGEN_BIL) {
-      if (dagensTransportMiddelEgenBilChecked === false) {
-        safeValiderSkjema(transportalternativerVerdier.EGEN_BIL);
-      } else {
-        safeValiderSkjema();
-      }
+      safeValiderSkjema(transportalternativerVerdier.EGEN_BIL);
       settDagensTransportMiddelEgenBilChecked(!dagensTransportMiddelEgenBilChecked);
       settAntallKilometerState('');
     } else if (nyValgt === transportalternativerVerdier.SYKLER) {
+      safeValiderSkjema(transportalternativerVerdier.SYKLER);
       settDagensTransportMiddelSyklerChecked(!dagensTransportMiddelSyklerChecked);
     } else if (nyValgt === transportalternativerVerdier.GÅR) {
+      safeValiderSkjema(transportalternativerVerdier.GÅR);
       settDagensTransportMiddelGårChecked(!dagensTransportMiddelGårChecked);
     } else if (nyValgt === transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
-      if (dagensTransportMiddelKollektivChecked === false) {
-        safeValiderSkjema(transportalternativerVerdier.KOLLEKTIVTRANSPORT);
-      } else {
-        safeValiderSkjema();
-      }
+      safeValiderSkjema(transportalternativerVerdier.KOLLEKTIVTRANSPORT);
       settDagensTransportMiddelKollektivChecked(!dagensTransportMiddelKollektivChecked);
       settMånedligeUtgifterState('');
     }
@@ -79,7 +72,6 @@ const DagensTransportmiddelCheckbox = (
         }
         onChange={(_, nyVerdi) => {
           skrivEndringTilGlobalState(nyVerdi);
-          settDagensTransportmiddelValidert(undefined);
         }}
       />
     </div>
