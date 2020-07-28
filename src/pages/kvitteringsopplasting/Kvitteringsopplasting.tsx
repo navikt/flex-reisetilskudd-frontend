@@ -3,9 +3,10 @@ import {
   Innholdstittel, Ingress,
 } from 'nav-frontend-typografi';
 import './kvitteringsopplasting.less';
-import FilopplasterModal from '../../components/filopplaster/FilopplasterModal';
+import FilopplasterModal from '../../components/filopplaster/filopplasterModal/FilopplasterModal';
 import OpplastedeFiler from '../../components/filopplaster/OpplastedeFiler';
-import DragAndDrop from '../../components/filopplaster/DragAndDrop';
+// import DragAndDrop from '../../components/filopplaster/DragAndDrop';
+import DragAndDrop from '../../components/filopplaster/dragAndDrop/DragAndDrop';
 import TotalBelop from '../../components/kvittering/totaltBelop/TotaltBelop';
 
 const Kvitteringsopplasting: React.FC = () : ReactElement => (
