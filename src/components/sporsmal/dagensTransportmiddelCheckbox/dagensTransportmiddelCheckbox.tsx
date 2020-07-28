@@ -3,7 +3,7 @@ import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import { CheckboxProps } from '../../../types/types';
 import 'nav-frontend-skjema-style';
 import { useAppStore } from '../../../data/stores/app-store';
-import { transportalternativerVerdier } from '../spørsmålTekster';
+import { transportalternativerVerdier } from '../sporsmalTekster';
 
 const DagensTransportmiddelCheckbox = (
   { tittel, svaralternativer, id }: CheckboxProps,

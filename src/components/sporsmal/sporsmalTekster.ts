@@ -79,6 +79,14 @@ export const månedligeUtgifterSpørsmål: InputProps = {
   id: 'dagens-transportmiddel-manedlige-utgifter-input',
 };
 
+export const totaltBeløpSpørsmål: InputProps = {
+  tittel: 'Totalt beløp',
+  inputMode: 'numeric',
+  feil: 'Beløpet er ugyldig',
+  bredde: 'fullbredde',
+  id: 'filopplaster-totalt-beløp-input',
+};
+
 export const transportVeileder: VeilederProps = {
   hjelpetekst: 'Kollektiv transport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.',
 };

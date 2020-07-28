@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { Input, Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
+import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import Vis from '../Vis';
@@ -16,6 +16,8 @@ import Datovelger from '../kvittering/datovelger/Datovelger';
 import { useAppStore } from '../../data/stores/app-store';
 import { generateId } from '../../utils/random';
 import TransportmiddelKvittering from '../kvittering/TransportmiddelKvittering';
+import InputSporsmal from '../sporsmal/inputSporsmal/InputSporsmal';
+import { totaltBeløpSpørsmål } from '../sporsmal/sporsmalTekster';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
@@ -49,7 +51,7 @@ const FilopplasterModal: React.FC = () => {
     }
     if (nyttBeløp <= 0) {
       return [{
-        skjemaelementId: 'beløp',
+        skjemaelementId: totaltBeløpSpørsmål.id,
         feilmelding: 'Vennligst skriv inn et positivt beløp',
       }];
     }
@@ -171,7 +173,13 @@ const FilopplasterModal: React.FC = () => {
         <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
         <div className="input-rad">
           <Datovelger className="periode-element" label="Dato" mode="single" onChange={(nyDato) => oppdaterDato(nyDato[0])} />
-          <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
+          <InputSporsmal
+            tittel={totaltBeløpSpørsmål.tittel}
+            inputMode={totaltBeløpSpørsmål.inputMode}
+            bredde={totaltBeløpSpørsmål.bredde}
+            id={totaltBeløpSpørsmål.id}
+            onChange={(value) => parseBelopInput(value)}
+          />
         </div>
         <div>
           <TransportmiddelKvittering handleChange={(
