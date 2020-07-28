@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
+import { Feiloppsummering, FeiloppsummeringFeil, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import Vis from '../Vis';
@@ -200,10 +200,12 @@ const FilopplasterModal: React.FC = () => {
           />
         </div>
         <div>
-          <TransportmiddelKvittering handleChange={(
-            transportmiddel,
-          ) => handleTransportmiddelChange(transportmiddel)}
-          />
+          <SkjemaGruppe feil={fåFeilmeldingTilInput(kvitteringTransportmiddelSpørsmål.id)}>
+            <TransportmiddelKvittering handleChange={(
+              transportmiddel,
+            ) => handleTransportmiddelChange(transportmiddel)}
+            />
+          </SkjemaGruppe>
         </div>
         <Fil fil={uopplastetFil} className="opplastede-filer" />
         {laster
