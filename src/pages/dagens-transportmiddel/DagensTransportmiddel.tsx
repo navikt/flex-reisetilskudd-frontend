@@ -16,6 +16,7 @@ import { useAppStore } from '../../data/stores/app-store';
 import { validerKilometer, validerKroner } from '../../utils/skjemavalidering';
 import './dagens-transportmiddel.less';
 import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal';
+import { hjelpetekstDagensTransportmiddel } from '../../constants/hjelpetekster';
 
 const DagensTransportmiddel = (): ReactElement => {
   const [valideringsFeil, settValideringsFeil] = useState<FeiloppsummeringFeil[]>([]);
@@ -98,8 +99,7 @@ const DagensTransportmiddel = (): ReactElement => {
           Hvilke transportmidler brukte du til og fra jobb før du ble sykemeldt?
         </Normaltekst>
         <Hjelpetekst className="kollektivtransport-hjelpetekst">
-          Kollektivtransport regnes som buss, trikk,
-          t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.
+          {hjelpetekstDagensTransportmiddel.hjelpetekst}
         </Hjelpetekst>
       </div>
       {DagensTransportmiddelCheckbox(transportalternativer)}
