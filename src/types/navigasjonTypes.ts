@@ -1,4 +1,5 @@
 export type AktivtStegProps = {
   aktivtSteg: number,
-  valideringsFunksjon?: any,
+  skalGåTilNesteSideNå?: boolean,
+  onClick?: () => void,
 };

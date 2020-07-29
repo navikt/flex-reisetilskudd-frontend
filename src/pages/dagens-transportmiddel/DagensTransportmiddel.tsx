@@ -10,7 +10,7 @@ import {
   antallKilometerSpørsmål,
   månedligeUtgifterSpørsmål,
   transportVeileder,
-  transportalternativerKollektivt, transportalternativerVerdier,
+  transportalternativerKollektivt,
 } from '../../components/sporsmal/spørsmålTekster';
 import { useAppStore } from '../../data/stores/app-store';
 import { validerNumerisk, validerKroner } from '../../utils/skjemavalidering';
@@ -20,9 +20,16 @@ import VidereKnapp from '../../components/knapper/VidereKnapp';
 
 const DagensTransportmiddel = (): ReactElement => {
   const [
-    valideringsFeilMeldinger, settValideringsFeilMeldinger,
+    visningsFeilmeldinger, settVisningsFeilmeldinger,
   ] = useState<FeiloppsummeringFeil[]>([]);
-  const [skalValidere, settSkalValidere] = useState<boolean>(false);
+  const [skalViseFeil, settSkalViseFeil] = useState<boolean>(false);
+  const [skalViseKilometerFeil, settSkalViseKilometerFeil] = useState<boolean>(false);
+  const [
+    skalViseMånedligeUtgifterFeil, settSkalViseMånedligeUtgifterFeil,
+  ] = useState<boolean>(false);
+  const [gårTilNesteSide, settGårTilNesteSide] = useState<boolean>(false);
+  // TODO: Fikse underfelt sin feilmelding:
+  const [skalHaFullValiering, settskalHaFullValiering] = useState<boolean>(false);
 
   const {
     dagensTransportMiddelEgenBilChecked,
@@ -34,11 +41,9 @@ const DagensTransportmiddel = (): ReactElement => {
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
   } = useAppStore();
 
-  const validerAntallKilometerInput = (
-    nyesteVerdi : string | null = null,
-  ): FeiloppsummeringFeil[] => {
+  const validerAntallKilometerInput = (): FeiloppsummeringFeil[] => {
     if (dagensTransportMiddelEgenBilChecked) {
-      if (!validerNumerisk(nyesteVerdi || antallKilometerState)) {
+      if (!validerNumerisk(antallKilometerState)) {
         return [
           {
             skjemaelementId: antallKilometerSpørsmål.id,
@@ -60,15 +65,12 @@ const DagensTransportmiddel = (): ReactElement => {
     return [];
   };
 
-  const validerCheckboxer = (nyesteVerdi : string | null = null): FeiloppsummeringFeil[] => {
+  const validerCheckboxer = (): FeiloppsummeringFeil[] => {
     if (
-      (
-        !dagensTransportMiddelEgenBilChecked
+      !dagensTransportMiddelEgenBilChecked
         && !dagensTransportMiddelSyklerChecked
         && !dagensTransportMiddelGårChecked
         && !dagensTransportMiddelKollektivChecked
-      )
-      && nyesteVerdi === null
     ) {
       return [
         {
@@ -80,101 +82,94 @@ const DagensTransportmiddel = (): ReactElement => {
     return [];
   };
 
-  const validerSkjema = (
-    hvilkenInputID: string | null = null,
-    nyesteVerdi : string | null = null,
-  ) : boolean => {
-    const nyeValideringsFeil: FeiloppsummeringFeil[] = [];
-    nyeValideringsFeil.push(
-      ...validerCheckboxer(
-        hvilkenInputID === transportalternativer.id
-          ? nyesteVerdi
-          : null,
-      ),
-    );
-    if (
-    // Skal alltid kjøre med mindre tilhørende checkbox nettopp er endret:
-      !(
-        nyesteVerdi === transportalternativerVerdier.EGEN_BIL
-          && hvilkenInputID === transportalternativer.id
-      )
-    ) {
-      nyeValideringsFeil.push(
-        ...validerAntallKilometerInput(
-          hvilkenInputID === antallKilometerSpørsmål.id
-            ? nyesteVerdi
-            : null,
-        ),
-      );
-    }
-    if (
-    // Skal alltid kjøre med mindre tilhørende checkbox nettopp er endret:
-      !(
-        nyesteVerdi === transportalternativerVerdier.KOLLEKTIVTRANSPORT
-          && hvilkenInputID === transportalternativer.id
-      )
-    ) {
-      nyeValideringsFeil.push(
-        ...validerMånedligeUtgifter(
-          hvilkenInputID === månedligeUtgifterSpørsmål.id
-            ? nyesteVerdi
-            : null,
-        ),
-      );
-    }
-
-    settValideringsFeilMeldinger(nyeValideringsFeil);
-
-    if (nyeValideringsFeil.length < 1) {
-      settSkalValidere(false);
-      settDagensTransportmiddelValidert(true);
-      return true;
-    }
-    settDagensTransportmiddelValidert(false);
-
-    return false;
-  };
-
-  const kanskjeValiderSkjema = (
-    hvilkenInputID: string | null = null,
-    nyesteVerdi : string | null = null,
-  ) => {
-    if (skalValidere) {
-      validerSkjema(hvilkenInputID, nyesteVerdi);
-    }
-  };
-
   const handleKilometerChange = (nyInput: string) => {
-    kanskjeValiderSkjema(antallKilometerSpørsmål.id, nyInput);
+    // kanskjeValiderSkjema(antallKilometerSpørsmål.id, nyInput);
     settAntallKilometerState(nyInput);
   };
 
   const handleMånedligeUtgifterChange = (nyInput: string) => {
-    kanskjeValiderSkjema(månedligeUtgifterSpørsmål.id, nyInput);
+    // kanskjeValiderSkjema(månedligeUtgifterSpørsmål.id, nyInput);
     settMånedligeUtgifterState(nyInput);
   };
 
   const fåFeilmeldingTilInput = (
     hvilkenInput : string,
-  ) : string | undefined => valideringsFeilMeldinger.find(
+  ) : string | undefined => visningsFeilmeldinger.find(
     (element) => element.skjemaelementId === hvilkenInput,
   )?.feilmelding;
 
   useEffect(() => {
-    kanskjeValiderSkjema();
-  }, [skalValidere]);
+    const valideringsFeil: FeiloppsummeringFeil[] = [];
+
+    const checkBoxFeil = validerCheckboxer();
+    const kilometerFeil = validerAntallKilometerInput();
+    const månedligeUtgifterFeil = validerMånedligeUtgifter();
+
+    valideringsFeil.push(...checkBoxFeil);
+    valideringsFeil.push(...kilometerFeil);
+    valideringsFeil.push(...månedligeUtgifterFeil);
+
+    if (skalViseFeil) {
+      const visningsFeil: FeiloppsummeringFeil[] = [];
+      visningsFeil.push(...checkBoxFeil);
+      if (skalHaFullValiering && skalViseKilometerFeil) {
+        visningsFeil.push(...kilometerFeil);
+      }
+      if (skalHaFullValiering && skalViseMånedligeUtgifterFeil) {
+        visningsFeil.push(...månedligeUtgifterFeil);
+      }
+
+      settVisningsFeilmeldinger(visningsFeil);
+    }
+
+    if (valideringsFeil.length < 1) {
+      settDagensTransportmiddelValidert(true);
+      settSkalViseFeil(false);
+      settskalHaFullValiering(false);
+    } else {
+      settDagensTransportmiddelValidert(false);
+    }
+  }, // eslint-disable-next-line react-hooks/exhaustive-deps
+  [
+    skalViseFeil,
+    skalViseKilometerFeil,
+    skalViseMånedligeUtgifterFeil,
+    dagensTransportMiddelEgenBilChecked,
+    dagensTransportMiddelSyklerChecked,
+    dagensTransportMiddelGårChecked,
+    dagensTransportMiddelKollektivChecked,
+    månedligeUtgifterState,
+    antallKilometerState,
+  ]);
+
+  useEffect(() => {
+    settSkalViseMånedligeUtgifterFeil(true);
+    settSkalViseKilometerFeil(true);
+  }, [
+    skalViseFeil,
+  ]);
+
+  useEffect(() => {
+    settskalHaFullValiering(false);
+  }, [
+    dagensTransportMiddelEgenBilChecked,
+    dagensTransportMiddelKollektivChecked,
+  ]);
+
+  const handleVidereKlikk = () => {
+    settSkalViseFeil(true);
+    settskalHaFullValiering(true);
+    if (dagensTransportmiddelValidert) {
+      settGårTilNesteSide(true);
+    }
+  };
 
   return (
     <>
       <Undertittel> Transportmiddel til daglig </Undertittel>
       <Normaltekst> Hva slags transportmiddel bruker du til daglig? </Normaltekst>
       {Veileder(transportVeileder)}
-      {DagensTransportmiddelCheckbox({
-        ...{
-          validerSkjema,
-        },
-        ...transportalternativer,
-      })}
+      {DagensTransportmiddelCheckbox(transportalternativer)}
       <Vis
         hvis={dagensTransportMiddelEgenBilChecked === true}
       >
@@ -190,12 +185,7 @@ const DagensTransportmiddel = (): ReactElement => {
         )}
       </Vis>
       <div className="transportalternativerKollektivt">
-        {DagensTransportmiddelCheckbox({
-          ...{
-            validerSkjema,
-          },
-          ...transportalternativerKollektivt,
-        })}
+        {DagensTransportmiddelCheckbox(transportalternativerKollektivt)}
         <Vis
           hvis={dagensTransportMiddelKollektivChecked === true}
         >
@@ -214,12 +204,13 @@ const DagensTransportmiddel = (): ReactElement => {
       <Vis hvis={dagensTransportmiddelValidert}>
         Skjemaet er validert, wohoo!
       </Vis>
-      <Vis hvis={dagensTransportmiddelValidert === false}>
-        <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={valideringsFeilMeldinger} />
+      <Vis hvis={skalViseFeil && visningsFeilmeldinger.length > 0}>
+        <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={visningsFeilmeldinger} />
       </Vis>
       <VidereKnapp
         aktivtSteg={2}
-        valideringsFunksjon={validerSkjema}
+        onClick={handleVidereKlikk}
+        skalGåTilNesteSideNå={gårTilNesteSide}
       />
     </>
   );

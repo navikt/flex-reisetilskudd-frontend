@@ -6,7 +6,9 @@ import { pathTilSide } from '../../utils/navigasjon';
 import { AktivtStegProps } from '../../types/navigasjonTypes';
 import './knapper.less';
 
-function VidereKnapp({ aktivtSteg, valideringsFunksjon } : AktivtStegProps): ReactElement {
+function VidereKnapp(
+  { aktivtSteg, onClick, skalGåTilNesteSideNå } : AktivtStegProps,
+): ReactElement {
   const history = useHistory();
 
   function gåTilNesteSide() {
@@ -19,13 +21,13 @@ function VidereKnapp({ aktivtSteg, valideringsFunksjon } : AktivtStegProps): Rea
   }
 
   function handleClick() {
-    if (valideringsFunksjon) {
-      const validert = valideringsFunksjon();
-      console.log(validert);
-      if (validert) {
-        gåTilNesteSide();
-      }
+    if (onClick) {
+      onClick();
     }
+  }
+
+  if (skalGåTilNesteSideNå) {
+    gåTilNesteSide();
   }
 
   return (

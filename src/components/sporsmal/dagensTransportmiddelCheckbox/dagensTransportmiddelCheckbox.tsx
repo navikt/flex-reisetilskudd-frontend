@@ -3,11 +3,11 @@ import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import { CheckboxProps } from '../../../types/types';
 import 'nav-frontend-skjema-style';
 import { useAppStore } from '../../../data/stores/app-store';
-import { transportalternativer, transportalternativerVerdier } from '../spørsmålTekster';
+import { transportalternativerVerdier } from '../spørsmålTekster';
 
 const DagensTransportmiddelCheckbox = (
   {
-    tittel, svaralternativer, id, validerSkjema,
+    tittel, svaralternativer, id,
   }: CheckboxProps,
 ): ReactElement => {
   const {
@@ -19,25 +19,15 @@ const DagensTransportmiddelCheckbox = (
     settAntallKilometerState,
   } = useAppStore();
 
-  const safeValiderSkjema = (nettoppChecked : string | null = null) => {
-    if (validerSkjema) {
-      validerSkjema(transportalternativer.id, nettoppChecked);
-    }
-  };
-
   const skrivEndringTilGlobalState = (nyValgt: string) => {
     if (nyValgt === transportalternativerVerdier.EGEN_BIL) {
-      safeValiderSkjema(transportalternativerVerdier.EGEN_BIL);
       settDagensTransportMiddelEgenBilChecked(!dagensTransportMiddelEgenBilChecked);
       settAntallKilometerState('');
     } else if (nyValgt === transportalternativerVerdier.SYKLER) {
-      safeValiderSkjema(transportalternativerVerdier.SYKLER);
       settDagensTransportMiddelSyklerChecked(!dagensTransportMiddelSyklerChecked);
     } else if (nyValgt === transportalternativerVerdier.GÅR) {
-      safeValiderSkjema(transportalternativerVerdier.GÅR);
       settDagensTransportMiddelGårChecked(!dagensTransportMiddelGårChecked);
     } else if (nyValgt === transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
-      safeValiderSkjema(transportalternativerVerdier.KOLLEKTIVTRANSPORT);
       settDagensTransportMiddelKollektivChecked(!dagensTransportMiddelKollektivChecked);
       settMånedligeUtgifterState('');
     }
