@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import {
   useParams,
 } from 'react-router-dom';
-import Brodsmuler from '../../components/Brodsmuler';
+import Brodsmuler from '../../components/brodsmoler/Brodsmuler';
 import Kvitteringsopplasting from '../kvitteringsopplasting/Kvitteringsopplasting';
 import Utbetaling from '../utbetaling/Utbetaling';
 import TilbakeKnapp from '../../components/knapper/TilbakeKnapp';
@@ -21,10 +21,10 @@ function Soknaden(): ReactElement {
 
   return (
     <div className="soknadSider">
-      <Brodsmuler aktivtSteg={idNum} />
       <TilbakeKnapp aktivtSteg={idNum} />
-      <SykmeldingPanel />
+      <Brodsmuler aktivtSteg={idNum} />
       <div className="sporsmal-wrapper">
+        <SykmeldingPanel />
         <Vis hvis={idNum === 1}>
           <Utbetaling />
         </Vis>

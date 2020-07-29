@@ -7,12 +7,12 @@ import OppsummeringDagensTransportmiddel from '../../components/oppsummering/Opp
 import OppsummeringUtbetaling from '../../components/oppsummering/OppsummeringUtbetaling';
 
 const Oppsummering = () : ReactElement => (
-  <div className="oppsummering-wrapper">
+  <div className="oppsummering-wrapper oppsummering-element">
     <Innholdstittel className="oppsummering-overskrift">Oppsummering av søknaden</Innholdstittel>
     <OppsummeringUtbetaling />
     <OppsummeringDagensTransportmiddel />
     <div className="oppsummering-element oppsummering-vedlegg">
-      <Undertittel className="oppsummering-underoverskrift">Opplastede kvitteringer</Undertittel>
+      <Undertittel className="oppsummering-element">Opplastede kvitteringer</Undertittel>
       <OpplastedeFiler />
       <div className="oppsummering-totalt-belop">
         <TotalBelop />
