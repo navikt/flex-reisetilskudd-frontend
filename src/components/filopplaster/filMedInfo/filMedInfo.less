@@ -39,7 +39,7 @@
     margin: 0 auto;
     grid-template-areas:
     'kvitteringTittel storrelse belopTittel datoTittel';
-    grid-template-columns: 15% 30% 10% 40%;
+    grid-template-columns: 15% 30% 35% 15%;
     grid-gap: 5px;
     margin-bottom: 1rem;
   
@@ -67,7 +67,6 @@
   
     .dato-tittel{
       grid-area: datoTittel;
-      justify-self: end;
     }
 
   }
@@ -116,7 +115,7 @@
       grid-template-areas:
       'kvittering storrelse belop dato';
       grid-gap: 5px;
-      grid-template-columns: 15% 30% 10% 40%;
+      grid-template-columns: 15% 30% 35% 15%;
     
       .typo-normal {
         display: inline;
@@ -137,7 +136,6 @@
         padding-top: 0.3rem;
         grid-area: dato;
         white-space: nowrap;
-        justify-self: end;
       }
     }
   
