@@ -33,6 +33,43 @@
       grid-area: datoTittel;
     }
   }
+
+  .kvitteringstitler-uten-slettknapp{
+    display: grid;
+    margin: 0 auto;
+    grid-template-areas:
+    'kvitteringTittel storrelse belopTittel datoTittel';
+    grid-template-columns: 15% 30% 35% 15%;
+    grid-gap: 5px;
+    margin-bottom: 1rem;
+  
+    hr {
+      border: 1px solid #b7b1a9;
+    }
+    
+    .typo-undertittel{
+      margin: 0;
+    }
+  
+  
+    .kvittering-tittel{
+      grid-area: kvitteringTittel;
+    }
+  
+    .filstorrelse {
+      grid-area: storrelse;
+      padding-top: 0.3rem;
+    }
+  
+    .belop-tittel{
+      grid-area: belopTittel;
+    }
+  
+    .dato-tittel{
+      grid-area: datoTittel;
+    }
+
+  }
   
   .fil-med-info{
       display: grid;
@@ -69,6 +106,36 @@
         max-width: 8rem;
         margin-left: auto;
         margin-right: 0;
+      }
+    }
+
+    .fil-med-info-uten-slettknapp{
+      display: grid;
+      margin: 0 auto;
+      grid-template-areas:
+      'kvittering storrelse belop dato';
+      grid-gap: 5px;
+      grid-template-columns: 15% 30% 35% 15%;
+    
+      .typo-normal {
+        display: inline;
+      }
+    
+      .kvittering{
+        grid-area: kvittering;
+        display: flex;
+        align-items: center;
+      }
+    
+      .belop{
+        padding-top: 0.3rem;
+        grid-area: belop;
+      }
+    
+      .dato {
+        padding-top: 0.3rem;
+        grid-area: dato;
+        white-space: nowrap;
       }
     }
   
