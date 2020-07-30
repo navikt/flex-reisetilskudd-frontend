@@ -96,7 +96,7 @@ const DagensTransportmiddel = (): ReactElement => {
       <Undertittel> Transportmiddel til daglig </Undertittel>
       <div className="transportmiddel-tekst">
         <Normaltekst className="transportmiddel-spørsmål">
-          Hvilke transportmidler brukte du til og fra jobb før du ble sykemeldt?
+          Hvilke transportmidler brukte du til og fra jobb før du ble sykmeldt?
         </Normaltekst>
         <Hjelpetekst className="kollektivtransport-hjelpetekst">
           {hjelpetekstDagensTransportmiddel.hjelpetekst}
