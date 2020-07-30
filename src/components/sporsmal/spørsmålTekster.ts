@@ -1,5 +1,5 @@
 import {
-  RadioSpørsmålProps, CheckboxProps, InputProps, VeilederProps,
+  RadioSpørsmålProps, CheckboxProps, InputProps,
 } from '../../types/types';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling/constants';
 
@@ -34,7 +34,7 @@ export const transportalternativerVerdier = {
 };
 
 export const transportalternativer: CheckboxProps = {
-  tittel: 'Velg fremkomstmiddel',
+  tittel: 'Velg transportmiddel',
   svaralternativer: [
     {
       label: 'Går',
@@ -74,9 +74,5 @@ export const månedligeUtgifterSpørsmål: InputProps = {
   tittel: 'Månedlige utgifter til offentlig transport',
   inputMode: 'numeric',
   bredde: 'S',
-  id: 'dagens-transportmiddel-manedlige-utgifter-input',
-};
-
-export const transportVeileder: VeilederProps = {
-  hjelpetekst: 'Kollektiv transport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.',
+  id: 'dagens-transportmiddel-månedlige-utgifter-input',
 };

@@ -1,26 +1,29 @@
 import React from 'react';
 import { Element } from 'nav-frontend-typografi';
-import FilMedInfo from './FilMedInfo';
+import FilMedInfo from './filMedInfo/FilMedInfo';
 import { KvitteringInterface } from '../../models/kvittering';
 import Vis from '../Vis';
 import { useAppStore } from '../../data/stores/app-store';
 
-const OpplastedeFiler: React.FC = () => {
+interface Props {
+  fjernKnapp?: boolean;
+}
+
+const OpplastedeFiler: React.FC<Props> = ({ fjernKnapp }) => {
   const { kvitteringer } = useAppStore();
 
   return (
     <div className="opplastede-filer">
       <Vis hvis={kvitteringer.length > 0}>
-        <div className="kvitteringstitler">
+        <div className={` ${fjernKnapp ? 'kvitteringstitler' : 'kvitteringstitler-uten-slettknapp'}`}>
           <Element className="kvittering-tittel">Kvittering</Element>
           <Element className="belop-tittel">Beløp</Element>
           <Element className="dato-tittel">Dato</Element>
         </div>
       </Vis>
-
       {kvitteringer.map((fil: KvitteringInterface, index: number) => (
         <div key={fil.id}>
-          <FilMedInfo fil={fil} />
+          <FilMedInfo fil={fil} fjernKnapp={fjernKnapp} />
           {index === kvitteringer.length - 1 ? '' : <hr />}
         </div>
       ))}

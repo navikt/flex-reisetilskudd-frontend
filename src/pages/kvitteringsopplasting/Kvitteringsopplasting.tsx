@@ -3,21 +3,29 @@ import {
   Innholdstittel, Ingress,
 } from 'nav-frontend-typografi';
 import './kvitteringsopplasting.less';
-import FilopplasterModal from '../../components/filopplaster/FilopplasterModal';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import FilopplasterModal from '../../components/filopplaster/filopplasterModal/FilopplasterModal';
 import OpplastedeFiler from '../../components/filopplaster/OpplastedeFiler';
-import DragAndDrop from '../../components/filopplaster/DragAndDrop';
+// import DragAndDrop from '../../components/filopplaster/DragAndDrop';
+import DragAndDrop from '../../components/filopplaster/dragAndDrop/DragAndDrop';
 import TotalBelop from '../../components/kvittering/totaltBelop/TotaltBelop';
+import { hjelpetekstKvitteringopplasting } from '../../constants/hjelpetekster';
 
-const Kvitteringsopplasting: React.FC = () : ReactElement => (
+const Kvitteringsopplasting: React.FC = (): ReactElement => (
   <div className="perioder-wrapper">
     <Innholdstittel className="perioder-overskrift">Opplasting av kvitteringer</Innholdstittel>
-    <Ingress className="perioder-overskrift"> Legg inn dine perioder og kvitteringer </Ingress>
+    <div className="kvitteringinfo-wrapper">
+      <Ingress className="perioder-ingress"> Legg inn dine kvitteringer </Ingress>
+      <Hjelpetekst className="kvitteringsopplasting-hjelpetekst">
+        {hjelpetekstKvitteringopplasting.hjelpetekst}
+      </Hjelpetekst>
+    </div>
     <div className="filopplaster-wrapper periode-element">
       <div className="filopplaster">
         <FilopplasterModal />
         <DragAndDrop />
       </div>
-      <OpplastedeFiler />
+      <OpplastedeFiler fjernKnapp />
       <TotalBelop />
     </div>
   </div>

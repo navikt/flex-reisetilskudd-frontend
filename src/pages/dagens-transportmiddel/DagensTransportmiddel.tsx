@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import Veileder from '../../components/sporsmal/Veileder';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import DagensTransportmiddelCheckbox
   from '../../components/sporsmal/dagensTransportmiddelCheckbox/dagensTransportmiddelCheckbox';
 import Vis from '../../components/Vis';
@@ -9,7 +9,6 @@ import {
   transportalternativer,
   antallKilometerSpørsmål,
   månedligeUtgifterSpørsmål,
-  transportVeileder,
   transportalternativerKollektivt,
 } from '../../components/sporsmal/spørsmålTekster';
 import { useAppStore } from '../../data/stores/app-store';
@@ -17,6 +16,7 @@ import { validerNumerisk, validerKroner } from '../../utils/skjemavalidering';
 import './dagens-transportmiddel.less';
 import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
+import { hjelpetekstDagensTransportmiddel } from '../../constants/hjelpetekster';
 
 const DagensTransportmiddel = (): ReactElement => {
   const [
@@ -171,8 +171,14 @@ const DagensTransportmiddel = (): ReactElement => {
   return (
     <>
       <Undertittel> Transportmiddel til daglig </Undertittel>
-      <Normaltekst> Hva slags transportmiddel bruker du til daglig? </Normaltekst>
-      {Veileder(transportVeileder)}
+      <div className="transportmiddel-tekst">
+        <Normaltekst className="transportmiddel-spørsmål">
+          Hvilke transportmidler brukte du til og fra jobb før du ble sykemeldt?
+        </Normaltekst>
+        <Hjelpetekst className="kollektivtransport-hjelpetekst">
+          {hjelpetekstDagensTransportmiddel.hjelpetekst}
+        </Hjelpetekst>
+      </div>
       {DagensTransportmiddelCheckbox(transportalternativer)}
       <Vis
         hvis={dagensTransportMiddelEgenBilChecked === true}

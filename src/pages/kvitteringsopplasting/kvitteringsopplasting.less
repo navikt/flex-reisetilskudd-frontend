@@ -4,6 +4,52 @@
   margin: 1.5rem 0;
 }
 
+.kvitteringsopplasting-hjelpetekst{
+  align-self: flex-start;
+}
+
+.kvitteringinfo-wrapper{
+  display: flex;
+  .kvitteringsopplasting-hjelpetekst{
+      margin-bottom: 0.5rem;
+      margin-left: 1rem;
+  }
+}
+
+.filopplaster-wrapper {
+    justify-content: center;
+  
+    ul.opplasting-liste {
+      padding-inline-start: 1.3em;
+      line-height: 40px;
+    }
+  
+    li {
+      font-size: 25px;
+    }
+  
+    .filopplaster {
+      text-align: center;
+      font-weight: bold;
+      border: 2px dashed #59514b;
+      border-radius: 4px; 
+      background-color: rgba(204, 222, 230, 0.5);
+      height: 64px;
+      color: @navBla;
+      margin: 1rem auto;
+    }
+  
+      .tekst {
+        line-height: 64px;
+        display: inline-block;
+        margin-left: 10px;
+      }
+
+      .feilmeldinger {
+        margin: 1rem 0 0 0;
+        text-align: left;
+      }
+}
 
 @media screen and (max-width: 390px){
   .ny-periode-knapp{
@@ -17,5 +63,4 @@
     text-align: center;
   }
 }
-
 
