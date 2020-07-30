@@ -1,4 +1,7 @@
 .horisontal-radio{
+  .utbetaling-tittel{
+    padding-bottom: 1rem;
+  }
   .inputPanelGruppe__inner{
       .inputPanel{
         margin-right: 0.25rem;
@@ -8,28 +11,12 @@
     display: flex;
     justify-content: space-evenly;
   }
-  @media screen and (max-width: 620px){
+  @media screen and (max-width: 750px){
     .inputPanelGruppe__inner{
       flex-direction: column;
     }
     .inputPanel.radioPanel{
-      display: table-cell;
-      position: relative;
-      width: 17.5rem;
+      width: unset;
     }
   }
-  @media screen and (max-width: 320px){
-    .inputPanelGruppe__inner{
-      flex-direction: column;
-    }
-    .inputPanel.radioPanel{
-      display: table-cell;
-      position: relative;
-      width: 14rem;
-    }
-  }
-  }
-  h2.typo-undertittel{
-    margin-bottom: 1rem;
-  }
-  
+}

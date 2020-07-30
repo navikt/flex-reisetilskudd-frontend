@@ -1,6 +1,6 @@
 .oppsummering-wrapper {
 
-  padding: 5rem 5rem;
+  padding: 4rem;
   border: 1px solid black;
   border-radius: 3px;
 
@@ -10,9 +10,6 @@
 
   .oppsummering-element {
     margin: 2rem 0;
-
-    .oppsummering-totalt-belop{
-    }
   }
 
   .oppsummering-element-split {
@@ -22,51 +19,28 @@
   .checked-med-tekst {
     margin-top: 0.5rem;
   }
+  .oppsummering-totalt-belop {
+    margin-top: 1rem;
+  }
 }
 
-@media screen and (max-width:950px){
-  .oppsummering-wrapper {
-
-    padding: 5rem 5rem;
-    border: 1px solid black;
-    border-radius: 3px;
-
-    .oppsummering-overskrift {
-      margin-bottom: 2rem;
+@media screen and (max-width: 750px){
+    .oppsummering-wrapper{
+      padding: 2rem 1rem;
+    
+    .oppsummering-overskrift{
+      transform: scale(0.90);
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      justify-content: center;
     }
-
     .oppsummering-element {
-      margin: 2rem 0;
-
-      .oppsummering-totalt-belop{
-      }
+      margin: 0;
+      transform: scale(0.90);
+      justify-content: center;
     }
-
-    .oppsummering-element-split {
-      border-top: 3px dashed black;
-    }
-
     .checked-med-tekst {
       margin-top: 0.5rem;
     }
-
-  }
-}
-
-@media screen and (max-width: 390px){
-  .oppsummering-wrapper{
-    padding: 1rem 1rem;
-  }
-  .oppsummering-overskrift{
-    transform: scale(0.85);
-    margin-top: 2rem;
-    justify-content: center;
-  }
-  .oppsummering-element {
-    transform: scale(0.85);
-    justify-content: center;
-  }
-  .checked-med-tekst {
-    margin-top: 0.5rem;
   }
 }

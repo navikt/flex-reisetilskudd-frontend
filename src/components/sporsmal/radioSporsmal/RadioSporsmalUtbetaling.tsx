@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { utbetalingSpørsmålVerdier } from '../spørsmålTekster';
 import { useAppStore } from '../../../data/stores/app-store';
@@ -22,9 +22,9 @@ const RadioSpørsmålUtbetaling = ({
 
   return (
     <div className="horisontal-radio">
-      <Undertittel>
+      <Systemtittel className="utbetaling-tittel">
         {tittel}
-      </Undertittel>
+      </Systemtittel>
       <RadioPanelGruppe
         name={name}
         description={spørsmålstekst}
