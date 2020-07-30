@@ -1,9 +1,10 @@
 import React, { ReactElement } from 'react';
 import Stegindikator from 'nav-frontend-stegindikator';
 import { useHistory } from 'react-router-dom';
-import { sideTitler } from '../constants/sideTitler';
-import { SEPARATOR } from '../utils/constants';
-import { AktivtStegProps } from '../types/navigasjonTypes';
+import { sideTitler } from '../../constants/sideTitler';
+import { SEPARATOR } from '../../utils/constants';
+import { AktivtStegProps } from '../../types/navigasjonTypes';
+import './brodsmoler.less';
 
 export const pathUtenSteg = (pathname: string) : string => {
   const arr: string[] = pathname.split(SEPARATOR);

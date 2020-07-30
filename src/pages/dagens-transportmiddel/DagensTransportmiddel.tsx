@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { useParams } from 'react-router-dom';
 import DagensTransportmiddelCheckbox
@@ -173,11 +173,11 @@ const DagensTransportmiddel = (): ReactElement => {
   };
 
   return (
-    <>
-      <Undertittel> Transportmiddel til daglig </Undertittel>
+    <div className="dagens-transportmiddel-wrapper">
+      <Systemtittel> Transportmiddel til daglig </Systemtittel>
       <div className="transportmiddel-tekst">
         <Normaltekst className="transportmiddel-spørsmål">
-          Hvilke transportmidler brukte du til og fra jobb før du ble sykemeldt?
+          Hvilke transportmidler brukte du til og fra jobb før du ble sykmeldt?
         </Normaltekst>
         <Hjelpetekst className="kollektivtransport-hjelpetekst">
           {hjelpetekstDagensTransportmiddel.hjelpetekst}
@@ -226,7 +226,7 @@ const DagensTransportmiddel = (): ReactElement => {
         onClick={handleVidereKlikk}
         skalGåTilNesteSideNå={gårTilNesteSide}
       />
-    </>
+    </div>
   );
 };
 
