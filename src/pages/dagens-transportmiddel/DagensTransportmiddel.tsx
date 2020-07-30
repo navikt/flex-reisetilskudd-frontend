@@ -28,8 +28,6 @@ const DagensTransportmiddel = (): ReactElement => {
     skalViseMånedligeUtgifterFeil, settSkalViseMånedligeUtgifterFeil,
   ] = useState<boolean>(false);
   const [gårTilNesteSide, settGårTilNesteSide] = useState<boolean>(false);
-  // TODO: Fikse underfelt sin feilmelding:
-  const [skalHaFullValiering, settskalHaFullValiering] = useState<boolean>(false);
 
   const {
     dagensTransportMiddelEgenBilChecked,
@@ -52,6 +50,10 @@ const DagensTransportmiddel = (): ReactElement => {
         ];
       }
     }
+    /* Gyldig verdi skrevet inn,
+     * skal ikke validere dette feltet igjen før brukeren trykker for å gå videre:
+     */
+    settSkalViseKilometerFeil(false);
     return [];
   };
 
@@ -60,8 +62,12 @@ const DagensTransportmiddel = (): ReactElement => {
       dagensTransportMiddelKollektivChecked
       && !validerKroner(nyesteVerdi || månedligeUtgifterState)
     ) {
-      return [{ skjemaelementId: månedligeUtgifterSpørsmål.id, feilmelding: 'Ugyldig kroneverdi' }];
+      return [{ skjemaelementId: månedligeUtgifterSpørsmål.id, feilmelding: 'Du må oppgi gyldig kroneverdi' }];
     }
+    /* Gyldig verdi skrevet inn,
+     * skal ikke validere dette feltet igjen før brukeren trykker for å gå videre:
+     */
+    settSkalViseMånedligeUtgifterFeil(false);
     return [];
   };
 
@@ -83,12 +89,10 @@ const DagensTransportmiddel = (): ReactElement => {
   };
 
   const handleKilometerChange = (nyInput: string) => {
-    // kanskjeValiderSkjema(antallKilometerSpørsmål.id, nyInput);
     settAntallKilometerState(nyInput);
   };
 
   const handleMånedligeUtgifterChange = (nyInput: string) => {
-    // kanskjeValiderSkjema(månedligeUtgifterSpørsmål.id, nyInput);
     settMånedligeUtgifterState(nyInput);
   };
 
@@ -112,10 +116,10 @@ const DagensTransportmiddel = (): ReactElement => {
     if (skalViseFeil) {
       const visningsFeil: FeiloppsummeringFeil[] = [];
       visningsFeil.push(...checkBoxFeil);
-      if (skalHaFullValiering && skalViseKilometerFeil) {
+      if (skalViseKilometerFeil) {
         visningsFeil.push(...kilometerFeil);
       }
-      if (skalHaFullValiering && skalViseMånedligeUtgifterFeil) {
+      if (skalViseMånedligeUtgifterFeil) {
         visningsFeil.push(...månedligeUtgifterFeil);
       }
 
@@ -125,7 +129,6 @@ const DagensTransportmiddel = (): ReactElement => {
     if (valideringsFeil.length < 1) {
       settDagensTransportmiddelValidert(true);
       settSkalViseFeil(false);
-      settskalHaFullValiering(false);
     } else {
       settDagensTransportmiddelValidert(false);
     }
@@ -143,22 +146,23 @@ const DagensTransportmiddel = (): ReactElement => {
   ]);
 
   useEffect(() => {
-    settSkalViseMånedligeUtgifterFeil(true);
-    settSkalViseKilometerFeil(true);
+    // Skal ikke vise feilmelding for et felt som nettopp er åpnet
+    settSkalViseKilometerFeil(false);
   }, [
-    skalViseFeil,
+    dagensTransportMiddelEgenBilChecked,
   ]);
 
   useEffect(() => {
-    settskalHaFullValiering(false);
+    // Skal ikke vise feilmelding for et felt som nettopp er åpnet
+    settSkalViseMånedligeUtgifterFeil(false);
   }, [
-    dagensTransportMiddelEgenBilChecked,
     dagensTransportMiddelKollektivChecked,
   ]);
 
   const handleVidereKlikk = () => {
+    settSkalViseMånedligeUtgifterFeil(true);
+    settSkalViseKilometerFeil(true);
     settSkalViseFeil(true);
-    settskalHaFullValiering(true);
     if (dagensTransportmiddelValidert) {
       settGårTilNesteSide(true);
     }
