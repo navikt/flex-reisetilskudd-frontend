@@ -1,25 +1,26 @@
 import React, { ReactElement } from 'react';
 import {
-  Innholdstittel, Ingress,
+  Ingress, Systemtittel,
 } from 'nav-frontend-typografi';
 import './kvitteringsopplasting.less';
 import FilopplasterModal from '../../components/filopplaster/filopplasterModal/FilopplasterModal';
 import OpplastedeFiler from '../../components/filopplaster/OpplastedeFiler';
-// import DragAndDrop from '../../components/filopplaster/DragAndDrop';
 import DragAndDrop from '../../components/filopplaster/dragAndDrop/DragAndDrop';
 import TotalBelop from '../../components/kvittering/totaltBelop/TotaltBelop';
 
 const Kvitteringsopplasting: React.FC = () : ReactElement => (
-  <div className="perioder-wrapper">
-    <Innholdstittel className="perioder-overskrift">Opplasting av kvitteringer</Innholdstittel>
-    <Ingress className="perioder-overskrift"> Legg inn dine kvitteringer </Ingress>
-    <div className="filopplaster-wrapper periode-element">
+  <div className="last-opp-kvittering-wrapper">
+    <Systemtittel className="last-opp-kvittering-overskrift">Opplasting av kvitteringer</Systemtittel>
+    <Ingress>Legg inn dine kvitteringer</Ingress>
+    <div className="filopplaster-wrapper">
       <div className="filopplaster">
         <FilopplasterModal />
         <DragAndDrop />
       </div>
       <OpplastedeFiler fjernKnapp />
-      <TotalBelop />
+      <div className="kvitteringer-totalt-beløp">
+        <TotalBelop />
+      </div>
     </div>
   </div>
 );

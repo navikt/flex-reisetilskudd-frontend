@@ -21,9 +21,9 @@ function Soknaden(): ReactElement {
 
   return (
     <div className="soknadSider">
-      <TilbakeKnapp aktivtSteg={idNum} />
-      <Brodsmuler aktivtSteg={idNum} />
       <div className="sporsmal-wrapper">
+        <TilbakeKnapp aktivtSteg={idNum} />
+        <Brodsmuler aktivtSteg={idNum} />
         <SykmeldingPanel />
         <Vis hvis={idNum === 1}>
           <Utbetaling />

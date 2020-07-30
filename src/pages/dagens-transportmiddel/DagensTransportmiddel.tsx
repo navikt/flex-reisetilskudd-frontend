@@ -91,7 +91,7 @@ const DagensTransportmiddel = (): ReactElement => {
   };
 
   return (
-    <>
+    <div className="dagens-transportmiddel-wrapper">
       <Undertittel> Transportmiddel til daglig </Undertittel>
       <div className="transportmiddel-tekst">
         <Normaltekst className="transportmiddel-spørsmål">
@@ -139,7 +139,7 @@ const DagensTransportmiddel = (): ReactElement => {
       <Vis hvis={dagensTransportmiddelValidert === false}>
         <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={valideringsFeil} />
       </Vis>
-    </>
+    </div>
   );
 };
 
