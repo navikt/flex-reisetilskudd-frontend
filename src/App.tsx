@@ -13,7 +13,7 @@ function App() : ReactElement {
       <Header />
       <Router>
         <Switch>
-          <Route path="/soknaden/:id">
+          <Route path="/soknaden/:soknadssideID">
             <Soknaden />
           </Route>
           <Route path="/kvittering">

@@ -6,17 +6,28 @@ import { pathTilSide } from '../../utils/navigasjon';
 import { AktivtStegProps } from '../../types/navigasjonTypes';
 import './knapper.less';
 
-function VidereKnapp({ aktivtSteg } : AktivtStegProps): ReactElement {
+function VidereKnapp(
+  { aktivtSteg, onClick, skalGåTilNesteSideNå } : AktivtStegProps,
+): ReactElement {
   const history = useHistory();
 
-  function goTo(idx: number) {
-    history.push(pathTilSide(idx, history));
+  function gåTilNesteSide() {
+    if (
+      aktivtSteg + 1 <= getAntallSider()
+      && aktivtSteg + 1 > 1
+    ) {
+      history.push(pathTilSide(aktivtSteg + 1, history));
+    }
   }
 
   function handleClick() {
-    if (aktivtSteg + 1 <= getAntallSider() && aktivtSteg + 1 > 1) {
-      goTo(aktivtSteg + 1);
+    if (onClick) {
+      onClick();
     }
+  }
+
+  if (skalGåTilNesteSideNå) {
+    gåTilNesteSide();
   }
 
   return (
