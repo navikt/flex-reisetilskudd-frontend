@@ -1,3 +1,5 @@
+@import "../../../../node_modules/nav-frontend-core/less/_variabler";
+
 .kvitteringstitler {
     display: grid;
     margin: 0 auto;
@@ -6,29 +8,29 @@
     grid-template-columns: 15% 25% 15% 40%;
     grid-gap: 5px;
     margin-bottom: 1rem;
-  
+
     hr {
       border: 1px solid #b7b1a9;
     }
-    
+
     .typo-undertittel{
       margin: 0;
     }
-  
-  
+
+
     .kvittering-tittel{
       grid-area: kvitteringTittel;
     }
-  
+
     .filstorrelse {
       grid-area: storrelse;
       padding-top: 0.3rem;
     }
-  
+
     .belop-tittel{
       grid-area: belopTittel;
     }
-  
+
     .dato-tittel{
       grid-area: datoTittel;
     }
@@ -42,35 +44,35 @@
     grid-template-columns: 15% 30% 35% 15%;
     grid-gap: 5px;
     margin-bottom: 1rem;
-  
+
     hr {
       border: 1px solid #b7b1a9;
     }
-    
+
     .typo-undertittel{
       margin: 0;
     }
-  
-  
+
+
     .kvittering-tittel{
       grid-area: kvitteringTittel;
     }
-  
+
     .filstorrelse {
       grid-area: storrelse;
       padding-top: 0.3rem;
     }
-  
+
     .belop-tittel{
       grid-area: belopTittel;
     }
-  
+
     .dato-tittel{
       grid-area: datoTittel;
     }
 
   }
-  
+
   .fil-med-info{
       display: grid;
       margin: 0 auto;
@@ -78,34 +80,37 @@
       'kvittering storrelse belop dato slett';
       grid-gap: 5px;
       grid-template-columns: 15% 25% 15% 10% 30%;
-    
+
       .typo-normal {
         display: inline;
       }
-    
+
       .kvittering{
         grid-area: kvittering;
         display: flex;
         align-items: center;
       }
-    
+
       .belop{
         padding-top: 0.3rem;
         grid-area: belop;
       }
-    
+
       .dato {
         padding-top: 0.3rem;
         grid-area: dato;
         white-space: nowrap;
       }
-    
+
       .slett-knapp{
-        max-height: 2rem;
+        padding: 0 0.5rem 0 0.5rem;
         grid-area: slett;
-        max-width: 8rem;
         margin-left: auto;
         margin-right: 0;
+
+        svg > path {
+          fill: @navBla;
+        }
       }
     }
 
@@ -116,50 +121,50 @@
       'kvittering storrelse belop dato';
       grid-gap: 5px;
       grid-template-columns: 15% 30% 35% 15%;
-    
+
       .typo-normal {
         display: inline;
       }
-    
+
       .kvittering{
         grid-area: kvittering;
         display: flex;
         align-items: center;
       }
-    
+
       .belop{
         padding-top: 0.3rem;
         grid-area: belop;
       }
-    
+
       .dato {
         padding-top: 0.3rem;
         grid-area: dato;
         white-space: nowrap;
       }
     }
-  
+
   .mobil-belop{
     display: none;
   }
   .mobil-dato{
     display: none;
   }
-  
+
   @media screen and (max-width: 950px){
     .slett-knapp {
       transform: scale(0.8);
-    }  
+    }
   }
-  
+
   @media screen and (max-width: 390px){
     .slett-knapp{
         transform: scale(0.60);
         margin-left: auto;
         margin-right: 0;
         margin-top: 1.5rem;
-    } 
-  
+    }
+
     .fil-med-info{
       border: 1px solid #78706A;
       border-radius: 0.3rem;
@@ -169,9 +174,9 @@
       'datotittel dato dato'
       ;
       grid-gap: 5px;
-      grid-template-columns: 30% 30% 36%; 
+      grid-template-columns: 30% 30% 36%;
     }
-  
+
     .mobil-belop{
       margin-top: 0.5rem;
       padding-top: 0.3rem;
@@ -185,23 +190,23 @@
       padding-left: 2.2rem;
       grid-area: datotittel;
     }
-  
+
     .kvitteringstitler{
       display: none;
     }
-  
+
     .kvittering{
       margin-top: 1.5rem;
       grid-area: kvittering;
       margin-left: 0.5rem;
     }
-    
+
     .filstorrelse {
       margin-top: 1.5rem;
       grid-area: storrelse;
       padding-top: 0.3rem;
     }
-  
+
     .belop{
       margin-top: 0.5rem;
       padding-top: 0.3rem;
@@ -210,7 +215,7 @@
       text-align: left;
       margin-left: 1rem;
     }
-  
+
     .dato {
       padding-top: 0.3rem;
       grid-area: dato;
@@ -219,4 +224,3 @@
       padding-bottom: 1rem;
     }
   }
-  
