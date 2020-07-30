@@ -51,7 +51,7 @@ const FilMedInfo: React.FC<Props> = ({ fil, fjernKnapp }) => {
   }
 
   return (
-    <div className="fil-med-info">
+    <div className={` ${fjernKnapp ? 'fil-med-info' : 'fil-med-info-uten-slettknapp'}`}>
       <div className="kvittering">
         <img
           className="vedleggsikon"

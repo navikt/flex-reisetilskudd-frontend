@@ -66,7 +66,6 @@ export const transportalternativerKollektivt: CheckboxProps = {
 export const antallKilometerSpørsmål: InputProps = {
   tittel: 'Antall kilometer fra bosted til arbeid',
   inputMode: 'numeric',
-  feil: 'Her er det noe feil',
   bredde: 'S',
   id: 'dagens-transportmiddel-kilometer-input',
 };
@@ -74,7 +73,6 @@ export const antallKilometerSpørsmål: InputProps = {
 export const månedligeUtgifterSpørsmål: InputProps = {
   tittel: 'Månedlige utgifter til offentlig transport',
   inputMode: 'numeric',
-  feil: 'Her er det noe feil',
   bredde: 'S',
   id: 'dagens-transportmiddel-månedlige-utgifter-input',
 };
