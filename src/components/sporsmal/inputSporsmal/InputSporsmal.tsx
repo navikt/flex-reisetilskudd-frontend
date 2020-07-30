@@ -8,7 +8,7 @@ import Vis from '../../Vis';
 import { hjelpetekstEgenBil, hjelpetekstKollektivtransport } from '../../../constants/hjelpetekster';
 
 const InputSporsmal = ({
-  tittel, inputMode, bredde, value, onChange, id,
+  tittel, inputMode, bredde, value, onChange, id, feil,
 }: InputProps): ReactElement => (
   <div className="månedlige-utgifter-spørsmål">
     <Element>
@@ -26,6 +26,7 @@ const InputSporsmal = ({
           }
         }}
         id={id}
+        feil={feil}
       />
       <Vis
         hvis={id === 'dagens-transportmiddel-kilometer-input'}
