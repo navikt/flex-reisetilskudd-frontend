@@ -1,4 +1,3 @@
-import { Element } from 'nav-frontend-typografi';
 import React, { ReactElement } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
@@ -12,11 +11,28 @@ const InputSporsmal = ({
   tittel, inputMode, bredde, value, onChange, id, feil,
 }: InputProps): ReactElement => (
   <div className="input-tittel">
-    <Element>
-      {tittel}
-    </Element>
-    <div className="input-felt">
+    <div className="input-felt-wrapper">
       <Input
+        label={(
+          <div style={{ display: 'flex' }}>
+            {tittel}
+            <Vis
+              hvis={id === antallKilometerSpørsmål.id}
+            >
+              <Hjelpetekst className="transportmiddel-kilometer-hjelpetekst">
+                {hjelpetekstEgenBil.hjelpetekst}
+              </Hjelpetekst>
+            </Vis>
+            <Vis
+              hvis={id === månedligeUtgifterSpørsmål.id}
+            >
+              <Hjelpetekst className="månedlige-utgifter-hjelpetekst">
+                {hjelpetekstKollektivtransport.hjelpetekst}
+              </Hjelpetekst>
+            </Vis>
+          </div>
+          )}
+        className="input-felt"
         inputMode={inputMode}
         pattern="[0-9]*"
         bredde={bredde}
@@ -29,20 +45,6 @@ const InputSporsmal = ({
         id={id}
         feil={feil}
       />
-      <Vis
-        hvis={id === antallKilometerSpørsmål.id}
-      >
-        <Hjelpetekst className="transportmiddel-kilometer-hjelpetekst">
-          {hjelpetekstEgenBil.hjelpetekst}
-        </Hjelpetekst>
-      </Vis>
-      <Vis
-        hvis={id === månedligeUtgifterSpørsmål.id}
-      >
-        <Hjelpetekst className="månedlige-utgifter-hjelpetekst">
-          {hjelpetekstKollektivtransport.hjelpetekst}
-        </Hjelpetekst>
-      </Vis>
     </div>
   </div>
 );
