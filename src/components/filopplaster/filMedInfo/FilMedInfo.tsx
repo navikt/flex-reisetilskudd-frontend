@@ -58,7 +58,7 @@ const FilMedInfo: React.FC<Props> = ({ fil, fjernKnapp }) => {
           src={vedlegg}
           alt="Vedleggsikon"
         />
-        <Normaltekst className="filnavn">{truncate(fil.navn, 15, '...')}</Normaltekst>
+        <Lenke href="#" className="filnavn">{truncate(fil.navn, 15, '...')}</Lenke>
       </div>
       <Normaltekst className="filstorrelse">
         (

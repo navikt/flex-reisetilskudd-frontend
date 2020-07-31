@@ -20,7 +20,7 @@ function customTruncet(fullString:string, trimsize:number) {
   return fullString.substr(0, trimsize) + separator + fullString.substr(-3);
 }
 
-const Fil: React.FC<Props> = ({ fil, href }) => (
+const Fil: React.FC<Props> = ({ fil }) => (
   <div>
     {fil
       ? (
@@ -32,15 +32,7 @@ const Fil: React.FC<Props> = ({ fil, href }) => (
                 src={vedlegg}
                 alt="Vedleggsikon"
               />
-              { href
-                ? (
-                  <Lenke href={href} target="_blank">
-                    <Normaltekst className="fil-lenke filnavn">{customTruncet(fil.name, 20)}</Normaltekst>
-                  </Lenke>
-                )
-                : (
-                  <Normaltekst className="filnavn">{customTruncet(fil.name, 20)}</Normaltekst>
-                )}
+              <Lenke href="#" className="filnavn">{customTruncet(fil.name, 20)}</Lenke>
               <Normaltekst className="filstørrelse">
                 (
                 {formaterFilstørrelse(fil.size)}

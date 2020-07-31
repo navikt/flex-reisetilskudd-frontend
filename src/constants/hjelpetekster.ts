@@ -11,6 +11,6 @@ export const hjelpetekstKollektivtransport = {
 };
 
 export const hjelpetekstKvitteringopplasting = {
-  hjelpetekst: 'Her skal du laste opp kvitteringer for transport du har brukt for å komme deg til jobb i  sykmeldingsperioden. '
+  hjelpetekst: 'Her skal du laste opp kvitteringer for transport du har brukt for å komme deg til jobb i  sykmeldingsperioden.'
         + 'Er du usikker på hvilken periode dette gjelder, kan du finne det under "Opplysninger om sykmeldingen" øverst på siden.',
 };
