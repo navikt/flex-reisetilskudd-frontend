@@ -1,16 +1,27 @@
 import React, { ReactElement, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RadioSpørsmålUtbetaling from '../../components/sporsmal/radioSporsmal/RadioSporsmalUtbetaling';
-import { utbetalingSpørsmål } from '../../components/sporsmal/spørsmålTekster';
+import { utbetalingSpørsmål, utbetalingSpørsmålVerdier } from '../../components/sporsmal/spørsmålTekster';
 import { ArbeidsgiverInterface } from '../../models/arbeidsgiver';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from './constants';
 import { Svaralternativ } from '../../types/types';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
+import { post } from '../../data/fetcher/fetcher';
+import env from '../../utils/environment';
+import { useAppStore } from '../../data/stores/app-store';
+import { logger } from '../../utils/logger';
+
+interface UtbetalingInterface {
+  reisetilskuddId: string;
+  utbetalingTilArbeidsgiver?: boolean;
+}
 
 const Utbetaling = (): ReactElement => {
   const [gårTilNesteSide, settGårTilNesteSide] = useState<boolean>(false);
 
-  const { soknadssideID } = useParams();
+  const { activeMegArbeidsgiver } = useAppStore();
+
+  const { soknadssideID, soknadsID } = useParams();
   const soknadssideIDTall = Number(soknadssideID);
 
   const getArbeidsgiver = (): ArbeidsgiverInterface => ({
@@ -30,7 +41,14 @@ const Utbetaling = (): ReactElement => {
     )));
 
   const handleVidereKlikk = () => {
-    settGårTilNesteSide(true);
+    post<UtbetalingInterface>(`${env.apiUrl}/reisetilskudd`, {
+      reisetilskuddId: soknadsID,
+      utbetalingTilArbeidsgiver: activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER,
+    }).then(() => {
+      settGårTilNesteSide(true);
+    }).catch((error) => {
+      logger.error('Feil ved oppdatering av skjema', error);
+    });
   };
 
   return (
