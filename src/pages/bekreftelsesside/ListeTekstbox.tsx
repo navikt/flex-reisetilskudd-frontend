@@ -12,8 +12,7 @@ function ListeTekstbox():ReactElement {
             {' '}
             <span />
             <div>
-              <Undertittel>Nå har du gjort første del</Undertittel>
-              <p>Du har sendt beskjed om sykefraværet til arbeidsgiveren din</p>
+              <Undertittel>Du har sendt inn søknaden</Undertittel>
             </div>
           </div>
 
@@ -21,11 +20,11 @@ function ListeTekstbox():ReactElement {
             <div className="numberCircle">2</div>
             <span />
             <div>
-              <Undertittel>Du har nå fullført andre del</Undertittel>
+              <Undertittel>Søknaden blir behandlet</Undertittel>
               <p>
                 <p>
-                  Kravet ditt om reisetilskudd er nå under behandling.
-                  Du vil få varsel når dette er klart
+                  Arbeidsgiveren din dekker utgiftene til reise de første 16 dagene.
+                  Deretter er det NAV som utbetaler pengene hvis du har krav på reisetilskudd.
                 </p>
                 <b>Lurer du på hva saksbehandler gjør?</b>
                 <p><a href="www.nav.no">Les mer om reglene for reisetilskudd .</a></p>
