@@ -12,7 +12,7 @@ const Oppsummering = () : ReactElement => (
     <OppsummeringUtbetaling />
     <OppsummeringDagensTransportmiddel />
     <div className="oppsummering-element oppsummering-vedlegg">
-      <Undertittel>Opplastede kvitteringer</Undertittel>
+      <Undertittel className="opplastede-kvitteringer-tittel">Opplastede kvitteringer</Undertittel>
       <OpplastedeFiler />
       <div className="oppsummering-totalt-belop">
         <TotalBelop />
