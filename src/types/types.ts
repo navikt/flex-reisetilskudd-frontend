@@ -1,6 +1,7 @@
 export interface Svaralternativ {
   label: string,
   value: string,
+  id: string,
 }
 
 export interface RadioSpørsmålProps {
@@ -9,6 +10,7 @@ export interface RadioSpørsmålProps {
   spørsmålstekst: string,
   hjelpetekst?: string,
   svaralternativer: Svaralternativ[],
+  feil?: string;
   id: string,
 }
 

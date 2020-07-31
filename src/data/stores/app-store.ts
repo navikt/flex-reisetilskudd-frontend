@@ -40,6 +40,8 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   ] = useState<boolean | undefined>(undefined);
 
   const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
+  const [utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
+  ] = useState<boolean | undefined>(undefined);
   const [kvitteringer, settKvitteringer] = useState<KvitteringInterface[]>(mockKvitteringer);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [filopplasterFeilmeldinger, settFilopplasterFeilmeldinger] = useState<string[]>([]);
@@ -63,6 +65,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
 
     activeMegArbeidsgiver, setActiveMegArbeidsgiver,
+    utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
     kvitteringer, settKvitteringer,
     uopplastetFil, settUopplastetFil,
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
