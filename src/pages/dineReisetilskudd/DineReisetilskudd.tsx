@@ -1,9 +1,9 @@
 import React, { ReactElement, useState } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
 import env from '../../utils/environment';
 import { logger } from '../../utils/logger';
-import Reisetilskudd from '../../components/reisetilskudd/Reisetilskudd';
+import Reisetilskudd from '../../components/dineReisetilskudd/Reisetilskudd';
 import Vis from '../../components/Vis';
 
 interface ReisetilskuddInterface {
@@ -49,6 +49,9 @@ function DineReisetilskudd(): ReactElement {
 
   return (
     <div className="app-page dine-reisetilskudd-side">
+      <Sidetittel tag="h1" className="sidetopp__tittel">
+        Dine reisetilskudd
+      </Sidetittel>
       <Vis hvis={reisetilskuddene && reisetilskuddene.length < 1}>
         <Normaltekst>
           Det kan se ut som om du ikke har noen registrerte reisetilskudd, gå til
