@@ -1,7 +1,5 @@
 .sykmelding-panel-wrapper{
-  margin-left: 10rem;
-  margin-right: 10rem;
-
+  margin-bottom: 2rem;
   .sykmelding-linje{
     margin-top: -0.5rem;
   }
@@ -10,6 +8,7 @@
     font-weight: bold;
   }
 }
+
 
 .sykmelding-opplysninger-wrapper{
   display: flex;
@@ -35,21 +34,11 @@
   
 }
 
-@media screen and (max-width: 950px){
-  .sykmelding-panel-wrapper{
-    margin-left: 3rem;
-    margin-right: 3rem;
-  }
-}
-
-@media screen and (max-width: 620px){
-  .sykmelding-panel-wrapper{
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-  .sykmelding-opplysninger-wrapper{
-    padding-left: 0rem;
-    padding-bottom: 0rem;
+  @media screen and (max-width: 750px){
+    .sykmelding-opplysninger-wrapper {
+      .diagnose-wrapper {
+        flex-direction: column;
+      }
   }
 
 }

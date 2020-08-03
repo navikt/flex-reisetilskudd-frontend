@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { Input } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
@@ -138,10 +138,10 @@ const FilopplasterModal: React.FC = () => {
       className="filopplaster-modal"
     >
       <div className="modal-content">
-        <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
+        <Systemtittel className="kvittering-header"> Ny kvittering </Systemtittel>
         <div className="input-rad">
-          <Datovelger className="periode-element" label="Dato" mode="single" onChange={(nyDato) => oppdaterDato(nyDato[0])} />
-          <Input label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
+          <Datovelger label="Dato" mode="single" onChange={(nyDato) => oppdaterDato(nyDato[0])} />
+          <Input className="totalt-beløp-label" label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
         </div>
         <div>
           <TransportmiddelKvittering />

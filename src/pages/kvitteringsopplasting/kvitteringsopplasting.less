@@ -1,33 +1,33 @@
 @import "../../../node_modules/nav-frontend-core/less/_variabler";
 
-.perioder-overskrift {
-  margin: 1.5rem 0;
-}
-
-.kvitteringsopplasting-hjelpetekst{
-  align-self: flex-start;
-}
-
-.kvitteringinfo-wrapper{
-  display: flex;
-  .kvitteringsopplasting-hjelpetekst{
+.last-opp-kvittering-wrapper{
+  .last-opp-kvittering-overskrift {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .last-opp-kvittering-tekst{
+    display: flex;
+    flex-direction: row;
+    .kvitteringsopplasting-hjelpetekst{
+      align-self: flex-start;
       margin-bottom: 0.5rem;
       margin-left: 1rem;
+      align-self: flex-start;
+    }
   }
-}
 
-.filopplaster-wrapper {
+  .filopplaster-wrapper {
     justify-content: center;
-  
+    
     ul.opplasting-liste {
       padding-inline-start: 1.3em;
       line-height: 40px;
     }
-  
+    
     li {
       font-size: 25px;
     }
-  
+    
     .filopplaster {
       text-align: center;
       font-weight: bold;
@@ -36,31 +36,21 @@
       background-color: rgba(204, 222, 230, 0.5);
       height: 64px;
       color: @navBla;
-      margin: 1rem auto;
+      margin: 2rem auto;
     }
-  
-      .tekst {
-        line-height: 64px;
-        display: inline-block;
-        margin-left: 10px;
-      }
-
-      .feilmeldinger {
-        margin: 1rem 0 0 0;
-        text-align: left;
-      }
-}
-
-@media screen and (max-width: 390px){
-  .ny-periode-knapp{
-    margin: 0.5rem;
+    
+    .tekst {
+      line-height: 64px;
+      display: inline-block;
+      margin-left: 10px;
+    }
+    
+    .feilmeldinger {
+      margin: 1rem 0 0 0;
+      text-align: left;
+    }
   }
-
-  .perioder-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    text-align: center;
+  .kvitteringer-totalt-beløp {
+    margin: 1rem 0;
   }
 }
-

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
+import Lenke from 'nav-frontend-lenker';
 import vedlegg from '../../../assets/vedlegg.svg';
 import formaterFilstørrelse from '../utils';
 import { KvitteringInterface } from '../../../models/kvittering';
@@ -57,7 +58,7 @@ const FilMedInfo: React.FC<Props> = ({ fil, fjernKnapp }) => {
           src={vedlegg}
           alt="Vedleggsikon"
         />
-        <Normaltekst className="filnavn">{truncate(fil.navn, 15, '...')}</Normaltekst>
+        <Lenke href="#" className="filnavn">{truncate(fil.navn, 15, '...')}</Lenke>
       </div>
       <Normaltekst className="filstorrelse">
         (
