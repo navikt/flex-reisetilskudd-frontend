@@ -6,19 +6,21 @@ import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
 
 const mockKvitteringer: Array<KvitteringInterface> = [
   {
-    id: 'tetstsgddgsdsdsdsdsdgsdg',
+    reisetilskuddId: '6969',
+    kvitteringId: 'tetstsgddgsdsdsdsdsdgsdg',
     navn: 'foo.txt',
-    størrelse: 1024 * 920,
-    beløp: 32.2,
-    dato: new Date('2020-05-01'),
+    storrelse: 1024 * 920,
+    belop: 32.2,
+    fom: new Date('2020-05-01'),
     transportmiddel: Transportmiddel.EGEN_BIL,
   },
   {
-    id: 'dhdywdjdjsjdsjdscehshdsd',
+    reisetilskuddId: '12352',
+    kvitteringId: 'dhdywdjdjsjdsjdscehshdsd',
     navn: 'bar.jpg',
-    størrelse: 812 * 920,
-    beløp: 2.2,
-    dato: new Date('2034-09-29'),
+    storrelse: 812 * 920,
+    belop: 2.2,
+    fom: new Date('2034-09-29'),
     transportmiddel: Transportmiddel.TAXI,
   },
 ];
@@ -40,6 +42,8 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   ] = useState<boolean | undefined>(undefined);
 
   const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
+  const [utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
+  ] = useState<boolean | undefined>(undefined);
   const [kvitteringer, settKvitteringer] = useState<KvitteringInterface[]>(mockKvitteringer);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [filopplasterFeilmeldinger, settFilopplasterFeilmeldinger] = useState<string[]>([]);
@@ -63,6 +67,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
 
     activeMegArbeidsgiver, setActiveMegArbeidsgiver,
+    utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
     kvitteringer, settKvitteringer,
     uopplastetFil, settUopplastetFil,
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,

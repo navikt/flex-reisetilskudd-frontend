@@ -6,29 +6,30 @@ import {
 } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import { useParams } from 'react-router-dom';
+import {
+  KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer, Transportmiddel,
+} from '../../../models/kvittering';
 import Vis from '../../Vis';
-
 import { useAppStore } from '../../../data/stores/app-store';
-import { generateId } from '../../../utils/random';
 import TransportmiddelKvittering from '../../kvittering/TransportmiddelKvittering';
 import {
   kvitteringTotaltBeløpSpørsmål,
   kvitteringDatoSpørsmål,
   kvitteringTransportmiddelSpørsmål,
 } from '../../sporsmal/sporsmalTekster';
-
-import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../../models/kvittering';
 import Fil from '../fil/Fil';
 import './filopplasterModal.less';
 import env from '../../../utils/environment';
 import { logger } from '../../../utils/logger';
-import { post } from '../../../data/fetcher/fetcher';
+import { post, put } from '../../../data/fetcher/fetcher';
 import Datovelger from '../../kvittering/datovelger/Datovelger';
 import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
+  const { soknadsID } = useParams();
   const [laster, settLaster] = useState<boolean>(false);
   const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<string>('');
@@ -135,27 +136,36 @@ const FilopplasterModal: React.FC = () => {
       }
 
       settLaster(true);
-      post<OpplastetKvitteringInterface>(`${env.mockApiUrl}/kvittering`, requestData)
+      post<OpplastetKvitteringInterface>(`${env.mockBucketUrl}/kvittering`, requestData)
         .then((response) => {
-          if (response.parsedBody?.dokumentId) {
+          if (response.parsedBody?.id) {
             const kvittering: KvitteringInterface = {
-              id: generateId(),
+              reisetilskuddId: soknadsID,
               navn: fil.name,
-              størrelse: fil.size,
-              beløp: (parsedBeløp),
-              dato: (dato || new Date()),
+              storrelse: fil.size,
+              belop: parsedBeløp,
+              fom: (dato || new Date()),
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              dokumentId: response.parsedBody!.dokumentId,
-              transportmiddel: transportmiddelKvittering,
+              kvitteringId: response.parsedBody!.id,
+              transportmiddel: Object.entries(Transportmiddel)
+                .find(([, v]) => v === transportmiddelKvittering)?.[0],
             };
             nyKvittering(kvittering);
-          } else {
-            logger.warn('Responsen inneholder ikke noen dokumentId', response.parsedBody);
+            return kvittering;
           }
+          logger.warn('Responsen inneholder ikke noen id', response.parsedBody);
+          return null;
         })
-        .then(() => {
-          clearState();
-          lukkModal();
+        .then((kvittering) => {
+          put<KvitteringInterface>(`${env.apiUrl}/kvittering`, kvittering)
+            .then(() => {
+              settLaster(false);
+              lukkModal();
+              settTransportmiddelKvittering(undefined);
+            })
+            .catch((error) => {
+              logger.error('Feil under opplasting av kvittering', error);
+            });
         })
         .catch((error) => {
           logger.error('Feil under opplasting av kvittering', error);

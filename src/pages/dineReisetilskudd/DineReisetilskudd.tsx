@@ -25,7 +25,7 @@ function DineReisetilskudd(): ReactElement {
 
   const hentReisetilskudd = (
   ) : void => {
-    fetch(`${apiUrl}reisetilskudd`, {
+    fetch(`${apiUrl}/reisetilskudd`, {
       credentials: 'include',
     })
       .then(

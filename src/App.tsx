@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import {
-  BrowserRouter as Router, Switch, Route, Redirect,
+  BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
 import Soknaden from './pages/soknaden/Soknaden';
 import BekreftelsesSide from './pages/bekreftelsesside/BekreftelsesSide';
@@ -11,17 +11,12 @@ import DineReisetilskudd from './pages/dineReisetilskudd/DineReisetilskudd';
 function App() : ReactElement {
   return (
     <StoreProvider>
-
       <div className="app-main-content">
         <Router>
           <Switch>
-            <Route path="/soknaden/:soknadssideID">
+            <Route path="/soknaden/:soknadsID/:soknadssideID">
               <Header />
               <Soknaden />
-            </Route>
-            <Route path="/soknaden/">
-              <Header />
-              <Redirect to="/soknaden/1" />
             </Route>
             <Route path="/kvittering">
               <Header />

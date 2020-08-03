@@ -18,6 +18,17 @@ import './dagens-transportmiddel.less';
 import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
 import { hjelpetekstDagensTransportmiddel } from '../../constants/hjelpetekster';
+import env from '../../utils/environment';
+import { post } from '../../data/fetcher/fetcher';
+import { logger } from '../../utils/logger';
+
+interface TransportmiddelInterface {
+  reisetilskuddId: string;
+  går?: boolean;
+  sykler?: boolean;
+  egenBil?: number;
+  kollektivtransport?: number;
+}
 
 const DagensTransportmiddel = (): ReactElement => {
   const [
@@ -40,7 +51,7 @@ const DagensTransportmiddel = (): ReactElement => {
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
   } = useAppStore();
 
-  const { soknadssideID } = useParams();
+  const { soknadssideID, soknadsID } = useParams();
   const soknadssideIDTall = Number(soknadssideID);
 
   const validerAntallKilometerInput = (): FeiloppsummeringFeil[] => {
@@ -84,7 +95,7 @@ const DagensTransportmiddel = (): ReactElement => {
     ) {
       return [
         {
-          skjemaelementId: transportalternativer.id,
+          skjemaelementId: transportalternativer.svaralternativer[0].id,
           feilmelding: 'Du må velge minst étt av alternativene for fremkomstmiddel',
         },
       ];
@@ -164,12 +175,22 @@ const DagensTransportmiddel = (): ReactElement => {
   ]);
 
   const handleVidereKlikk = () => {
-    settSkalViseMånedligeUtgifterFeil(true);
-    settSkalViseKilometerFeil(true);
-    settSkalViseFeil(true);
-    if (dagensTransportmiddelValidert) {
-      settGårTilNesteSide(true);
-    }
+    post<TransportmiddelInterface>(`${env.apiUrl}/reisetilskudd`, {
+      reisetilskuddId: soknadsID,
+      går: dagensTransportMiddelGårChecked,
+      sykler: dagensTransportMiddelSyklerChecked,
+      egenBil: parseFloat(antallKilometerState),
+      kollektivtransport: parseFloat(månedligeUtgifterState),
+    }).then(() => {
+      settSkalViseMånedligeUtgifterFeil(true);
+      settSkalViseKilometerFeil(true);
+      settSkalViseFeil(true);
+      if (dagensTransportmiddelValidert) {
+        settGårTilNesteSide(true);
+      }
+    }).catch((error) => {
+      logger.error('Feil ved oppdatering av skjema', error);
+    });
   };
 
   return (
@@ -215,9 +236,6 @@ const DagensTransportmiddel = (): ReactElement => {
           )}
         </Vis>
       </div>
-      <Vis hvis={dagensTransportmiddelValidert}>
-        Skjemaet er validert, wohoo!
-      </Vis>
       <Vis hvis={skalViseFeil && visningsFeilmeldinger.length > 0}>
         <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={visningsFeilmeldinger} />
       </Vis>

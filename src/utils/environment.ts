@@ -35,6 +35,14 @@ class Environment {
   get tillatteFiltyper() {
     return this.env.TILLATTE_FILTYPER.split(',');
   }
+
+  get bucketUrl() {
+    return this.env.BUCKET_URL;
+  }
+
+  get mockBucketUrl() {
+    return this.env.MOCK_BUCKET_URL;
+  }
 }
 
 const env = new Environment();
