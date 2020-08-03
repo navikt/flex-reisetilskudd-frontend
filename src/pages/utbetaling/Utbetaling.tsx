@@ -66,7 +66,10 @@ const Utbetaling = (): ReactElement => {
       settUtbetalingspørsmålValidert(false);
     }
   }, [activeMegArbeidsgiver,
-    skalViseFeil]);
+    skalViseFeil,
+    settUtbetalingspørsmålValidert,
+    validerUtbetaling,
+  ]);
 
   const handleVidereKlikk = () => {
     settSkalViseFeil(true);
