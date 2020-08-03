@@ -84,7 +84,7 @@ const DagensTransportmiddel = (): ReactElement => {
     ) {
       return [
         {
-          skjemaelementId: transportalternativer.id,
+          skjemaelementId: transportalternativer.svaralternativer[0].id,
           feilmelding: 'Du må velge minst étt av alternativene for fremkomstmiddel',
         },
       ];
@@ -215,9 +215,6 @@ const DagensTransportmiddel = (): ReactElement => {
           )}
         </Vis>
       </div>
-      <Vis hvis={dagensTransportmiddelValidert}>
-        Skjemaet er validert, wohoo!
-      </Vis>
       <Vis hvis={skalViseFeil && visningsFeilmeldinger.length > 0}>
         <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={visningsFeilmeldinger} />
       </Vis>
