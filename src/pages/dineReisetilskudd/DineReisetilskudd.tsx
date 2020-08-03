@@ -48,7 +48,7 @@ function DineReisetilskudd(): ReactElement {
   }
 
   return (
-    <div className="dine-reisetilskudd-side">
+    <div className="app-page dine-reisetilskudd-side">
       <Vis hvis={reisetilskuddene && reisetilskuddene.length < 1}>
         <Normaltekst>
           Det kan se ut som om du ikke har noen registrerte reisetilskudd, gå til

@@ -18,25 +18,23 @@ function Soknaden(): ReactElement {
   const idNum = Number(soknadssideID);
 
   return (
-    <div className="soknadSider">
-      <div className="sporsmal-wrapper">
-        <TilbakeKnapp aktivtSteg={idNum} />
-        <Brodsmuler aktivtSteg={idNum} />
-        <SykmeldingPanel />
-        <Vis hvis={idNum === 1}>
-          <Utbetaling />
-        </Vis>
-        <Vis hvis={idNum === 2}>
-          <DagensTransportmiddel />
-        </Vis>
-        <Vis hvis={idNum === 3}>
-          <Kvitteringsopplasting />
-        </Vis>
-        <Vis hvis={idNum === 4}>
-          <Oppsummering />
-          <SendKnapp />
-        </Vis>
-      </div>
+    <div className="app-page sporsmal-wrapper">
+      <TilbakeKnapp aktivtSteg={idNum} />
+      <Brodsmuler aktivtSteg={idNum} />
+      <SykmeldingPanel />
+      <Vis hvis={idNum === 1}>
+        <Utbetaling />
+      </Vis>
+      <Vis hvis={idNum === 2}>
+        <DagensTransportmiddel />
+      </Vis>
+      <Vis hvis={idNum === 3}>
+        <Kvitteringsopplasting />
+      </Vis>
+      <Vis hvis={idNum === 4}>
+        <Oppsummering />
+        <SendKnapp />
+      </Vis>
     </div>
   );
 }
