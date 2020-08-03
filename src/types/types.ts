@@ -1,6 +1,7 @@
 export interface Svaralternativ {
   label: string,
   value: string,
+  id: string,
 }
 
 export interface RadioSpørsmålProps {
@@ -9,6 +10,7 @@ export interface RadioSpørsmålProps {
   spørsmålstekst: string,
   hjelpetekst?: string,
   svaralternativer: Svaralternativ[],
+  feil?: string;
   id: string,
 }
 
@@ -22,9 +24,9 @@ export interface CheckboxProps {
 export interface InputProps {
   tittel: string;
   inputMode: 'numeric';
-  feil?: string;
-  bredde: 'S';
+  bredde: 'fullbredde' | 'XXL' | 'XL' | 'L' | 'M' | 'S' | 'XS' | 'XXS';
   value?: number | string | undefined;
   onChange?: (s: string) => void;
   id: string;
+  feil?: string;
 }

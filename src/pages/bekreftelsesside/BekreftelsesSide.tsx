@@ -6,10 +6,8 @@ import VeienVidereBox from './VeienVidere';
 function BekreftelsesSide():ReactElement {
   return (
     <div className="bekreftelsesside-page-wrapper">
-      <div className="content-wrapper">
-        <ListeTekstbox />
-        <VeienVidereBox />
-      </div>
+      <ListeTekstbox />
+      <VeienVidereBox />
     </div>
   );
 }

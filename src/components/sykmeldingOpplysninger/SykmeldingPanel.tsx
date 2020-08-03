@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import './sykmeldingOpplysninger.less';
 import SykmeldingOpplysninger from './SykmeldingOpplysninger';
 import { useAppStore } from '../../data/stores/app-store';
@@ -18,7 +18,7 @@ const SykmeldingPanel = () : ReactElement => {
   return (
     <div className="sykmelding-panel-wrapper">
 
-      <Ekspanderbartpanel className="sykmelding-innhold" tittel={<Normaltekst>Opplysninger om sykmeldingen</Normaltekst>}>
+      <Ekspanderbartpanel className="sykmelding-innhold" tittel={<Undertittel>Opplysninger fra sykmeldingen</Undertittel>}>
         <hr className="sykmelding-linje" />
         <SykmeldingOpplysninger />
       </Ekspanderbartpanel>
