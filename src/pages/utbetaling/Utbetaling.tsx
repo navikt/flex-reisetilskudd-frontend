@@ -54,8 +54,8 @@ const Utbetaling = (): ReactElement => {
 
   useEffect(() => {
     const valideringsfeil: FeiloppsummeringFeil[] = [];
-
     const utbetalingFeil = validerUtbetaling();
+
     valideringsfeil.push(...utbetalingFeil);
 
     settVisningsfeilmeldinger(valideringsfeil);
@@ -65,10 +65,10 @@ const Utbetaling = (): ReactElement => {
     } else {
       settUtbetalingspørsmålValidert(false);
     }
-  }, [activeMegArbeidsgiver,
+  }, // eslint-disable-next-line react-hooks/exhaustive-deps
+  [
+    activeMegArbeidsgiver,
     skalViseFeil,
-    settUtbetalingspørsmålValidert,
-    validerUtbetaling,
   ]);
 
   const handleVidereKlikk = () => {
