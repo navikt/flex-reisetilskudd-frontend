@@ -46,8 +46,18 @@ const FilopplasterModal: React.FC = () => {
     settKvitteringer([...kvitteringer, kvittering]);
   };
 
-  const lukkModal = () => {
+  const clearState = () => {
+    settLaster(false);
+    settDato(null);
+    settBeløp('');
+    settTransportmiddelKvittering(undefined);
     settUopplastetFil(null);
+    settHarAlleredeBlittValidert(false);
+    settValideringsFeil([]);
+  };
+
+  const lukkModal = () => {
+    clearState();
     settÅpenFilopplasterModal(false);
   };
 
@@ -145,12 +155,7 @@ const FilopplasterModal: React.FC = () => {
           }
         })
         .then(() => {
-          settLaster(false);
-          settDato(null);
-          settBeløp('');
-          settTransportmiddelKvittering(undefined);
-          settUopplastetFil(null);
-          settHarAlleredeBlittValidert(false);
+          clearState();
           lukkModal();
         })
         .catch((error) => {
@@ -163,8 +168,6 @@ const FilopplasterModal: React.FC = () => {
     settBeløp(beløpString);
     if (harAlleredeBlittValidert) {
       validerKvittering(beløpString, null, null);
-    } else {
-      logger.error(`Fikk ikke til å parse beløp ${beløpString}`);
     }
   };
 
