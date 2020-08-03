@@ -1,6 +1,7 @@
 describe('Tester reisetilskuddsøknaden', () => {
     
-    const url:string = 'http://localhost:3000/soknaden/1'
+    const url:string = 'http://localhost:3000/'
+    
 
     before(() => {
         cy.visit(url)
@@ -19,6 +20,7 @@ describe('Tester reisetilskuddsøknaden', () => {
     describe('utfylling av side 1', ()=>{
 
         it('Tar tak i meg-knapp og clicker', function() {
+            cy.url().should('include', `soknaden/1`)
             let megknapp = cy.get('.inputPanel').children().eq(1)
             megknapp.should('be.visible')
             megknapp.click()
@@ -34,6 +36,7 @@ describe('Tester reisetilskuddsøknaden', () => {
     describe('utfylling av side 2', ()=>{
     
         it('fyller ut går, egen bil, klikker på hjelpetekst, fylle rinn km', function() {
+            cy.url().should('include', `soknaden/2`)
             cy.contains('Går').click()
             cy.contains('Sykler').click()
             cy.contains('Egen bil').click()
@@ -64,17 +67,39 @@ describe('Tester reisetilskuddsøknaden', () => {
     describe('utfylling av side 3', ()=>{
     
         it('sjekker at siden inneholder elementer', function() {
+            cy.url().should('include', `soknaden/3`)
             cy.contains('Last opp dine kvitteringer')
             cy.contains('Her kan du laste opp kvitteringer fra reisetilskuddsperioden.')
             cy.get('.last-opp-kvittering-tekst').should('be.visible')
             
             let hjelpetekst = cy.get('.hjelpetekst').should('be.visible')
             hjelpetekst.click()
+            hjelpetekst.click()
+
+            cy.get('.filopplasteren').should('be.visible')
             
             //cy.get('.månedlige-utgifter-input').should('be.visible')
 
 
-            //cy.get('.videre-knapp').click()
+            cy.get('.videre-knapp').click()
+        })
+    })
+
+    describe('utfylling av side 4', ()=>{
+    
+        it('sjekker at oppsummeringssiden inneholder elementer', function() {
+            cy.url().should('include', `soknaden/4`)
+            
+            cy.get('.send-knapp').click()
+        })
+    })
+
+    describe('kvitteringsside', ()=>{
+    
+        it('sjekker at bekreftelse/kvittering-siden inneholder elementer', function() {
+            cy.url().should('include', `kvittering`)
+            
+            
         })
     })
 
