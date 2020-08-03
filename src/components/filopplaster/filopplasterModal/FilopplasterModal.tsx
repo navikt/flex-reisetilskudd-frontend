@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Undertittel, Element } from 'nav-frontend-typografi';
+import { Systemtittel, Element } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import {
   Feiloppsummering, FeiloppsummeringFeil, SkjemaGruppe, Input,
@@ -19,7 +19,6 @@ import {
 
 import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../../models/kvittering';
 import Fil from '../fil/Fil';
-import '../filopplaster.less';
 import './filopplasterModal.less';
 import env from '../../../utils/environment';
 import { logger } from '../../../utils/logger';
@@ -193,7 +192,7 @@ const FilopplasterModal: React.FC = () => {
       className="filopplaster-modal"
     >
       <div className="modal-content">
-        <Undertittel className="kvittering-header"> Ny kvittering </Undertittel>
+        <Systemtittel className="kvittering-header"> Ny kvittering </Systemtittel>
         <div className="input-rad">
           <Datovelger
             id={kvitteringDatoSpørsmål.id}

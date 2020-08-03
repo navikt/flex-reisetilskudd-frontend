@@ -10,7 +10,7 @@ const mockKvitteringer: Array<KvitteringInterface> = [
     navn: 'foo.txt',
     størrelse: 1024 * 920,
     beløp: 32.2,
-    dato: new Date(),
+    dato: new Date('2020-05-01'),
     transportmiddel: Transportmiddel.EGEN_BIL,
   },
   {
@@ -18,7 +18,7 @@ const mockKvitteringer: Array<KvitteringInterface> = [
     navn: 'bar.jpg',
     størrelse: 812 * 920,
     beløp: 2.2,
-    dato: new Date(),
+    dato: new Date('2034-09-29'),
     transportmiddel: Transportmiddel.TAXI,
   },
 ];

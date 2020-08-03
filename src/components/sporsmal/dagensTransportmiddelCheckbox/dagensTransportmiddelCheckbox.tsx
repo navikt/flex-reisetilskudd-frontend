@@ -6,14 +6,15 @@ import { useAppStore } from '../../../data/stores/app-store';
 import { transportalternativerVerdier } from '../sporsmalTekster';
 
 const DagensTransportmiddelCheckbox = (
-  { tittel, svaralternativer, id }: CheckboxProps,
+  {
+    tittel, svaralternativer, id,
+  }: CheckboxProps,
 ): ReactElement => {
   const {
     dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
     dagensTransportMiddelSyklerChecked, settDagensTransportMiddelSyklerChecked,
     dagensTransportMiddelGårChecked, settDagensTransportMiddelGårChecked,
     dagensTransportMiddelKollektivChecked, settDagensTransportMiddelKollektivChecked,
-    settDagensTransportmiddelValidert,
     settMånedligeUtgifterState,
     settAntallKilometerState,
   } = useAppStore();
@@ -61,7 +62,6 @@ const DagensTransportmiddelCheckbox = (
         }
         onChange={(_, nyVerdi) => {
           skrivEndringTilGlobalState(nyVerdi);
-          settDagensTransportmiddelValidert(undefined);
         }}
       />
     </div>
