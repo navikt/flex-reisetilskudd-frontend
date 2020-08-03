@@ -18,9 +18,6 @@ const OppsummeringDagensTransportmiddel = () : ReactElement => {
       <Undertittel className="oppsummering-underoverskrift">Hvordan reiste du før sykmeldingen?</Undertittel>
       <Vis hvis={
         dagensTransportMiddelEgenBilChecked
-        /* TODO: Vurdere å fjerne sjekk på antallKilometerState,
-        man kan nok anta at verdien er validert */
-        && antallKilometerState !== ''
       }
       >
         <CheckedMedTekst tekst={`Kjører egen bil, ${antallKilometerState} kilometer`} />
@@ -33,9 +30,6 @@ const OppsummeringDagensTransportmiddel = () : ReactElement => {
       </Vis>
       <Vis hvis={
         dagensTransportMiddelKollektivChecked
-        /* TODO: Vurdere å fjerne sjekk på månedligeUtgifterState,
-        man kan nok anta at verdien er validert */
-        && månedligeUtgifterState !== ''
       }
       >
         <CheckedMedTekst tekst={`Reiser kollektivt med ${månedligeUtgifterState} kroner i månedlige utgifter`} />

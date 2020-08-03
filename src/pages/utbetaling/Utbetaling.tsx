@@ -2,7 +2,7 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FeiloppsummeringFeil, Feiloppsummering } from 'nav-frontend-skjema';
 import RadioSpørsmålUtbetaling from '../../components/sporsmal/radioSporsmal/RadioSporsmalUtbetaling';
-import { utbetalingSpørsmål } from '../../components/sporsmal/spørsmålTekster';
+import { utbetalingSpørsmål } from '../../components/sporsmal/sporsmalTekster';
 import { ArbeidsgiverInterface } from '../../models/arbeidsgiver';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from './constants';
 import { Svaralternativ } from '../../types/types';

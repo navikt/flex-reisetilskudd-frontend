@@ -4,11 +4,11 @@ import './bekreftelsesside.less';
 import { Undertittel } from 'nav-frontend-typografi';
 import { DatoFormat, getIDag, getNåTid } from '../../utils/dato';
 
-function VeienVidereBox():ReactElement {
+function VeienVidereBox(): ReactElement {
   return (
     <div className="veien-videre-wrapper">
       <AlertStripe className="gronn-checkbox" type="suksess">
-        <Undertittel>Sykemeldingen er sendt til NAV</Undertittel>
+        <Undertittel>Sykmeldingen er sendt til NAV</Undertittel>
         <p>
           Sendt:
           {' '}
@@ -34,8 +34,8 @@ function VeienVidereBox():ReactElement {
         <p>
           <b>Har du flere jobber?</b>
           <p>
-            Du må levere én sykemelding per jobb.
-            Kontakt den som har sykemeldt deg hvis du trenger flere sykemeldinger.
+            Du må levere én sykmelding per jobb.
+            Kontakt den som har sykmeldt deg hvis du trenger flere sykmeldinger.
           </p>
         </p>
         <p>

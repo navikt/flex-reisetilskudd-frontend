@@ -1,3 +1,5 @@
+@import "../../../../node_modules/nav-frontend-core/less/_variabler";
+
 .kvitteringstitler {
     display: grid;
     margin: 0 auto;
@@ -5,29 +7,29 @@
     'kvitteringTittel storrelse belopTittel datoTittel';
     grid-template-columns: 15% 25% 15% 45%;
     margin-bottom: 1rem;
-  
+
     hr {
       border: 1px solid #b7b1a9;
     }
-    
+
     .typo-undertittel{
       margin: 0;
     }
-  
-  
+
+
     .kvittering-tittel{
       grid-area: kvitteringTittel;
     }
-  
+
     .filstorrelse {
       grid-area: storrelse;
       padding-top: 0.3rem;
     }
-  
+
     .belop-tittel{
       grid-area: belopTittel;
     }
-  
+
     .dato-tittel{
       grid-area: datoTittel;
     }
@@ -40,35 +42,35 @@
     'kvitteringTittel storrelse belopTittel datoTittel';
     grid-template-columns: 15% 30% 35% 20%;
     margin-bottom: 1rem;
-  
+
     hr {
       border: 1px solid #b7b1a9;
     }
-    
+
     .typo-undertittel{
       margin: 0;
     }
-  
-  
+
+
     .kvittering-tittel{
       grid-area: kvitteringTittel;
     }
-  
+
     .filstorrelse {
       grid-area: storrelse;
       padding-top: 0.3rem;
     }
-  
+
     .belop-tittel{
       grid-area: belopTittel;
     }
-  
+
     .dato-tittel{
       grid-area: datoTittel;
     }
 
   }
-  
+
   .fil-med-info{
       display: grid;
       margin: 0 auto;
@@ -79,29 +81,46 @@
       .typo-normal {
         display: inline;
       }
-    
+
       .kvittering{
         grid-area: kvittering;
         display: flex;
         align-items: center;
       }
-    
+      .filstorrelse {
+        padding-top: 0.54rem;
+      }
+
       .belop{
-        padding-top: 0.3rem;
+        padding-top: 0.54rem;
         grid-area: belop;
       }
-    
+
       .dato {
-        padding-top: 0.3rem;
+        padding-top: 0.54rem;
         grid-area: dato;
         white-space: nowrap;
       }
-    
+
       .slett-knapp{
-        max-height: 2rem;
+        padding: 0 0.5rem 0 0.5rem;
         grid-area: slett;
-        max-width: 8rem;
-        justify-self: right;
+        margin: 0 0 0 auto;
+
+        svg > path {
+          fill: @navBla;
+          
+        }
+      }
+      .knapp{
+        border: none;
+        font-weight: 400;
+      }
+      .knapp:hover{
+        svg > path {
+          fill: white;
+          
+        }
       }
     }
 
@@ -115,25 +134,25 @@
       .typo-normal {
         display: inline;
       }
-    
+
       .kvittering{
         grid-area: kvittering;
         display: flex;
         align-items: center;
       }
-    
+
       .belop{
         padding-top: 0.3rem;
         grid-area: belop;
       }
-    
+
       .dato {
         padding-top: 0.3rem;
         grid-area: dato;
         white-space: nowrap;
       }
     }
-  
+
   .mobil-belop{
     display: none;
   }
@@ -150,8 +169,8 @@
         transform: scale(0.85);
         margin-left: auto;
         margin-top: 1.5rem;
-    } 
-  
+    }
+
     .fil-med-info{
       border: 1px solid #78706A;
       border-radius: 0.3rem;
@@ -162,7 +181,7 @@
       ;
       grid-template-columns: 30% 35% 35%; 
     }
-  
+
     .mobil-belop{
       margin-top: 0.5rem;
       padding-top: 0.3rem;
@@ -176,23 +195,23 @@
       padding-left: 2.2rem;
       grid-area: datotittel;
     }
-  
+
     .kvitteringstitler{
       display: none;
     }
-  
+
     .kvittering{
       margin-top: 1.5rem;
       grid-area: kvittering;
       margin-left: 0.5rem;
     }
-    
+
     .filstorrelse {
       margin-top: 1.2rem;
       grid-area: storrelse;
       padding-top: 0.3rem;
     }
-  
+
     .belop{
       margin-top: 0.5rem;
       padding-top: 0.3rem;
@@ -201,7 +220,7 @@
       text-align: left;
       margin-left: 1rem;
     }
-  
+
     .dato {
       padding-top: 0.3rem;
       grid-area: dato;
@@ -229,4 +248,3 @@
       }
     }
   }
-  

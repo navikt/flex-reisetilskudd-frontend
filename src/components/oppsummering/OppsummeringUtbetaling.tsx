@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import { useAppStore } from '../../data/stores/app-store';
 import Vis from '../Vis';
-import { utbetalingSpørsmålVerdier } from '../sporsmal/spørsmålTekster';
+import { utbetalingSpørsmålVerdier } from '../sporsmal/sporsmalTekster';
 import { ArbeidsgiverInterface } from '../../models/arbeidsgiver';
 import CheckedMedTekst from '../common/checkedMedTekst/CheckedMedTekst';
 

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { utbetalingSpørsmålVerdier } from '../spørsmålTekster';
+import { utbetalingSpørsmålVerdier } from '../sporsmalTekster';
 import { useAppStore } from '../../../data/stores/app-store';
 import { RadioSpørsmålProps } from '../../../types/types';
 import './radiosporsmal-utbetaling.less';
