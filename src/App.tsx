@@ -6,6 +6,7 @@ import Soknaden from './pages/soknaden/Soknaden';
 import BekreftelsesSide from './pages/bekreftelsesside/BekreftelsesSide';
 import StoreProvider from './data/stores/StoreProvider';
 import Header from './components/header/Header';
+import DineReisetilskudd from './pages/dineReisetilskudd/DineReisetilskudd';
 
 function App() : ReactElement {
   return (
@@ -16,6 +17,9 @@ function App() : ReactElement {
           <Route path="/soknaden/:soknadssideID">
             <Soknaden />
           </Route>
+          <Route path="/soknaden/">
+            <Redirect to="/soknaden/1" />
+          </Route>
           <Route path="/kvittering">
             <BekreftelsesSide />
           </Route>
@@ -23,7 +27,7 @@ function App() : ReactElement {
             <BekreftelsesSide />
           </Route>
           <Route path="/">
-            <Redirect to="/soknaden/1" />
+            <DineReisetilskudd />
           </Route>
         </Switch>
       </Router>
