@@ -25,13 +25,14 @@ import env from '../../../utils/environment';
 import { logger } from '../../../utils/logger';
 import { post } from '../../../data/fetcher/fetcher';
 import Datovelger from '../../kvittering/datovelger/Datovelger';
+import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
   const [laster, settLaster] = useState<boolean>(false);
   const [dato, settDato] = useState<Date | null>(null);
-  const [beløp, settBeløp] = useState<number | null>(null);
+  const [beløp, settBeløp] = useState<string>('');
   const [valideringsFeil, settValideringsFeil] = useState<FeiloppsummeringFeil[]>([]);
   const [harAlleredeBlittValidert, settHarAlleredeBlittValidert] = useState<boolean>(false);
   const {
@@ -56,17 +57,11 @@ const FilopplasterModal: React.FC = () => {
     (element) => element.skjemaelementId === hvilkenInput,
   )?.feilmelding;
 
-  const validerBeløp = (nyttBeløp : number | null): FeiloppsummeringFeil[] => {
-    if (!nyttBeløp || nyttBeløp === null) {
+  const validerBeløp = (nyttBeløp : string | null): FeiloppsummeringFeil[] => {
+    if (!nyttBeløp || nyttBeløp === null || !validerKroner(nyttBeløp)) {
       return [{
         skjemaelementId: kvitteringTotaltBeløpSpørsmål.id,
         feilmelding: 'Vennligst skriv inn et gyldig beløp',
-      }];
-    }
-    if (nyttBeløp <= 0) {
-      return [{
-        skjemaelementId: kvitteringTotaltBeløpSpørsmål.id,
-        feilmelding: 'Vennligst skriv inn et positivt beløp',
       }];
     }
     return [];
@@ -98,7 +93,7 @@ const FilopplasterModal: React.FC = () => {
   };
 
   const validerKvittering = (
-    nyttBeløp: number | null = null,
+    nyttBeløp: string | null = null,
     nyDato : Date | null = null,
     nyttTransportmiddel : TransportmiddelAlternativer | null = null,
   ) => {
@@ -122,8 +117,13 @@ const FilopplasterModal: React.FC = () => {
     if (validerKvittering()) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       requestData.append('dato', dato!.toString());
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      requestData.append('beløp', beløp!.toString());
+      requestData.append('beløp', beløp.toString());
+
+      const parsedBeløp = validerOgReturnerKroner(beløp);
+      if (parsedBeløp === null || Number.isNaN(parsedBeløp)) {
+        logger.error('Bruker har fått til å validere et ugyldig beløp', beløp);
+        return;
+      }
 
       settLaster(true);
       post<OpplastetKvitteringInterface>(`${env.mockApiUrl}/kvittering`, requestData)
@@ -133,7 +133,7 @@ const FilopplasterModal: React.FC = () => {
               id: generateId(),
               navn: fil.name,
               størrelse: fil.size,
-              beløp: (beløp || 0.0),
+              beløp: (parsedBeløp),
               dato: (dato || new Date()),
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               dokumentId: response.parsedBody!.dokumentId,
@@ -147,7 +147,7 @@ const FilopplasterModal: React.FC = () => {
         .then(() => {
           settLaster(false);
           settDato(null);
-          settBeløp(null);
+          settBeløp('');
           settTransportmiddelKvittering(undefined);
           settUopplastetFil(null);
           settHarAlleredeBlittValidert(false);
@@ -159,16 +159,12 @@ const FilopplasterModal: React.FC = () => {
     }
   };
 
-  const parseBelopInput = (belopString: string) => {
-    try {
-      const kommaTilPunktum = belopString.replace(',', '.');
-      const inputBelop = parseFloat(kommaTilPunktum);
-      settBeløp(inputBelop);
-      if (harAlleredeBlittValidert) {
-        validerKvittering(inputBelop, null, null);
-      }
-    } catch {
-      logger.error(`Fikk ikke til å parse beløp ${belopString}`);
+  const handleBeløpChange = (beløpString: string) => {
+    settBeløp(beløpString);
+    if (harAlleredeBlittValidert) {
+      validerKvittering(beløpString, null, null);
+    } else {
+      logger.error(`Fikk ikke til å parse beløp ${beløpString}`);
     }
   };
 
@@ -208,10 +204,11 @@ const FilopplasterModal: React.FC = () => {
             <Element className="kvittering-beløp-input">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>
             <Input
               inputMode={kvitteringTotaltBeløpSpørsmål.inputMode}
+              value={beløp}
               pattern="[0-9]*"
               bredde={kvitteringTotaltBeløpSpørsmål.bredde}
               onChange={(e) => {
-                parseBelopInput(e.target.value);
+                handleBeløpChange(e.target.value);
               }}
               id={kvitteringTotaltBeløpSpørsmål.id}
               feil={fåFeilmeldingTilInput(kvitteringTotaltBeløpSpørsmål.id)}

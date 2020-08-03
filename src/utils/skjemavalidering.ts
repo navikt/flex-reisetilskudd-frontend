@@ -8,6 +8,13 @@ export const validerKroner = (tekstInput : string | number) : boolean => {
   return kroneTall.test(tekstInput.toString());
 };
 
+export const validerOgReturnerKroner = (tekstInput: string) : number | null => {
+  if (validerKroner(tekstInput)) {
+    return Number(tekstInput);
+  }
+  return null;
+};
+
 export const validerKilometer = (
   tekstInput : string | number,
 ) : boolean => validerNumerisk(tekstInput);
