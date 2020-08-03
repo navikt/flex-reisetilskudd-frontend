@@ -62,11 +62,11 @@ const FilMedInfo: React.FC<Props> = ({ fil, fjernKnapp }) => {
       </div>
       <Normaltekst className="filstorrelse">
         (
-        {formaterFilstørrelse(fil.størrelse)}
+        {formaterFilstørrelse(fil.storrelse)}
         )
       </Normaltekst>
       <Normaltekst className="belop">
-        {fil.beløp}
+        {fil.belop}
         {' '}
         kr
       </Normaltekst>

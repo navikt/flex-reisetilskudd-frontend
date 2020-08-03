@@ -6,12 +6,14 @@ import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { useParams } from 'react-router-dom';
-import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../../models/kvittering';
+import {
+  KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer, Transportmiddel,
+} from '../../../models/kvittering';
 import Fil from '../fil/Fil';
 import './filopplasterModal.less';
 import env from '../../../utils/environment';
 import { logger } from '../../../utils/logger';
-import { post } from '../../../data/fetcher/fetcher';
+import { post, put } from '../../../data/fetcher/fetcher';
 import Datovelger from '../../kvittering/datovelger/Datovelger';
 import { useAppStore } from '../../../data/stores/app-store';
 import TransportmiddelKvittering from '../../kvittering/TransportmiddelKvittering';
@@ -94,12 +96,13 @@ const FilopplasterModal: React.FC = () => {
             const kvittering: KvitteringInterface = {
               reisetilskuddId: soknadsID,
               navn: fil.name,
-              størrelse: fil.size,
-              beløp: (beløp || 0.0),
+              storrelse: fil.size,
+              belop: (beløp || 0.0),
               fom: (dato || new Date()),
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               kvitteringId: response.parsedBody!.id,
-              transportmiddel,
+              transportmiddel: Object.entries(Transportmiddel)
+                .find(([, v]) => v === transportmiddel)?.[0],
             };
             nyKvittering(kvittering);
             return kvittering;
@@ -107,11 +110,16 @@ const FilopplasterModal: React.FC = () => {
           logger.warn('Responsen inneholder ikke noen id', response.parsedBody);
           return null;
         })
-        .then((kvittering) => kvittering)
-        .then(() => {
-          settLaster(false);
-          lukkModal();
-          settTransportmiddel(undefined);
+        .then((kvittering) => {
+          put<KvitteringInterface>(`${env.apiUrl}/kvittering`, kvittering)
+            .then(() => {
+              settLaster(false);
+              lukkModal();
+              settTransportmiddel(undefined);
+            })
+            .catch((error) => {
+              logger.error('Feil under opplasting av kvittering', error);
+            });
         })
         .catch((error) => {
           logger.error('Feil under opplasting av kvittering', error);

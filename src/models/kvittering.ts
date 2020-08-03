@@ -1,14 +1,11 @@
 export interface KvitteringInterface {
   reisetilskuddId: string;
-  navn: string;
-  størrelse: number;
-  beløp: number;
-  fom: Date;
   kvitteringId: string;
-  transportmiddel?:
-  Transportmiddel.TAXI |
-  Transportmiddel.KOLLEKTIV |
-  Transportmiddel.EGEN_BIL;
+  navn: string;
+  storrelse: number;
+  belop: number;
+  fom: Date;
+  transportmiddel?: string;
 }
 
 export interface OpplastetKvitteringInterface {
