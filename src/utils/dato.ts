@@ -20,6 +20,6 @@ export const getIDag = (format?: string): string => moment().format(format || Da
 
 export const getNåTid = (format?: string): string => moment().format(format || TidsFormat.VANLIG);
 
-export const formatertDato = (date: Date, format?: string): string => (
+export const formatertDato = (date: Date | string, format?: string): string => (
   moment(date).format(format || DatoFormat.TALL)
 );

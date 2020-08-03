@@ -6,12 +6,36 @@ body {
     background-color: #E5E5E5;
     font-family: @font-family;
   }
-  
+
+
+.app-main-content{
+  background-color: white;
+  margin: 0;
+  flex: 1;
+}
+
+.app-page{
+  width: 700px;
+  margin: 0 auto;
+  padding: 1rem 0;
+  flex: 1;
+}
+
+@media screen and (max-width: 750px){
+  .app-page{
+    position: relative;
+    padding: 3rem 2rem;
+    width: unset;
+    margin: 0;
+  }
+}
+
+
   .sentrert {
     display: flex;
     justify-content: center;
   }
-  
+
   .seksjon {
     padding-bottom: 3rem;
   }
@@ -26,4 +50,3 @@ body {
     flex: 1;
   }
 }
-  
