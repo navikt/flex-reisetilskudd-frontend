@@ -2,13 +2,21 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FeiloppsummeringFeil, Feiloppsummering } from 'nav-frontend-skjema';
 import RadioSpørsmålUtbetaling from '../../components/sporsmal/radioSporsmal/RadioSporsmalUtbetaling';
-import { utbetalingSpørsmål } from '../../components/sporsmal/sporsmalTekster';
+import { utbetalingSpørsmål, utbetalingSpørsmålVerdier } from '../../components/sporsmal/sporsmalTekster';
 import { ArbeidsgiverInterface } from '../../models/arbeidsgiver';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from './constants';
 import { Svaralternativ } from '../../types/types';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
+import { post } from '../../data/fetcher/fetcher';
+import env from '../../utils/environment';
 import { useAppStore } from '../../data/stores/app-store';
+import { logger } from '../../utils/logger';
 import Vis from '../../components/Vis';
+
+interface UtbetalingInterface {
+  reisetilskuddId: string;
+  utbetalingTilArbeidsgiver?: boolean;
+}
 
 const Utbetaling = (): ReactElement => {
   const [
@@ -22,7 +30,7 @@ const Utbetaling = (): ReactElement => {
   const [skalViseFeil, settSkalViseFeil] = useState<boolean>(false);
   const [gårTilNesteSide, settGårTilNesteSide] = useState<boolean>(false);
 
-  const { soknadssideID } = useParams();
+  const { soknadssideID, soknadsID } = useParams();
   const soknadssideIDTall = Number(soknadssideID);
   const getArbeidsgiver = (): ArbeidsgiverInterface => ({
     navn: 'Arbeids- og velferdsetaten',
@@ -72,6 +80,14 @@ const Utbetaling = (): ReactElement => {
   ]);
 
   const handleVidereKlikk = () => {
+    post<UtbetalingInterface>(`${env.apiUrl}/reisetilskudd`, {
+      reisetilskuddId: soknadsID,
+      utbetalingTilArbeidsgiver: activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER,
+    }).then(() => {
+      settGårTilNesteSide(true);
+    }).catch((error) => {
+      logger.error('Feil ved oppdatering av skjema', error);
+    });
     settSkalViseFeil(true);
 
     if (utbetalingspørsmålValidert) {

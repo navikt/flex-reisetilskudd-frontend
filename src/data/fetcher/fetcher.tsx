@@ -30,7 +30,21 @@ export const post = async function<T>(
   path: string,
   // eslint-disable-next-line
   body: any,
-  args: RequestInit = { method: 'post', body: JSON.stringify(body) },
+  args: RequestInit = {
+    method: 'post', body: JSON.stringify(body), credentials: 'include', headers: { 'Content-Type': 'application/json' },
+  },
+): Promise<HttpResponse<T>> {
+  return fetcher<T>(new Request(path, args));
+};
+
+// eslint-disable-next-line func-names
+export const put = async function<T>(
+  path: string,
+  // eslint-disable-next-line
+  body: any,
+  args: RequestInit = {
+    method: 'put', body: JSON.stringify(body), credentials: 'include', headers: { 'Content-Type': 'application/json' },
+  },
 ): Promise<HttpResponse<T>> {
   return fetcher<T>(new Request(path, args));
 };

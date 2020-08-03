@@ -8,9 +8,9 @@ const TotalBelop = (): ReactElement => {
   const totaltBeløp = (): number => (kvitteringer
     ? (
       kvitteringer
-        .filter((kvittering) => kvittering.beløp)
+        .filter((kvittering) => kvittering.belop)
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((kvittering) => kvittering.beløp!)
+        .map((kvittering) => kvittering.belop!)
         .reduce((a, b) => a + b, 0.0)
     )
     : (0.0));

@@ -13,6 +13,9 @@ function App() : ReactElement {
       <Header />
       <Router>
         <Switch>
+          <Route path="/soknaden/:soknadsID/:soknadssideID">
+            <Soknaden />
+          </Route>
           <Route path="/soknaden/:soknadssideID">
             <Soknaden />
           </Route>
@@ -25,6 +28,7 @@ function App() : ReactElement {
           <Route path="/">
             <Redirect to="/soknaden/1" />
           </Route>
+
         </Switch>
       </Router>
     </StoreProvider>
