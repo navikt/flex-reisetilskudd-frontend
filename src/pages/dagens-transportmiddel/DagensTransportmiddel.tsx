@@ -11,7 +11,7 @@ import {
   antallKilometerSpørsmål,
   månedligeUtgifterSpørsmål,
   transportalternativerKollektivt,
-} from '../../components/sporsmal/spørsmålTekster';
+} from '../../components/sporsmal/sporsmalTekster';
 import { useAppStore } from '../../data/stores/app-store';
 import { validerNumerisk, validerKroner } from '../../utils/skjemavalidering';
 import './dagens-transportmiddel.less';

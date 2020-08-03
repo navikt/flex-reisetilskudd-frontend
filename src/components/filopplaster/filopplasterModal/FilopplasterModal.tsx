@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Systemtittel, Element } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { Input } from 'nav-frontend-skjema';
+import {
+  Feiloppsummering, FeiloppsummeringFeil, SkjemaGruppe, Input,
+} from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import Vis from '../../Vis';
+
+import { useAppStore } from '../../../data/stores/app-store';
+import { generateId } from '../../../utils/random';
+import TransportmiddelKvittering from '../../kvittering/TransportmiddelKvittering';
+import {
+  kvitteringTotaltBeløpSpørsmål,
+  kvitteringDatoSpørsmål,
+  kvitteringTransportmiddelSpørsmål,
+} from '../../sporsmal/sporsmalTekster';
+
 import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../../models/kvittering';
 import Fil from '../fil/Fil';
 import './filopplasterModal.less';
@@ -12,23 +24,20 @@ import env from '../../../utils/environment';
 import { logger } from '../../../utils/logger';
 import { post } from '../../../data/fetcher/fetcher';
 import Datovelger from '../../kvittering/datovelger/Datovelger';
-import { useAppStore } from '../../../data/stores/app-store';
-import { generateId } from '../../../utils/random';
-import TransportmiddelKvittering from '../../kvittering/TransportmiddelKvittering';
+import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
   const [laster, settLaster] = useState<boolean>(false);
   const [dato, settDato] = useState<Date | null>(null);
-  const [beløp, settBeløp] = useState<number | null>(null);
+  const [beløp, settBeløp] = useState<string>('');
+  const [valideringsFeil, settValideringsFeil] = useState<FeiloppsummeringFeil[]>([]);
+  const [harAlleredeBlittValidert, settHarAlleredeBlittValidert] = useState<boolean>(false);
   const {
-    kvitteringer, settKvitteringer, transportmiddel, settTransportmiddel,
-  } = useAppStore();
-
-  const {
+    kvitteringer, settKvitteringer,
+    transportmiddelKvittering, settTransportmiddelKvittering,
     uopplastetFil, settUopplastetFil,
-    filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
     åpenFilopplasterModal, settÅpenFilopplasterModal,
   } = useAppStore();
 
@@ -36,55 +45,94 @@ const FilopplasterModal: React.FC = () => {
     settKvitteringer([...kvitteringer, kvittering]);
   };
 
-  const lukkModal = () => {
+  const clearState = () => {
+    settLaster(false);
+    settDato(null);
+    settBeløp('');
+    settTransportmiddelKvittering(undefined);
     settUopplastetFil(null);
+    settHarAlleredeBlittValidert(false);
+    settValideringsFeil([]);
+  };
+
+  const lukkModal = () => {
+    clearState();
     settÅpenFilopplasterModal(false);
   };
 
-  const validerBeløp = (nyttBeløp : number | null): boolean => {
-    if (!nyttBeløp || nyttBeløp === null) {
-      settFilopplasterFeilmeldinger(['Vennligst skriv inn et gyldig beløp']);
-      return false;
+  const fåFeilmeldingTilInput = (
+    hvilkenInput : string,
+  ) : string | undefined => valideringsFeil.find(
+    (element) => element.skjemaelementId === hvilkenInput,
+  )?.feilmelding;
+
+  const validerBeløp = (nyttBeløp : string | null): FeiloppsummeringFeil[] => {
+    if (!nyttBeløp || nyttBeløp === null || !validerKroner(nyttBeløp)) {
+      return [{
+        skjemaelementId: kvitteringTotaltBeløpSpørsmål.id,
+        feilmelding: 'Vennligst skriv inn et gyldig beløp',
+      }];
     }
-    if (nyttBeløp <= 0) {
-      settFilopplasterFeilmeldinger(['Vennligst skriv inn et positivt beløp']);
-      return false;
-    }
-    return true;
+    return [];
   };
 
-  const validerDato = (nyDato: Date | null): boolean => {
+  const validerDato = (nyDato: Date | null): FeiloppsummeringFeil[] => {
     if (!nyDato || nyDato === null) {
-      settFilopplasterFeilmeldinger(['Vennligst velg en gyldig dato']);
-      return false;
+      return [
+        {
+          skjemaelementId: kvitteringDatoSpørsmål.id,
+          feilmelding: 'Vennligst velg en gyldig dato',
+        },
+      ];
     }
-    return true;
+    return [];
   };
 
-  const validerTransportmiddel = (nyttTransportmiddel: TransportmiddelAlternativer) => {
+  const validerTransportmiddel = (nyttTransportmiddel: TransportmiddelAlternativer)
+  : FeiloppsummeringFeil[] => {
     if (nyttTransportmiddel === undefined) {
-      settFilopplasterFeilmeldinger(['Vennligst velg et transportmiddel']);
-      return false;
+      return [
+        {
+          skjemaelementId: kvitteringTransportmiddelSpørsmål.id,
+          feilmelding: 'Vennligst velg minst ett transportmiddel',
+        },
+      ];
     }
-    return true;
+    return [];
   };
 
-  const oppdaterDato = (nyDato: Date): void => {
-    if (validerDato(nyDato)) {
-      settFilopplasterFeilmeldinger([]);
-    }
-    settDato(nyDato);
+  const validerKvittering = (
+    nyttBeløp: string | null = null,
+    nyDato : Date | null = null,
+    nyttTransportmiddel : TransportmiddelAlternativer | null = null,
+  ) => {
+    const datoFeil = validerDato(nyDato || dato);
+    const beløpFeil = validerBeløp(nyttBeløp || beløp);
+    const transportmiddelFeil = validerTransportmiddel(
+      nyttTransportmiddel
+      || transportmiddelKvittering,
+    );
+
+    const nyeValideringsFeil = [...datoFeil, ...beløpFeil, ...transportmiddelFeil];
+    settValideringsFeil(nyeValideringsFeil);
+    settHarAlleredeBlittValidert(true);
+    return nyeValideringsFeil.length === 0;
   };
 
   const lagreKvittering = (fil: File) => {
     const requestData = new FormData();
     requestData.append('file', fil);
 
-    if (validerDato(dato) && validerBeløp(beløp) && validerTransportmiddel(transportmiddel)) {
+    if (validerKvittering()) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       requestData.append('dato', dato!.toString());
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      requestData.append('beløp', beløp!.toString());
+      requestData.append('beløp', beløp.toString());
+
+      const parsedBeløp = validerOgReturnerKroner(beløp);
+      if (parsedBeløp === null || Number.isNaN(parsedBeløp)) {
+        logger.error('Bruker har fått til å validere et ugyldig beløp', beløp);
+        return;
+      }
 
       settLaster(true);
       post<OpplastetKvitteringInterface>(`${env.mockApiUrl}/kvittering`, requestData)
@@ -94,11 +142,11 @@ const FilopplasterModal: React.FC = () => {
               id: generateId(),
               navn: fil.name,
               størrelse: fil.size,
-              beløp: (beløp || 0.0),
+              beløp: (parsedBeløp),
               dato: (dato || new Date()),
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               dokumentId: response.parsedBody!.dokumentId,
-              transportmiddel,
+              transportmiddel: transportmiddelKvittering,
             };
             nyKvittering(kvittering);
           } else {
@@ -106,9 +154,8 @@ const FilopplasterModal: React.FC = () => {
           }
         })
         .then(() => {
-          settLaster(false);
+          clearState();
           lukkModal();
-          settTransportmiddel(undefined);
         })
         .catch((error) => {
           logger.error('Feil under opplasting av kvittering', error);
@@ -116,16 +163,23 @@ const FilopplasterModal: React.FC = () => {
     }
   };
 
-  const parseBelopInput = (belopString: string) => {
-    try {
-      const kommaTilPunktum = belopString.replace(',', '.');
-      const inputBelop = parseFloat(kommaTilPunktum);
-      if (validerBeløp(inputBelop)) {
-        settFilopplasterFeilmeldinger([]);
-        settBeløp(inputBelop);
-      }
-    } catch {
-      settFilopplasterFeilmeldinger(['Vennligst bruk tall i inputfeltet']);
+  const handleBeløpChange = (beløpString: string) => {
+    settBeløp(beløpString);
+    if (harAlleredeBlittValidert) {
+      validerKvittering(beløpString, null, null);
+    }
+  };
+
+  const oppdaterDato = (nyDato: Date): void => {
+    settDato(nyDato);
+    if (harAlleredeBlittValidert) {
+      validerKvittering(null, nyDato, null);
+    }
+  };
+
+  const handleTransportmiddelChange = (transportmiddel : TransportmiddelAlternativer) => {
+    if (harAlleredeBlittValidert) {
+      validerKvittering(null, null, transportmiddel);
     }
   };
 
@@ -140,15 +194,40 @@ const FilopplasterModal: React.FC = () => {
       <div className="modal-content">
         <Systemtittel className="kvittering-header"> Ny kvittering </Systemtittel>
         <div className="input-rad">
-          <Datovelger label="Dato" mode="single" onChange={(nyDato) => oppdaterDato(nyDato[0])} />
-          <Input className="totalt-beløp-label" label="Totalt beløp" inputMode="numeric" pattern="[0-9]*" onChange={(e) => parseBelopInput(e.target.value)} />
+          <Datovelger
+            id={kvitteringDatoSpørsmål.id}
+            className="periode-element"
+            label="Dato"
+            mode="single"
+            onChange={(nyDato) => oppdaterDato(nyDato[0])}
+            feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
+          />
+          <div>
+            <Element className="kvittering-beløp-input">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>
+            <Input
+              inputMode={kvitteringTotaltBeløpSpørsmål.inputMode}
+              value={beløp}
+              pattern="[0-9]*"
+              bredde={kvitteringTotaltBeløpSpørsmål.bredde}
+              onChange={(e) => {
+                handleBeløpChange(e.target.value);
+              }}
+              id={kvitteringTotaltBeløpSpørsmål.id}
+              feil={fåFeilmeldingTilInput(kvitteringTotaltBeløpSpørsmål.id)}
+            />
+          </div>
         </div>
         <div>
-          <TransportmiddelKvittering />
+          <SkjemaGruppe feil={fåFeilmeldingTilInput(kvitteringTransportmiddelSpørsmål.id)}>
+            <TransportmiddelKvittering handleChange={(
+              transportmiddel,
+            ) => handleTransportmiddelChange(transportmiddel)}
+            />
+          </SkjemaGruppe>
         </div>
         <Fil fil={uopplastetFil} className="opplastede-filer" />
         {laster
-          ? (<NavFrontendSpinner className="lagre-kvittering-spinner" />)
+          ? (<NavFrontendSpinner className="lagre-kvittering" />)
           : (
             <Knapp
               htmlType="submit"
@@ -160,13 +239,9 @@ const FilopplasterModal: React.FC = () => {
               Lagre kvittering
             </Knapp>
           )}
-        <div className="filopplasterFeilmeldinger" aria-live="polite">
-          {filopplasterFeilmeldinger.map((feilmelding) => (
-            <AlertStripeFeil key={feilmelding} className="feilmelding-alert">
-              {feilmelding}
-            </AlertStripeFeil>
-          ))}
-        </div>
+        <Vis hvis={valideringsFeil.length > 0}>
+          <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={valideringsFeil} />
+        </Vis>
       </div>
     </Modal>
   );

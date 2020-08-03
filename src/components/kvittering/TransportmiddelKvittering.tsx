@@ -1,18 +1,22 @@
-import { Undertittel } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import React, { ReactElement } from 'react';
-import { Transportmiddel } from '../../models/kvittering';
+import { Transportmiddel, TransportmiddelAlternativer } from '../../models/kvittering';
 import { useAppStore } from '../../data/stores/app-store';
 
-const TransportmiddelKvittering = (): ReactElement => {
-  const { transportmiddel, settTransportmiddel } = useAppStore();
+interface Props {
+  handleChange? : (transportmiddel : TransportmiddelAlternativer) => void
+}
+
+const TransportmiddelKvittering : React.FC<Props> = ({ handleChange }) : ReactElement => {
+  const { transportmiddelKvittering, settTransportmiddelKvittering } = useAppStore();
 
   return (
     <RadioPanelGruppe
       key={Transportmiddel.SPØRSMÅLS_KEY}
       className="kvittering-element"
       name="transportmiddel"
-      legend={<Undertittel>Transportmiddel</Undertittel>}
+      legend={<Element>Transportmiddel</Element>}
       radios={[
         {
           label: Transportmiddel.TAXI,
@@ -30,9 +34,12 @@ const TransportmiddelKvittering = (): ReactElement => {
           id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.KOLLEKTIV}`,
         },
       ]}
-      checked={transportmiddel}
-      onChange={(_, nyVerdi) => {
-        settTransportmiddel(nyVerdi);
+      checked={transportmiddelKvittering}
+      onChange={(_, nyttTransportmiddel) => {
+        if (handleChange) {
+          handleChange(nyttTransportmiddel as TransportmiddelAlternativer);
+        }
+        settTransportmiddelKvittering(nyttTransportmiddel);
       }}
     />
   );

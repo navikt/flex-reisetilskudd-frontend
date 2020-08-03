@@ -3,7 +3,7 @@ import { Input } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { InputProps } from '../../../types/types';
 import './input-sporsmal.less';
-import { antallKilometerSpørsmål, månedligeUtgifterSpørsmål } from '../spørsmålTekster';
+import { antallKilometerSpørsmål, månedligeUtgifterSpørsmål } from '../sporsmalTekster';
 import Vis from '../../Vis';
 import { hjelpetekstEgenBil, hjelpetekstKollektivtransport } from '../../../constants/hjelpetekster';
 
