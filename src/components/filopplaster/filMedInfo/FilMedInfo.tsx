@@ -26,7 +26,7 @@ const FilMedInfo: React.FC<Props> = ({ fil, fjernKnapp }) => {
 
   const slettKvittering = (kvitteringSomSkalSlettes: KvitteringInterface) => {
     settKvitteringer(kvitteringer.filter(
-      (kvittering) => kvittering.id !== kvitteringSomSkalSlettes.id,
+      (kvittering) => kvittering.kvitteringId !== kvitteringSomSkalSlettes.kvitteringId,
     ));
   };
 
@@ -71,8 +71,8 @@ const FilMedInfo: React.FC<Props> = ({ fil, fjernKnapp }) => {
         kr
       </Normaltekst>
       <Normaltekst className="dato">
-        {fil.dato
-          ? formatertDato(fil.dato, DatoFormat.NATURLIG_LANG)
+        {fil.fom
+          ? formatertDato(fil.fom, DatoFormat.NATURLIG_LANG)
           : ''}
       </Normaltekst>
       <Vis hvis={fjernKnapp}>

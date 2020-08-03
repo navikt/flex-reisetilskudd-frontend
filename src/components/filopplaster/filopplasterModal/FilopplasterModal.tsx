@@ -5,6 +5,7 @@ import { Input } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import { useParams } from 'react-router-dom';
 import { KvitteringInterface, OpplastetKvitteringInterface, TransportmiddelAlternativer } from '../../../models/kvittering';
 import Fil from '../fil/Fil';
 import './filopplasterModal.less';
@@ -13,12 +14,12 @@ import { logger } from '../../../utils/logger';
 import { post } from '../../../data/fetcher/fetcher';
 import Datovelger from '../../kvittering/datovelger/Datovelger';
 import { useAppStore } from '../../../data/stores/app-store';
-import { generateId } from '../../../utils/random';
 import TransportmiddelKvittering from '../../kvittering/TransportmiddelKvittering';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
+  const { soknadsID } = useParams();
   const [laster, settLaster] = useState<boolean>(false);
   const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<number | null>(null);
@@ -87,24 +88,26 @@ const FilopplasterModal: React.FC = () => {
       requestData.append('beløp', beløp!.toString());
 
       settLaster(true);
-      post<OpplastetKvitteringInterface>(`${env.mockApiUrl}/kvittering`, requestData)
+      post<OpplastetKvitteringInterface>(`${env.mockBucketUrl}/kvittering`, requestData)
         .then((response) => {
-          if (response.parsedBody?.dokumentId) {
+          if (response.parsedBody?.id) {
             const kvittering: KvitteringInterface = {
-              id: generateId(),
+              reisetilskuddId: soknadsID,
               navn: fil.name,
               størrelse: fil.size,
               beløp: (beløp || 0.0),
-              dato: (dato || new Date()),
+              fom: (dato || new Date()),
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              dokumentId: response.parsedBody!.dokumentId,
+              kvitteringId: response.parsedBody!.id,
               transportmiddel,
             };
             nyKvittering(kvittering);
-          } else {
-            logger.warn('Responsen inneholder ikke noen dokumentId', response.parsedBody);
+            return kvittering;
           }
+          logger.warn('Responsen inneholder ikke noen id', response.parsedBody);
+          return null;
         })
+        .then((kvittering) => kvittering)
         .then(() => {
           settLaster(false);
           lukkModal();

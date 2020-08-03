@@ -22,7 +22,7 @@ const OpplastedeFiler: React.FC<Props> = ({ fjernKnapp }) => {
         </div>
       </Vis>
       {kvitteringer.map((fil: KvitteringInterface, index: number) => (
-        <div key={fil.id}>
+        <div key={fil.kvitteringId}>
           <FilMedInfo fil={fil} fjernKnapp={fjernKnapp} />
           {index === kvitteringer.length - 1 ? '' : <hr />}
         </div>

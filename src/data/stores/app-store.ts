@@ -6,19 +6,21 @@ import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
 
 const mockKvitteringer: Array<KvitteringInterface> = [
   {
-    id: 'tetstsgddgsdsdsdsdsdgsdg',
+    reisetilskuddId: '6969',
+    kvitteringId: 'tetstsgddgsdsdsdsdsdgsdg',
     navn: 'foo.txt',
     størrelse: 1024 * 920,
     beløp: 32.2,
-    dato: new Date('2020-05-01'),
+    fom: new Date('2020-05-01'),
     transportmiddel: Transportmiddel.EGEN_BIL,
   },
   {
-    id: 'dhdywdjdjsjdsjdscehshdsd',
+    reisetilskuddId: '12352',
+    kvitteringId: 'dhdywdjdjsjdsjdscehshdsd',
     navn: 'bar.jpg',
     størrelse: 812 * 920,
     beløp: 2.2,
-    dato: new Date('2034-09-29'),
+    fom: new Date('2034-09-29'),
     transportmiddel: Transportmiddel.TAXI,
   },
 ];
