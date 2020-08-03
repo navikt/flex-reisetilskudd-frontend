@@ -12,6 +12,11 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         cy.get('.header-icons').should('be.visible')
     })
 
+    it('tilbake-knapp eksisterer på siden', ()=> {
+        let tilbakeKnapp = cy.get('.tilbake-knapp')
+        tilbakeKnapp.should('be.visible')
+    })
+
     it('Laster inn stegindikator', function() {
         let stegindikator = cy.get('.stegindikator')
         stegindikator.should('be.visible')
