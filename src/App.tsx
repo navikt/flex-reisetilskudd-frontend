@@ -11,17 +11,20 @@ import DineReisetilskudd from './pages/dineReisetilskudd/DineReisetilskudd';
 function App() : ReactElement {
   return (
     <StoreProvider>
-      <Header />
+
       <div className="app-main-content">
         <Router>
           <Switch>
             <Route path="/soknaden/:soknadssideID">
+              <Header />
               <Soknaden />
             </Route>
             <Route path="/soknaden/">
+              <Header />
               <Redirect to="/soknaden/1" />
             </Route>
             <Route path="/kvittering">
+              <Header />
               <BekreftelsesSide />
             </Route>
             <Route path="/bekreftelse">
