@@ -10,4 +10,5 @@ window._env_ = {
   MAKS_FILSTORRELSE: "1MB",
   BUCKET_URL: "https://flex-bucket-uploader.dev-gcp.nais.io",
   MOCK_BUCKET_URL: "http://localhost:3080",
+  SYFOREST_SYKMELDINGER_API: "http://localhost:1993/syforest/sykmeldinger",
 };

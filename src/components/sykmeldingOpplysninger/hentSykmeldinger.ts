@@ -1,5 +1,6 @@
 import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
 import { logger } from '../../utils/logger';
+import env from '../../utils/environment';
 
 interface Periode {
   fom: string,
@@ -79,7 +80,8 @@ export const faaRiktigSykmelding = (
 export const hentSykmeldinger = (
   settOpplysningerSykmeldinger : (s : SykmeldingOpplysningInterface[]) => void,
 ) : void => {
-  fetch('http://localhost:1993/syforest/sykmeldinger', {
+  const { syfoRestSykmeldingerApiUrl } = env;
+  fetch(syfoRestSykmeldingerApiUrl, {
     credentials: 'include',
   })
     .then(
