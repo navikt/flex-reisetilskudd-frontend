@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { FeiloppsummeringFeil, Feiloppsummering } from 'nav-frontend-skjema';
 import RadioSpørsmålUtbetaling from '../../components/sporsmal/radioSporsmal/RadioSporsmalUtbetaling';
 import { utbetalingSpørsmål, utbetalingSpørsmålVerdier } from '../../components/sporsmal/sporsmalTekster';
@@ -8,7 +8,9 @@ import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from './con
 import { Svaralternativ } from '../../types/types';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
 import { post } from '../../data/fetcher/fetcher';
+
 import env from '../../utils/environment';
+import { gåTilNesteSide } from '../../utils/navigasjon';
 import { useAppStore } from '../../data/stores/app-store';
 import { logger } from '../../utils/logger';
 import Vis from '../../components/Vis';
@@ -28,7 +30,6 @@ const Utbetaling = (): ReactElement => {
     settUtbetalingspørsmålValidert,
   } = useAppStore();
   const [skalViseFeil, settSkalViseFeil] = useState<boolean>(false);
-  const [gårTilNesteSide, settGårTilNesteSide] = useState<boolean>(false);
 
   const { soknadssideID, soknadsID } = useParams();
   const soknadssideIDTall = Number(soknadssideID);
@@ -36,6 +37,8 @@ const Utbetaling = (): ReactElement => {
     navn: 'Arbeids- og velferdsetaten',
     orgNr: '392392482849',
   });
+
+  const history = useHistory();
 
   const leggInnArbeidsGiverIString = (tekstStreng: string) => tekstStreng.replace(
     arbeidsgiverNavnPlaceHolder, getArbeidsgiver().navn,
@@ -80,18 +83,17 @@ const Utbetaling = (): ReactElement => {
   ]);
 
   const handleVidereKlikk = () => {
-    post<UtbetalingInterface>(`${env.apiUrl}/reisetilskudd`, {
-      reisetilskuddId: soknadsID,
-      utbetalingTilArbeidsgiver: activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER,
-    }).then(() => {
-      settGårTilNesteSide(true);
-    }).catch((error) => {
-      logger.error('Feil ved oppdatering av skjema', error);
-    });
-    settSkalViseFeil(true);
-
     if (utbetalingspørsmålValidert) {
-      settGårTilNesteSide(true);
+      post<UtbetalingInterface>(`${env.apiUrl}/reisetilskudd`, {
+        reisetilskuddId: soknadsID,
+        utbetalingTilArbeidsgiver: activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER,
+      }).then(() => {
+        gåTilNesteSide(history, soknadssideIDTall);
+      }).catch((error) => {
+        logger.error('Feil ved oppdatering av skjema', error);
+      });
+    } else {
+      settSkalViseFeil(true);
     }
   };
 
@@ -110,7 +112,6 @@ const Utbetaling = (): ReactElement => {
       <VidereKnapp
         aktivtSteg={soknadssideIDTall}
         onClick={handleVidereKlikk}
-        skalGåTilNesteSideNå={gårTilNesteSide}
       />
     </>
   );
