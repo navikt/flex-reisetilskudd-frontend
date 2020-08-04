@@ -1,4 +1,5 @@
 export enum SykmeldingOpplysningEnum {
+  ID= 'id',
   FRA_DATO= 'fraDato',
   TIL_DATO= 'tilDato',
   DIAGNOSE= 'diagnose',
@@ -12,6 +13,7 @@ export enum SykmeldingOpplysningEnum {
 }
 
 export interface SykmeldingOpplysningInterface {
+  [SykmeldingOpplysningEnum.ID]: string;
   [SykmeldingOpplysningEnum.FRA_DATO]: string;
   [SykmeldingOpplysningEnum.TIL_DATO]: string;
   [SykmeldingOpplysningEnum.DIAGNOSE]: string;
@@ -22,4 +24,35 @@ export interface SykmeldingOpplysningInterface {
   [SykmeldingOpplysningEnum.ARBEIDSGIVER]: string;
   [SykmeldingOpplysningEnum.SYKMELDER]: string;
   [SykmeldingOpplysningEnum.AKTIVITET_IKKE_MULIG_434]: string;
+}
+
+export interface Periode {
+  fom: string,
+  tom: string,
+  reisetilskudd: boolean,
+}
+
+export interface Diagnose {
+  diagnose: string,
+  diagnosekode: string,
+  diagnosesystem: string,
+}
+
+export interface Sykmelding {
+  id: string,
+  mulighetForArbeid: {
+    perioder: Periode[],
+    aktivitetIkkeMulig433: string[],
+  },
+  diagnose: {
+    hoveddiagnose: Diagnose,
+    bidiagnoser: Diagnose[],
+  },
+  mottakendeArbeidsgiver : {
+    navn: string,
+    virksomhetsnummer: string
+  },
+  bekreftelse: {
+    sykmelder: string,
+  }
 }

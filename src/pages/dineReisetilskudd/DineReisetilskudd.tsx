@@ -5,16 +5,7 @@ import env from '../../utils/environment';
 import { logger } from '../../utils/logger';
 import Reisetilskudd from '../../components/dineReisetilskudd/Reisetilskudd';
 import Vis from '../../components/Vis';
-
-interface ReisetilskuddInterface {
-  fnr?: string,
-  fom?: string,
-  orgNavn?: string,
-  orgNummer?: string,
-  reisetilskuddId?: string,
-  sykmeldingId?: string,
-  tom?: string,
-}
+import { ReisetilskuddInterface } from '../../models/reisetilskudd';
 
 function DineReisetilskudd(): ReactElement {
   const { apiUrl } = env;

@@ -26,6 +26,11 @@ const mockKvitteringer: Array<KvitteringInterface> = [
 ];
 
 export const [AppStoreProvider, useAppStore] = constate(() => {
+  /* UTBETALINGSSPØRSMÅL */
+  const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
+  const [utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
+  ] = useState<boolean | undefined>(undefined);
+
   /* DAGENS TRANSPORTMIDDEL */
   const [dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
   ] = useState<boolean>(false);
@@ -41,13 +46,13 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
   ] = useState<boolean | undefined>(undefined);
 
-  const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
-  const [utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
-  ] = useState<boolean | undefined>(undefined);
+  /* KVITTERINGSOPPLASTING */
   const [kvitteringer, settKvitteringer] = useState<KvitteringInterface[]>(mockKvitteringer);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [filopplasterFeilmeldinger, settFilopplasterFeilmeldinger] = useState<string[]>([]);
   const [åpenFilopplasterModal, settÅpenFilopplasterModal] = useState<boolean>(false);
+
+  /* OPPLYSNINGER FRA SYKMELDINGEN */
   const [
     opplysningerSykmeldinger,
     settOpplysningerSykmeldinger,
@@ -55,8 +60,15 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   const [
     transportmiddelKvittering, settTransportmiddelKvittering,
   ] = useState<TransportmiddelAlternativer>();
+  const [
+    sykmeldingID, settSykmeldingID,
+  ] = useState<string>('');
 
   return {
+    /* UTBETALINGSSPØRSMÅL */
+    activeMegArbeidsgiver, setActiveMegArbeidsgiver,
+    utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
+
     /* DAGENS TRANSPORTMIDDEL */
     dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
     dagensTransportMiddelSyklerChecked, settDagensTransportMiddelSyklerChecked,
@@ -66,13 +78,15 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     antallKilometerState, settAntallKilometerState,
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
 
-    activeMegArbeidsgiver, setActiveMegArbeidsgiver,
-    utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
+    /* KVITTERINGSOPPLASTING */
     kvitteringer, settKvitteringer,
     uopplastetFil, settUopplastetFil,
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
     åpenFilopplasterModal, settÅpenFilopplasterModal,
+
+    /* OPPLYSNINGER FRA SYKMELDINGEN */
     opplysningerSykmeldinger, settOpplysningerSykmeldinger,
     transportmiddelKvittering, settTransportmiddelKvittering,
+    sykmeldingID, settSykmeldingID,
   };
 });
