@@ -7,11 +7,14 @@ body {
     font-family: @font-family;
   }
 
-
 .app-main-content{
-  background-color: white;
+  background-color: @white;
   margin: 0;
   flex: 1;
+}
+
+.app-main-content.grey{
+  background-color: rgb(238, 238, 238);
 }
 
 .app-page{
@@ -24,12 +27,11 @@ body {
 @media screen and (max-width: 750px){
   .app-page{
     position: relative;
-    padding: 3rem 2rem;
     width: unset;
     margin: 0;
+    padding: 3rem 2rem;
   }
 }
-
 
   .sentrert {
     display: flex;
