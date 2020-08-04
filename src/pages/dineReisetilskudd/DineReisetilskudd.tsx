@@ -5,6 +5,7 @@ import env from '../../utils/environment';
 import { logger } from '../../utils/logger';
 import Reisetilskudd from '../../components/dineReisetilskudd/Reisetilskudd';
 import Vis from '../../components/Vis';
+import { get } from '../../data/fetcher/fetcher';
 
 interface ReisetilskuddInterface {
   fnr?: string,
@@ -23,23 +24,10 @@ function DineReisetilskudd(): ReactElement {
   ] = useState<ReisetilskuddInterface[] | undefined>(undefined);
   const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
 
-  const hentReisetilskudd = (
-  ) : void => {
-    fetch(`${apiUrl}/reisetilskudd`, {
-      credentials: 'include',
-    })
-      .then(
-        (response) => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          return response.json();
-        },
-      )
-      .then((jsonResponse) => {
-        settReisetilskuddene(jsonResponse);
-      })
-      .catch((err) => logger.error(err));
+  const hentReisetilskudd = () : void => {
+    get<ReisetilskuddInterface[]>(`${apiUrl}/reisetilskudd`)
+    .then(req => settReisetilskuddene(req.parsedBody))
+    .catch(err => logger.error(err));
   };
 
   if (isFirstRender) {
