@@ -6,28 +6,20 @@ import { logger } from '../../utils/logger';
 import Reisetilskudd from '../../components/dineReisetilskudd/Reisetilskudd';
 import Vis from '../../components/Vis';
 import { get } from '../../data/fetcher/fetcher';
-
-interface ReisetilskuddInterface {
-  fnr?: string,
-  fom?: string,
-  orgNavn?: string,
-  orgNummer?: string,
-  reisetilskuddId?: string,
-  sykmeldingId?: string,
-  tom?: string,
-}
+import { ReisetilskuddInterface } from '../../models/reisetilskudd';
+import mockReisetilskudd from '../../data/mock/reisetilskudd';
 
 function DineReisetilskudd(): ReactElement {
   const { apiUrl } = env;
   const [
     reisetilskuddene, settReisetilskuddene,
-  ] = useState<ReisetilskuddInterface[] | undefined>(undefined);
+  ] = useState<ReisetilskuddInterface[] | undefined>(mockReisetilskudd);
   const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
 
   const hentReisetilskudd = () : void => {
     get<ReisetilskuddInterface[]>(`${apiUrl}/reisetilskudd`)
-    .then(req => settReisetilskuddene(req.parsedBody))
-    .catch(err => logger.error(err));
+      .then((req) => settReisetilskuddene(req.parsedBody))
+      .catch((err) => logger.error(err));
   };
 
   if (isFirstRender) {

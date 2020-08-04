@@ -6,64 +6,94 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import { SøknadsIkon } from '../../assets/ikoner';
 import { DatoFormat, formatertDato } from '../../utils/dato';
 import Vis from '../Vis';
-
-interface InngangsProps {
-  to: string;
-  children: React.ReactNode;
-}
-
-interface ReisetilskuddInterface {
-  fnr?: string,
-  fom?: string,
-  orgNavn?: string,
-  orgNummer?: string,
-  reisetilskuddId?: string,
-  sykmeldingId?: string,
-  tom?: string,
-}
+import { useAppStore } from '../../data/stores/app-store';
+import { ReisetilskuddInterface } from '../../models/reisetilskudd';
+import { validerTall } from '../../utils/skjemavalidering';
 
 interface Props {
   reisetilskudd: ReisetilskuddInterface,
 }
 
-const Reisetilskudd = ({ reisetilskudd }: Props) : ReactElement => (
-  <Link to={`/soknaden/${reisetilskudd.reisetilskuddId}/1`} className="reisetilskudd-element-wrapper">
-    <SøknadsIkon />
-    {
-        /*
-        <Element className="reisetilskudd-id">
-      Reisetilskudd-ID:
-      {' '}
-      {reisetilskudd.reisetilskuddId}
-    </Element>
-    <Element className="sykmelding-id">
-      Sykmelding-ID:
-      {' '}
-      {reisetilskudd.sykmeldingId}
-    </Element>
-         */
-      }
-    <Element>
-      {reisetilskudd.orgNavn}
-      {' '}
-      (org.nr
-      {reisetilskudd.orgNummer}
-      )
-    </Element>
-    <Vis hvis={reisetilskudd.fom && reisetilskudd.tom}>
+const Reisetilskudd : React.FC<Props> = ({ reisetilskudd }) : ReactElement => {
+  const {
+    setActiveMegArbeidsgiver,
+
+    settDagensTransportMiddelGårChecked,
+    settDagensTransportMiddelSyklerChecked,
+    settDagensTransportMiddelEgenBilChecked,
+    settDagensTransportMiddelKollektivChecked,
+
+    settMånedligeUtgifterState,
+    settAntallKilometerState,
+  } = useAppStore();
+
+  const settReisetilskuddTilGlobalState = (valgtReisetilskudd : ReisetilskuddInterface) => {
+    if (valgtReisetilskudd.utbetalingTilArbeidsgiver) {
+      setActiveMegArbeidsgiver(valgtReisetilskudd.utbetalingTilArbeidsgiver);
+    } else {
+      setActiveMegArbeidsgiver('');
+    }
+
+    if (valgtReisetilskudd.går) {
+      settDagensTransportMiddelGårChecked(valgtReisetilskudd.går);
+    } else {
+      settDagensTransportMiddelGårChecked(false);
+    }
+
+    if (valgtReisetilskudd.sykler) {
+      settDagensTransportMiddelSyklerChecked(valgtReisetilskudd.sykler);
+    } else {
+      settDagensTransportMiddelSyklerChecked(false);
+    }
+
+    if (valgtReisetilskudd.egenBil
+        && validerTall(valgtReisetilskudd.egenBil)) {
+      settDagensTransportMiddelEgenBilChecked(true);
+      settAntallKilometerState(valgtReisetilskudd.egenBil.toString());
+    } else {
+      settDagensTransportMiddelEgenBilChecked(false);
+      settAntallKilometerState('');
+    }
+
+    if (valgtReisetilskudd.kollektivtransport
+      && validerTall(valgtReisetilskudd.kollektivtransport)) {
+      settMånedligeUtgifterState(valgtReisetilskudd.kollektivtransport.toString());
+      settDagensTransportMiddelKollektivChecked(true);
+    } else {
+      settDagensTransportMiddelKollektivChecked(false);
+      settMånedligeUtgifterState('');
+    }
+  };
+
+  return (
+    <Link
+      to={`/soknaden/${reisetilskudd.reisetilskuddId}/1`}
+      className="reisetilskudd-element-wrapper"
+      onClick={() => settReisetilskuddTilGlobalState(reisetilskudd)}
+    >
+      <SøknadsIkon />
       <Element>
-        Gjelder perioden fra
+        {reisetilskudd.orgNavn}
         {' '}
-        {reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : ''}
-        {' '}
-        til
-        {' '}
-        {reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''}
+        (org.nr
+        {reisetilskudd.orgNummer}
+        )
       </Element>
-    </Vis>
-    <HoyreChevron />
-    <hr />
-  </Link>
-);
+      <Vis hvis={reisetilskudd.fom && reisetilskudd.tom}>
+        <Element>
+          Gjelder perioden fra
+          {' '}
+          {reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : ''}
+          {' '}
+          til
+          {' '}
+          {reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''}
+        </Element>
+      </Vis>
+      <HoyreChevron />
+      <hr />
+    </Link>
+  );
+};
 
 export default Reisetilskudd;
