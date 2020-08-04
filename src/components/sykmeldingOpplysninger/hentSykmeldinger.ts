@@ -1,43 +1,13 @@
-import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
+import { SykmeldingOpplysningInterface, Periode, Sykmelding } from '../../models/sykmelding';
 import { logger } from '../../utils/logger';
 import env from '../../utils/environment';
-
-interface Periode {
-  fom: string,
-  tom: string,
-  reisetilskudd: boolean,
-}
-
-interface Diagnose {
-  diagnose: string,
-  diagnosekode: string,
-  diagnosesystem: string,
-}
-
-interface Sykmelding {
-  mulighetForArbeid: {
-    perioder: Periode[],
-    aktivitetIkkeMulig433: string[],
-  },
-  diagnose: {
-    hoveddiagnose: Diagnose,
-    bidiagnoser: Diagnose[],
-  },
-  mottakendeArbeidsgiver : {
-    navn: string,
-    virksomhetsnummer: string
-  },
-  bekreftelse: {
-    sykmelder: string,
-  }
-}
-
-type SykMeldingAPI = Sykmelding[];
+import { ReisetilskuddInterface } from '../../models/reisetilskudd';
 
 const fåSykmeldingOpplysningSomInterface = (
   response : Sykmelding,
 ) : SykmeldingOpplysningInterface => {
   const sykmeldingOpplysninger = {
+    id: response?.id,
     fraDato: response?.mulighetForArbeid?.perioder[0]?.fom,
     tilDato: response?.mulighetForArbeid?.perioder[0]?.tom,
     diagnose: response?.diagnose?.hoveddiagnose?.diagnose,
@@ -54,8 +24,8 @@ const fåSykmeldingOpplysningSomInterface = (
 };
 
 export const finnSykmeldingerMedReisetilskudd = (
-  response : SykMeldingAPI,
-) : SykMeldingAPI => {
+  response : Sykmelding[],
+) : Sykmelding[] => {
   const filtrerteSykmeldinger = response.filter((sykmelding : Sykmelding) => {
     const reisetilskuddPerioder = sykmelding?.mulighetForArbeid?.perioder?.filter(
       (
@@ -74,11 +44,37 @@ export const finnSykmeldingerMedReisetilskudd = (
 
 // TODO: Hent aktiv sykmelding
 export const faaRiktigSykmelding = (
-  response : SykMeldingAPI,
+  response : Sykmelding[],
 ) : Sykmelding => response[0];
 
+export const fåSykmeldingIDFraAktivtReisetilskuddID = (aktivtReisetilskuddID: string,
+  callback: (s: string) => void) : void => {
+  const { apiUrl } = env;
+  fetch(`${apiUrl}/reisetilskudd`, {
+    credentials: 'include',
+  })
+    .then(
+      (response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      },
+    )
+    .then((JSONReisetilskudd) => {
+      const riktigReisetilskudd = JSONReisetilskudd.find(
+        (
+          sykmelding: ReisetilskuddInterface,
+        ) => sykmelding.reisetilskuddId === aktivtReisetilskuddID,
+      );
+      callback(riktigReisetilskudd.sykmeldingId);
+    })
+    .catch((err) => logger.error(err));
+};
+
 export const hentSykmeldinger = (
-  settOpplysningerSykmeldinger : (s : SykmeldingOpplysningInterface[]) => void,
+  callback : (s : SykmeldingOpplysningInterface[]) => void,
+  sykmeldingID: string,
 ) : void => {
   const { syfoRestSykmeldingerApiUrl } = env;
   fetch(syfoRestSykmeldingerApiUrl, {
@@ -93,10 +89,18 @@ export const hentSykmeldinger = (
       },
     )
     .then((response) => finnSykmeldingerMedReisetilskudd(response))
-    .then((sykmeldingerMedReisetilskudd) => faaRiktigSykmelding(sykmeldingerMedReisetilskudd))
+    .then((sykmeldingerMedReisetilskudd) => {
+      const riktigSykmelding = sykmeldingerMedReisetilskudd.find(
+        (sykmelding) => sykmelding.id === sykmeldingID,
+      );
+      if (riktigSykmelding) {
+        return riktigSykmelding;
+      }
+      throw new Error('Fant ikke sykmelding med riktig ID');
+    })
     .then((riktigSykmelding) => fåSykmeldingOpplysningSomInterface(riktigSykmelding))
     .then((parsedOpplysninger : SykmeldingOpplysningInterface) => {
-      settOpplysningerSykmeldinger([parsedOpplysninger]);
+      callback([parsedOpplysninger]);
     })
     .catch((err) => logger.error(err));
 };
