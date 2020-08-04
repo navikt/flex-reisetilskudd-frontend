@@ -43,6 +43,10 @@ class Environment {
   get mockBucketUrl() {
     return this.env.MOCK_BUCKET_URL;
   }
+
+  get syfoRestSykmeldingerApiUrl() {
+    return this.env.SYFOREST_SYKMELDINGER_API;
+  }
 }
 
 const env = new Environment();
