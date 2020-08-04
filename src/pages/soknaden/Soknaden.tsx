@@ -6,7 +6,6 @@ import Brodsmuler from '../../components/brodsmoler/Brodsmuler';
 import Kvitteringsopplasting from '../kvitteringsopplasting/Kvitteringsopplasting';
 import Utbetaling from '../utbetaling/Utbetaling';
 import TilbakeKnapp from '../../components/knapper/TilbakeKnapp';
-import SendKnapp from '../../components/knapper/SendKnapp';
 import DagensTransportmiddel from '../dagens-transportmiddel/DagensTransportmiddel';
 import Vis from '../../components/Vis';
 import Oppsummering from '../oppsummering/Oppsummering';
@@ -33,7 +32,6 @@ function Soknaden(): ReactElement {
       </Vis>
       <Vis hvis={idNum === 4}>
         <Oppsummering />
-        <SendKnapp />
       </Vis>
     </div>
   );

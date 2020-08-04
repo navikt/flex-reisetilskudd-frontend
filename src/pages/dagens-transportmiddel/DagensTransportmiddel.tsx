@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import DagensTransportmiddelCheckbox
   from '../../components/sporsmal/dagensTransportmiddelCheckbox/dagensTransportmiddelCheckbox';
 import Vis from '../../components/Vis';
@@ -22,6 +22,8 @@ import env from '../../utils/environment';
 import { post } from '../../data/fetcher/fetcher';
 import { logger } from '../../utils/logger';
 
+import { gåTilNesteSide } from '../../utils/navigasjon';
+
 interface TransportmiddelInterface {
   reisetilskuddId: string;
   går?: boolean;
@@ -39,7 +41,6 @@ const DagensTransportmiddel = (): ReactElement => {
   const [
     skalViseMånedligeUtgifterFeil, settSkalViseMånedligeUtgifterFeil,
   ] = useState<boolean>(false);
-  const [gårTilNesteSide, settGårTilNesteSide] = useState<boolean>(false);
 
   const {
     dagensTransportMiddelEgenBilChecked,
@@ -53,6 +54,8 @@ const DagensTransportmiddel = (): ReactElement => {
 
   const { soknadssideID, soknadsID } = useParams();
   const soknadssideIDTall = Number(soknadssideID);
+
+  const history = useHistory();
 
   const validerAntallKilometerInput = (): FeiloppsummeringFeil[] => {
     if (dagensTransportMiddelEgenBilChecked) {
@@ -186,7 +189,7 @@ const DagensTransportmiddel = (): ReactElement => {
       settSkalViseKilometerFeil(true);
       settSkalViseFeil(true);
       if (dagensTransportmiddelValidert) {
-        settGårTilNesteSide(true);
+        gåTilNesteSide(history, soknadssideIDTall);
       }
     }).catch((error) => {
       logger.error('Feil ved oppdatering av skjema', error);
@@ -242,7 +245,6 @@ const DagensTransportmiddel = (): ReactElement => {
       <VidereKnapp
         aktivtSteg={soknadssideIDTall}
         onClick={handleVidereKlikk}
-        skalGåTilNesteSideNå={gårTilNesteSide}
       />
     </div>
   );
