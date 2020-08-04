@@ -5,7 +5,7 @@ import RadioSpørsmålUtbetaling from '../../components/sporsmal/radioSporsmal/R
 import { utbetalingSpørsmål, utbetalingSpørsmålVerdier } from '../../components/sporsmal/sporsmalTekster';
 import { ArbeidsgiverInterface } from '../../models/arbeidsgiver';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from './constants';
-import { Svaralternativ } from '../../types/types';
+import { Svaralternativ } from '../../models/sporsmal';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
 import { post } from '../../data/fetcher/fetcher';
 

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import Vis from '../Vis';
 import { pathTilSide } from '../../utils/navigasjon';
-import { AktivtStegProps } from '../../types/navigasjonTypes';
+import { AktivtStegProps } from '../../models/navigasjon';
 import './knapper.less';
 
 function TilbakeKnapp({ aktivtSteg } : AktivtStegProps): ReactElement {
