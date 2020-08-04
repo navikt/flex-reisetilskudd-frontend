@@ -1,10 +1,12 @@
 import React, { ReactElement, useState } from 'react';
-import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+import { Normaltekst, Sidetittel, Element } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
 import env from '../../utils/environment';
 import { logger } from '../../utils/logger';
 import Reisetilskudd from '../../components/dineReisetilskudd/Reisetilskudd';
 import Vis from '../../components/Vis';
+
+import './dine-reisetilskudd.less';
 
 interface ReisetilskuddInterface {
   fnr?: string,
@@ -62,9 +64,12 @@ function DineReisetilskudd(): ReactElement {
           for å se om det ligger noe der.
         </Normaltekst>
       </Vis>
-      <Vis hvis={reisetilskuddene}>
-        {reisetilskuddene?.map((value) => <Reisetilskudd key={`reisetilskudd-${value?.reisetilskuddId}`} reisetilskudd={value} />)}
-      </Vis>
+      <div className="dine-reisetilskudd-wrapper">
+        <Vis hvis={reisetilskuddene}>
+          <Element className="nye-reisetilskuddsøknader">Nye søknader om reisetilskudd</Element>
+          {reisetilskuddene?.map((value) => <Reisetilskudd key={`reisetilskudd-${value?.reisetilskuddId}`} reisetilskudd={value} />)}
+        </Vis>
+      </div>
       <Vis hvis={reisetilskuddene === undefined}>
         <Normaltekst>Teknisk feil, kunne ikke finne noen reisetilskudd</Normaltekst>
       </Vis>

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Element } from 'nav-frontend-typografi';
+import { Element, Systemtittel } from 'nav-frontend-typografi';
 import './reisetilskudd.less';
 import { Link } from 'react-router-dom';
 import { HoyreChevron } from 'nav-frontend-chevron';
@@ -27,42 +27,35 @@ interface Props {
 }
 
 const Reisetilskudd = ({ reisetilskudd }: Props) : ReactElement => (
-  <Link to={`/soknaden/${reisetilskudd.reisetilskuddId}/1`} className="reisetilskudd-element-wrapper">
-    <SøknadsIkon />
-    {
-        /*
-        <Element className="reisetilskudd-id">
-      Reisetilskudd-ID:
-      {' '}
-      {reisetilskudd.reisetilskuddId}
-    </Element>
-    <Element className="sykmelding-id">
-      Sykmelding-ID:
-      {' '}
-      {reisetilskudd.sykmeldingId}
-    </Element>
-         */
-      }
-    <Element>
-      {reisetilskudd.orgNavn}
-      {' '}
-      (org.nr
-      {reisetilskudd.orgNummer}
-      )
-    </Element>
-    <Vis hvis={reisetilskudd.fom && reisetilskudd.tom}>
-      <Element>
-        Gjelder perioden fra
+  <Link
+    to={`/soknaden/${reisetilskudd.reisetilskuddId}/1`}
+    className="reisetilskudd-element-wrapper"
+  >
+    <div className="reisetilskudd-ikon">
+      <SøknadsIkon />
+    </div>
+    <div className="reisetilskudd-innhold">
+      <Systemtittel className="reisetilskudd-innhold-tittel">Søknad om reisetilskudd</Systemtittel>
+      <Vis hvis={reisetilskudd.fom && reisetilskudd.tom}>
+        <Element className="reisetilskudd-periode">
+          Gjelder perioden fra
+          {' '}
+          {reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : ''}
+          {' '}
+          til
+          {' '}
+          {reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''}
+        </Element>
+      </Vis>
+      <Element className="reisetilskudd-orgnavn">
+        {reisetilskudd.orgNavn}
         {' '}
-        {reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : ''}
-        {' '}
-        til
-        {' '}
-        {reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''}
+        (org.nr
+        {reisetilskudd.orgNummer}
+        )
       </Element>
-    </Vis>
-    <HoyreChevron />
-    <hr />
+    </div>
+    <HoyreChevron className="reisetilskudd-chevron" />
   </Link>
 );
 
