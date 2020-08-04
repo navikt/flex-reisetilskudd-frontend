@@ -164,11 +164,15 @@
     .kvitteringstitler-uten-slettknapp{
       display: none;
     }
-    
-    .slett-knapp{
-        transform: scale(0.85);
-        margin-left: auto;
-        margin-top: 1.5rem;
+
+    .last-opp-kvittering-tekst{
+      .hjelpetekst__ikon{
+        transform: scale(1.5);
+      }
+    }
+
+    .vedleggsikon{
+      transform: scale(0.7);
     }
 
     .fil-med-info{
@@ -180,17 +184,23 @@
       'datotittel dato dato'
       ;
       grid-template-columns: 30% 35% 35%; 
+      .slett-knapp{
+        transform: scale(0.85);
+        margin-left: auto;
+        margin: 1.4rem 0 0 0;
+        padding: 0 0 0 0.5rem;
+      }
     }
 
     .mobil-belop{
-      margin-top: 0.5rem;
+      margin-top: 0.3rem;
       padding-top: 0.3rem;
       display: flex;
       padding-left: 2.2rem;
       grid-area: beloptittel;
     }
     .mobil-dato{
-      padding-top: 0.3rem;
+      margin-top: 0.5rem;
       display: flex;
       padding-left: 2.2rem;
       grid-area: datotittel;
@@ -207,26 +217,26 @@
     }
 
     .filstorrelse {
-      margin-top: 1.2rem;
+      margin-top: 1.5rem;
       grid-area: storrelse;
-      padding-top: 0.3rem;
+      padding-top: 0.2rem;
+      margin-left: 1rem;
     }
 
     .belop{
-      margin-top: 0.5rem;
-      padding-top: 0.3rem;
-      padding-bottom: 0.5rem;
+      margin-top: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0.4rem;
       grid-area: belop;
       text-align: left;
       margin-left: 1rem;
     }
 
     .dato {
-      padding-top: 0.3rem;
+      padding-bottom: 1.4rem;
       grid-area: dato;
-      padding-left: 1rem;
-      justify-self: left;
-      padding-bottom: 1rem;
+      text-align: left;
+      margin-left: 1rem;
     }
 
     .fil-med-info-uten-slettknapp{
