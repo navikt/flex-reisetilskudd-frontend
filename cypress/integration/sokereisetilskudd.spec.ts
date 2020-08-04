@@ -1,13 +1,13 @@
 describe('Tester reisetilskuddsøknaden', () => {
     
-    const url:string = 'http://localhost:3000/'
+    const url:string = 'http://localhost:3000/soknaden/1'
     
 
     before(() => {
         cy.visit(url)
     })
 
-    it('Inneholder content', function() {
+    it('Inneholder content', ()=> {
         cy.get('.horisontal-radio').should('be.visible')
     })
 
@@ -17,29 +17,35 @@ describe('Tester reisetilskuddsøknaden', () => {
         cy.contains('Skal reisetilskuddet utbetales til deg eller til Arbeids- og velferdsetaten (org.nr. 392392482849)?')
     })
 
-    describe('utfylling av side 1', ()=>{
+    describe('Utfylling og validering av side 1', ()=>{
 
-        it('Tar tak i meg-knapp og clicker', function() {
+        it('Tar tak i meg-knapp og clicker', ()=> {
             cy.url().should('include', `soknaden/1`)
             let megknapp = cy.get('.inputPanel').children().eq(1)
             megknapp.should('be.visible')
             megknapp.click()
         })
         
-        it('finner videreknappen', function() {
+        it('Tester at begge radiobuttons er clickable via id',()=>{
+            cy.get('#Arbeidsgiver').click({force:true}).should('be.checked')
+            cy.get('#Meg').click({force:true}).should('be.checked')
+        })
+        
+        it('finner videreknappen', ()=> {
             let videreknappen = cy.get('.videre-knapp')
             videreknappen.should('be.visible')
             videreknappen.click()
         })
     })
 
-    describe('utfylling av side 2', ()=>{
+    describe('Utfylling av side 2', ()=>{
     
-        it('fyller ut går, egen bil, klikker på hjelpetekst, fylle rinn km', function() {
+        it('fyller ut går, egen bil, klikker på hjelpetekst, fylle rinn km', ()=> {
             cy.url().should('include', `soknaden/2`)
-            cy.contains('Går').click()
-            cy.contains('Sykler').click()
-            cy.contains('Egen bil').click()
+            cy.contains('Går').click({ force: true })
+            cy.get('#Går').click( {force: true})
+            cy.contains('Sykler').click({ force: true })
+            cy.contains('Egen bil').click({ force: true })
             cy.get('.månedlige-utgifter-input').should('be.visible')
 
             let hjelpetekst = cy.get('.transportmiddel-kilometer-hjelpetekst').should('be.visible')
@@ -58,15 +64,24 @@ describe('Tester reisetilskuddsøknaden', () => {
             kollektivUtgifter.type('900')
             kollektivUtgifter.should('have.value', '900')
 
-            //cy.get('#dagens-transportmiddel-transportalternativer').should('be.visible')
+            cy.get('#dagens-transportmiddel-transportalternativer').should('be.visible')
+        })
+    })
 
+    describe('Checkboxvalidering side 2', ()=>{
+        it('Sjekker at Checkboxene er checked',()=>{
+            cy.get('#Går').click({force:true}).should('be.checked')
+            cy.get('#Sykler').should('be.checked')
+            cy.get('#Egen_bil').should('be.checked')
+            cy.get('#Kollektivtransport').should('be.checked')
+            
             cy.get('.videre-knapp').click()
         })
     })
 
-    describe('utfylling av side 3', ()=>{
+    describe('Innholdsvalidering side 3', ()=>{
     
-        it('sjekker at siden inneholder elementer', function() {
+        it('sjekker at siden inneholder elementer', () =>{
             cy.url().should('include', `soknaden/3`)
             cy.contains('Last opp dine kvitteringer')
             cy.contains('Her kan du laste opp kvitteringer fra reisetilskuddsperioden.')
@@ -77,28 +92,71 @@ describe('Tester reisetilskuddsøknaden', () => {
             hjelpetekst.click()
 
             cy.get('.filopplasteren').should('be.visible')
-            
-            //cy.get('.månedlige-utgifter-input').should('be.visible')
-
-
-            cy.get('.videre-knapp').click()
         })
+
+        it('Sjekker om oppsumeringssiden inneholder kvitteringer', () => {
+            if(!(cy.get('.fil-med-info'))){
+                cy.log("kvitteringsfiler med info er ikke displayet på siden")
+                console.log("kvitteringsfiler med info er ikke displayet på siden")
+            }else{
+                const kvittering = cy.get('.fil-med-info')
+                expect(kvittering).to.equal(kvittering.should('be.visible'))
+                cy.get('.fil-med-info').should('be.visible')
+                cy.get('.slett-knapp').should('be.visible')
+                cy.log("kvitteringsfiler med info displayes")
+                console.log("kvitteringsfiler med info displayes")
+            }
+            cy.get('.videre-knapp').click()
+          })
+          
     })
 
-    describe('utfylling av side 4', ()=>{
+    describe('Innholdsvalidering side 4', ()=>{
     
-        it('sjekker at oppsummeringssiden inneholder elementer', function() {
+        it('sjekker at oppsummeringssiden inneholder elementer', ()=> {
             cy.url().should('include', `soknaden/4`)
+            cy.contains('Oppsummering av søknaden')
+            cy.contains('Hvem skal pengene utbetales til?')
+            cy.contains('Hvordan reiste du før sykmeldingen?')
+            cy.contains('Opplastede kvitteringer')
+            cy.contains('Totalt beløp:')
+            
+            if(!(cy.contains('Kvittering') && cy.contains('Beløp') && cy.contains('Dato'))){
+                cy.log('Oppsummeringssiden inneholder ingen kvitteringsoverskrift og kanskje ingen kvitteringer')
+                console.log('Oppsummeringssiden har ikke kvitteringsoverskrift og kanskje ingen kvitteringer!')
+                
+            }else{
+                cy.contains('Kvittering')
+                cy.contains('Beløp')
+                cy.contains('Dato')
+                cy.log("Kvitteringer displayes på oppsummeringssiden")
+                console.log("Kvitteringer displayes på oppsummeringssiden")
+            }
             
             cy.get('.send-knapp').click()
         })
     })
 
-    describe('kvitteringsside', ()=>{
     
-        it('sjekker at bekreftelse/kvittering-siden inneholder elementer', function() {
+    describe('Kvitteringsside', ()=>{
+    
+        it('sjekker at bekreftelse/kvittering-siden inneholder elementer', ()=> {
             cy.url().should('include', `kvittering`)
             
+            cy.get('.bekreftelsesside-page-wrapper').should('be.visible')
+            cy.log('Content vises på siden')
+
+            cy.get('.numberCircle').should('be.visible')
+            
+            cy.contains('Du har sendt inn søknaden')
+            cy.contains('Søknaden blir behandlet')
+
+            cy.contains('Les mer om reglene for reisetilskudd')
+            cy.get('a[href*="www.nav.no"]').should('be.visible')
+
+            cy.contains('sykepenger til selvstendig næringsdrivende og frilansere')
+
+            cy.contains('Les om hva du må gjøre for å beholde sykepengene')
             
         })
     })
