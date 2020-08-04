@@ -19,7 +19,7 @@ interface Props {
 
 const Datovelger: React.FC<Props> = ({
   label = '', className = '', onChange = () => { }, mode = 'single', id = '', feil = undefined,
-  maksDato = undefined,
+  maksDato = '',
 }) => {
   const validerDato = (d: Date[]) => {
     onChange(d);
