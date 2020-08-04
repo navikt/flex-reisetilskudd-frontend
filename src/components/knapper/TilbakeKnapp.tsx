@@ -21,7 +21,13 @@ function TilbakeKnapp({ aktivtSteg } : AktivtStegProps): ReactElement {
     <div className="tilbake-knapp">
       <Vis hvis={aktivtSteg === 1}>
         {/* Hvis vi er på første side i vår søknad og skal gå et annet sted */}
-        <Tilbakeknapp>Tilbake til forside</Tilbakeknapp>
+        <Tilbakeknapp
+          onClick={() => {
+            history.push('/');
+          }}
+        >
+          Tilbake til Dine Reisetilskudd
+        </Tilbakeknapp>
       </Vis>
       <Vis hvis={aktivtSteg > 1}>
         <Tilbakeknapp onClick={() => handleClick()}>Tilbake</Tilbakeknapp>
