@@ -27,8 +27,8 @@ describe('Tester reisetilskuddsøknaden', () => {
         })
         
         it('Tester at begge radiobuttons er clickable via id',()=>{
-            cy.get('#Arbeidsgiver').click({force:true}).should('be.checked')
-            cy.get('#Meg').click({force:true}).should('be.checked')
+            cy.get('#utbetaling-arbeidsgiver').click({force:true}).should('be.checked')
+            cy.get('#utbetaling-meg').click({force:true}).should('be.checked')
         })
         
         it('finner videreknappen', ()=> {
@@ -42,8 +42,8 @@ describe('Tester reisetilskuddsøknaden', () => {
     
         it('fyller ut går, egen bil, klikker på hjelpetekst, fylle rinn km', ()=> {
             cy.url().should('include', `soknaden/2`)
-            cy.contains('Går').click({ force: true })
-            cy.get('#Går').click( {force: true})
+            cy.contains('transport-går').click({ force: true })
+            cy.get('#transport-går').click( {force: true})
             cy.contains('Sykler').click({ force: true })
             cy.contains('Egen bil').click({ force: true })
             cy.get('.månedlige-utgifter-input').should('be.visible')
@@ -70,10 +70,10 @@ describe('Tester reisetilskuddsøknaden', () => {
 
     describe('Checkboxvalidering side 2', ()=>{
         it('Sjekker at Checkboxene er checked',()=>{
-            cy.get('#Går').click({force:true}).should('be.checked')
-            cy.get('#Sykler').should('be.checked')
-            cy.get('#Egen_bil').should('be.checked')
-            cy.get('#Kollektivtransport').should('be.checked')
+            cy.get('#transport-går').click({force:true}).should('be.checked')
+            cy.get('#transport-sykler').should('be.checked')
+            cy.get('#transport-egen-bil').should('be.checked')
+            cy.get('#transport-kollektiv').should('be.checked')
             
             cy.get('.videre-knapp').click()
         })
