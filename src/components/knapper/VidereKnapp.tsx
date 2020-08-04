@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
-import { AktivtStegProps } from '../../types/navigasjonTypes';
+import { AktivtStegProps } from '../../models/navigasjon';
 import './knapper.less';
 
 function VidereKnapp(
