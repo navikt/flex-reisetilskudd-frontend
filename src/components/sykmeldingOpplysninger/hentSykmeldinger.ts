@@ -76,8 +76,8 @@ export const hentSykmeldinger = (
   callback : (s : SykmeldingOpplysningInterface[]) => void,
   sykmeldingID: string,
 ) : void => {
-  // TODO: Denne URL-en må defineres via env:
-  fetch('http://localhost:1993/syforest/sykmeldinger', {
+  const { syfoRestSykmeldingerApiUrl } = env;
+  fetch(syfoRestSykmeldingerApiUrl, {
     credentials: 'include',
   })
     .then(
