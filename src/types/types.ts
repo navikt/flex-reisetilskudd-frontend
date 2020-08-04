@@ -1,6 +1,7 @@
 export interface Svaralternativ {
   label: string,
   value: string,
+  id: string,
 }
 
 export interface RadioSpørsmålProps {

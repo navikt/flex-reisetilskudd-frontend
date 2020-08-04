@@ -17,10 +17,12 @@ export const utbetalingSpørsmål: RadioSpørsmålProps = {
     {
       label: 'Meg',
       value: utbetalingSpørsmålVerdier.MEG,
+      id: 'Meg',
     },
     {
       label: `${arbeidsgiverNavnPlaceHolder}`,
       value: utbetalingSpørsmålVerdier.ARBEIDSGIVER,
+      id: 'Arbeidsgiver',
     },
   ],
   id: 'utbetaling-offentlig-privat-sporsmal',
@@ -39,14 +41,17 @@ export const transportalternativer: CheckboxProps = {
     {
       label: 'Går',
       value: transportalternativerVerdier.GÅR,
+      id: 'Går',
     },
     {
       label: 'Sykler',
       value: transportalternativerVerdier.SYKLER,
+      id: 'Sykler',
     },
     {
       label: 'Egen bil',
       value: transportalternativerVerdier.EGEN_BIL,
+      id: 'Egen_bil',
     },
   ],
   id: 'dagens-transportmiddel-transportalternativer',
@@ -58,6 +63,7 @@ export const transportalternativerKollektivt: CheckboxProps = {
     {
       label: 'Kollektivtransport',
       value: transportalternativerVerdier.KOLLEKTIVTRANSPORT,
+      id: 'Kollektivtransport',
     },
   ],
   id: 'dagens-transportmiddel-transportalternativer-kollektivt',
