@@ -2,6 +2,7 @@ import {
   RadioSpørsmålProps, CheckboxProps, InputProps,
 } from '../../types/types';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling/constants';
+import { Transportmiddel } from '../../models/kvittering';
 
 export const utbetalingSpørsmålVerdier = {
   NAME: 'UTBETALINGARBEIDSGIVER',
@@ -17,15 +18,15 @@ export const utbetalingSpørsmål: RadioSpørsmålProps = {
     {
       label: 'Meg',
       value: utbetalingSpørsmålVerdier.MEG,
-      id: 'Meg',
+      id: 'utbetaling-meg',
     },
     {
       label: `${arbeidsgiverNavnPlaceHolder}`,
       value: utbetalingSpørsmålVerdier.ARBEIDSGIVER,
-      id: 'Arbeidsgiver',
+      id: 'utbetaling-arbeidsgiver',
     },
   ],
-  id: 'utbetaling-offentlig-privat-sporsmal',
+  id: 'utbetaling-sporsmal',
 };
 
 export const transportalternativerVerdier = {
@@ -41,17 +42,17 @@ export const transportalternativer: CheckboxProps = {
     {
       label: 'Går',
       value: transportalternativerVerdier.GÅR,
-      id: 'Går',
+      id: 'transport-går',
     },
     {
       label: 'Sykler',
       value: transportalternativerVerdier.SYKLER,
-      id: 'Sykler',
+      id: 'transport-sykler',
     },
     {
       label: 'Egen bil',
       value: transportalternativerVerdier.EGEN_BIL,
-      id: 'Egen_bil',
+      id: 'transport-egen-bil',
     },
   ],
   id: 'dagens-transportmiddel-transportalternativer',
@@ -63,7 +64,7 @@ export const transportalternativerKollektivt: CheckboxProps = {
     {
       label: 'Kollektivtransport',
       value: transportalternativerVerdier.KOLLEKTIVTRANSPORT,
-      id: 'Kollektivtransport',
+      id: 'transport-kollektiv',
     },
   ],
   id: 'dagens-transportmiddel-transportalternativer-kollektivt',
@@ -80,5 +81,25 @@ export const månedligeUtgifterSpørsmål: InputProps = {
   tittel: 'Månedlige utgifter til offentlig transport',
   inputMode: 'numeric',
   bredde: 'S',
-  id: 'dagens-transportmiddel-månedlige-utgifter-input',
+  id: 'dagens-transportmiddel-manedlige-utgifter-input',
+};
+
+export const kvitteringTotaltBeløpSpørsmål: InputProps = {
+  tittel: 'Totalt beløp',
+  inputMode: 'numeric',
+  feil: 'Beløpet er ugyldig',
+  bredde: 'fullbredde',
+  id: 'filopplaster-totalt-beløp-input',
+};
+
+export const kvitteringDatoSpørsmål = {
+  id: 'filopplaster-dato-input',
+};
+
+export const kvitteringTransportmiddelSpørsmål = {
+  id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.TAXI}`,
+};
+
+export const transportVeileder = {
+  hjelpetekst: 'Kollektiv transport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.',
 };

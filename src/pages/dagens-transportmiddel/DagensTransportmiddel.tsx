@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import DagensTransportmiddelCheckbox
   from '../../components/sporsmal/dagensTransportmiddelCheckbox/dagensTransportmiddelCheckbox';
 import Vis from '../../components/Vis';
@@ -11,13 +11,26 @@ import {
   antallKilometerSpørsmål,
   månedligeUtgifterSpørsmål,
   transportalternativerKollektivt,
-} from '../../components/sporsmal/spørsmålTekster';
+} from '../../components/sporsmal/sporsmalTekster';
 import { useAppStore } from '../../data/stores/app-store';
 import { validerNumerisk, validerKroner } from '../../utils/skjemavalidering';
 import './dagens-transportmiddel.less';
 import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
 import { hjelpetekstDagensTransportmiddel } from '../../constants/hjelpetekster';
+import env from '../../utils/environment';
+import { post } from '../../data/fetcher/fetcher';
+import { logger } from '../../utils/logger';
+
+import { gåTilNesteSide } from '../../utils/navigasjon';
+
+interface TransportmiddelInterface {
+  reisetilskuddId: string;
+  går?: boolean;
+  sykler?: boolean;
+  egenBil?: number;
+  kollektivtransport?: number;
+}
 
 const DagensTransportmiddel = (): ReactElement => {
   const [
@@ -28,7 +41,6 @@ const DagensTransportmiddel = (): ReactElement => {
   const [
     skalViseMånedligeUtgifterFeil, settSkalViseMånedligeUtgifterFeil,
   ] = useState<boolean>(false);
-  const [gårTilNesteSide, settGårTilNesteSide] = useState<boolean>(false);
 
   const {
     dagensTransportMiddelEgenBilChecked,
@@ -40,8 +52,10 @@ const DagensTransportmiddel = (): ReactElement => {
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
   } = useAppStore();
 
-  const { soknadssideID } = useParams();
+  const { soknadssideID, soknadsID } = useParams();
   const soknadssideIDTall = Number(soknadssideID);
+
+  const history = useHistory();
 
   const validerAntallKilometerInput = (): FeiloppsummeringFeil[] => {
     if (dagensTransportMiddelEgenBilChecked) {
@@ -84,7 +98,7 @@ const DagensTransportmiddel = (): ReactElement => {
     ) {
       return [
         {
-          skjemaelementId: transportalternativer.id,
+          skjemaelementId: transportalternativer.svaralternativer[0].id,
           feilmelding: 'Du må velge minst étt av alternativene for fremkomstmiddel',
         },
       ];
@@ -164,12 +178,22 @@ const DagensTransportmiddel = (): ReactElement => {
   ]);
 
   const handleVidereKlikk = () => {
-    settSkalViseMånedligeUtgifterFeil(true);
-    settSkalViseKilometerFeil(true);
-    settSkalViseFeil(true);
-    if (dagensTransportmiddelValidert) {
-      settGårTilNesteSide(true);
-    }
+    post<TransportmiddelInterface>(`${env.apiUrl}/reisetilskudd`, {
+      reisetilskuddId: soknadsID,
+      går: dagensTransportMiddelGårChecked,
+      sykler: dagensTransportMiddelSyklerChecked,
+      egenBil: parseFloat(antallKilometerState),
+      kollektivtransport: parseFloat(månedligeUtgifterState),
+    }).then(() => {
+      settSkalViseMånedligeUtgifterFeil(true);
+      settSkalViseKilometerFeil(true);
+      settSkalViseFeil(true);
+      if (dagensTransportmiddelValidert) {
+        gåTilNesteSide(history, soknadssideIDTall);
+      }
+    }).catch((error) => {
+      logger.error('Feil ved oppdatering av skjema', error);
+    });
   };
 
   return (
@@ -215,16 +239,12 @@ const DagensTransportmiddel = (): ReactElement => {
           )}
         </Vis>
       </div>
-      <Vis hvis={dagensTransportmiddelValidert}>
-        Skjemaet er validert, wohoo!
-      </Vis>
       <Vis hvis={skalViseFeil && visningsFeilmeldinger.length > 0}>
         <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={visningsFeilmeldinger} />
       </Vis>
       <VidereKnapp
         aktivtSteg={soknadssideIDTall}
         onClick={handleVidereKlikk}
-        skalGåTilNesteSideNå={gårTilNesteSide}
       />
     </div>
   );
