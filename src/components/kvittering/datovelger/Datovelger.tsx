@@ -14,10 +14,12 @@ interface Props {
   mode?: 'single' | 'multiple' | 'range' | 'time';
   id?: string;
   feil?: string;
+  maksDato?: string;
 }
 
 const Datovelger: React.FC<Props> = ({
   label = '', className = '', onChange = () => { }, mode = 'single', id = '', feil = undefined,
+  maksDato = undefined,
 }) => {
   const validerDato = (d: Date[]) => {
     onChange(d);
@@ -38,6 +40,7 @@ const Datovelger: React.FC<Props> = ({
           locale: Norwegian,
           allowInput: true,
           disableMobile: true,
+          maxDate: maksDato,
         }}
         onChange={(date) => validerDato(date)}
         id={id}
