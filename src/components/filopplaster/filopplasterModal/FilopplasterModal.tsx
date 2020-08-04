@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Systemtittel, Element } from 'nav-frontend-typografi';
+import moment from 'moment';
 import Modal from 'nav-frontend-modal';
 import {
   Feiloppsummering, FeiloppsummeringFeil, SkjemaGruppe, Input,
@@ -25,6 +26,7 @@ import { logger } from '../../../utils/logger';
 import { post, put } from '../../../data/fetcher/fetcher';
 import Datovelger from '../../kvittering/datovelger/Datovelger';
 import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering';
+import { getIDag, DatoFormat, formatertDato } from '../../../utils/dato';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
@@ -83,6 +85,15 @@ const FilopplasterModal: React.FC = () => {
         {
           skjemaelementId: kvitteringDatoSpørsmål.id,
           feilmelding: 'Vennligst velg en gyldig dato',
+        },
+      ];
+    }
+    if (moment(formatertDato(nyDato, DatoFormat.FLATPICKR))
+      .isAfter(getIDag(DatoFormat.FLATPICKR))) {
+      return [
+        {
+          skjemaelementId: kvitteringDatoSpørsmål.id,
+          feilmelding: 'Vennligst velg en dato før dagens dato',
         },
       ];
     }
@@ -211,6 +222,7 @@ const FilopplasterModal: React.FC = () => {
             mode="single"
             onChange={(nyDato) => oppdaterDato(nyDato[0])}
             feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
+            maksDato=""
           />
           <div>
             <Element className="kvittering-beløp-input">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>
