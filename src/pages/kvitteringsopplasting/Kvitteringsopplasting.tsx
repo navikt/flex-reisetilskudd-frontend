@@ -1,10 +1,10 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import {
   Systemtittel, Normaltekst,
 } from 'nav-frontend-typografi';
 import './kvitteringsopplasting.less';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import FilopplasterModal from '../../components/filopplaster/filopplasterModal/FilopplasterModal';
 import OpplastedeFiler from '../../components/filopplaster/OpplastedeFiler';
 import DragAndDrop from '../../components/filopplaster/dragAndDrop/DragAndDrop';
@@ -12,14 +12,16 @@ import TotalBelop from '../../components/kvittering/totaltBelop/TotaltBelop';
 import { hjelpetekstKvitteringopplasting } from '../../constants/hjelpetekster';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
 
-const Kvitteringsopplasting: React.FC = () : ReactElement => {
-  const [gårTilNesteSide, settGårTilNesteSide] = useState<boolean>(false);
+import { gåTilNesteSide } from '../../utils/navigasjon';
 
+const Kvitteringsopplasting: React.FC = () : ReactElement => {
   const { soknadssideID } = useParams();
   const soknadssideIDTall = Number(soknadssideID);
 
+  const history = useHistory();
+
   const handleVidereKlikk = () => {
-    settGårTilNesteSide(true);
+    gåTilNesteSide(history, soknadssideIDTall);
   };
   return (
     <div className="last-opp-kvittering-wrapper">
@@ -42,7 +44,6 @@ const Kvitteringsopplasting: React.FC = () : ReactElement => {
         <VidereKnapp
           aktivtSteg={soknadssideIDTall}
           onClick={handleVidereKlikk}
-          skalGåTilNesteSideNå={gårTilNesteSide}
         />
       </div>
     </div>

@@ -5,6 +5,7 @@ import OpplastedeFiler from '../../components/filopplaster/OpplastedeFiler';
 import TotalBelop from '../../components/kvittering/totaltBelop/TotaltBelop';
 import OppsummeringDagensTransportmiddel from '../../components/oppsummering/OppsummeringDagensTransportMiddel';
 import OppsummeringUtbetaling from '../../components/oppsummering/OppsummeringUtbetaling';
+import SendKnapp from '../../components/knapper/SendKnapp';
 
 const Oppsummering = () : ReactElement => (
   <div className="oppsummering-wrapper oppsummering-element">
@@ -18,6 +19,7 @@ const Oppsummering = () : ReactElement => (
         <TotalBelop />
       </div>
     </div>
+    <SendKnapp />
   </div>
 );
 
