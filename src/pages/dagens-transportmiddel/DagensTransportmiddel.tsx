@@ -52,7 +52,7 @@ const DagensTransportmiddel = (): ReactElement => {
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
   } = useAppStore();
 
-  const { soknadssideID, soknadsID } = useParams();
+  const { soknadssideID, reisetilskuddID } = useParams();
   const soknadssideIDTall = Number(soknadssideID);
 
   const history = useHistory();
@@ -179,7 +179,7 @@ const DagensTransportmiddel = (): ReactElement => {
 
   const handleVidereKlikk = () => {
     post<TransportmiddelInterface>(`${env.apiUrl}/reisetilskudd`, {
-      reisetilskuddId: soknadsID,
+      reisetilskuddId: reisetilskuddID,
       går: dagensTransportMiddelGårChecked,
       sykler: dagensTransportMiddelSyklerChecked,
       egenBil: parseFloat(antallKilometerState),

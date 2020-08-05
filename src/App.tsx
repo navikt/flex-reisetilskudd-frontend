@@ -13,7 +13,7 @@ function App() : ReactElement {
     <StoreProvider>
       <Router>
         <Switch>
-          <Route path="/soknaden/:soknadsID/:soknadssideID">
+          <Route path="/soknaden/:reisetilskuddID/:soknadssideID">
             <div className="app-main-content">
               <Header />
               <Soknaden />

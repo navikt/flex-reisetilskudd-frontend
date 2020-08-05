@@ -20,7 +20,7 @@ async function fetcher<T>(
 // eslint-disable-next-line func-names
 export const get = async function<T>(
   path: string,
-  args: RequestInit = { method: 'get' },
+  args: RequestInit = { method: 'get', credentials: 'include' },
 ): Promise<HttpResponse<T>> {
   return fetcher<T>(new Request(path, args));
 };

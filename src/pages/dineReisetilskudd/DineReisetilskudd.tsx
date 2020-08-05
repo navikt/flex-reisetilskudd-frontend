@@ -1,54 +1,23 @@
 import React, { ReactElement, useState } from 'react';
 import { Normaltekst, Sidetittel, Element } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
-import env from '../../utils/environment';
-import { logger } from '../../utils/logger';
 import Reisetilskudd from '../../components/dineReisetilskudd/Reisetilskudd';
-import Vis from '../../components/Vis';
-
 import './dine-reisetilskudd.less';
-
-interface ReisetilskuddInterface {
-  fnr?: string,
-  fom?: string,
-  orgNavn?: string,
-  orgNummer?: string,
-  reisetilskuddId?: string,
-  sykmeldingId?: string,
-  tom?: string,
-}
+import Vis from '../../components/Vis';
+import { useAppStore } from '../../data/stores/app-store';
+import hentReisetilskudd from '../../data/fetcher/hentReisetilskudd';
 
 function DineReisetilskudd(): ReactElement {
-  const { apiUrl } = env;
-  const [
-    reisetilskuddene, settReisetilskuddene,
-  ] = useState<ReisetilskuddInterface[] | undefined>(undefined);
+  const {
+    reisetilskuddene,
+    settReisetilskuddene,
+  } = useAppStore();
   const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
 
-  const hentReisetilskudd = (
-  ) : void => {
-    fetch(`${apiUrl}/reisetilskudd`, {
-      credentials: 'include',
-    })
-      .then(
-        (response) => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          return response.json();
-        },
-      )
-      .then((jsonResponse) => {
-        settReisetilskuddene(jsonResponse);
-      })
-      .catch((err) => logger.error(err));
-  };
-
   if (isFirstRender) {
-    hentReisetilskudd();
+    hentReisetilskudd(settReisetilskuddene);
     setIsFirstRender(false);
   }
-
   return (
     <div className="app-page dine-reisetilskudd-side">
       <Sidetittel tag="h1" className="sidetopp__tittel">

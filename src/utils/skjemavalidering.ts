@@ -15,6 +15,8 @@ export const validerOgReturnerKroner = (tekstInput: string) : number | null => {
   return null;
 };
 
+export const validerTall = (input: number | string) : boolean => !Number.isNaN(Number(input));
+
 export const validerKilometer = (
   tekstInput : string | number,
 ) : boolean => validerNumerisk(tekstInput);
