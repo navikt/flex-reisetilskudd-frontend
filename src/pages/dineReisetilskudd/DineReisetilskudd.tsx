@@ -17,7 +17,6 @@ function DineReisetilskudd(): ReactElement {
     hentReisetilskudd(settReisetilskuddene);
     setIsFirstRender(false);
   }
-
   return (
     <div className="app-page dine-reisetilskudd-side">
       <Sidetittel tag="h1" className="sidetopp__tittel">

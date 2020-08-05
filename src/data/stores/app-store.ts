@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { KvitteringInterface, Transportmiddel, TransportmiddelAlternativer } from '../../models/kvittering';
 import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
 import { ReisetilskuddInterface } from '../../models/reisetilskudd';
-import mockReisetilskudd from '../mock/reisetilskudd';
 
 const mockKvitteringer: Array<KvitteringInterface> = [
   {
@@ -60,7 +59,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
 
   const [
     reisetilskuddene, settReisetilskuddene,
-  ] = useState<ReisetilskuddInterface[] | undefined>(mockReisetilskudd);
+  ] = useState<ReisetilskuddInterface[] | undefined>();
 
   const [
     aktivtReisetilskuddId, settAktivtReisetilskuddId,
