@@ -6,7 +6,7 @@ import TotalBelop from '../../components/kvittering/totaltBelop/TotaltBelop';
 import OppsummeringDagensTransportmiddel from '../../components/oppsummering/OppsummeringDagensTransportMiddel';
 import OppsummeringUtbetaling from '../../components/oppsummering/OppsummeringUtbetaling';
 
-const Oppsummering = () : ReactElement => (
+const Oppsummering = (): ReactElement => (
   <div className="oppsummering-wrapper oppsummering-element">
     <Systemtittel className="oppsummering-overskrift">Oppsummering av søknaden</Systemtittel>
     <OppsummeringUtbetaling />

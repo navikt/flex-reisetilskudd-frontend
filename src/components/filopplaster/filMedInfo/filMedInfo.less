@@ -243,18 +243,39 @@
       border: 1px solid #78706A;
       border-radius: 0.3rem;
       grid-template-areas:
-      'kvittering storrelse slett'
-      'beloptittel belop 1'
-      'datotittel dato dato'
+      'kvittering storrelse'
+      'beloptittel belop '
+      'datotittel dato'
       ;
       grid-template-columns: 50% 50%;
 
-      .belop{
-        margin-left: 0rem;
+      .vedleggsikon{
+        transform: scale(0.7);
       }
-    
-      .dato {
+      .mobil-belop{
+        margin-top: 0.7rem;
+        margin-right: 0rem;
+        padding-right: 0rem;
+        padding-left: 1.5rem;
+      }
+      .mobil-dato{
+        padding-left: 1.5rem;;
+      }
+      .kvittering{
         padding-left: 0rem;
+        .filnavn{
+          margin-left: 0rem;
+        }
+      }
+      .belop{
+        margin: 0.7rem 0 0 0;
+      }
+      .dato{
+        margin: 0.25rem 0 0 0;
+        white-space: unset;
+      }
+      .filstorrelse{
+        margin: 1.4rem 0 0 0;
       }
     }
   }
