@@ -46,7 +46,7 @@ const DragAndDrop: React.FC = (): ReactElement => {
   });
 
   return (
-    <div {...getRootProps()}>
+    <div className="filopplasteren" {...getRootProps()}>
       <input {...getInputProps()} />
       {isDragActive ? (
         <>
