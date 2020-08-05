@@ -75,7 +75,7 @@ const DagensTransportmiddel = (): ReactElement => {
     return [];
   };
 
-  const validerMånedligeUtgifter = (nyesteVerdi : string | null = null): FeiloppsummeringFeil[] => {
+  const validerMånedligeUtgifter = (nyesteVerdi: string | null = null): FeiloppsummeringFeil[] => {
     if (
       dagensTransportMiddelKollektivChecked
       && !validerKroner(nyesteVerdi || månedligeUtgifterState)
@@ -92,9 +92,9 @@ const DagensTransportmiddel = (): ReactElement => {
   const validerCheckboxer = (): FeiloppsummeringFeil[] => {
     if (
       !dagensTransportMiddelEgenBilChecked
-        && !dagensTransportMiddelSyklerChecked
-        && !dagensTransportMiddelGårChecked
-        && !dagensTransportMiddelKollektivChecked
+      && !dagensTransportMiddelSyklerChecked
+      && !dagensTransportMiddelGårChecked
+      && !dagensTransportMiddelKollektivChecked
     ) {
       return [
         {
@@ -115,8 +115,8 @@ const DagensTransportmiddel = (): ReactElement => {
   };
 
   const fåFeilmeldingTilInput = (
-    hvilkenInput : string,
-  ) : string | undefined => visningsFeilmeldinger.find(
+    hvilkenInput: string,
+  ): string | undefined => visningsFeilmeldinger.find(
     (element) => element.skjemaelementId === hvilkenInput,
   )?.feilmelding;
 
@@ -200,10 +200,10 @@ const DagensTransportmiddel = (): ReactElement => {
     <div className="dagens-transportmiddel-wrapper">
       <Systemtittel> Transportmiddel til daglig </Systemtittel>
       <div className="transportmiddel-tekst">
-        <Normaltekst className="transportmiddel-spørsmål">
+        <Normaltekst className="transportmiddel-spørsmål" id="transportmiddel-spørsmål" aria-describedby="min-hjelpetekst-kollektivtransport">
           Hvilke transportmidler brukte du til og fra jobb før du ble sykmeldt?
         </Normaltekst>
-        <Hjelpetekst className="kollektivtransport-hjelpetekst">
+        <Hjelpetekst className="kollektivtransport-hjelpetekst" id="min-hjelpetekst-kollektivtransport" aria-describedby="transportmiddel-spørsmål">
           {hjelpetekstDagensTransportmiddel.hjelpetekst}
         </Hjelpetekst>
       </div>
