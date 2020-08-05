@@ -1,6 +1,7 @@
 describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
     
-    const url:string = 'http://localhost:3000'
+    //const url:string = 'http://localhost:3000'
+    const url:string = 'http://localhost:3000/soknaden/f0cb53e1-1db1-419b-ae83-3e5eeca81d33/1'
 
     before(() => {
         cy.visit(url)

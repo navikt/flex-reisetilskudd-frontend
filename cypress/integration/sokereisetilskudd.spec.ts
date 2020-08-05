@@ -18,7 +18,7 @@ describe('Tester reisetilskuddsøknaden', () => {
         cy.contains('Utbetaling til arbeidsgiver')
         cy.contains('Skal reisetilskuddet utbetales til deg eller til Arbeids- og velferdsetaten (org.nr. 392392482849)?')
     })
-
+    
     describe('Utfylling og validering av side 1', ()=>{
 
         it('Tar tak i meg-knapp og clicker', ()=> {
@@ -51,7 +51,6 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.contains('Sykler').click({ force: true })
             cy.contains('Egen bil').click({ force: true })
             cy.get('#transport-kollektiv').click( {force: true})
-            //cy.get('.månedlige-utgifter-input').should('be.visible')
 
             let hjelpetekst = cy.get('.transportmiddel-kilometer-hjelpetekst').should('be.visible')
             hjelpetekst.click()
@@ -62,9 +61,8 @@ describe('Tester reisetilskuddsøknaden', () => {
             
             let kollektivtransport = cy.get('#dagens-transportmiddel-transportalternativer-kollektivt')
             kollektivtransport.should('be.visible')
-            kollektivtransport.click()
 
-            let kollektivUtgifter = cy.get('#dagens-transportmiddel-månedlige-utgifter-input')
+            let kollektivUtgifter = cy.get('#dagens-transportmiddel-manedlige-utgifter-input')
             kollektivUtgifter.should('be.visible')
             kollektivUtgifter.type('900')
             kollektivUtgifter.should('have.value', '900')
