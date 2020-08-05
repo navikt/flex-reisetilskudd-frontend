@@ -7,15 +7,14 @@ import { SøknadsIkon } from '../../assets/ikoner';
 import { DatoFormat, formatertDato } from '../../utils/dato';
 import Vis from '../Vis';
 import { ReisetilskuddInterface } from '../../models/reisetilskudd';
-import { useGlobalReisetilskudd } from './useGlobalReisetilskudd';
+import useReisetilskuddTilGlobalState from './useReisetilskuddTilGlobalState';
 
 interface Props {
   reisetilskudd: ReisetilskuddInterface,
 }
 
 const Reisetilskudd : React.FC<Props> = ({ reisetilskudd }) : ReactElement => {
-
-  const settReisetilskuddTilGlobalState = useGlobalReisetilskudd();
+  const settReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState();
 
   return (
     <Link

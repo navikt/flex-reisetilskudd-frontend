@@ -15,12 +15,15 @@ import './soknaden.less';
 import { useAppStore } from '../../data/stores/app-store';
 
 import hentReisetilskudd from '../../data/fetcher/hentReisetilskudd';
+import useReisetilskuddTilGlobalState from '../../components/dineReisetilskudd/useReisetilskuddTilGlobalState';
 
 function Soknaden(): ReactElement {
   const history = useHistory();
 
   const { soknadssideID, reisetilskuddID } = useParams();
   const idNum = Number(soknadssideID);
+
+  const settReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState();
 
   const {
     aktivtReisetilskuddId,
@@ -38,13 +41,15 @@ function Soknaden(): ReactElement {
   [aktivtReisetilskuddId, reisetilskuddID]);
 
   useEffect(() => {
-    const match = reisetilskuddene?.find(
+    const eksisterendeReisetilskudd = reisetilskuddene?.find(
       (reisetilskudd) => reisetilskudd.reisetilskuddId === reisetilskuddID
       );
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    match
-      ? settAktivtReisetilskuddId(reisetilskuddID)
-      : reisetilskuddene !== undefined && history.push('/');
+    if (eksisterendeReisetilskudd) {
+      settAktivtReisetilskuddId(reisetilskuddID);
+      settReisetilskuddTilGlobalState(eksisterendeReisetilskudd);
+    } else if (reisetilskuddene !== undefined) {
+      history.push('/');
+    }
   },
   // eslint-disable-next-line react-hooks/exhaustive-deps
   [reisetilskuddene, reisetilskuddID]);

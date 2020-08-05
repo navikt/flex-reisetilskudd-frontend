@@ -15,7 +15,7 @@ function DineReisetilskudd(): ReactElement {
   const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
 
   if (isFirstRender) {
-    // hentReisetilskudd(settReisetilskuddene);
+    hentReisetilskudd(settReisetilskuddene);
     setIsFirstRender(false);
   }
   return (
