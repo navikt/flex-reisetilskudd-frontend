@@ -1,6 +1,6 @@
 import { KvitteringInterface, Transportmiddel } from '../../models/kvittering';
 
-const mockKvitteringer: Array<KvitteringInterface> = [
+const mockKvitteringer: KvitteringInterface[] = [
   {
     reisetilskuddId: '6969',
     kvitteringId: 'tetstsgddgsdsdsdsdsdgsdg',

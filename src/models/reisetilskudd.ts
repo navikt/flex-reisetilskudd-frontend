@@ -1,3 +1,5 @@
+import { KvitteringInterface } from './kvittering';
+
 export interface ReisetilskuddInterface {
   fnr?: string,
   fom?: string,
@@ -15,5 +17,5 @@ export interface ReisetilskuddInterface {
   reisetilskuddId?: string,
   sykmeldingId?: string,
 
-  kvitteringer: ReisetilskuddInterface[]
+  kvitteringer: KvitteringInterface[]
 }

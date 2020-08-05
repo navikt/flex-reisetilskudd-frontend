@@ -20,7 +20,7 @@ const mockReisetilskudd : ReisetilskuddInterface[] = [
     reisetilskuddId: '28fa10b8-c9af-4a7a-a0b2-90caed65ab4c',
     sykmeldingId: '72ea12dd-eabc-49ed-910f-5ecd50e7dd5c',
 
-    kvitteringer : []
+    kvitteringer: [],
   },
   {
     fnr: '01010112345',
@@ -38,7 +38,7 @@ const mockReisetilskudd : ReisetilskuddInterface[] = [
     reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
     sykmeldingId: '72ea1sdd-eabc-49ed-910f-5ecd50e7dd5c',
 
-    kvitteringer : []
+    kvitteringer: [],
   },
   {
     fnr: '01010112345',
@@ -56,7 +56,7 @@ const mockReisetilskudd : ReisetilskuddInterface[] = [
     reisetilskuddId: '1ajsdlkajlsdkjalksjdlkajd',
     sykmeldingId: '72ea1sdd-eabc-910f-5ecd50e7dd5c',
 
-    kvitteringer : []
+    kvitteringer: [],
   },
 ];
 

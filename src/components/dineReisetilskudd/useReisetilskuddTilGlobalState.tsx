@@ -16,6 +16,8 @@ const useReisetilskuddTilGlobalState = (): (reisetilskudd: ReisetilskuddInterfac
     settAntallKilometerState,
 
     settAktivtReisetilskuddId,
+
+    settKvitteringer,
   } = useAppStore();
 
   return (valgtReisetilskudd : ReisetilskuddInterface) => {
@@ -55,6 +57,10 @@ const useReisetilskuddTilGlobalState = (): (reisetilskudd: ReisetilskuddInterfac
     } else {
       settDagensTransportMiddelKollektivChecked(false);
       settMånedligeUtgifterState('');
+    }
+
+    if (valgtReisetilskudd.kvitteringer !== undefined) {
+      settKvitteringer(valgtReisetilskudd.kvitteringer);
     }
   };
 };

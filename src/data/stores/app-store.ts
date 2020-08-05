@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { KvitteringInterface, TransportmiddelAlternativer } from '../../models/kvittering';
 import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
 import { ReisetilskuddInterface } from '../../models/reisetilskudd';
-import mockKvitteringer from '../../data/mock/kvitteringer';
-
+import mockKvitteringer from '../mock/kvitteringer';
 
 export const [AppStoreProvider, useAppStore] = constate(() => {
   /* UTBETALINGSSPØRSMÅL */
