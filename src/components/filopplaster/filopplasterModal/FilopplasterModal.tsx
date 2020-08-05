@@ -31,7 +31,7 @@ import { getIDag, DatoFormat, formatertDato } from '../../../utils/dato';
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
-  const { soknadsID } = useParams();
+  const { reisetilskuddID } = useParams();
   const [laster, settLaster] = useState<boolean>(false);
   const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<string>('');
@@ -151,7 +151,7 @@ const FilopplasterModal: React.FC = () => {
         .then((response) => {
           if (response.parsedBody?.id) {
             const kvittering: KvitteringInterface = {
-              reisetilskuddId: soknadsID,
+              reisetilskuddId: reisetilskuddID,
               navn: fil.name,
               storrelse: fil.size,
               belop: parsedBeløp,

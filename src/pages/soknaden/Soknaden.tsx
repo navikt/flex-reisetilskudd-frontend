@@ -11,10 +11,18 @@ import Vis from '../../components/Vis';
 import Oppsummering from '../oppsummering/Oppsummering';
 import SykmeldingPanel from '../../components/sykmeldingOpplysninger/SykmeldingPanel';
 import './soknaden.less';
+import { useAppStore } from '../../data/stores/app-store';
 
 function Soknaden(): ReactElement {
-  const { soknadssideID } = useParams();
+  const { soknadssideID, reisetilskuddID } = useParams();
   const idNum = Number(soknadssideID);
+
+  const {
+    aktivtReisetilskuddId,
+    settAktivtReisetilskuddId,
+  } = useAppStore();
+
+  console.log(aktivtReisetilskuddId);
 
   return (
     <div className="app-page sporsmal-wrapper">

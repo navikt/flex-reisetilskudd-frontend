@@ -1,29 +1,20 @@
 import React, { ReactElement, useState } from 'react';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
-import env from '../../utils/environment';
-import { logger } from '../../utils/logger';
 import Reisetilskudd from '../../components/dineReisetilskudd/Reisetilskudd';
 import Vis from '../../components/Vis';
-import { get } from '../../data/fetcher/fetcher';
-import { ReisetilskuddInterface } from '../../models/reisetilskudd';
-import mockReisetilskudd from '../../data/mock/reisetilskudd';
+import { useAppStore } from '../../data/stores/app-store';
+import hentReisetilskudd from '../../data/fetcher/hentReisetilskudd';
 
 function DineReisetilskudd(): ReactElement {
-  const { apiUrl } = env;
-  const [
-    reisetilskuddene, settReisetilskuddene,
-  ] = useState<ReisetilskuddInterface[] | undefined>(mockReisetilskudd);
+  const {
+    reisetilskuddene,
+    settReisetilskuddene,
+  } = useAppStore();
   const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
 
-  const hentReisetilskudd = () : void => {
-    get<ReisetilskuddInterface[]>(`${apiUrl}/reisetilskudd`)
-      .then((req) => settReisetilskuddene(req.parsedBody))
-      .catch((err) => logger.error(err));
-  };
-
   if (isFirstRender) {
-    hentReisetilskudd();
+    hentReisetilskudd(settReisetilskuddene);
     setIsFirstRender(false);
   }
 

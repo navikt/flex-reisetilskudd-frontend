@@ -3,6 +3,8 @@ import constate from 'constate';
 import { useState } from 'react';
 import { KvitteringInterface, Transportmiddel, TransportmiddelAlternativer } from '../../models/kvittering';
 import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
+import { ReisetilskuddInterface } from '../../models/reisetilskudd';
+import mockReisetilskudd from '../mock/reisetilskudd';
 
 const mockKvitteringer: Array<KvitteringInterface> = [
   {
@@ -56,6 +58,14 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     transportmiddelKvittering, settTransportmiddelKvittering,
   ] = useState<TransportmiddelAlternativer>();
 
+  const [
+    reisetilskuddene, settReisetilskuddene,
+  ] = useState<ReisetilskuddInterface[] | undefined>(mockReisetilskudd);
+
+  const [
+    aktivtReisetilskuddId, settAktivtReisetilskuddId,
+  ] = useState<string>();
+
   return {
     /* DAGENS TRANSPORTMIDDEL */
     dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
@@ -74,5 +84,7 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     åpenFilopplasterModal, settÅpenFilopplasterModal,
     opplysningerSykmeldinger, settOpplysningerSykmeldinger,
     transportmiddelKvittering, settTransportmiddelKvittering,
+    reisetilskuddene, settReisetilskuddene,
+    aktivtReisetilskuddId, settAktivtReisetilskuddId,
   };
 });

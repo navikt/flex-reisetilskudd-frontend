@@ -14,7 +14,7 @@ function App() : ReactElement {
       <div className="app-main-content">
         <Router>
           <Switch>
-            <Route path="/soknaden/:soknadsID/:soknadssideID">
+            <Route path="/soknaden/:reisetilskuddID/:soknadssideID">
               <Header />
               <Soknaden />
             </Route>

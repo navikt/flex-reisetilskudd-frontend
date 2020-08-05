@@ -31,7 +31,7 @@ const Utbetaling = (): ReactElement => {
   } = useAppStore();
   const [skalViseFeil, settSkalViseFeil] = useState<boolean>(false);
 
-  const { soknadssideID, soknadsID } = useParams();
+  const { soknadssideID, reisetilskuddID } = useParams();
   const soknadssideIDTall = Number(soknadssideID);
   const getArbeidsgiver = (): ArbeidsgiverInterface => ({
     navn: 'Arbeids- og velferdsetaten',
@@ -85,7 +85,7 @@ const Utbetaling = (): ReactElement => {
   const handleVidereKlikk = () => {
     if (utbetalingspørsmålValidert) {
       post<UtbetalingInterface>(`${env.apiUrl}/reisetilskudd`, {
-        reisetilskuddId: soknadsID,
+        reisetilskuddId: reisetilskuddID,
         utbetalingTilArbeidsgiver: activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER,
       }).then(() => {
         gåTilNesteSide(history, soknadssideIDTall);

@@ -25,9 +25,13 @@ const Reisetilskudd : React.FC<Props> = ({ reisetilskudd }) : ReactElement => {
 
     settMånedligeUtgifterState,
     settAntallKilometerState,
+
+    settAktivtReisetilskuddId,
   } = useAppStore();
 
   const settReisetilskuddTilGlobalState = (valgtReisetilskudd : ReisetilskuddInterface) => {
+    settAktivtReisetilskuddId(valgtReisetilskudd.reisetilskuddId);
+
     if (valgtReisetilskudd.utbetalingTilArbeidsgiver) {
       setActiveMegArbeidsgiver(valgtReisetilskudd.utbetalingTilArbeidsgiver);
     } else {
