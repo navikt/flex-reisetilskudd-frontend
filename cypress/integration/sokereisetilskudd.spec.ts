@@ -1,61 +1,6 @@
-import { utbetalingSpørsmålVerdier } from '../../src/components/sporsmal/sporsmalTekster';
-
-interface ReisetilskuddInterface {
-    fnr?: string,
-    fom?: string,
-    tom?: string,
-  
-    utbetalingTilArbeidsgiver?: string,
-  
-    går?: boolean,
-    sykler?: boolean,
-    kollektivtransport?: number,
-    egenBil?: number,
-  
-    orgNavn?: string,
-    orgNummer?: string,
-    reisetilskuddId?: string,
-    sykmeldingId?: string,
-  }
+import mockReisetilskudd from '../../src/data/mock/reisetilskudd';
 
 describe('Tester reisetilskuddsøknaden', () => {
-    const mockReisetilskudd : ReisetilskuddInterface[] = [
-        {
-          fnr: '01010112345',
-          fom: '2020-08-03',
-          tom: '2020-08-03',
-      
-          orgNavn: 'Mock Arbeid AS',
-          orgNummer: '123123123',
-      
-          utbetalingTilArbeidsgiver: utbetalingSpørsmålVerdier.MEG,
-      
-          går: true,
-          sykler: true,
-          kollektivtransport: 42,
-          egenBil: 0,
-      
-          reisetilskuddId: '28fa10b8-c9af-4a7a-a0b2-90caed65ab4c',
-          sykmeldingId: '72ea12dd-eabc-49ed-910f-5ecd50e7dd5c',
-        },
-        {
-          fnr: '01010112345',
-          fom: '2020-05-13',
-          orgNavn: 'Mock Vaskeri Vaskerelven',
-          orgNummer: '9237419',
-      
-          utbetalingTilArbeidsgiver: utbetalingSpørsmålVerdier.ARBEIDSGIVER,
-      
-          går: true,
-          sykler: false,
-          kollektivtransport: 0,
-          egenBil: 13,
-      
-          reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
-          sykmeldingId: '72ea1sdd-eabc-49ed-910f-5ecd50e7dd5c',
-        },
-      ];
-
     const url:string = `http://localhost:3000/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`
 
     before(() => {
@@ -91,12 +36,12 @@ describe('Tester reisetilskuddsøknaden', () => {
             megknapp.should('be.visible')
             megknapp.click()
         })
-        
+
         it('Tester at begge radiobuttons er clickable via id',()=>{
             cy.get('#utbetaling-arbeidsgiver').click({force:true}).should('be.checked')
             cy.get('#utbetaling-meg').click({force:true}).should('be.checked')
         })
-        
+
         it('finner videreknappen', ()=> {
             let videreknappen = cy.get('.videre-knapp')
             videreknappen.should('be.visible')
@@ -105,7 +50,7 @@ describe('Tester reisetilskuddsøknaden', () => {
     })
 
     describe('Utfylling av side 2', ()=>{
-    
+
         it('fyller ut går, egen bil, klikker på hjelpetekst, fylle rinn km', ()=> {
             cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/2`)
             cy.contains('Går').click({ force: true })
@@ -120,7 +65,7 @@ describe('Tester reisetilskuddsøknaden', () => {
             let kmInput = cy.get('#dagens-transportmiddel-kilometer-input').should('be.visible')
             kmInput.type('1337')
             kmInput.should('have.value', '1337')
-            
+
             let kollektivtransport = cy.get('#dagens-transportmiddel-transportalternativer-kollektivt')
             kollektivtransport.should('be.visible')
 
@@ -139,19 +84,19 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.get('#transport-sykler').should('be.checked')
             cy.get('#transport-egen-bil').should('be.checked')
             cy.get('#transport-kollektiv').should('be.checked')
-            
+
             cy.get('.videre-knapp').click()
         })
     })
 
     describe('Innholdsvalidering side 3', ()=>{
-    
+
         it('sjekker at siden inneholder elementer', () =>{
             cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/3`)
             cy.contains('Last opp dine kvitteringer')
             cy.contains('Her kan du laste opp kvitteringer fra reisetilskuddsperioden.')
             cy.get('.last-opp-kvittering-tekst').should('be.visible')
-            
+
             let hjelpetekst = cy.get('.hjelpetekst').should('be.visible')
             hjelpetekst.click()
             hjelpetekst.click()
@@ -173,11 +118,11 @@ describe('Tester reisetilskuddsøknaden', () => {
             }
             cy.get('.videre-knapp').click()
           })
-          
+
     })
 
     describe('Innholdsvalidering side 4', ()=>{
-    
+
         it('sjekker at oppsummeringssiden inneholder elementer', ()=> {
             cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/4`)
             cy.contains('Oppsummering av søknaden')
@@ -185,11 +130,11 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.contains('Hvordan reiste du før sykmeldingen?')
             cy.contains('Opplastede kvitteringer')
             cy.contains('Totalt beløp:')
-            
+
             if(!(cy.contains('Kvittering') && cy.contains('Beløp') && cy.contains('Dato'))){
                 cy.log('Oppsummeringssiden inneholder ingen kvitteringsoverskrift og kanskje ingen kvitteringer')
                 console.log('Oppsummeringssiden har ikke kvitteringsoverskrift og kanskje ingen kvitteringer!')
-                
+
             }else{
                 cy.contains('Kvittering')
                 cy.contains('Beløp')
@@ -197,22 +142,22 @@ describe('Tester reisetilskuddsøknaden', () => {
                 cy.log("Kvitteringer displayes på oppsummeringssiden")
                 console.log("Kvitteringer displayes på oppsummeringssiden")
             }
-            
+
             cy.get('.send-knapp').click()
         })
     })
 
-    
+
     describe('Kvitteringsside', ()=>{
-    
+
         it('sjekker at bekreftelse/kvittering-siden inneholder elementer', ()=> {
             cy.url().should('include', `kvittering`)
-            
+
             cy.get('.bekreftelsesside-page-wrapper').should('be.visible')
             cy.log('Content vises på siden')
 
             cy.get('.numberCircle').should('be.visible')
-            
+
             cy.contains('Du har sendt inn søknaden')
             cy.contains('Søknaden blir behandlet')
 
@@ -222,7 +167,7 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.contains('sykepenger til selvstendig næringsdrivende og frilansere')
 
             cy.contains('Les om hva du må gjøre for å beholde sykepengene')
-            
+
         })
     })
 
