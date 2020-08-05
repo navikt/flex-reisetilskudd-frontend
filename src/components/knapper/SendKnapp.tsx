@@ -7,7 +7,7 @@ const SendKnapp = (): ReactElement => {
   const history = useHistory();
 
   function handleClick() {
-    history.push('/kvittering');
+    history.push('/bekreftelse');
   }
 
   return (

@@ -1,6 +1,7 @@
 import mockReisetilskudd from '../../src/data/mock/reisetilskudd';
 
 describe('Tester reisetilskuddsøknaden', () => {
+
     const url:string = `http://localhost:3000/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`
 
     before(() => {
@@ -148,10 +149,10 @@ describe('Tester reisetilskuddsøknaden', () => {
     })
 
 
-    describe('Kvitteringsside', ()=>{
+    describe('Bekreftelsesside', ()=>{
 
-        it('sjekker at bekreftelse/kvittering-siden inneholder elementer', ()=> {
-            cy.url().should('include', `kvittering`)
+        it('sjekker at bekreftelsessiden inneholder elementer', ()=> {
+            cy.url().should('include', `bekreftelse`)
 
             cy.get('.bekreftelsesside-page-wrapper').should('be.visible')
             cy.log('Content vises på siden')
