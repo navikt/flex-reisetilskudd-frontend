@@ -20,7 +20,7 @@ function App() : ReactElement {
             </div>
           </Route>
           <Route path="/kvittering">
-            <div className="app-main-content">
+            <div className="app-main-content grey">
               <Header />
               <BekreftelsesSide />
             </div>
