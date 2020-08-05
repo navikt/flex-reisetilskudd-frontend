@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import Vis from '../Vis';
-import { pathTilSide, pathUtenSteg } from '../../utils/navigasjon';
-import { AktivtStegProps } from '../../types/navigasjonTypes';
+import { pathTilSide } from '../../utils/navigasjon';
+import { AktivtStegProps } from '../../models/navigasjon';
 import './knapper.less';
 
 function TilbakeKnapp({ aktivtSteg } : AktivtStegProps): ReactElement {
@@ -21,8 +21,12 @@ function TilbakeKnapp({ aktivtSteg } : AktivtStegProps): ReactElement {
     <div className="tilbake-knapp">
       <Vis hvis={aktivtSteg === 1}>
         {/* Hvis vi er på første side i vår søknad og skal gå et annet sted */}
-        <Tilbakeknapp onClick={() => history.push(pathUtenSteg('/'))}>
-          Tilbake til forside
+        <Tilbakeknapp
+          onClick={() => {
+            history.push('/');
+          }}
+        >
+          Tilbake til Dine Reisetilskudd
         </Tilbakeknapp>
       </Vis>
       <Vis hvis={aktivtSteg > 1}>

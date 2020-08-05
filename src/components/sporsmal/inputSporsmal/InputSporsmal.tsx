@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { InputProps } from '../../../types/types';
+import { InputProps } from '../../../models/sporsmal';
 import './input-sporsmal.less';
 import { antallKilometerSpørsmål, månedligeUtgifterSpørsmål } from '../sporsmalTekster';
 import Vis from '../../Vis';

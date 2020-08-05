@@ -3,7 +3,7 @@ import Stegindikator from 'nav-frontend-stegindikator';
 import { useHistory } from 'react-router-dom';
 import { sideTitler } from '../../constants/sideTitler';
 import { SEPARATOR } from '../../utils/constants';
-import { AktivtStegProps } from '../../types/navigasjonTypes';
+import { AktivtStegProps } from '../../models/navigasjon';
 import './brodsmoler.less';
 
 export const pathUtenSteg = (pathname: string) : string => {

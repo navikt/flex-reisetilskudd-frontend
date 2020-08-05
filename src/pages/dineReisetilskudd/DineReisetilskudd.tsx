@@ -1,7 +1,8 @@
 import React, { ReactElement, useState } from 'react';
-import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+import { Normaltekst, Sidetittel, Element } from 'nav-frontend-typografi';
 import { Link } from 'react-router-dom';
 import Reisetilskudd from '../../components/dineReisetilskudd/Reisetilskudd';
+import './dine-reisetilskudd.less';
 import Vis from '../../components/Vis';
 import { useAppStore } from '../../data/stores/app-store';
 import hentReisetilskudd from '../../data/fetcher/hentReisetilskudd';
@@ -32,9 +33,12 @@ function DineReisetilskudd(): ReactElement {
           for å se om det ligger noe der.
         </Normaltekst>
       </Vis>
-      <Vis hvis={reisetilskuddene}>
-        {reisetilskuddene?.map((value) => <Reisetilskudd key={`reisetilskudd-${value?.reisetilskuddId}`} reisetilskudd={value} />)}
-      </Vis>
+      <div className="dine-reisetilskudd-wrapper">
+        <Vis hvis={reisetilskuddene}>
+          <Element className="nye-reisetilskuddsøknader">Nye søknader om reisetilskudd</Element>
+          {reisetilskuddene?.map((value) => <Reisetilskudd key={`reisetilskudd-${value?.reisetilskuddId}`} reisetilskudd={value} />)}
+        </Vis>
+      </div>
       <Vis hvis={reisetilskuddene === undefined}>
         <Normaltekst>Teknisk feil, kunne ikke finne noen reisetilskudd</Normaltekst>
       </Vis>

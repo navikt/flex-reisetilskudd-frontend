@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Element } from 'nav-frontend-typografi';
+import { Element, Systemtittel } from 'nav-frontend-typografi';
 import './reisetilskudd.less';
 import { Link } from 'react-router-dom';
 import { HoyreChevron } from 'nav-frontend-chevron';
@@ -75,27 +75,31 @@ const Reisetilskudd : React.FC<Props> = ({ reisetilskudd }) : ReactElement => {
       className="reisetilskudd-element-wrapper"
       onClick={() => settReisetilskuddTilGlobalState(reisetilskudd)}
     >
-      <SøknadsIkon />
-      <Element>
-        {reisetilskudd.orgNavn}
-        {' '}
-        (org.nr
-        {reisetilskudd.orgNummer}
-        )
-      </Element>
-      <Vis hvis={reisetilskudd.fom && reisetilskudd.tom}>
-        <Element>
-          Gjelder perioden fra
+      <div className="reisetilskudd-ikon">
+        <SøknadsIkon />
+      </div>
+      <div className="reisetilskudd-innhold">
+        <Systemtittel className="reisetilskudd-innhold-tittel">Søknad om reisetilskudd</Systemtittel>
+        <Vis hvis={reisetilskudd.fom && reisetilskudd.tom}>
+          <Element className="reisetilskudd-periode">
+            Gjelder perioden fra
+            {' '}
+            {reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : ''}
+            {' '}
+            til
+            {' '}
+            {reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''}
+          </Element>
+        </Vis>
+        <Element className="reisetilskudd-orgnavn">
+          {reisetilskudd.orgNavn}
           {' '}
-          {reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : ''}
-          {' '}
-          til
-          {' '}
-          {reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''}
+          (org.nr
+          {reisetilskudd.orgNummer}
+          )
         </Element>
-      </Vis>
-      <HoyreChevron />
-      <hr />
+      </div>
+      <HoyreChevron className="reisetilskudd-chevron" />
     </Link>
   );
 };

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
-import { CheckboxProps } from '../../../types/types';
+import { CheckboxProps } from '../../../models/sporsmal';
 import 'nav-frontend-skjema-style';
 import { useAppStore } from '../../../data/stores/app-store';
 import { transportalternativerVerdier } from '../sporsmalTekster';
