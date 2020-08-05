@@ -1,11 +1,75 @@
-describe('Tester reisetilskuddsøknaden', () => {
-    
-    //Sykmelding id: http://localhost:3000/soknaden/f0cb53e1-1db1-419b-ae83-3e5eeca81d33/1
+import { utbetalingSpørsmålVerdier } from '../../src/components/sporsmal/sporsmalTekster';
 
-    const url:string = 'http://localhost:3000/soknaden/f0cb53e1-1db1-419b-ae83-3e5eeca81d33/1'
-    
+interface ReisetilskuddInterface {
+    fnr?: string,
+    fom?: string,
+    tom?: string,
+  
+    utbetalingTilArbeidsgiver?: string,
+  
+    går?: boolean,
+    sykler?: boolean,
+    kollektivtransport?: number,
+    egenBil?: number,
+  
+    orgNavn?: string,
+    orgNummer?: string,
+    reisetilskuddId?: string,
+    sykmeldingId?: string,
+  }
+
+describe('Tester reisetilskuddsøknaden', () => {
+    const mockReisetilskudd : ReisetilskuddInterface[] = [
+        {
+          fnr: '01010112345',
+          fom: '2020-08-03',
+          tom: '2020-08-03',
+      
+          orgNavn: 'Mock Arbeid AS',
+          orgNummer: '123123123',
+      
+          utbetalingTilArbeidsgiver: utbetalingSpørsmålVerdier.MEG,
+      
+          går: true,
+          sykler: true,
+          kollektivtransport: 42,
+          egenBil: 0,
+      
+          reisetilskuddId: '28fa10b8-c9af-4a7a-a0b2-90caed65ab4c',
+          sykmeldingId: '72ea12dd-eabc-49ed-910f-5ecd50e7dd5c',
+        },
+        {
+          fnr: '01010112345',
+          fom: '2020-05-13',
+          orgNavn: 'Mock Vaskeri Vaskerelven',
+          orgNummer: '9237419',
+      
+          utbetalingTilArbeidsgiver: utbetalingSpørsmålVerdier.ARBEIDSGIVER,
+      
+          går: true,
+          sykler: false,
+          kollektivtransport: 0,
+          egenBil: 13,
+      
+          reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
+          sykmeldingId: '72ea1sdd-eabc-49ed-910f-5ecd50e7dd5c',
+        },
+      ];
+
+    const url:string = `http://localhost:3000/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`
 
     before(() => {
+        cy.server()
+        cy.route({
+            method: 'GET',
+            url: 'http://localhost:6969/reisetilskudd/reisetilskudd',
+            response: mockReisetilskudd
+        })
+        cy.route({
+            method: 'POST',
+            url: 'http://localhost:6969/reisetilskudd/reisetilskudd',
+            response: ''
+        })
         cy.visit(url)
     })
 
@@ -18,11 +82,11 @@ describe('Tester reisetilskuddsøknaden', () => {
         cy.contains('Utbetaling til arbeidsgiver')
         cy.contains('Skal reisetilskuddet utbetales til deg eller til Arbeids- og velferdsetaten (org.nr. 392392482849)?')
     })
-    
+
     describe('Utfylling og validering av side 1', ()=>{
 
         it('Tar tak i meg-knapp og clicker', ()=> {
-            cy.url().should('include', `soknaden/f0cb53e1-1db1-419b-ae83-3e5eeca81d33/1`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`)
             let megknapp = cy.get('.inputPanel').children().eq(1)
             megknapp.should('be.visible')
             megknapp.click()
@@ -43,9 +107,7 @@ describe('Tester reisetilskuddsøknaden', () => {
     describe('Utfylling av side 2', ()=>{
     
         it('fyller ut går, egen bil, klikker på hjelpetekst, fylle rinn km', ()=> {
-            /*hack for å komme seg videre til neste side uten å authentisere*/
-            cy.visit('http://localhost:3000/soknaden/f0cb53e1-1db1-419b-ae83-3e5eeca81d33/2')
-            cy.url().should('include', `soknaden/f0cb53e1-1db1-419b-ae83-3e5eeca81d33/2`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/2`)
             cy.contains('Går').click({ force: true })
             cy.get('#transport-går').click( {force: true})
             cy.contains('Sykler').click({ force: true })
@@ -85,8 +147,7 @@ describe('Tester reisetilskuddsøknaden', () => {
     describe('Innholdsvalidering side 3', ()=>{
     
         it('sjekker at siden inneholder elementer', () =>{
-            cy.visit('http://localhost:3000/soknaden/f0cb53e1-1db1-419b-ae83-3e5eeca81d33/3')
-            cy.url().should('include', `soknaden/f0cb53e1-1db1-419b-ae83-3e5eeca81d33/3`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/3`)
             cy.contains('Last opp dine kvitteringer')
             cy.contains('Her kan du laste opp kvitteringer fra reisetilskuddsperioden.')
             cy.get('.last-opp-kvittering-tekst').should('be.visible')
@@ -118,8 +179,7 @@ describe('Tester reisetilskuddsøknaden', () => {
     describe('Innholdsvalidering side 4', ()=>{
     
         it('sjekker at oppsummeringssiden inneholder elementer', ()=> {
-            cy.visit('http://localhost:3000/soknaden/f0cb53e1-1db1-419b-ae83-3e5eeca81d33/4')
-            cy.url().should('include', `soknaden/f0cb53e1-1db1-419b-ae83-3e5eeca81d33/4`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/4`)
             cy.contains('Oppsummering av søknaden')
             cy.contains('Hvem skal pengene utbetales til?')
             cy.contains('Hvordan reiste du før sykmeldingen?')
