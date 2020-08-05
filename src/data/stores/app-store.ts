@@ -1,30 +1,11 @@
 /* eslint-disable object-property-newline */
 import constate from 'constate';
 import { useState } from 'react';
-import { KvitteringInterface, Transportmiddel, TransportmiddelAlternativer } from '../../models/kvittering';
+import { KvitteringInterface, TransportmiddelAlternativer } from '../../models/kvittering';
 import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
 import { ReisetilskuddInterface } from '../../models/reisetilskudd';
+import mockKvitteringer from '../../data/mock/kvitteringer';
 
-const mockKvitteringer: Array<KvitteringInterface> = [
-  {
-    reisetilskuddId: '6969',
-    kvitteringId: 'tetstsgddgsdsdsdsdsdgsdg',
-    navn: 'foo.txt',
-    storrelse: 1024 * 920,
-    belop: 32.2,
-    fom: new Date('2020-05-01'),
-    transportmiddel: Transportmiddel.EGEN_BIL,
-  },
-  {
-    reisetilskuddId: '12352',
-    kvitteringId: 'dhdywdjdjsjdsjdscehshdsd',
-    navn: 'bar.jpg',
-    storrelse: 812 * 920,
-    belop: 2.2,
-    fom: new Date('2034-09-29'),
-    transportmiddel: Transportmiddel.TAXI,
-  },
-];
 
 export const [AppStoreProvider, useAppStore] = constate(() => {
   /* UTBETALINGSSPØRSMÅL */

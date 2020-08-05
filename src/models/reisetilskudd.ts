@@ -14,4 +14,6 @@ export interface ReisetilskuddInterface {
   orgNummer?: string,
   reisetilskuddId?: string,
   sykmeldingId?: string,
+
+  kvitteringer: ReisetilskuddInterface[]
 }
