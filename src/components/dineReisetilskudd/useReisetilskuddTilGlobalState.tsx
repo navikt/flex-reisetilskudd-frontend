@@ -3,7 +3,7 @@ import { ReisetilskuddInterface } from '../../models/reisetilskudd';
 import { validerTall } from '../../utils/skjemavalidering';
 import { utbetalingSpørsmålVerdier } from '../sporsmal/sporsmalTekster';
 
-const useReisetilskuddTilGlobalState = (): (a: ReisetilskuddInterface) => void => {
+const useReisetilskuddTilGlobalState = (): (reisetilskudd: ReisetilskuddInterface) => void => {
   const {
     setActiveMegArbeidsgiver,
 
