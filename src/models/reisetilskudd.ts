@@ -3,7 +3,7 @@ export interface ReisetilskuddInterface {
   fom?: string,
   tom?: string,
 
-  utbetalingTilArbeidsgiver?: string,
+  utbetalingTilArbeidsgiver?: boolean,
 
   går?: boolean,
   sykler?: boolean,
