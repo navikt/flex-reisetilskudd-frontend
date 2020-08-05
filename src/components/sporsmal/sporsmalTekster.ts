@@ -1,6 +1,6 @@
 import {
   RadioSpørsmålProps, CheckboxProps, InputProps,
-} from '../../types/types';
+} from '../../models/sporsmal';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling/constants';
 import { Transportmiddel } from '../../models/kvittering';
 

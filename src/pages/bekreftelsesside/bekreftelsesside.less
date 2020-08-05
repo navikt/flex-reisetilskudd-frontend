@@ -1,66 +1,74 @@
 .bekreftelsesside-page-wrapper{
-    background-color: rgb(238, 238, 238);
     padding-top: 5rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 
-    span:before{
-        content:" "; 
-        display:inline-block; 
+    span.nummer-circle-separator:before{
+        content:" ";
+        display:inline-block;
         width:32px;
     }
-}
 
-.liste-wrapper{
-    width: 700px;
-    justify-content: center;
-    background-color: white;
-    padding-top: 3rem;
-    padding-bottom: 2rem;
-}
-.tekstwrapper{
-    padding-left: 3rem;
-    padding-right: 3rem;
-    display: flex;
-    justify-content: center;
-}
+    .liste-wrapper{
+        max-width: 670px;
+        justify-content: center;
+        background-color: white;
+        padding-top: 3rem;
+        padding-bottom: 2rem;
+    }
+    .tekstwrapper{
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
 
-.veien-videre-wrapper {
-    width: 700px;
-    padding-top: 3rem ;
-    padding-bottom: 10rem;
-}
+    .veien-videre-wrapper {
+        padding-top: 3rem ;
+        padding-bottom: 10rem;
+    }
 
-.gronn-checkbox{
-    border-top: 1px solid #06893A;
-    border-left: 1px solid #06893A;
-    border-right: 1px solid #06893A;
-    border-bottom: none;
-    justify-content: center;
-}
+    .gronn-checkbox{
+        border-top: 1px solid #06893A;
+        border-left: 1px solid #06893A;
+        border-right: 1px solid #06893A;
+        border-bottom: none;
+        justify-content: center;
+    }
 
-.bla-info{
-    background-color: white;
-    justify-content: center;
-}
+    .bla-info{
+        background-color: white;
+        justify-content: center;
+    }
 
-.numberCircle{
-    border-radius: 50%;
-    min-width: 1em;
-    height: 1em;
-    padding: 8px;
+    .numberCircle{
+        border-radius: 50%;
+        min-width: 1em;
+        height: 1em;
+        padding: 8px;
 
-    background: rgb(125, 181, 141);
-    color: black;
-    text-align: center;
-    font: 14px Arial, sans-serif;
-}
+        background: rgb(125, 181, 141);
+        color: black;
+        text-align: center;
+        font: 14px Arial, sans-serif;
+    }
 
-.inline-container{
-    display:flex;
-    flex-direction:row;
-    vertical-align: text-top;
-    padding-bottom: 1.5rem;
+    .inline-container{
+        display:flex;
+        flex-direction:row;
+        vertical-align: text-top;
+        padding-bottom: 1.5rem;
+    }
+
+    span.uthevet-tittel {
+        display: block;
+        width: 100%;
+        font-weight: bold;
+    }
+
+    span.tekstblokk {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
 }

@@ -3,6 +3,7 @@ import constate from 'constate';
 import { useState } from 'react';
 import { KvitteringInterface, Transportmiddel, TransportmiddelAlternativer } from '../../models/kvittering';
 import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
+import { ReisetilskuddInterface } from '../../models/reisetilskudd';
 
 const mockKvitteringer: Array<KvitteringInterface> = [
   {
@@ -26,6 +27,19 @@ const mockKvitteringer: Array<KvitteringInterface> = [
 ];
 
 export const [AppStoreProvider, useAppStore] = constate(() => {
+  /* GENERELT */
+  const [
+    reisetilskuddene, settReisetilskuddene,
+  ] = useState<ReisetilskuddInterface[] | undefined>();
+  const [
+    aktivtReisetilskuddId, settAktivtReisetilskuddId,
+  ] = useState<string>();
+
+  /* UTBETALINGSSPØRSMÅL */
+  const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
+  const [utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
+  ] = useState<boolean | undefined>(undefined);
+
   /* DAGENS TRANSPORTMIDDEL */
   const [dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
   ] = useState<boolean>(false);
@@ -41,22 +55,33 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
   ] = useState<boolean | undefined>(undefined);
 
-  const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
-  const [utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
-  ] = useState<boolean | undefined>(undefined);
+  /* KVITTERINGSOPPLASTING */
   const [kvitteringer, settKvitteringer] = useState<KvitteringInterface[]>(mockKvitteringer);
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [filopplasterFeilmeldinger, settFilopplasterFeilmeldinger] = useState<string[]>([]);
   const [åpenFilopplasterModal, settÅpenFilopplasterModal] = useState<boolean>(false);
   const [
+    transportmiddelKvittering, settTransportmiddelKvittering,
+  ] = useState<TransportmiddelAlternativer>();
+
+  /* OPPLYSNINGER FRA SYKMELDINGEN */
+  const [
     opplysningerSykmeldinger,
     settOpplysningerSykmeldinger,
   ] = useState<SykmeldingOpplysningInterface[] | undefined>(undefined);
   const [
-    transportmiddelKvittering, settTransportmiddelKvittering,
-  ] = useState<TransportmiddelAlternativer>();
+    sykmeldingID, settSykmeldingID,
+  ] = useState<string>('');
 
   return {
+    /* GENERELT */
+    reisetilskuddene, settReisetilskuddene,
+    aktivtReisetilskuddId, settAktivtReisetilskuddId,
+
+    /* UTBETALINGSSPØRSMÅL */
+    activeMegArbeidsgiver, setActiveMegArbeidsgiver,
+    utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
+
     /* DAGENS TRANSPORTMIDDEL */
     dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
     dagensTransportMiddelSyklerChecked, settDagensTransportMiddelSyklerChecked,
@@ -66,13 +91,15 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     antallKilometerState, settAntallKilometerState,
     dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
 
-    activeMegArbeidsgiver, setActiveMegArbeidsgiver,
-    utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
+    /* KVITTERINGSOPPLASTING */
     kvitteringer, settKvitteringer,
     uopplastetFil, settUopplastetFil,
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
     åpenFilopplasterModal, settÅpenFilopplasterModal,
-    opplysningerSykmeldinger, settOpplysningerSykmeldinger,
     transportmiddelKvittering, settTransportmiddelKvittering,
+
+    /* OPPLYSNINGER FRA SYKMELDINGEN */
+    opplysningerSykmeldinger, settOpplysningerSykmeldinger,
+    sykmeldingID, settSykmeldingID,
   };
 });

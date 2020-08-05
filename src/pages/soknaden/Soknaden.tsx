@@ -1,21 +1,58 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import {
   useParams,
+  useHistory,
 } from 'react-router-dom';
 import Brodsmuler from '../../components/brodsmoler/Brodsmuler';
 import Kvitteringsopplasting from '../kvitteringsopplasting/Kvitteringsopplasting';
 import Utbetaling from '../utbetaling/Utbetaling';
 import TilbakeKnapp from '../../components/knapper/TilbakeKnapp';
-import SendKnapp from '../../components/knapper/SendKnapp';
 import DagensTransportmiddel from '../dagens-transportmiddel/DagensTransportmiddel';
 import Vis from '../../components/Vis';
 import Oppsummering from '../oppsummering/Oppsummering';
 import SykmeldingPanel from '../../components/sykmeldingOpplysninger/SykmeldingPanel';
 import './soknaden.less';
+import { useAppStore } from '../../data/stores/app-store';
+
+import hentReisetilskudd from '../../data/fetcher/hentReisetilskudd';
+import useReisetilskuddTilGlobalState from '../../components/dineReisetilskudd/useReisetilskuddTilGlobalState';
 
 function Soknaden(): ReactElement {
-  const { soknadssideID } = useParams();
+  const history = useHistory();
+
+  const { soknadssideID, reisetilskuddID } = useParams();
   const idNum = Number(soknadssideID);
+
+  const settReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState();
+
+  const {
+    aktivtReisetilskuddId,
+    settAktivtReisetilskuddId,
+    reisetilskuddene,
+    settReisetilskuddene,
+  } = useAppStore();
+
+  useEffect(() => {
+    if (aktivtReisetilskuddId !== reisetilskuddID) {
+      hentReisetilskudd(settReisetilskuddene);
+    }
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [aktivtReisetilskuddId, reisetilskuddID]);
+
+  useEffect(() => {
+    const eksisterendeReisetilskudd = reisetilskuddene?.find(
+      (reisetilskudd) => reisetilskudd.reisetilskuddId === reisetilskuddID
+      );
+    if (eksisterendeReisetilskudd) {
+      settAktivtReisetilskuddId(reisetilskuddID);
+      settReisetilskuddTilGlobalState(eksisterendeReisetilskudd);
+    } else if (reisetilskuddene !== undefined) {
+      history.push('/');
+    }
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [reisetilskuddene, reisetilskuddID]);
 
   return (
     <div className="app-page sporsmal-wrapper">
@@ -33,7 +70,6 @@ function Soknaden(): ReactElement {
       </Vis>
       <Vis hvis={idNum === 4}>
         <Oppsummering />
-        <SendKnapp />
       </Vis>
     </div>
   );

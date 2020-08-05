@@ -3,7 +3,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { utbetalingSpørsmålVerdier } from '../sporsmalTekster';
 import { useAppStore } from '../../../data/stores/app-store';
-import { RadioSpørsmålProps } from '../../../types/types';
+import { RadioSpørsmålProps } from '../../../models/sporsmal';
 import './radiosporsmal-utbetaling.less';
 
 const RadioSpørsmålUtbetaling = ({

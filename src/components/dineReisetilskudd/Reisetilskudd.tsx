@@ -1,69 +1,54 @@
 import React, { ReactElement } from 'react';
-import { Element } from 'nav-frontend-typografi';
+import { Element, Systemtittel } from 'nav-frontend-typografi';
 import './reisetilskudd.less';
 import { Link } from 'react-router-dom';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { SøknadsIkon } from '../../assets/ikoner';
 import { DatoFormat, formatertDato } from '../../utils/dato';
 import Vis from '../Vis';
-
-interface InngangsProps {
-  to: string;
-  children: React.ReactNode;
-}
-
-interface ReisetilskuddInterface {
-  fnr?: string,
-  fom?: string,
-  orgNavn?: string,
-  orgNummer?: string,
-  reisetilskuddId?: string,
-  sykmeldingId?: string,
-  tom?: string,
-}
+import { ReisetilskuddInterface } from '../../models/reisetilskudd';
+import useReisetilskuddTilGlobalState from './useReisetilskuddTilGlobalState';
 
 interface Props {
   reisetilskudd: ReisetilskuddInterface,
 }
 
-const Reisetilskudd = ({ reisetilskudd }: Props) : ReactElement => (
-  <Link to={`/soknaden/${reisetilskudd.reisetilskuddId}/1`} className="reisetilskudd-element-wrapper">
-    <SøknadsIkon />
-    {
-        /*
-        <Element className="reisetilskudd-id">
-      Reisetilskudd-ID:
-      {' '}
-      {reisetilskudd.reisetilskuddId}
-    </Element>
-    <Element className="sykmelding-id">
-      Sykmelding-ID:
-      {' '}
-      {reisetilskudd.sykmeldingId}
-    </Element>
-         */
-      }
-    <Element>
-      {reisetilskudd.orgNavn}
-      {' '}
-      (org.nr
-      {reisetilskudd.orgNummer}
-      )
-    </Element>
-    <Vis hvis={reisetilskudd.fom && reisetilskudd.tom}>
-      <Element>
-        Gjelder perioden fra
-        {' '}
-        {reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : ''}
-        {' '}
-        til
-        {' '}
-        {reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''}
-      </Element>
-    </Vis>
-    <HoyreChevron />
-    <hr />
-  </Link>
-);
+const Reisetilskudd : React.FC<Props> = ({ reisetilskudd }) : ReactElement => {
+  const settReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState();
+
+  return (
+    <Link
+      to={`/soknaden/${reisetilskudd.reisetilskuddId}/1`}
+      className="reisetilskudd-element-wrapper"
+      onClick={() => settReisetilskuddTilGlobalState(reisetilskudd)}
+    >
+      <div className="reisetilskudd-ikon">
+        <SøknadsIkon />
+      </div>
+      <div className="reisetilskudd-innhold">
+        <Systemtittel className="reisetilskudd-innhold-tittel">Søknad om reisetilskudd</Systemtittel>
+        <Vis hvis={reisetilskudd.fom && reisetilskudd.tom}>
+          <Element className="reisetilskudd-periode">
+            Gjelder perioden fra
+            {' '}
+            {reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : ''}
+            {' '}
+            til
+            {' '}
+            {reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''}
+          </Element>
+        </Vis>
+        <Element className="reisetilskudd-orgnavn">
+          {reisetilskudd.orgNavn}
+          {' '}
+          (org.nr
+          {reisetilskudd.orgNummer}
+          )
+        </Element>
+      </div>
+      <HoyreChevron className="reisetilskudd-chevron" />
+    </Link>
+  );
+};
 
 export default Reisetilskudd;

@@ -4,16 +4,28 @@ import { Undertittel } from 'nav-frontend-typografi';
 import './sykmeldingOpplysninger.less';
 import SykmeldingOpplysninger from './SykmeldingOpplysninger';
 import { useAppStore } from '../../data/stores/app-store';
-import { hentSykmeldinger } from './hentSykmeldinger';
+import { fåSykmeldingIDFraAktivtReisetilskuddID, hentSykmeldinger } from './hentSykmeldinger';
 
 const SykmeldingPanel = () : ReactElement => {
   const {
     settOpplysningerSykmeldinger,
+    sykmeldingID, settSykmeldingID,
+    aktivtReisetilskuddId,
   } = useAppStore();
 
   useEffect(() => {
-    hentSykmeldinger(settOpplysningerSykmeldinger);
-  }, [settOpplysningerSykmeldinger]);
+    if (sykmeldingID) {
+      hentSykmeldinger(settOpplysningerSykmeldinger, sykmeldingID);
+    }
+  }, // eslint-disable-next-line react-hooks/exhaustive-deps
+  [settOpplysningerSykmeldinger, sykmeldingID]);
+
+  useEffect(() => {
+    if (aktivtReisetilskuddId) {
+      fåSykmeldingIDFraAktivtReisetilskuddID(aktivtReisetilskuddId, settSykmeldingID);
+    }
+  }, // eslint-disable-next-line react-hooks/exhaustive-deps
+  [aktivtReisetilskuddId]);
 
   return (
     <div className="sykmelding-panel-wrapper">

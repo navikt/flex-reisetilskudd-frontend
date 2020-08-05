@@ -8,6 +8,7 @@ export enum DatoFormat {
   NATURLIG_KORT = 'Do MMMM',
   NATURLIG_LANG = 'Do MMMM YYYY',
   NATURLIG_FULL = 'dddd Do MMMM YYYY',
+  FLATPICKR = 'YYYY-MM-DD',
 }
 
 export enum TidsFormat {

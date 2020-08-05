@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Systemtittel, Element } from 'nav-frontend-typografi';
+import moment from 'moment';
 import Modal from 'nav-frontend-modal';
 import {
   Feiloppsummering, FeiloppsummeringFeil, SkjemaGruppe, Input,
@@ -25,11 +26,12 @@ import { logger } from '../../../utils/logger';
 import { post, put } from '../../../data/fetcher/fetcher';
 import Datovelger from '../../kvittering/datovelger/Datovelger';
 import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering';
+import { getIDag, DatoFormat, formatertDato } from '../../../utils/dato';
 
 const FilopplasterModal: React.FC = () => {
   Modal.setAppElement('#root'); // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
-  const { soknadsID } = useParams();
+  const { reisetilskuddID } = useParams();
   const [laster, settLaster] = useState<boolean>(false);
   const [dato, settDato] = useState<Date | null>(null);
   const [beløp, settBeløp] = useState<string>('');
@@ -83,6 +85,15 @@ const FilopplasterModal: React.FC = () => {
         {
           skjemaelementId: kvitteringDatoSpørsmål.id,
           feilmelding: 'Vennligst velg en gyldig dato',
+        },
+      ];
+    }
+    if (moment(formatertDato(nyDato, DatoFormat.FLATPICKR))
+      .isAfter(getIDag(DatoFormat.FLATPICKR))) {
+      return [
+        {
+          skjemaelementId: kvitteringDatoSpørsmål.id,
+          feilmelding: 'Vennligst velg en dato før dagens dato',
         },
       ];
     }
@@ -140,7 +151,7 @@ const FilopplasterModal: React.FC = () => {
         .then((response) => {
           if (response.parsedBody?.id) {
             const kvittering: KvitteringInterface = {
-              reisetilskuddId: soknadsID,
+              reisetilskuddId: reisetilskuddID,
               navn: fil.name,
               storrelse: fil.size,
               belop: parsedBeløp,
@@ -211,6 +222,7 @@ const FilopplasterModal: React.FC = () => {
             mode="single"
             onChange={(nyDato) => oppdaterDato(nyDato[0])}
             feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
+            maksDato=""
           />
           <div>
             <Element className="kvittering-beløp-input">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>
