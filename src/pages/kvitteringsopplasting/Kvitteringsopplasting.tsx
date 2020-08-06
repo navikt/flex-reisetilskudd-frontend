@@ -11,10 +11,9 @@ import DragAndDrop from '../../components/filopplaster/dragAndDrop/DragAndDrop';
 import TotalBelop from '../../components/kvittering/totaltBelop/TotaltBelop';
 import { hjelpetekstKvitteringopplasting } from '../../constants/hjelpetekster';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
-
 import { gåTilNesteSide } from '../../utils/navigasjon';
 
-const Kvitteringsopplasting: React.FC = () : ReactElement => {
+const Kvitteringsopplasting: React.FC = (): ReactElement => {
   const { soknadssideID } = useParams();
   const soknadssideIDTall = Number(soknadssideID);
 
@@ -27,8 +26,8 @@ const Kvitteringsopplasting: React.FC = () : ReactElement => {
     <div className="last-opp-kvittering-wrapper">
       <Systemtittel className="last-opp-kvittering-overskrift">Last opp dine kvitteringer</Systemtittel>
       <div className="last-opp-kvittering-tekst">
-        <Normaltekst>Her kan du laste opp kvitteringer fra reisetilskuddsperioden.</Normaltekst>
-        <Hjelpetekst className="kvitteringsopplasting-hjelpetekst">
+        <Normaltekst id="kvitteringsopplastning-overskrift" aria-describedby="min-hjelpetekst-kvitteringsopplastning">Her kan du laste opp kvitteringer fra reisetilskuddsperioden.</Normaltekst>
+        <Hjelpetekst className="kvitteringsopplasting-hjelpetekst" id="min-hjelpetekst-kvitteringsopplastning" aria-describedby="kvitteringsopplastning-overskrift">
           {hjelpetekstKvitteringopplasting.hjelpetekst}
         </Hjelpetekst>
       </div>

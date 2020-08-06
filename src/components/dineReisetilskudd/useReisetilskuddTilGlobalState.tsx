@@ -23,10 +23,12 @@ const useReisetilskuddTilGlobalState = (): (reisetilskudd: ReisetilskuddInterfac
   return (valgtReisetilskudd : ReisetilskuddInterface) => {
     settAktivtReisetilskuddId(valgtReisetilskudd.reisetilskuddId);
 
-    if (valgtReisetilskudd.utbetalingTilArbeidsgiver) {
+    if (valgtReisetilskudd.utbetalingTilArbeidsgiver === true) {
       setActiveMegArbeidsgiver(utbetalingSpørsmålVerdier.ARBEIDSGIVER);
-    } else {
+    } else if (valgtReisetilskudd.utbetalingTilArbeidsgiver === false) {
       setActiveMegArbeidsgiver(utbetalingSpørsmålVerdier.MEG);
+    } else if (valgtReisetilskudd.utbetalingTilArbeidsgiver === undefined) {
+      setActiveMegArbeidsgiver('');
     }
 
     if (valgtReisetilskudd.går) {

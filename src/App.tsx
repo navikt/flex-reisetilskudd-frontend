@@ -19,12 +19,6 @@ function App() : ReactElement {
               <Soknaden />
             </div>
           </Route>
-          <Route path="/kvittering">
-            <div className="app-main-content">
-              <Header />
-              <BekreftelsesSide />
-            </div>
-          </Route>
           <Route path="/bekreftelse">
             <div className="app-main-content grey">
               <BekreftelsesSide />

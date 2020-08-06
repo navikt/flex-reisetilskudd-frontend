@@ -7,6 +7,14 @@ import { ReisetilskuddInterface } from '../../models/reisetilskudd';
 import mockKvitteringer from '../mock/kvitteringer';
 
 export const [AppStoreProvider, useAppStore] = constate(() => {
+  /* GENERELT */
+  const [
+    reisetilskuddene, settReisetilskuddene,
+  ] = useState<ReisetilskuddInterface[] | undefined>();
+  const [
+    aktivtReisetilskuddId, settAktivtReisetilskuddId,
+  ] = useState<string>();
+
   /* UTBETALINGSSPØRSMÅL */
   const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
   const [utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
@@ -32,6 +40,9 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
   const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
   const [filopplasterFeilmeldinger, settFilopplasterFeilmeldinger] = useState<string[]>([]);
   const [åpenFilopplasterModal, settÅpenFilopplasterModal] = useState<boolean>(false);
+  const [
+    transportmiddelKvittering, settTransportmiddelKvittering,
+  ] = useState<TransportmiddelAlternativer>();
 
   /* OPPLYSNINGER FRA SYKMELDINGEN */
   const [
@@ -39,21 +50,14 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     settOpplysningerSykmeldinger,
   ] = useState<SykmeldingOpplysningInterface[] | undefined>(undefined);
   const [
-    transportmiddelKvittering, settTransportmiddelKvittering,
-  ] = useState<TransportmiddelAlternativer>();
-  const [
     sykmeldingID, settSykmeldingID,
   ] = useState<string>('');
 
-  const [
-    reisetilskuddene, settReisetilskuddene,
-  ] = useState<ReisetilskuddInterface[] | undefined>();
-
-  const [
-    aktivtReisetilskuddId, settAktivtReisetilskuddId,
-  ] = useState<string>();
-
   return {
+    /* GENERELT */
+    reisetilskuddene, settReisetilskuddene,
+    aktivtReisetilskuddId, settAktivtReisetilskuddId,
+
     /* UTBETALINGSSPØRSMÅL */
     activeMegArbeidsgiver, setActiveMegArbeidsgiver,
     utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
@@ -72,12 +76,10 @@ export const [AppStoreProvider, useAppStore] = constate(() => {
     uopplastetFil, settUopplastetFil,
     filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
     åpenFilopplasterModal, settÅpenFilopplasterModal,
+    transportmiddelKvittering, settTransportmiddelKvittering,
 
     /* OPPLYSNINGER FRA SYKMELDINGEN */
     opplysningerSykmeldinger, settOpplysningerSykmeldinger,
-    transportmiddelKvittering, settTransportmiddelKvittering,
-    reisetilskuddene, settReisetilskuddene,
-    aktivtReisetilskuddId, settAktivtReisetilskuddId,
     sykmeldingID, settSykmeldingID,
   };
 });
