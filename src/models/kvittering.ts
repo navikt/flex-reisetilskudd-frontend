@@ -5,6 +5,7 @@ export interface KvitteringInterface {
   storrelse: number;
   belop: number;
   fom: Date;
+  tom?: Date;
   transportmiddel?: string;
 }
 
