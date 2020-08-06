@@ -9,6 +9,9 @@ import { formatertDato, DatoFormat } from '../../../utils/dato';
 import { useAppStore } from '../../../data/stores/app-store';
 import './filMedInfo.less';
 import Vis from '../../Vis';
+import { del } from '../../../data/fetcher/fetcher';
+import env from '../../../utils/environment';
+import { logger } from '../../../utils/logger';
 
 interface Props {
   fil: KvitteringInterface;
@@ -28,6 +31,8 @@ const FilMedInfo: React.FC<Props> = ({ fil, fjernKnapp }) => {
     settKvitteringer(kvitteringer.filter(
       (kvittering) => kvittering.kvitteringId !== kvitteringSomSkalSlettes.kvitteringId,
     ));
+    del<string>(`${env.apiUrl}/kvittering`, { kvitteringId: fil.kvitteringId })
+      .catch((error) => logger.error('Feil under sletting av kvittering', error));
   };
 
   const håndterKlikk = () => {
