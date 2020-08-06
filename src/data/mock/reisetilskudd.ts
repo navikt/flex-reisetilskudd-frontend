@@ -72,6 +72,8 @@ const mockReisetilskudd : ReisetilskuddInterface[] = [
 
     reisetilskuddId: '1ajsdlkajlsdkjalksjdlkajd',
     sykmeldingId: '72ea1sdd-eabc-910f-5ecd50e7dd5c',
+
+    kvitteringer: [],
   },
 ];
 
