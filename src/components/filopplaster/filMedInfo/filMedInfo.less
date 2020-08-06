@@ -40,7 +40,8 @@
     margin: 0 auto;
     grid-template-areas:
     'kvitteringTittel storrelse belopTittel datoTittel';
-    grid-template-columns: 15% 30% 35% 20%;
+    grid-template-columns: 30% 25% 25% 20%;
+    // grid-template-columns: 15% 30% 35% 20%;
     margin-bottom: 1rem;
 
     hr {
@@ -76,8 +77,8 @@
       margin: 0 auto;
       grid-template-areas:
       'kvittering storrelse belop dato slett';
-      grid-template-columns: 15% 25% 15% 15% 30%;
-  
+      grid-template-columns: 25% 15% 15% 15% 30%;
+
       .typo-normal {
         display: inline;
       }
@@ -109,7 +110,7 @@
 
         svg > path {
           fill: @navBla;
-          
+
         }
       }
       .knapp{
@@ -119,7 +120,7 @@
       .knapp:hover{
         svg > path {
           fill: white;
-          
+
         }
       }
     }
@@ -129,8 +130,8 @@
       margin: 0 auto;
       grid-template-areas:
       'kvittering storrelse belop dato';
-      grid-template-columns: 15% 30% 35% 20%;
-    
+      grid-template-columns: 30% 25% 25% 20%;
+
       .typo-normal {
         display: inline;
       }
@@ -159,7 +160,7 @@
   .mobil-dato{
     display: none;
   }
-  
+
   @media screen and (max-width: 450px){
     .kvitteringstitler-uten-slettknapp{
       display: none;
@@ -183,7 +184,7 @@
       'beloptittel belop 1'
       'datotittel dato dato'
       ;
-      grid-template-columns: 30% 35% 35%; 
+      grid-template-columns: 30% 35% 35%;
       .slett-knapp{
         transform: scale(0.85);
         margin-left: auto;
