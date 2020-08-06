@@ -16,9 +16,9 @@ export interface OpplastetKvitteringInterface {
 export enum Transportmiddel {
   SPØRSMÅLS_KEY = 'kvittering-transportmiddel-spørsmål',
   TAXI = 'Taxi',
-  KOLLEKTIV = 'Kollektivtransport',
+  KOLLEKTIVT = 'Kollektivtransport',
   EGEN_BIL = 'Egen bil'
 }
 
-export type TransportmiddelAlternativer = Transportmiddel.EGEN_BIL | Transportmiddel.KOLLEKTIV
+export type TransportmiddelAlternativer = Transportmiddel.EGEN_BIL | Transportmiddel.KOLLEKTIVT
 | Transportmiddel.TAXI | undefined;

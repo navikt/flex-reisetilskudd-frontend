@@ -29,9 +29,9 @@ const TransportmiddelKvittering : React.FC<Props> = ({ handleChange }) : ReactEl
           id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.EGEN_BIL}`,
         },
         {
-          label: Transportmiddel.KOLLEKTIV,
-          value: Transportmiddel.KOLLEKTIV,
-          id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.KOLLEKTIV}`,
+          label: Transportmiddel.KOLLEKTIVT,
+          value: Transportmiddel.KOLLEKTIVT,
+          id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.KOLLEKTIVT}`,
         },
       ]}
       checked={transportmiddelKvittering}
