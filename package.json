@@ -56,7 +56,7 @@
     "nav-frontend-typografi-style": "^1.0.22",
     "nav-frontend-veileder": "^2.0.20",
     "nav-frontend-veileder-style": "^2.0.15",
-    "npm": "^6.14.6",
+    "npm": "^6.14.8",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-collapse": "^5.0.1",
@@ -66,7 +66,7 @@
     "react-flatpickr": "^3.10.1",
     "react-modal": "^3.11.2",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.3",
     "typescript": "^3.7.5",
     "uuid": "^8.2.0"
   },
@@ -95,7 +95,7 @@
   "scripts": {
     "start-mock": "MOCK_BACKEND=true npm run generate-env-config && REACT_APP_DECORATOR_URL=https://www.nav.no/dekoratoren craco start",
     "start": "npm run generate-env-config && craco start",
-    "build": "PUBLIC_URL=##PUBLIC_URL## REACT_APP_DECORATOR_URL=##DECORATOR_URL## craco build",
+    "build": "REACT_APP_DECORATOR_URL=##DECORATOR_URL## craco build",
     "test": "craco test",
     "cypress:open": "cypress open",
     "eject": "craco eject",
