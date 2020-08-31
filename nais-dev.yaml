@@ -1,0 +1,34 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: flex-reisetilskudd-frontend
+  namespace: flex
+  labels:
+    team: flex
+spec:
+  image: {{ image }}
+  port: 8080
+  ingresses:
+    - "https://reisetilskudd.dev.nav.no/"
+  replicas:
+    min: 2
+    max: 2
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  liveness:
+    path: internal/isAlive
+  readiness:
+    path: internal/isReady
+  env:
+    - name: FLEX_REISETILSKUDD_BACKEND_PROXY_ROOT
+      value: "https://flex-reisetilskudd-backend-proxy.dev.nav.no"
+    - name: LOGINSERVICE_URL
+      value: "https://loginservice.dev.nav.no/login"
+    - name: DECORATOR_URL
+      value: "https://dekoratoren.dev.nav.no"

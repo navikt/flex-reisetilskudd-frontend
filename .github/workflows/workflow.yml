@@ -37,6 +37,25 @@ jobs:
             docker build . -f Dockerfile -t ${IMAGE}
             docker push ${IMAGE}
 
+  deploy-to-dev-gcp:
+    name: Deploy to dev-gcp
+    needs: build-and-publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/download-artifact@v1
+        with:
+          name: VERSION.txt
+          path: .
+      - run: echo "::set-env name=VERSION::"`cat VERSION.txt`""
+      - run: echo "::set-env name=IMAGE::"docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP:$VERSION""
+      - name: Deploy to dev-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais-dev.yaml
+
   tag-image-as-latest:
     if: github.ref == 'refs/heads/master'
     name: Tag dockerimage as latest

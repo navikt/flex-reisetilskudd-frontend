@@ -4,12 +4,8 @@ class Environment {
   /* eslint-disable-next-line */
   private env = (window as any)._env_;
 
-  get reisepengerUrl() {
-    return this.env.REISEPENGER_URL;
-  }
-
   get apiUrl() {
-    return this.env.API_URL;
+    return this.env.FLEX_REISETILSKUDD_BACKEND_PROXY_ROOT;
   }
 
   get mockApiUrl() {
