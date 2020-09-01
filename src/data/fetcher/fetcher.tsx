@@ -53,9 +53,8 @@ export const put = async function<T>(
 export const del = async function<T>(
   path: string,
   // eslint-disable-next-line
-  body: any,
   args: RequestInit = {
-    method: 'delete', body: JSON.stringify(body), credentials: 'include', headers: { 'Content-Type': 'application/json' },
+    method: 'delete', credentials: 'include', headers: { 'Content-Type': 'application/json' },
   },
 ): Promise<HttpResponse<T>> {
   return fetcher<T>(new Request(path, args));

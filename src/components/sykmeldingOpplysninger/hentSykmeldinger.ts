@@ -50,7 +50,7 @@ export const faaRiktigSykmelding = (
 export const fåSykmeldingIDFraAktivtReisetilskuddID = (aktivtReisetilskuddID: string,
   callback: (s: string) => void) : void => {
   const { apiUrl } = env;
-  fetch(`${apiUrl}/reisetilskudd`, {
+  fetch(`${apiUrl}/api/v1/reisetilskudd`, {
     credentials: 'include',
   })
     .then(

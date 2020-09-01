@@ -19,7 +19,7 @@ import InputSporsmal from '../../components/sporsmal/inputSporsmal/InputSporsmal
 import VidereKnapp from '../../components/knapper/VidereKnapp';
 import { hjelpetekstDagensTransportmiddel } from '../../constants/hjelpetekster';
 import env from '../../utils/environment';
-import { post } from '../../data/fetcher/fetcher';
+import { put } from '../../data/fetcher/fetcher';
 import { logger } from '../../utils/logger';
 
 import { gåTilNesteSide } from '../../utils/navigasjon';
@@ -178,7 +178,7 @@ const DagensTransportmiddel = (): ReactElement => {
   ]);
 
   const handleVidereKlikk = () => {
-    post<TransportmiddelInterface>(`${env.apiUrl}/reisetilskudd`, {
+    put<TransportmiddelInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${reisetilskuddID}`, {
       reisetilskuddId: reisetilskuddID,
       går: dagensTransportMiddelGårChecked,
       sykler: dagensTransportMiddelSyklerChecked,

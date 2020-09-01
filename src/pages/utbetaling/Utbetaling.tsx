@@ -7,7 +7,7 @@ import { ArbeidsgiverInterface } from '../../models/arbeidsgiver';
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from './constants';
 import { Svaralternativ } from '../../models/sporsmal';
 import VidereKnapp from '../../components/knapper/VidereKnapp';
-import { post } from '../../data/fetcher/fetcher';
+import { put } from '../../data/fetcher/fetcher';
 
 import env from '../../utils/environment';
 import { gåTilNesteSide } from '../../utils/navigasjon';
@@ -84,7 +84,7 @@ const Utbetaling = (): ReactElement => {
 
   const handleVidereKlikk = () => {
     if (utbetalingspørsmålValidert) {
-      post<UtbetalingInterface>(`${env.apiUrl}/reisetilskudd`, {
+      put<UtbetalingInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${reisetilskuddID}`, {
         reisetilskuddId: reisetilskuddID,
         utbetalingTilArbeidsgiver: activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER,
       }).then(() => {

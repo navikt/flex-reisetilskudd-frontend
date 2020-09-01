@@ -23,7 +23,7 @@ import Fil from '../fil/Fil';
 import './filopplasterModal.less';
 import env from '../../../utils/environment';
 import { logger } from '../../../utils/logger';
-import { post, put } from '../../../data/fetcher/fetcher';
+import { post } from '../../../data/fetcher/fetcher';
 import Datovelger from '../../kvittering/datovelger/Datovelger';
 import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering';
 import { getIDag, DatoFormat, formatertDato } from '../../../utils/dato';
@@ -168,7 +168,7 @@ const FilopplasterModal: React.FC = () => {
           return null;
         })
         .then((kvittering) => {
-          put<KvitteringInterface>(`${env.apiUrl}/kvittering`, kvittering)
+          post<KvitteringInterface>(`${env.apiUrl}/api/v1/kvittering`, kvittering)
             .then(() => {
               settLaster(false);
               lukkModal();

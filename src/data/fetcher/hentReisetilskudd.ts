@@ -5,7 +5,7 @@ import { logger } from '../../utils/logger';
 
 const hentReisetilskudd = (callback : (reisetilskudd? : ReisetilskuddInterface[]) => void)
 : void => {
-  get<ReisetilskuddInterface[]>(`${env.apiUrl}/reisetilskudd`)
+  get<ReisetilskuddInterface[]>(`${env.apiUrl}/api/v1/reisetilskudd`)
     .then((req) => callback(req.parsedBody))
     .catch((err) => logger.error(err));
 };
