@@ -2,7 +2,7 @@ import { filstørrelseTilBytes } from '../components/filopplaster/utils'
 
 class Environment {
     /* eslint-disable-next-line */
-  private env = (window as any)._env_;
+    private env = (window as any)._env_;
 
     get apiUrl() {
         return this.env.FLEX_REISETILSKUDD_BACKEND_PROXY_ROOT
@@ -12,13 +12,13 @@ class Environment {
         return this.env.MOCK_API_URL
     }
 
-  get isQ1() {
-    return this.env.ENVIRONMENT === 'q1';
-  }
+    get isQ1() {
+        return this.env.ENVIRONMENT === 'q1'
+    }
 
-  get isProd() {
-    return this.env.ENVIRONMENT === 'prod';
-  }
+    get isProd() {
+        return this.env.ENVIRONMENT === 'prod'
+    }
 
     get loginServiceUrl() {
         return this.env.LOGIN_SERVICE_URL
