@@ -13,11 +13,11 @@ class Environment {
   }
 
   get isQ1() {
-    return this.env.IS_Q1 === 'TRUE';
+    return this.env.ENVIRONMENT === 'q1';
   }
 
   get isProd() {
-    return this.env.IS_PROD === 'TRUE';
+    return this.env.ENVIRONMENT === 'prod';
   }
 
   get loginServiceUrl() {
