@@ -1,0 +1,280 @@
+@import "../../../../node_modules/nav-frontend-core/less/_variabler";
+
+.kvitteringstitler {
+    display: grid;
+    margin: 0 auto 1rem;
+    grid-template-areas:
+    'kvitteringTittel storrelse belopTittel datoTittel';
+    grid-template-columns: 15% 25% 15% 45%;
+
+    hr {
+        border: 1px solid #b7b1a9;
+    }
+
+    .kvittering-tittel {
+        grid-area: kvitteringTittel;
+    }
+
+    .filstorrelse {
+        grid-area: storrelse;
+        padding-top: 0.3rem;
+    }
+
+    .belop-tittel {
+        grid-area: belopTittel;
+    }
+
+    .dato-tittel {
+        grid-area: datoTittel;
+    }
+}
+
+.kvitteringstitler-uten-slettknapp {
+    display: grid;
+    margin: 0 auto 1rem;
+    grid-template-areas:
+    'kvitteringTittel storrelse belopTittel datoTittel';
+    grid-template-columns: 30% 25% 25% 20%;
+    // grid-template-columns: 15% 30% 35% 20%;
+
+    hr {
+        border: 1px solid #b7b1a9;
+    }
+
+    .kvittering-tittel {
+        grid-area: kvitteringTittel;
+    }
+
+    .filstorrelse {
+        grid-area: storrelse;
+        padding-top: 0.3rem;
+    }
+
+    .belop-tittel {
+        grid-area: belopTittel;
+    }
+
+    .dato-tittel {
+        grid-area: datoTittel;
+    }
+}
+
+.fil-med-info {
+    display: grid;
+    margin: 0 auto;
+    grid-template-areas:
+      'kvittering storrelse belop dato slett';
+    grid-template-columns: 25% 15% 15% 15% 30%;
+
+    .typo-normal {
+        display: inline;
+    }
+
+    .kvittering {
+        grid-area: kvittering;
+        display: flex;
+        align-items: center;
+    }
+
+    .filstorrelse {
+        padding-top: 0.54rem;
+    }
+
+    .belop {
+        padding-top: 0.54rem;
+        grid-area: belop;
+    }
+
+    .dato {
+        padding-top: 0.54rem;
+        grid-area: dato;
+        white-space: nowrap;
+    }
+
+    .slett-knapp {
+        padding: 0 0.5rem 0 0.5rem;
+        grid-area: slett;
+        margin: 0 0 0 auto;
+
+        svg > path {
+            fill: @navBla;
+
+        }
+    }
+
+    .knapp {
+        border: none;
+        font-weight: 400;
+    }
+
+    .knapp:hover {
+        svg > path {
+            fill: white;
+
+        }
+    }
+}
+
+.fil-med-info-uten-slettknapp {
+    display: grid;
+    margin: 0 auto;
+    grid-template-areas:
+      'kvittering storrelse belop dato';
+    grid-template-columns: 30% 25% 25% 20%;
+
+    .typo-normal {
+        display: inline;
+    }
+
+    .kvittering {
+        grid-area: kvittering;
+        display: flex;
+        align-items: center;
+    }
+
+    .belop {
+        padding-top: 0.3rem;
+        grid-area: belop;
+    }
+
+    .dato {
+        padding-top: 0.3rem;
+        grid-area: dato;
+        white-space: nowrap;
+    }
+}
+
+.mobil-belop {
+    display: none;
+}
+
+.mobil-dato {
+    display: none;
+}
+
+@media screen and (max-width: 450px) {
+    .kvitteringstitler-uten-slettknapp {
+        display: none;
+    }
+
+    .last-opp-kvittering-tekst {
+        .hjelpetekst__ikon {
+            transform: scale(1.5);
+        }
+    }
+
+    .vedleggsikon {
+        transform: scale(0.7);
+    }
+
+    .fil-med-info {
+        border: 1px solid #78706A;
+        border-radius: 0.3rem;
+        grid-template-areas:
+      'kvittering storrelse slett'
+      'beloptittel belop 1'
+      'datotittel dato dato';
+        grid-template-columns: 30% 35% 35%;
+
+        .slett-knapp {
+            transform: scale(0.85);
+            margin: 1.4rem 0 0 0;
+            padding: 0 0 0 0.5rem;
+        }
+    }
+
+    .mobil-belop {
+        margin-top: 0.3rem;
+        padding-top: 0.3rem;
+        display: flex;
+        padding-left: 2.2rem;
+        grid-area: beloptittel;
+    }
+
+    .mobil-dato {
+        margin-top: 0.5rem;
+        display: flex;
+        padding-left: 2.2rem;
+        grid-area: datotittel;
+    }
+
+    .kvitteringstitler {
+        display: none;
+    }
+
+    .kvittering {
+        margin-top: 1.5rem;
+        grid-area: kvittering;
+        margin-left: 0.5rem;
+    }
+
+    .filstorrelse {
+        margin-top: 1.5rem;
+        grid-area: storrelse;
+        padding-top: 0.2rem;
+        margin-left: 1rem;
+    }
+
+    .belop {
+        margin-top: 0.1rem;
+        padding-top: 0.2rem;
+        padding-bottom: 0.4rem;
+        grid-area: belop;
+        text-align: left;
+        margin-left: 1rem;
+    }
+
+    .dato {
+        padding-bottom: 1.4rem;
+        grid-area: dato;
+        text-align: left;
+        margin-left: 1rem;
+    }
+
+    .fil-med-info-uten-slettknapp {
+        border: 1px solid #78706A;
+        border-radius: 0.3rem;
+        grid-template-areas:
+      'kvittering storrelse'
+      'beloptittel belop '
+      'datotittel dato';
+        grid-template-columns: 50% 50%;
+
+        .vedleggsikon {
+            margin-left: 0.1rem;
+            transform: scale(0.7);
+        }
+
+        .mobil-belop {
+            margin: 0.7rem 0 0 0.5rem;
+            padding-right: 0;
+            padding-left: 1.5rem;
+        }
+
+        .mobil-dato {
+            padding-left: 1.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .kvittering {
+            padding-left: 0;
+
+            .filnavn {
+                margin-left: 0.3rem;
+            }
+        }
+
+        .belop {
+            margin: 0.7rem 0 0 0;
+        }
+
+        .dato {
+            margin: 0.25rem 0 0 0;
+            white-space: unset;
+        }
+
+        .filstorrelse {
+            margin: 1.4rem 0 0 0;
+        }
+    }
+}

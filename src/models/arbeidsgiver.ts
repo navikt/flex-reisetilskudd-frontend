@@ -1,4 +1,4 @@
 export interface ArbeidsgiverInterface {
-  navn: string,
-  orgNr: string,
+    navn: string,
+    orgNr: string,
 }

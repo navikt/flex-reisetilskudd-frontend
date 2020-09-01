@@ -1,5 +1,5 @@
 export type AktivtStegProps = {
-  aktivtSteg: number,
-  skalGåTilNesteSideNå?: boolean,
-  onClick?: () => void,
+    aktivtSteg: number,
+    skalGåTilNesteSideNå?: boolean,
+    onClick?: () => void,
 };

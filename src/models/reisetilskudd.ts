@@ -1,21 +1,21 @@
-import { KvitteringInterface } from './kvittering';
+import { KvitteringInterface } from './kvittering'
 
 export interface ReisetilskuddInterface {
-  fnr?: string,
-  fom?: string,
-  tom?: string,
+    fnr?: string,
+    fom?: string,
+    tom?: string,
 
-  utbetalingTilArbeidsgiver?: boolean,
+    utbetalingTilArbeidsgiver?: boolean,
 
-  går?: boolean,
-  sykler?: boolean,
-  kollektivtransport?: number,
-  egenBil?: number,
+    går?: boolean,
+    sykler?: boolean,
+    kollektivtransport?: number,
+    egenBil?: number,
 
-  orgNavn?: string,
-  orgNummer?: string,
-  reisetilskuddId?: string,
-  sykmeldingId?: string,
+    orgNavn?: string,
+    orgNummer?: string,
+    reisetilskuddId?: string,
+    sykmeldingId?: string,
 
-  kvitteringer: KvitteringInterface[]
+    kvitteringer: KvitteringInterface[]
 }

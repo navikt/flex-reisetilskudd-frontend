@@ -1,30 +1,30 @@
-import './index.less';
+import './index.less'
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import App from './App';
-import env from './utils/environment';
-import * as serviceWorker from './serviceWorker';
+import App from './app'
+import * as serviceWorker from './serviceWorker'
+import env from './utils/environment'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root') as HTMLElement,
-);
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    document.getElementById('root') as HTMLElement
+)
 
 const frontendloggerSrc = () => {
-  if (env.isQ1 || env.isProd) {
-    return '/frontendlogger/logger.js';
-  }
-  return '/dev-frontendlogger.js';
-};
+    if (env.isQ1 || env.isProd) {
+        return '/frontendlogger/logger.js'
+    }
+    return '/dev-frontendlogger.js'
+}
 
-const src = frontendloggerSrc();
-const script = document.createElement('script');
-script.src = src;
-script.async = true;
-document.body.appendChild(script);
+const src = frontendloggerSrc()
+const script = document.createElement('script')
+script.src = src
+script.async = true
+document.body.appendChild(script)
 
-serviceWorker.unregister();
+serviceWorker.unregister()

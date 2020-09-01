@@ -1,23 +1,23 @@
 export interface KvitteringInterface {
-  reisetilskuddId: string;
-  kvitteringId: string;
-  navn: string;
-  storrelse: number;
-  belop: number;
-  fom: Date;
-  tom?: Date;
-  transportmiddel?: string;
+    reisetilskuddId: string;
+    kvitteringId: string;
+    navn: string;
+    storrelse: number;
+    belop: number;
+    fom: Date;
+    tom?: Date;
+    transportmiddel?: string;
 }
 
 export interface OpplastetKvitteringInterface {
-  id: string;
+    id: string;
 }
 
 export enum Transportmiddel {
-  SPØRSMÅLS_KEY = 'kvittering-transportmiddel-spørsmål',
-  TAXI = 'Taxi',
-  KOLLEKTIVT = 'Kollektivtransport',
-  EGEN_BIL = 'Egen bil'
+    SPØRSMÅLS_KEY = 'kvittering-transportmiddel-spørsmål',
+    TAXI = 'Taxi',
+    KOLLEKTIVT = 'Kollektivtransport',
+    EGEN_BIL = 'Egen bil'
 }
 
 export type TransportmiddelAlternativer = Transportmiddel.EGEN_BIL | Transportmiddel.KOLLEKTIVT
