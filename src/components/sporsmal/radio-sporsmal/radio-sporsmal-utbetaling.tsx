@@ -25,9 +25,7 @@ const RadioSpørsmålUtbetaling = ({ tittel, name, spørsmålstekst, svaralterna
             <RadioPanelGruppe
                 name={name}
                 description={spørsmålstekst}
-                radios={
-                    svaralternativer
-                }
+                radios={svaralternativer}
                 checked={activeMegArbeidsgiver}
                 onChange={(_, nyVerdi) => {
                     skrivEndringTilGlobalState(nyVerdi)

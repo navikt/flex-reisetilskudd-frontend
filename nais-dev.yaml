@@ -32,3 +32,5 @@ spec:
       value: "https://loginservice.dev.nav.no/login"
     - name: DECORATOR_URL
       value: "https://dekoratoren.dev.nav.no"
+    - name: ENVIRONMENT
+      value: "q1"

@@ -1,0 +1,23 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: spvedtak
+  namespace: flex
+  labels:
+    team: flex
+spec:
+  image: {{ image }}
+  port: 8080
+  ingresses:
+    - "https://reisetilskudd.labs.nais.io/"
+  liveness:
+    path: internal/isAlive
+  readiness:
+    path: internal/isReady
+  env:
+    - name: MOCK_BACKEND
+      value: "true"
+    - name: DECORATOR_URL
+      value: "https://www.nav.no/dekoratoren"
+    - name: ENVIRONMENT
+      value: "labs"

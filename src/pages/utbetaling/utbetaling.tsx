@@ -1,13 +1,13 @@
-import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema'
-import React, { ReactElement, useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { Feiloppsummering,FeiloppsummeringFeil } from 'nav-frontend-skjema'
+import React, { useEffect,useState } from 'react'
+import { useHistory,useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
 import VidereKnapp from '../../components/knapper/videre-knapp'
 import RadioSpørsmålUtbetaling from '../../components/sporsmal/radio-sporsmal/radio-sporsmal-utbetaling'
 import { utbetalingSpørsmål, utbetalingSpørsmålVerdier } from '../../components/sporsmal/sporsmal-tekster'
 import Vis from '../../components/vis'
-import { post } from '../../data/fetcher/fetcher'
+import { put } from '../../data/fetcher/fetcher'
 import { useAppStore } from '../../data/stores/app-store'
 import { ArbeidsgiverInterface } from '../../models/arbeidsgiver'
 import { Svaralternativ } from '../../models/sporsmal'
@@ -17,12 +17,14 @@ import { gåTilNesteSide } from '../../utils/navigasjon'
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from './constants'
 
 interface UtbetalingInterface {
-    reisetilskuddId: string;
-    utbetalingTilArbeidsgiver?: boolean;
+    reisetilskuddId: string
+    utbetalingTilArbeidsgiver?: boolean
 }
 
-const Utbetaling = (): ReactElement => {
-    const [ visningsfeilmeldinger, settVisningsfeilmeldinger, ] = useState<FeiloppsummeringFeil[]>([])
+const Utbetaling = () => {
+    const [
+        visningsfeilmeldinger, settVisningsfeilmeldinger,
+    ] = useState<FeiloppsummeringFeil[]>([])
     const {
         activeMegArbeidsgiver,
         utbetalingspørsmålValidert,
@@ -79,7 +81,7 @@ const Utbetaling = (): ReactElement => {
 
     const handleVidereKlikk = () => {
         if (utbetalingspørsmålValidert) {
-            post<UtbetalingInterface>(`${env.apiUrl}/reisetilskudd`, {
+            put<UtbetalingInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${reisetilskuddID}`, {
                 reisetilskuddId: reisetilskuddID,
                 utbetalingTilArbeidsgiver: activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER,
             }).then(() => {

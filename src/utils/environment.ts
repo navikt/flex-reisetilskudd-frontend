@@ -12,13 +12,13 @@ class Environment {
         return this.env.MOCK_API_URL
     }
 
-    get isQ1() {
-        return this.env.IS_Q1 === 'TRUE'
-    }
+  get isQ1() {
+    return this.env.ENVIRONMENT === 'q1';
+  }
 
-    get isProd() {
-        return this.env.IS_PROD === 'TRUE'
-    }
+  get isProd() {
+    return this.env.ENVIRONMENT === 'prod';
+  }
 
     get loginServiceUrl() {
         return this.env.LOGIN_SERVICE_URL
