@@ -10,14 +10,11 @@ import hentReisetilskudd from '../../data/fetcher/hent-reisetilskudd'
 import { useAppStore } from '../../data/stores/app-store'
 
 function DineReisetilskudd() {
-    const {
-        reisetilskuddene,
-        settReisetilskuddene,
-    } = useAppStore()
+    const { reisetilskuddene, setReisetilskuddene } = useAppStore()
     const [ isFirstRender, setIsFirstRender ] = useState<boolean>(true)
 
     if (isFirstRender) {
-        hentReisetilskudd(settReisetilskuddene)
+        hentReisetilskudd(setReisetilskuddene)
         setIsFirstRender(false)
     }
     return (

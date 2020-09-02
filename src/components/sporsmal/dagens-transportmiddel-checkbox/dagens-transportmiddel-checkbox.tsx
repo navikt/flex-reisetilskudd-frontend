@@ -9,25 +9,25 @@ import { transportalternativerVerdier } from '../sporsmal-tekster'
 
 const DagensTransportmiddelCheckbox = ({ tittel, svaralternativer, id, }: CheckboxProps) => {
     const {
-        dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
-        dagensTransportMiddelSyklerChecked, settDagensTransportMiddelSyklerChecked,
-        dagensTransportMiddelGårChecked, settDagensTransportMiddelGårChecked,
-        dagensTransportMiddelKollektivChecked, settDagensTransportMiddelKollektivChecked,
-        settMånedligeUtgifterState,
-        settAntallKilometerState,
+        dagensTransportMiddelEgenBilChecked, setDagensTransportMiddelEgenBilChecked,
+        dagensTransportMiddelSyklerChecked, setDagensTransportMiddelSyklerChecked,
+        dagensTransportMiddelGårChecked, setDagensTransportMiddelGårChecked,
+        dagensTransportMiddelKollektivChecked, setDagensTransportMiddelKollektivChecked,
+        setMånedligeUtgifterState,
+        setAntallKilometerState,
     } = useAppStore()
 
     const skrivEndringTilGlobalState = (nyValgt: string) => {
         if (nyValgt === transportalternativerVerdier.EGEN_BIL) {
-            settDagensTransportMiddelEgenBilChecked(!dagensTransportMiddelEgenBilChecked)
-            settAntallKilometerState('')
+            setDagensTransportMiddelEgenBilChecked(!dagensTransportMiddelEgenBilChecked)
+            setAntallKilometerState('')
         } else if (nyValgt === transportalternativerVerdier.SYKLER) {
-            settDagensTransportMiddelSyklerChecked(!dagensTransportMiddelSyklerChecked)
+            setDagensTransportMiddelSyklerChecked(!dagensTransportMiddelSyklerChecked)
         } else if (nyValgt === transportalternativerVerdier.GÅR) {
-            settDagensTransportMiddelGårChecked(!dagensTransportMiddelGårChecked)
+            setDagensTransportMiddelGårChecked(!dagensTransportMiddelGårChecked)
         } else if (nyValgt === transportalternativerVerdier.KOLLEKTIVTRANSPORT) {
-            settDagensTransportMiddelKollektivChecked(!dagensTransportMiddelKollektivChecked)
-            settMånedligeUtgifterState('')
+            setDagensTransportMiddelKollektivChecked(!dagensTransportMiddelKollektivChecked)
+            setMånedligeUtgifterState('')
         }
     }
 

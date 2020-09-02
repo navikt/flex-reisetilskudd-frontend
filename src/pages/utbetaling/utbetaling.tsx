@@ -1,6 +1,6 @@
-import { Feiloppsummering,FeiloppsummeringFeil } from 'nav-frontend-skjema'
-import React, { useEffect,useState } from 'react'
-import { useHistory,useParams } from 'react-router-dom'
+import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema'
+import React, { useEffect, useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
 import VidereKnapp from '../../components/knapper/videre-knapp'
@@ -22,15 +22,9 @@ interface UtbetalingInterface {
 }
 
 const Utbetaling = () => {
-    const [
-        visningsfeilmeldinger, settVisningsfeilmeldinger,
-    ] = useState<FeiloppsummeringFeil[]>([])
-    const {
-        activeMegArbeidsgiver,
-        utbetalingspørsmålValidert,
-        settUtbetalingspørsmålValidert,
-    } = useAppStore()
-    const [ skalViseFeil, settSkalViseFeil ] = useState<boolean>(false)
+    const { activeMegArbeidsgiver, utbetalingspørsmålValidert, setUtbetalingspørsmålValidert } = useAppStore()
+    const [ visningsfeilmeldinger, setVisningsfeilmeldinger ] = useState<FeiloppsummeringFeil[]>([])
+    const [ skalViseFeil, setSkalViseFeil ] = useState<boolean>(false)
 
     const { soknadssideID, reisetilskuddID } = useParams<RouteParams>()
     const soknadssideIDTall = Number(soknadssideID)
@@ -69,12 +63,12 @@ const Utbetaling = () => {
         const utbetalingFeil = validerUtbetaling()
 
         valideringsfeil.push(...utbetalingFeil)
-        settVisningsfeilmeldinger(valideringsfeil)
+        setVisningsfeilmeldinger(valideringsfeil)
 
         if (valideringsfeil.length < 1) {
-            settUtbetalingspørsmålValidert(true)
+            setUtbetalingspørsmålValidert(true)
         } else {
-            settUtbetalingspørsmålValidert(false)
+            setUtbetalingspørsmålValidert(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ activeMegArbeidsgiver, skalViseFeil ])
@@ -90,7 +84,7 @@ const Utbetaling = () => {
                 logger.error('Feil ved oppdatering av skjema', error)
             })
         } else {
-            settSkalViseFeil(true)
+            setSkalViseFeil(true)
         }
     }
 

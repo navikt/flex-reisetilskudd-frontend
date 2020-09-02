@@ -1,5 +1,7 @@
+import './app.less'
+
 import React, { ReactElement } from 'react'
-import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom'
+import { Route, Switch, } from 'react-router-dom'
 
 import Header from './components/header/header'
 import StoreProvider from './data/stores/store-provider'
@@ -15,27 +17,30 @@ export interface RouteParams {
 function App(): ReactElement {
     return (
         <StoreProvider>
-            <Router>
-                <Switch>
-                    <Route path="/soknaden/:reisetilskuddID/:soknadssideID">
-                        <div className="app-main-content">
-                            <Header />
-                            <Soknaden />
-                        </div>
-                    </Route>
-                    <Route path="/bekreftelse">
-                        <div className="app-main-content grey">
-                            <BekreftelsesSide />
-                        </div>
-                    </Route>
-                    <Route path="/">
-                        <div className="app-main-content grey">
-                            <DineReisetilskudd />
-                        </div>
-                    </Route>
-                </Switch>
+            <Switch>
+                {/*
+                <Route exact={true} path="/" component={DineReisetilskudd} />
+                <Route path={'/soknaden/:reisetilskuddID/:soknadssideID'} component={Soknaden} />
+                <Route path={'/bekreftelse'} component={BekreftelsesSide} />
+                */}
 
-            </Router>
+                <Route path="/soknaden/:reisetilskuddID/:soknadssideID">
+                    <div className="app-main-content">
+                        <Header />
+                        <Soknaden />
+                    </div>
+                </Route>
+                <Route path="/bekreftelse">
+                    <div className="app-main-content grey">
+                        <BekreftelsesSide />
+                    </div>
+                </Route>
+                <Route path="/">
+                    <div className="app-main-content grey">
+                        <DineReisetilskudd />
+                    </div>
+                </Route>
+            </Switch>
         </StoreProvider>
     )
 }

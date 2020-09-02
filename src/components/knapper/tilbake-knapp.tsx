@@ -8,31 +8,23 @@ import { AktivtStegProps } from '../../models/navigasjon'
 import { pathTilSide } from '../../utils/navigasjon'
 import Vis from '../vis'
 
-function TilbakeKnapp({ aktivtSteg } : AktivtStegProps): ReactElement {
+function TilbakeKnapp({ aktivtSteg }: AktivtStegProps): ReactElement {
     const history = useHistory()
 
     function goTo(idx: number) {
         history.push(pathTilSide(idx, history))
     }
 
-    function handleClick() {
-        goTo(aktivtSteg - 1)
-    }
-
     return (
         <div className="tilbake-knapp">
             <Vis hvis={aktivtSteg === 1}>
                 {/* Hvis vi er på første side i vår søknad og skal gå et annet sted */}
-                <Tilbakeknapp
-                    onClick={() => {
-                        history.push('/')
-                    }}
-                >
-          Tilbake til Dine Reisetilskudd
+                <Tilbakeknapp onClick={() => history.push('/')}>
+                    Tilbake til Dine Reisetilskudd
                 </Tilbakeknapp>
             </Vis>
             <Vis hvis={aktivtSteg > 1}>
-                <Tilbakeknapp onClick={() => handleClick()}>Tilbake</Tilbakeknapp>
+                <Tilbakeknapp onClick={() => goTo(aktivtSteg - 1)}>Tilbake</Tilbakeknapp>
             </Vis>
         </div>
     )

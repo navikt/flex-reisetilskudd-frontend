@@ -1,15 +1,15 @@
 export enum SykmeldingOpplysningEnum {
-    ID= 'id',
-    FRA_DATO= 'fraDato',
-    TIL_DATO= 'tilDato',
-    DIAGNOSE= 'diagnose',
-    BI_DIAGNOSER= 'bidiagnoser',
-    DIAGNOSEKODE= 'diagnosekode',
-    REISETILSKUDD= 'reisetilskudd',
-    BESKRIV_HENSYN= 'beskrivHensyn',
-    ARBEIDSGIVER= 'arbeidsgiver',
-    SYKMELDER= 'sykmelder',
-    AKTIVITET_IKKE_MULIG_434= 'aktivitetIkkeMulig434',
+    ID = 'id',
+    FRA_DATO = 'fraDato',
+    TIL_DATO = 'tilDato',
+    DIAGNOSE = 'diagnose',
+    BI_DIAGNOSER = 'bidiagnoser',
+    DIAGNOSEKODE = 'diagnosekode',
+    REISETILSKUDD = 'reisetilskudd',
+    BESKRIV_HENSYN = 'beskrivHensyn',
+    ARBEIDSGIVER = 'arbeidsgiver',
+    SYKMELDER = 'sykmelder',
+    AKTIVITET_IKKE_MULIG_434 = 'aktivitetIkkeMulig434',
 }
 
 export interface SykmeldingOpplysningInterface {
@@ -48,7 +48,7 @@ export interface Sykmelding {
         hoveddiagnose: Diagnose,
         bidiagnoser: Diagnose[],
     },
-    mottakendeArbeidsgiver : {
+    mottakendeArbeidsgiver: {
         navn: string,
         virksomhetsnummer: string
     },

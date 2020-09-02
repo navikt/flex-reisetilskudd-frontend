@@ -6,22 +6,18 @@ import { utbetalingSpørsmålVerdier } from '../sporsmal/sporsmal-tekster'
 const useReisetilskuddTilGlobalState = (): (reisetilskudd: ReisetilskuddInterface) => void => {
     const {
         setActiveMegArbeidsgiver,
-
-        settDagensTransportMiddelGårChecked,
-        settDagensTransportMiddelSyklerChecked,
-        settDagensTransportMiddelEgenBilChecked,
-        settDagensTransportMiddelKollektivChecked,
-
-        settMånedligeUtgifterState,
-        settAntallKilometerState,
-
-        settAktivtReisetilskuddId,
-
-        settKvitteringer,
+        setDagensTransportMiddelGårChecked,
+        setDagensTransportMiddelSyklerChecked,
+        setDagensTransportMiddelEgenBilChecked,
+        setDagensTransportMiddelKollektivChecked,
+        setMånedligeUtgifterState,
+        setAntallKilometerState,
+        setAktivtReisetilskuddId,
+        setKvitteringer,
     } = useAppStore()
 
     return (valgtReisetilskudd: ReisetilskuddInterface) => {
-        settAktivtReisetilskuddId(valgtReisetilskudd.reisetilskuddId)
+        setAktivtReisetilskuddId(valgtReisetilskudd.reisetilskuddId)
 
         if (valgtReisetilskudd.utbetalingTilArbeidsgiver === true) {
             setActiveMegArbeidsgiver(utbetalingSpørsmålVerdier.ARBEIDSGIVER)
@@ -32,37 +28,37 @@ const useReisetilskuddTilGlobalState = (): (reisetilskudd: ReisetilskuddInterfac
         }
 
         if (valgtReisetilskudd.går) {
-            settDagensTransportMiddelGårChecked(valgtReisetilskudd.går)
+            setDagensTransportMiddelGårChecked(valgtReisetilskudd.går)
         } else {
-            settDagensTransportMiddelGårChecked(false)
+            setDagensTransportMiddelGårChecked(false)
         }
 
         if (valgtReisetilskudd.sykler) {
-            settDagensTransportMiddelSyklerChecked(valgtReisetilskudd.sykler)
+            setDagensTransportMiddelSyklerChecked(valgtReisetilskudd.sykler)
         } else {
-            settDagensTransportMiddelSyklerChecked(false)
+            setDagensTransportMiddelSyklerChecked(false)
         }
 
         if (valgtReisetilskudd.egenBil
             && validerTall(valgtReisetilskudd.egenBil)) {
-            settDagensTransportMiddelEgenBilChecked(true)
-            settAntallKilometerState(valgtReisetilskudd.egenBil.toString())
+            setDagensTransportMiddelEgenBilChecked(true)
+            setAntallKilometerState(valgtReisetilskudd.egenBil.toString())
         } else {
-            settDagensTransportMiddelEgenBilChecked(false)
-            settAntallKilometerState('')
+            setDagensTransportMiddelEgenBilChecked(false)
+            setAntallKilometerState('')
         }
 
         if (valgtReisetilskudd.kollektivtransport
             && validerTall(valgtReisetilskudd.kollektivtransport)) {
-            settMånedligeUtgifterState(valgtReisetilskudd.kollektivtransport.toString())
-            settDagensTransportMiddelKollektivChecked(true)
+            setMånedligeUtgifterState(valgtReisetilskudd.kollektivtransport.toString())
+            setDagensTransportMiddelKollektivChecked(true)
         } else {
-            settDagensTransportMiddelKollektivChecked(false)
-            settMånedligeUtgifterState('')
+            setDagensTransportMiddelKollektivChecked(false)
+            setMånedligeUtgifterState('')
         }
 
         if (valgtReisetilskudd.kvitteringer !== undefined) {
-            settKvitteringer(valgtReisetilskudd.kvitteringer)
+            setKvitteringer(valgtReisetilskudd.kvitteringer)
         }
     }
 }

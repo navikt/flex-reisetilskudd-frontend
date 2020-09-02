@@ -9,17 +9,16 @@ import Vis from '../vis'
 import PeriodeTekst from './periode-tekst'
 import VisVerdi from './vis-verdi'
 
-const SykmeldingOpplysninger = () : ReactElement => {
+const SykmeldingOpplysninger = (): ReactElement => {
     const { opplysningerSykmeldinger } = useAppStore()
     const vårSykmelding = opplysningerSykmeldinger ? opplysningerSykmeldinger[0] : undefined
 
-    const fraDato : string = vårSykmelding?.[SykmeldingOpplysningEnum.FRA_DATO] || ''
-    const tilDato : string = vårSykmelding?.[SykmeldingOpplysningEnum.TIL_DATO] || ''
+    const fraDato: string = vårSykmelding?.[SykmeldingOpplysningEnum.FRA_DATO] || ''
+    const tilDato: string = vårSykmelding?.[SykmeldingOpplysningEnum.TIL_DATO] || ''
 
     const tittelKlasseNavn = 'soknad-tittel'
-    const diagnoseWrapper = 'diagnose-wrapper'
 
-    const visVårVerdi = (hvilkenVerdi : SykmeldingOpplysningEnum) => (
+    const visVårVerdi = (hvilkenVerdi: SykmeldingOpplysningEnum) => (
         <VisVerdi hvilkenVerdi={hvilkenVerdi} vårSykmelding={vårSykmelding} />
     )
 
@@ -28,30 +27,30 @@ const SykmeldingOpplysninger = () : ReactElement => {
             <Vis hvis={vårSykmelding !== undefined}>
                 <Element className={tittelKlasseNavn}>Periode</Element>
                 <PeriodeTekst fraDato={fraDato} tilDato={tilDato} />
-                <div className={diagnoseWrapper}>
-                    <div>
+                <div className="diagnose-wrapper">
+                    <>
                         <Element>
-              Diagnose
+                            Diagnose
                         </Element>
                         {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSE)}
-                    </div>
-                    <div>
+                    </>
+                    <>
                         <Element>
-              Diagnosekode
+                            Diagnosekode
                         </Element>
                         {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSEKODE)}
-                    </div>
+                    </>
                 </div>
                 <Element className={tittelKlasseNavn}>Bidiagnose </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.BI_DIAGNOSER)}
                 <Element className={tittelKlasseNavn}>Reisetilskudd</Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.REISETILSKUDD)}
                 <Element className={tittelKlasseNavn}>
-          Beskriv eventelle hesyn som må tas på arbeidsplassen
+                    Beskriv eventelle hesyn som må tas på arbeidsplassen
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
                 <Element className={tittelKlasseNavn}>
-          Arbeidsgiver som legen har skrevet inn
+                    Arbeidsgiver som legen har skrevet inn
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.ARBEIDSGIVER)}
                 <Element className={tittelKlasseNavn}>Lege/sykmelder</Element>
@@ -59,7 +58,7 @@ const SykmeldingOpplysninger = () : ReactElement => {
             </Vis>
             <Vis hvis={vårSykmelding === undefined}>
                 <Normaltekst>
-          Vi kunne dessverre ikke hente opplysninger fra sykmeldingen din, prøv igjen senere
+                    Vi kunne dessverre ikke hente opplysninger fra sykmeldingen din, prøv igjen senere
                 </Normaltekst>
             </Vis>
         </div>

@@ -12,12 +12,7 @@ const VeienVidereBox = () => {
         <div className="veien-videre-wrapper">
             <AlertStripe className="gronn-checkbox" type="suksess">
                 <Undertittel>Sykmeldingen er sendt til NAV</Undertittel>
-                Sendt:
-                {' '}
-                {getIDag(DatoFormat.NATURLIG_FULL)}
-                , kl:
-                {' '}
-                {getNåTid()}
+                {`Sendt: ${getIDag(DatoFormat.NATURLIG_FULL)}, kl: ${getNåTid()}`}
             </AlertStripe>
             <AlertStripe className="bla-info" type="info">
                 <Undertittel>Hva skjer videre?</Undertittel>

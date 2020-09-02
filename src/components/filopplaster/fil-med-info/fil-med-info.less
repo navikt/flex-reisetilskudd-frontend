@@ -1,4 +1,4 @@
-@import "../../../../node_modules/nav-frontend-core/less/_variabler";
+@import '../../../../node_modules/nav-frontend-core/less/_variabler';
 
 .kvitteringstitler {
     display: grid;
@@ -8,7 +8,7 @@
     grid-template-columns: 15% 25% 15% 45%;
 
     hr {
-        border: 1px solid #b7b1a9;
+        border: 1px solid @navGra40;
     }
 
     .kvittering-tittel {
@@ -38,7 +38,7 @@
     // grid-template-columns: 15% 30% 35% 20%;
 
     hr {
-        border: 1px solid #b7b1a9;
+        border: 1px solid @navGra40;
     }
 
     .kvittering-tittel {
@@ -109,7 +109,7 @@
 
     .knapp:hover {
         svg > path {
-            fill: white;
+            fill: @white;
 
         }
     }
@@ -168,7 +168,7 @@
     }
 
     .fil-med-info {
-        border: 1px solid #78706A;
+        border: 1px solid @navGra60;
         border-radius: 0.3rem;
         grid-template-areas:
       'kvittering storrelse slett'
@@ -232,7 +232,7 @@
     }
 
     .fil-med-info-uten-slettknapp {
-        border: 1px solid #78706A;
+        border: 1px solid @navGra60;
         border-radius: 0.3rem;
         grid-template-areas:
       'kvittering storrelse'

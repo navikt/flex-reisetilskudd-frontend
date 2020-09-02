@@ -31,38 +31,39 @@ import Vis from '../../vis'
 import Fil from '../fil/fil'
 
 const FilopplasterModal = () => {
-    Modal.setAppElement('#root') // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
-
-    const { reisetilskuddID } = useParams<RouteParams>()
-    const [ laster, settLaster ] = useState<boolean>(false)
-    const [ dato, settDato ] = useState<Date | null>(null)
-    const [ beløp, settBeløp ] = useState<string>('')
-    const [ valideringsFeil, settValideringsFeil ] = useState<FeiloppsummeringFeil[]>([])
-    const [ harAlleredeBlittValidert, settHarAlleredeBlittValidert ] = useState<boolean>(false)
     const {
-        kvitteringer, settKvitteringer,
-        transportmiddelKvittering, settTransportmiddelKvittering,
-        uopplastetFil, settUopplastetFil,
-        åpenFilopplasterModal, settÅpenFilopplasterModal,
+        kvitteringer, setKvitteringer,
+        transportmiddelKvittering, setTransportmiddelKvittering,
+        uopplastetFil, setUopplastetFil,
+        åpenFilopplasterModal, setÅpenFilopplasterModal,
     } = useAppStore()
 
+    const { reisetilskuddID } = useParams<RouteParams>()
+    const [ laster, setLaster ] = useState<boolean>(false)
+    const [ dato, setDato ] = useState<Date | null>(null)
+    const [ beløp, setBeløp ] = useState<string>('')
+    const [ valideringsFeil, setValideringsFeil ] = useState<FeiloppsummeringFeil[]>([])
+    const [ harAlleredeBlittValidert, setHarAlleredeBlittValidert ] = useState<boolean>(false)
+
+    Modal.setAppElement('#root') // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
+
     const nyKvittering = (kvittering: KvitteringInterface) => {
-        settKvitteringer([ ...kvitteringer, kvittering ])
+        setKvitteringer([ ...kvitteringer, kvittering ])
     }
 
     const clearState = () => {
-        settLaster(false)
-        settDato(null)
-        settBeløp('')
-        settTransportmiddelKvittering(undefined)
-        settUopplastetFil(null)
-        settHarAlleredeBlittValidert(false)
-        settValideringsFeil([])
+        setLaster(false)
+        setDato(null)
+        setBeløp('')
+        setTransportmiddelKvittering(undefined)
+        setUopplastetFil(null)
+        setHarAlleredeBlittValidert(false)
+        setValideringsFeil([])
     }
 
     const lukkModal = () => {
         clearState()
-        settÅpenFilopplasterModal(false)
+        setÅpenFilopplasterModal(false)
     }
 
     const fåFeilmeldingTilInput = (
@@ -115,14 +116,11 @@ const FilopplasterModal = () => {
     ) => {
         const datoFeil = validerDato(nyDato || dato)
         const beløpFeil = validerBeløp(nyttBeløp || beløp)
-        const transportmiddelFeil = validerTransportmiddel(
-            nyttTransportmiddel
-            || transportmiddelKvittering,
-        )
+        const transportmiddelFeil = validerTransportmiddel(nyttTransportmiddel || transportmiddelKvittering)
 
         const nyeValideringsFeil = [ ...datoFeil, ...beløpFeil, ...transportmiddelFeil ]
-        settValideringsFeil(nyeValideringsFeil)
-        settHarAlleredeBlittValidert(true)
+        setValideringsFeil(nyeValideringsFeil)
+        setHarAlleredeBlittValidert(true)
         return nyeValideringsFeil.length === 0
     }
 
@@ -141,7 +139,7 @@ const FilopplasterModal = () => {
                 return
             }
 
-            settLaster(true)
+            setLaster(true)
             post<OpplastetKvitteringInterface>(`${env.mockBucketUrl}/kvittering`, requestData)
                 .then((response) => {
                     if (response.parsedBody?.id) {
@@ -165,9 +163,9 @@ const FilopplasterModal = () => {
                 .then((kvittering) => {
                     put<KvitteringInterface>(`${env.apiUrl}/kvittering`, kvittering)
                         .then(() => {
-                            settLaster(false)
+                            setLaster(false)
                             lukkModal()
-                            settTransportmiddelKvittering(undefined)
+                            setTransportmiddelKvittering(undefined)
                         })
                         .catch((error) => {
                             logger.error('Feil under opplasting av kvittering', error)
@@ -180,14 +178,14 @@ const FilopplasterModal = () => {
     }
 
     const handleBeløpChange = (beløpString: string) => {
-        settBeløp(beløpString)
+        setBeløp(beløpString)
         if (harAlleredeBlittValidert) {
             validerKvittering(beløpString, null, null)
         }
     }
 
     const oppdaterDato = (nyDato: Date): void => {
-        settDato(nyDato)
+        setDato(nyDato)
         if (harAlleredeBlittValidert) {
             validerKvittering(null, nyDato, null)
         }

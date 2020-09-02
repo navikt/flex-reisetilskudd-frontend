@@ -6,15 +6,9 @@ import React from 'react'
 import { AktivtStegProps } from '../../models/navigasjon'
 
 const VidereKnapp = ({ onClick }: AktivtStegProps) => {
-    function handleClick() {
-        if (onClick) {
-            onClick()
-        }
-    }
-
     return (
         <div className="videre-knapp">
-            <Knapp type="hoved" onClick={() => handleClick()}>Gå videre</Knapp>
+            <Knapp type="hoved" onClick={() => onClick!()}>Gå videre</Knapp>
         </div>
     )
 }

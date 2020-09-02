@@ -1,22 +1,26 @@
-.horisontal-radio{
-  .utbetaling-tittel{
-    padding-bottom: 1rem;
-  }
-  .inputPanelGruppe__inner{
-      .inputPanel{
-        margin-right: 0.25rem;
-        margin-bottom: 0.5em;
-        width: 50%;
+.horisontal-radio {
+    .utbetaling-tittel {
+        padding-bottom: 1rem;
     }
-    display: flex;
-    justify-content: space-evenly;
-  }
-  @media screen and (max-width: 750px){
-    .inputPanelGruppe__inner{
-      flex-direction: column;
+
+    .inputPanelGruppe__inner {
+        .inputPanel {
+            margin-right: 0.25rem;
+            margin-bottom: 0.5em;
+            width: 50%;
+        }
+
+        display: flex;
+        justify-content: space-evenly;
     }
-    .inputPanel.radioPanel{
-      width: unset;
+
+    @media screen and (max-width: 750px) {
+        .inputPanelGruppe__inner {
+            flex-direction: column;
+        }
+
+        .inputPanel.radioPanel {
+            width: unset;
+        }
     }
-  }
 }

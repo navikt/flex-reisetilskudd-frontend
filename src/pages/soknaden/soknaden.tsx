@@ -15,23 +15,16 @@ import Oppsummering from '../oppsummering/oppsummering'
 import Utbetaling from '../utbetaling/utbetaling'
 
 const Soknaden = () => {
-    const history = useHistory()
+    const { aktivtReisetilskuddId, setAktivtReisetilskuddId, reisetilskuddene, setReisetilskuddene } = useAppStore()
+    const setReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState()
 
+    const history = useHistory()
     const { soknadssideID, reisetilskuddID } = useParams<RouteParams>()
     const idNum = Number(soknadssideID)
 
-    const settReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState()
-
-    const {
-        aktivtReisetilskuddId,
-        settAktivtReisetilskuddId,
-        reisetilskuddene,
-        settReisetilskuddene,
-    } = useAppStore()
-
     useEffect(() => {
         if (aktivtReisetilskuddId !== reisetilskuddID) {
-            hentReisetilskudd(settReisetilskuddene)
+            hentReisetilskudd(setReisetilskuddene)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ aktivtReisetilskuddId, reisetilskuddID ])
@@ -41,8 +34,8 @@ const Soknaden = () => {
             (reisetilskudd) => reisetilskudd.reisetilskuddId === reisetilskuddID
         )
         if (eksisterendeReisetilskudd) {
-            settAktivtReisetilskuddId(reisetilskuddID)
-            settReisetilskuddTilGlobalState(eksisterendeReisetilskudd)
+            setAktivtReisetilskuddId(reisetilskuddID)
+            setReisetilskuddTilGlobalState(eksisterendeReisetilskudd)
         } else if (reisetilskuddene !== undefined) {
             history.push('/')
         }

@@ -20,6 +20,7 @@ const PeriodeTekst = ({ fraDato, tilDato }: PeriodeTekstProps): ReactElement => 
         <Vis hvis={fraDato !== '' && tilDato === ''}>
             {formatertDato(new Date(fraDato), DatoFormat.NATURLIG_LANG)}
         </Vis>
+
         <Vis hvis={fraDato === '' && tilDato === ''}>
             Kunne dessverre ikke finne perioden
         </Vis>

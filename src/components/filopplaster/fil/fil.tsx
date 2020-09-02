@@ -6,7 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi'
 import React from 'react'
 
 import vedlegg from '../../../assets/vedlegg.svg'
-import formaterFilstørrelse from '../utils'
+import formaterFilstørrelse from '../../../utils/fil-utils'
 
 interface Props {
     fil: File | null;
@@ -27,11 +27,7 @@ const Fil = ({ fil }: Props) => (
         {fil
             ?
             <div key={fil.name} className="modal-fil">
-                <img
-                    className="vedleggsikon"
-                    src={vedlegg}
-                    alt="Vedleggsikon"
-                />
+                <img className="vedleggsikon" src={vedlegg} alt="Vedleggsikon" />
                 <Lenke href="#" className="filnavn">{customTruncet(fil.name, 20)}</Lenke>
                 <Normaltekst className="filstørrelse">
                     {formaterFilstørrelse(fil.size)}

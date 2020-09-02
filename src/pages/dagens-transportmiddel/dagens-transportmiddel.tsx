@@ -35,22 +35,21 @@ interface TransportmiddelInterface {
 }
 
 const DagensTransportmiddel = () => {
-    const [
-        visningsFeilmeldinger, settVisningsFeilmeldinger,
-    ] = useState<FeiloppsummeringFeil[]>([])
-    const [ skalViseFeil, settSkalViseFeil ] = useState<boolean>(false)
-    const [ skalViseKilometerFeil, settSkalViseKilometerFeil ] = useState<boolean>(false)
-    const [ skalViseMånedligeUtgifterFeil, settSkalViseMånedligeUtgifterFeil ] = useState<boolean>(false)
 
     const {
         dagensTransportMiddelEgenBilChecked,
         dagensTransportMiddelSyklerChecked,
         dagensTransportMiddelGårChecked,
         dagensTransportMiddelKollektivChecked,
-        månedligeUtgifterState, settMånedligeUtgifterState,
-        antallKilometerState, settAntallKilometerState,
-        dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
+        månedligeUtgifterState, setMånedligeUtgifterState,
+        antallKilometerState, setAntallKilometerState,
+        dagensTransportmiddelValidert, setDagensTransportmiddelValidert,
     } = useAppStore()
+
+    const [ visningsFeilmeldinger, setVisningsFeilmeldinger ] = useState<FeiloppsummeringFeil[]>([])
+    const [ skalViseFeil, setSkalViseFeil ] = useState<boolean>(false)
+    const [ skalViseKilometerFeil, setSkalViseKilometerFeil ] = useState<boolean>(false)
+    const [ skalViseMånedligeUtgifterFeil, setSkalViseMånedligeUtgifterFeil ] = useState<boolean>(false)
 
     const { soknadssideID, reisetilskuddID } = useParams<RouteParams>()
     const soknadssideIDTall = Number(soknadssideID)
@@ -71,7 +70,7 @@ const DagensTransportmiddel = () => {
         /* Gyldig verdi skrevet inn,
         * skal ikke validere dette feltet igjen før brukeren trykker for å gå videre:
         */
-        settSkalViseKilometerFeil(false)
+        setSkalViseKilometerFeil(false)
         return []
     }
 
@@ -85,7 +84,7 @@ const DagensTransportmiddel = () => {
         /* Gyldig verdi skrevet inn,
         * skal ikke validere dette feltet igjen før brukeren trykker for å gå videre:
         */
-        settSkalViseMånedligeUtgifterFeil(false)
+        setSkalViseMånedligeUtgifterFeil(false)
         return []
     }
 
@@ -107,11 +106,11 @@ const DagensTransportmiddel = () => {
     }
 
     const handleKilometerChange = (nyInput: string) => {
-        settAntallKilometerState(nyInput)
+        setAntallKilometerState(nyInput)
     }
 
     const handleMånedligeUtgifterChange = (nyInput: string) => {
-        settMånedligeUtgifterState(nyInput)
+        setMånedligeUtgifterState(nyInput)
     }
 
     const fåFeilmeldingTilInput = (
@@ -141,14 +140,14 @@ const DagensTransportmiddel = () => {
                 visningsFeil.push(...månedligeUtgifterFeil)
             }
 
-            settVisningsFeilmeldinger(visningsFeil)
+            setVisningsFeilmeldinger(visningsFeil)
         }
 
         if (valideringsFeil.length < 1) {
-            settDagensTransportmiddelValidert(true)
-            settSkalViseFeil(false)
+            setDagensTransportmiddelValidert(true)
+            setSkalViseFeil(false)
         } else {
-            settDagensTransportmiddelValidert(false)
+            setDagensTransportmiddelValidert(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
@@ -165,14 +164,14 @@ const DagensTransportmiddel = () => {
 
     useEffect(() => {
         // Skal ikke vise feilmelding for et felt som nettopp er åpnet
-        settSkalViseKilometerFeil(false)
+        setSkalViseKilometerFeil(false)
     }, [
         dagensTransportMiddelEgenBilChecked,
     ])
 
     useEffect(() => {
         // Skal ikke vise feilmelding for et felt som nettopp er åpnet
-        settSkalViseMånedligeUtgifterFeil(false)
+        setSkalViseMånedligeUtgifterFeil(false)
     }, [
         dagensTransportMiddelKollektivChecked,
     ])
@@ -185,9 +184,9 @@ const DagensTransportmiddel = () => {
             egenBil: parseFloat(antallKilometerState),
             kollektivtransport: parseFloat(månedligeUtgifterState),
         }).then(() => {
-            settSkalViseMånedligeUtgifterFeil(true)
-            settSkalViseKilometerFeil(true)
-            settSkalViseFeil(true)
+            setSkalViseMånedligeUtgifterFeil(true)
+            setSkalViseKilometerFeil(true)
+            setSkalViseFeil(true)
             if (dagensTransportmiddelValidert) {
                 gåTilNesteSide(history, soknadssideIDTall)
             }

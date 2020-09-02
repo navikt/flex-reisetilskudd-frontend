@@ -7,13 +7,13 @@ import { useDropzone } from 'react-dropzone'
 import opplasting from '../../../assets/opplasting.svg'
 import { useAppStore } from '../../../data/stores/app-store'
 import env from '../../../utils/environment'
-import formaterFilstørrelse from '../utils'
+import formaterFilstørrelse from '../../../utils/fil-utils'
 
 const DragAndDrop = () => {
     const {
-        settUopplastetFil,
-        filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
-        settÅpenFilopplasterModal,
+        setUopplastetFil,
+        filopplasterFeilmeldinger, setFilopplasterFeilmeldinger,
+        setÅpenFilopplasterModal,
     } = useAppStore()
 
     const { tillatteFiltyper } = env
@@ -22,20 +22,20 @@ const DragAndDrop = () => {
     const onDropCallback = useCallback(
         (filer) => {
             filer.forEach((fil: File) => {
-                settUopplastetFil(fil)
+                setUopplastetFil(fil)
                 if (maxFilstørrelse && fil.size > maxFilstørrelse) {
                     const maks = formaterFilstørrelse(maxFilstørrelse)
-                    settFilopplasterFeilmeldinger([ ...filopplasterFeilmeldinger, `Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}` ])
+                    setFilopplasterFeilmeldinger([ ...filopplasterFeilmeldinger, `Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}` ])
                     return
                 }
 
                 if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-                    settFilopplasterFeilmeldinger([ ...filopplasterFeilmeldinger, `Filtypen til ${fil.name} er ugyldig. Gyldige typer er ${tillatteFiltyper}` ])
+                    setFilopplasterFeilmeldinger([ ...filopplasterFeilmeldinger, `Filtypen til ${fil.name} er ugyldig. Gyldige typer er ${tillatteFiltyper}` ])
                     return
                 }
 
-                settFilopplasterFeilmeldinger([])
-                settÅpenFilopplasterModal(true)
+                setFilopplasterFeilmeldinger([])
+                setÅpenFilopplasterModal(true)
             })
         },
         // eslint-disable-next-line

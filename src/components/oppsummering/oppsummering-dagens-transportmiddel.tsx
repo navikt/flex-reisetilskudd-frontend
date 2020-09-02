@@ -14,11 +14,11 @@ const OppsummeringDagensTransportmiddel = () => {
         månedligeUtgifterState,
         antallKilometerState,
     } = useAppStore()
+
     return (
         <div className="oppsummering-element oppsummering-dagens-transportmiddel">
             <Undertittel className="oppsummering-underoverskrift">Hvordan reiste du før sykmeldingen?</Undertittel>
-            <Vis hvis={dagensTransportMiddelEgenBilChecked}
-            >
+            <Vis hvis={dagensTransportMiddelEgenBilChecked}>
                 <CheckedMedTekst tekst={`Kjører egen bil, ${antallKilometerState} kilometer`} />
             </Vis>
             <Vis hvis={dagensTransportMiddelGårChecked}>
@@ -27,8 +27,7 @@ const OppsummeringDagensTransportmiddel = () => {
             <Vis hvis={dagensTransportMiddelSyklerChecked}>
                 <CheckedMedTekst tekst="Sykler" />
             </Vis>
-            <Vis hvis={dagensTransportMiddelKollektivChecked}
-            >
+            <Vis hvis={dagensTransportMiddelKollektivChecked}>
                 <CheckedMedTekst tekst={`Reiser kollektivt med ${månedligeUtgifterState} kroner i månedlige utgifter`} />
             </Vis>
         </div>

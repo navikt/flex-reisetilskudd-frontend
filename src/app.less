@@ -1,9 +1,10 @@
-@import '../node_modules/nav-frontend-core/less/core';
+@import 'node_modules/nav-frontend-core/less/_variabler';
+@import './basic';
 
 body {
     margin: 0;
     box-sizing: content-box;
-    background-color: #e5e5e5;
+    background-color: @navLysGra;
     font-family: @font-family;
 }
 
@@ -14,7 +15,7 @@ body {
 }
 
 .app-main-content.grey {
-    background-color: rgb(238, 238, 238);
+    background-color: @navLysGra;
 }
 
 .app-page {

@@ -9,18 +9,18 @@ import { fåSykmeldingIDFraAktivtReisetilskuddID, hentSykmeldinger } from './hen
 import SykmeldingOpplysninger from './sykmelding-opplysninger'
 
 const SykmeldingPanel = (): ReactElement => {
-    const { settOpplysningerSykmeldinger, sykmeldingID, settSykmeldingID, aktivtReisetilskuddId } = useAppStore()
+    const { setOpplysningerSykmeldinger, sykmeldingID, setSykmeldingID, aktivtReisetilskuddId } = useAppStore()
 
     useEffect(() => {
         if (sykmeldingID) {
-            hentSykmeldinger(settOpplysningerSykmeldinger, sykmeldingID)
+            hentSykmeldinger(setOpplysningerSykmeldinger, sykmeldingID)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ settOpplysningerSykmeldinger, sykmeldingID ])
+    }, [ setOpplysningerSykmeldinger, sykmeldingID ])
 
     useEffect(() => {
         if (aktivtReisetilskuddId) {
-            fåSykmeldingIDFraAktivtReisetilskuddID(aktivtReisetilskuddId, settSykmeldingID)
+            fåSykmeldingIDFraAktivtReisetilskuddID(aktivtReisetilskuddId, setSykmeldingID)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ aktivtReisetilskuddId ])

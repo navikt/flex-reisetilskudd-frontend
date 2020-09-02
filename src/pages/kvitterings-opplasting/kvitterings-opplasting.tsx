@@ -22,6 +22,7 @@ const KvitteringsOpplasting = () => {
     const handleVidereKlikk = () => {
         gåTilNesteSide(history, soknadssideIDTall)
     }
+
     return (
         <div className="last-opp-kvittering-wrapper">
             <Systemtittel className="last-opp-kvittering-overskrift">Last opp dine kvitteringer</Systemtittel>
@@ -41,10 +42,7 @@ const KvitteringsOpplasting = () => {
                 <div className="kvitteringer-totalt-beløp">
                     <TotalBelop />
                 </div>
-                <VidereKnapp
-                    aktivtSteg={soknadssideIDTall}
-                    onClick={handleVidereKlikk}
-                />
+                <VidereKnapp aktivtSteg={soknadssideIDTall} onClick={handleVidereKlikk} />
             </div>
         </div>
     )

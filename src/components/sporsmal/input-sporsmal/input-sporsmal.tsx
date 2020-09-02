@@ -37,11 +37,7 @@ const InputSporsmal = ({ tittel, inputMode, bredde, value, onChange, id, feil }:
                 pattern="[0-9]*"
                 bredde={bredde}
                 value={value}
-                onChange={(e) => {
-                    if (onChange) {
-                        onChange(e.target.value)
-                    }
-                }}
+                onChange={(e) => onChange!(e.target.value)}
                 id={id}
                 feil={feil}
             />

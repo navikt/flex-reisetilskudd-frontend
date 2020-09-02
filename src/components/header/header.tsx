@@ -1,12 +1,12 @@
 import './header.less'
 
 import { Systemtittel } from 'nav-frontend-typografi'
-import React, { ReactElement } from 'react'
+import React from 'react'
 
 import busImg from '../../assets/buss.png'
 import treImg from '../../assets/tre.png'
 
-function Header():ReactElement {
+const Header = () => {
     return (
         <div className="header">
             <Systemtittel className="søknadstittel">Søknad om reisetilskudd</Systemtittel>

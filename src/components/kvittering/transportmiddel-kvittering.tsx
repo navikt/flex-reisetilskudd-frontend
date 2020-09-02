@@ -10,7 +10,7 @@ interface Props {
 }
 
 const TransportmiddelKvittering = ({ handleChange }: Props) => {
-    const { transportmiddelKvittering, settTransportmiddelKvittering } = useAppStore()
+    const { transportmiddelKvittering, setTransportmiddelKvittering } = useAppStore()
 
     return (
         <RadioPanelGruppe
@@ -40,7 +40,7 @@ const TransportmiddelKvittering = ({ handleChange }: Props) => {
                 if (handleChange) {
                     handleChange(nyttTransportmiddel as TransportmiddelAlternativer)
                 }
-                settTransportmiddelKvittering(nyttTransportmiddel)
+                setTransportmiddelKvittering(nyttTransportmiddel)
             }}
         />
     )

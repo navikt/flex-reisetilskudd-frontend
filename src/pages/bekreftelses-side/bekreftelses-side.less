@@ -1,3 +1,5 @@
+@import 'node_modules/nav-frontend-core/less/_variabler';
+
 .bekreftelsesside-page-wrapper{
     padding-top: 5rem;
     display: flex;
@@ -5,7 +7,7 @@
     align-items: center;
 
     span.nummer-circle-separator:before{
-        content:" ";
+        content:' ';
         display:inline-block;
         width:32px;
     }
@@ -13,7 +15,7 @@
     .liste-wrapper{
         max-width: 670px;
         justify-content: center;
-        background-color: white;
+        background-color: @white;
         padding-top: 3rem;
         padding-bottom: 2rem;
     }
@@ -29,15 +31,15 @@
     }
 
     .gronn-checkbox{
-        border-top: 1px solid #06893A;
-        border-left: 1px solid #06893A;
-        border-right: 1px solid #06893A;
+        border-top: 1px solid @navGronn;
+        border-left: 1px solid @navGronn;
+        border-right: 1px solid @navGronn;
         border-bottom: none;
         justify-content: center;
     }
 
     .bla-info{
-        background-color: white;
+        background-color: @white;
         justify-content: center;
     }
 

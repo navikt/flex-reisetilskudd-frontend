@@ -1,12 +1,12 @@
 import { ReisetilskuddInterface } from '../../models/reisetilskudd'
-import { Periode, Sykmelding,SykmeldingOpplysningInterface } from '../../models/sykmelding'
+import { Periode, Sykmelding, SykmeldingOpplysningInterface } from '../../models/sykmelding'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
 
 const fåSykmeldingOpplysningSomInterface = (
     response : Sykmelding,
 ) : SykmeldingOpplysningInterface => {
-    const sykmeldingOpplysninger = {
+    return {
         id: response?.id,
         fraDato: response?.mulighetForArbeid?.perioder[0]?.fom,
         tilDato: response?.mulighetForArbeid?.perioder[0]?.tom,
@@ -19,27 +19,20 @@ const fåSykmeldingOpplysningSomInterface = (
         sykmelder: response?.bekreftelse?.sykmelder,
         aktivitetIkkeMulig434: response?.mulighetForArbeid?.aktivitetIkkeMulig433[0],
     }
-
-    return sykmeldingOpplysninger
 }
 
 export const finnSykmeldingerMedReisetilskudd = (
     response : Sykmelding[],
 ) : Sykmelding[] => {
-    const filtrerteSykmeldinger = response.filter((sykmelding : Sykmelding) => {
+    return response.filter((sykmelding: Sykmelding) => {
         const reisetilskuddPerioder = sykmelding?.mulighetForArbeid?.perioder?.filter(
-      (
-          periode : Periode,
-      ) => {
-          if (periode?.reisetilskudd === true) {
-              return true
-          }
-
-          return false
-      })
+            (
+                periode: Periode,
+            ) => {
+                return periode?.reisetilskudd === true
+            })
         return reisetilskuddPerioder.length > 0
     })
-    return filtrerteSykmeldinger
 }
 
 // TODO: Hent aktiv sykmelding

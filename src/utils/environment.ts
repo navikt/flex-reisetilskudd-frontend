@@ -1,4 +1,4 @@
-import { filstørrelseTilBytes } from '../components/filopplaster/utils'
+import { filstørrelseTilBytes } from './fil-utils'
 
 class Environment {
     /* eslint-disable-next-line */
@@ -38,6 +38,10 @@ class Environment {
 
     get mockBucketUrl() {
         return this.env.MOCK_BUCKET_URL
+    }
+
+    get baseName() {
+        return this.env.BASE_NAME
     }
 
     get syfoRestSykmeldingerApiUrl() {
