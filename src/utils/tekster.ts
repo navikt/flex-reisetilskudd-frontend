@@ -1,8 +1,10 @@
-import VedtakTekster from '../pages/vedtak/vedtak-tekster'
+import StegTekster from '../components/steg/steg-tekster'
+import ReisetilskuddTekster from '../pages/reisetilskudd-side/reisetilskudd-side-tekster'
 import { logger } from './logger'
 
 const tekster = {
-    ...VedtakTekster.nb,
+    ...ReisetilskuddTekster.nb,
+    ...StegTekster.nb,
 }
 
 export const tekst = (tekst: string): string => {

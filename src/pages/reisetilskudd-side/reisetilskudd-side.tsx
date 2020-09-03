@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import DineReisetilskudd from '../../components/dine-reisetilskudd/dine-reisetilskudd'
 import Vis from '../../components/vis'
 import { useAppStore } from '../../data/stores/app-store'
+import { tekst } from '../../utils/tekster'
 
 const ReisetilskuddSide = () => {
     const { reisetilskuddene } = useAppStore()
@@ -14,16 +15,13 @@ const ReisetilskuddSide = () => {
     return (
         <div className="app-page dine-reisetilskudd-side">
             <Sidetittel tag="h1" className="sidetopp__tittel">
-                Dine reisetilskudd
+                {tekst('reisetilskudd.tittel')}
             </Sidetittel>
             <Vis hvis={reisetilskuddene && reisetilskuddene.length < 1}>
                 <Normaltekst>
-                    Det kan se ut som om du ikke har noen registrerte reisetilskudd, gå til
-                    {' '}
-                    {' '}
-                    <Link to="/#">Dine sykmeldinger</Link>
-                    {' '}
-                    for å se om det ligger noe der.
+                    {tekst('ingen.reisetilskudd1')}
+                    <Link to={tekst('reisetilskudd.url')}>{tekst('reisetilskudd.lenke')}</Link>
+                    {tekst('ingen.reisetilskudd1')}
                 </Normaltekst>
             </Vis>
             <div className="dine-reisetilskudd-wrapper">

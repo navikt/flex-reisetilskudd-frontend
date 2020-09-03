@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
-import Brodsmuler from '../../components/brodsmoler/brodsmuler'
 import useReisetilskuddTilGlobalState from '../../components/dine-reisetilskudd/useReisetilskuddTilGlobalState'
 import TilbakeKnapp from '../../components/knapper/tilbake-knapp'
+import Steg from '../../components/steg/steg'
 import SykmeldingPanel from '../../components/sykmelding-opplysninger/sykmelding-panel'
 import Vis from '../../components/vis'
 import { useAppStore } from '../../data/stores/app-store'
@@ -23,7 +23,6 @@ const Soknaden = () => {
 
     useEffect(() => {
         if (aktivtReisetilskuddId !== reisetilskuddID) {
-            // hentReisetilskudd(setReisetilskuddene)
             setAktivtReisetilskuddId(reisetilskuddID)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,7 +44,7 @@ const Soknaden = () => {
     return (
         <div className="app-page sporsmal-wrapper">
             <TilbakeKnapp aktivtSteg={idNum} />
-            <Brodsmuler aktivtSteg={idNum} />
+            <Steg aktivtSteg={idNum} />
             <SykmeldingPanel />
             <Vis hvis={idNum === 1}>
                 <Utbetaling />

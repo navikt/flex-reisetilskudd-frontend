@@ -39,8 +39,7 @@ const useReisetilskuddTilGlobalState = (): (reisetilskudd: Reisetilskudd) => voi
             setDagensTransportMiddelSyklerChecked(false)
         }
 
-        if (valgtReisetilskudd.egenBil
-            && validerTall(valgtReisetilskudd.egenBil)) {
+        if (valgtReisetilskudd.egenBil && validerTall(valgtReisetilskudd.egenBil)) {
             setDagensTransportMiddelEgenBilChecked(true)
             setAntallKilometerState(valgtReisetilskudd.egenBil.toString())
         } else {
@@ -48,8 +47,7 @@ const useReisetilskuddTilGlobalState = (): (reisetilskudd: Reisetilskudd) => voi
             setAntallKilometerState('')
         }
 
-        if (valgtReisetilskudd.kollektivtransport
-            && validerTall(valgtReisetilskudd.kollektivtransport)) {
+        if (valgtReisetilskudd.kollektivtransport && validerTall(valgtReisetilskudd.kollektivtransport)) {
             setMånedligeUtgifterState(valgtReisetilskudd.kollektivtransport.toString())
             setDagensTransportMiddelKollektivChecked(true)
         } else {
