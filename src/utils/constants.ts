@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
-export const SEPARATOR = '/';
+export const empty: any = null || undefined
+export const SEPARATOR = '/'

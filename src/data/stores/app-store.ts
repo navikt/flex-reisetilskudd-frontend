@@ -1,85 +1,67 @@
-/* eslint-disable object-property-newline */
-import constate from 'constate';
-import { useState } from 'react';
-import { KvitteringInterface, TransportmiddelAlternativer } from '../../models/kvittering';
-import { SykmeldingOpplysningInterface } from '../../models/sykmelding';
-import { ReisetilskuddInterface } from '../../models/reisetilskudd';
-import mockKvitteringer from '../mock/kvitteringer';
+import constate from 'constate'
+import { useState } from 'react'
 
-export const [AppStoreProvider, useAppStore] = constate(() => {
-  /* GENERELT */
-  const [
-    reisetilskuddene, settReisetilskuddene,
-  ] = useState<ReisetilskuddInterface[] | undefined>();
-  const [
-    aktivtReisetilskuddId, settAktivtReisetilskuddId,
-  ] = useState<string>();
+import { Kvittering, TransportmiddelAlternativer } from '../../types/kvittering'
+import { Reisetilskudd } from '../../types/reisetilskudd'
+import { SykmeldingOpplysning } from '../../types/sykmelding'
+import mockKvitteringer from '../mock/data/kvitteringer'
 
-  /* UTBETALINGSSPØRSMÅL */
-  const [activeMegArbeidsgiver, setActiveMegArbeidsgiver] = useState<string>('');
-  const [utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
-  ] = useState<boolean | undefined>(undefined);
-
-  /* DAGENS TRANSPORTMIDDEL */
-  const [dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
-  ] = useState<boolean>(false);
-  const [dagensTransportMiddelSyklerChecked, settDagensTransportMiddelSyklerChecked,
-  ] = useState<boolean>(false);
-  const [dagensTransportMiddelGårChecked, settDagensTransportMiddelGårChecked,
-  ] = useState<boolean>(false);
-  const [dagensTransportMiddelKollektivChecked, settDagensTransportMiddelKollektivChecked,
-  ] = useState<boolean>(false);
-  const [månedligeUtgifterState, settMånedligeUtgifterState] = useState<string>('');
-  const [antallKilometerState, settAntallKilometerState] = useState<string>('');
-  const [
-    dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
-  ] = useState<boolean | undefined>(undefined);
-
-  /* KVITTERINGSOPPLASTING */
-  const [kvitteringer, settKvitteringer] = useState<KvitteringInterface[]>(mockKvitteringer);
-  const [uopplastetFil, settUopplastetFil] = useState<File | null>(null);
-  const [filopplasterFeilmeldinger, settFilopplasterFeilmeldinger] = useState<string[]>([]);
-  const [åpenFilopplasterModal, settÅpenFilopplasterModal] = useState<boolean>(false);
-  const [
-    transportmiddelKvittering, settTransportmiddelKvittering,
-  ] = useState<TransportmiddelAlternativer>();
-
-  /* OPPLYSNINGER FRA SYKMELDINGEN */
-  const [
-    opplysningerSykmeldinger,
-    settOpplysningerSykmeldinger,
-  ] = useState<SykmeldingOpplysningInterface[] | undefined>(undefined);
-  const [
-    sykmeldingID, settSykmeldingID,
-  ] = useState<string>('');
-
-  return {
+export const [ AppStoreProvider, useAppStore ] = constate(() => {
     /* GENERELT */
-    reisetilskuddene, settReisetilskuddene,
-    aktivtReisetilskuddId, settAktivtReisetilskuddId,
+    const [ reisetilskuddene, setReisetilskuddene ] = useState<Reisetilskudd[]>([])
+    const [ aktivtReisetilskuddId, setAktivtReisetilskuddId ] = useState<string>()
 
     /* UTBETALINGSSPØRSMÅL */
-    activeMegArbeidsgiver, setActiveMegArbeidsgiver,
-    utbetalingspørsmålValidert, settUtbetalingspørsmålValidert,
+    const [ activeMegArbeidsgiver, setActiveMegArbeidsgiver ] = useState<string>('')
+    const [ utbetalingspørsmålValidert, setUtbetalingspørsmålValidert ] = useState<boolean>()
 
     /* DAGENS TRANSPORTMIDDEL */
-    dagensTransportMiddelEgenBilChecked, settDagensTransportMiddelEgenBilChecked,
-    dagensTransportMiddelSyklerChecked, settDagensTransportMiddelSyklerChecked,
-    dagensTransportMiddelGårChecked, settDagensTransportMiddelGårChecked,
-    dagensTransportMiddelKollektivChecked, settDagensTransportMiddelKollektivChecked,
-    månedligeUtgifterState, settMånedligeUtgifterState,
-    antallKilometerState, settAntallKilometerState,
-    dagensTransportmiddelValidert, settDagensTransportmiddelValidert,
+    const [ dagensTransportMiddelEgenBilChecked, setDagensTransportMiddelEgenBilChecked ] = useState<boolean>(false)
+    const [ dagensTransportMiddelSyklerChecked, setDagensTransportMiddelSyklerChecked ] = useState<boolean>(false)
+    const [ dagensTransportMiddelGårChecked, setDagensTransportMiddelGårChecked ] = useState<boolean>(false)
+    const [ dagensTransportMiddelKollektivChecked, setDagensTransportMiddelKollektivChecked ] = useState<boolean>(false)
+    const [ månedligeUtgifterState, setMånedligeUtgifterState ] = useState<string>('')
+    const [ antallKilometerState, setAntallKilometerState ] = useState<string>('')
+    const [ dagensTransportmiddelValidert, setDagensTransportmiddelValidert ] = useState<boolean>()
 
     /* KVITTERINGSOPPLASTING */
-    kvitteringer, settKvitteringer,
-    uopplastetFil, settUopplastetFil,
-    filopplasterFeilmeldinger, settFilopplasterFeilmeldinger,
-    åpenFilopplasterModal, settÅpenFilopplasterModal,
-    transportmiddelKvittering, settTransportmiddelKvittering,
+    const [ kvitteringer, setKvitteringer ] = useState<Kvittering[]>(mockKvitteringer)
+    const [ uopplastetFil, setUopplastetFil ] = useState<File | null>(null)
+    const [ filopplasterFeilmeldinger, setFilopplasterFeilmeldinger ] = useState<string[]>([])
+    const [ åpenFilopplasterModal, setÅpenFilopplasterModal ] = useState<boolean>(false)
+    const [ transportmiddelKvittering, setTransportmiddelKvittering ] = useState<TransportmiddelAlternativer>()
 
     /* OPPLYSNINGER FRA SYKMELDINGEN */
-    opplysningerSykmeldinger, settOpplysningerSykmeldinger,
-    sykmeldingID, settSykmeldingID,
-  };
-});
+    const [ opplysningerSykmeldinger, setOpplysningerSykmeldinger ] = useState<SykmeldingOpplysning[]>()
+    const [ sykmeldingID, setSykmeldingID ] = useState<string>('')
+
+    return {
+        /* GENERELT */
+        reisetilskuddene, setReisetilskuddene,
+        aktivtReisetilskuddId, setAktivtReisetilskuddId,
+
+        /* UTBETALINGSSPØRSMÅL */
+        activeMegArbeidsgiver, setActiveMegArbeidsgiver,
+        utbetalingspørsmålValidert, setUtbetalingspørsmålValidert,
+
+        /* DAGENS TRANSPORTMIDDEL */
+        dagensTransportMiddelEgenBilChecked, setDagensTransportMiddelEgenBilChecked,
+        dagensTransportMiddelSyklerChecked, setDagensTransportMiddelSyklerChecked,
+        dagensTransportMiddelGårChecked, setDagensTransportMiddelGårChecked,
+        dagensTransportMiddelKollektivChecked, setDagensTransportMiddelKollektivChecked,
+        månedligeUtgifterState, setMånedligeUtgifterState,
+        antallKilometerState, setAntallKilometerState,
+        dagensTransportmiddelValidert, setDagensTransportmiddelValidert,
+
+        /* KVITTERINGSOPPLASTING */
+        kvitteringer, setKvitteringer,
+        uopplastetFil, setUopplastetFil,
+        filopplasterFeilmeldinger, setFilopplasterFeilmeldinger,
+        åpenFilopplasterModal, setÅpenFilopplasterModal,
+        transportmiddelKvittering, setTransportmiddelKvittering,
+
+        /* OPPLYSNINGER FRA SYKMELDINGEN */
+        opplysningerSykmeldinger, setOpplysningerSykmeldinger,
+        sykmeldingID, setSykmeldingID,
+    }
+})

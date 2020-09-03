@@ -1,50 +1,62 @@
-import { filstørrelseTilBytes } from '../components/filopplaster/utils';
+import { filstørrelseTilBytes } from './fil-utils'
 
 class Environment {
-  /* eslint-disable-next-line */
-  private env = (window as any)._env_;
 
-  get apiUrl() {
-    return this.env.FLEX_REISETILSKUDD_BACKEND_PROXY_ROOT;
-  }
+    private env = (window as any)._env_;
 
-  get mockApiUrl() {
-    return this.env.MOCK_API_URL;
-  }
+    get apiUrl() {
+        return this.env.FLEX_REISETILSKUDD_BACKEND_PROXY_ROOT
+    }
 
-  get isQ1() {
-    return this.env.ENVIRONMENT === 'q1';
-  }
+    get mockApiUrl() {
+        return this.env.MOCK_API_URL
+    }
 
-  get isProd() {
-    return this.env.ENVIRONMENT === 'prod';
-  }
+    get isMockBackend() {
+        return this.env.MOCK_BACKEND === 'true'
+    }
 
-  get loginServiceUrl() {
-    return this.env.LOGIN_SERVICE_URL;
-  }
+    get isQ1() {
+        return this.env.ENVIRONMENT === 'q1'
+    }
 
-  get maksFilstørrelse() {
-    return filstørrelseTilBytes(this.env.MAKS_FILSTORRELSE);
-  }
+    get isProd() {
+        return this.env.ENVIRONMENT === 'prod'
+    }
 
-  get tillatteFiltyper() {
-    return this.env.TILLATTE_FILTYPER.split(',');
-  }
+    get loginServiceUrl() {
+        return this.env.LOGIN_SERVICE_URL
+    }
 
-  get bucketUrl() {
-    return this.env.BUCKET_URL;
-  }
+    get loginServiceRedirectUrl() {
+        return this.env.LOGINSERVICE_REDIRECT_URL
+    }
 
-  get mockBucketUrl() {
-    return this.env.MOCK_BUCKET_URL;
-  }
+    get maksFilstørrelse() {
+        return filstørrelseTilBytes(this.env.MAKS_FILSTORRELSE)
+    }
 
-  get syfoRestSykmeldingerApiUrl() {
-    return this.env.SYFOREST_SYKMELDINGER_API;
-  }
+    get tillatteFiltyper() {
+        return this.env.TILLATTE_FILTYPER.split(',')
+    }
+
+    get bucketUrl() {
+        return this.env.BUCKET_URL
+    }
+
+    get mockBucketUrl() {
+        return this.env.MOCK_BUCKET_URL
+    }
+
+    get baseName() {
+        return this.env.BASE_NAME
+    }
+
+    get syfoRestSykmeldingerApiUrl() {
+        return this.env.SYFOREST_SYKMELDINGER_API
+    }
 }
 
-const env = new Environment();
+const env = new Environment()
 
-export default env;
+export default env
