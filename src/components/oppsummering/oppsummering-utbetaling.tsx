@@ -2,7 +2,7 @@ import { Undertittel } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { ArbeidsgiverInterface } from '../../models/arbeidsgiver'
+import { ArbeidsgiverInterface } from '../../types/arbeidsgiver'
 import CheckedMedTekst from '../common/checked-med-tekst/checked-med-tekst'
 import { utbetalingSpørsmålVerdier } from '../sporsmal/sporsmal-tekster'
 import Vis from '../vis'

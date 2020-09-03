@@ -1,11 +1,11 @@
-import { ReisetilskuddInterface } from '../../models/reisetilskudd'
-import { Periode, Sykmelding, SykmeldingOpplysningInterface } from '../../models/sykmelding'
+import { Reisetilskudd } from '../../types/reisetilskudd'
+import { Periode, Sykmelding, SykmeldingOpplysning } from '../../types/sykmelding'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
 
 const fåSykmeldingOpplysningSomInterface = (
     response : Sykmelding,
-) : SykmeldingOpplysningInterface => {
+) : SykmeldingOpplysning => {
     return {
         id: response?.id,
         fraDato: response?.mulighetForArbeid?.perioder[0]?.fom,
@@ -57,7 +57,7 @@ export const fåSykmeldingIDFraAktivtReisetilskuddID = (aktivtReisetilskuddID: s
         .then((JSONReisetilskudd) => {
             const riktigReisetilskudd = JSONReisetilskudd.find(
                 (
-                    sykmelding: ReisetilskuddInterface,
+                    sykmelding: Reisetilskudd,
                 ) => sykmelding.reisetilskuddId === aktivtReisetilskuddID,
             )
             callback(riktigReisetilskudd.sykmeldingId)
@@ -66,7 +66,7 @@ export const fåSykmeldingIDFraAktivtReisetilskuddID = (aktivtReisetilskuddID: s
 }
 
 export const hentSykmeldinger = (
-    callback : (s : SykmeldingOpplysningInterface[]) => void,
+    callback : (s : SykmeldingOpplysning[]) => void,
     sykmeldingID: string,
 ) : void => {
     const { syfoRestSykmeldingerApiUrl } = env
@@ -92,7 +92,7 @@ export const hentSykmeldinger = (
             throw new Error('Fant ikke sykmelding med riktig ID')
         })
         .then((riktigSykmelding) => fåSykmeldingOpplysningSomInterface(riktigSykmelding))
-        .then((parsedOpplysninger : SykmeldingOpplysningInterface) => {
+        .then((parsedOpplysninger : SykmeldingOpplysning) => {
             callback([ parsedOpplysninger ])
         })
         .catch((err) => logger.error(err))

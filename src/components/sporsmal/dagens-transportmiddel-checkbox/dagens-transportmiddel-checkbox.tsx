@@ -4,7 +4,7 @@ import { CheckboksPanelGruppe } from 'nav-frontend-skjema'
 import React from 'react'
 
 import { useAppStore } from '../../../data/stores/app-store'
-import { CheckboxProps } from '../../../models/sporsmal'
+import { CheckboxProps } from '../../../types/sporsmal'
 import { transportalternativerVerdier } from '../sporsmal-tekster'
 
 const DagensTransportmiddelCheckbox = ({ tittel, svaralternativer, id, }: CheckboxProps) => {

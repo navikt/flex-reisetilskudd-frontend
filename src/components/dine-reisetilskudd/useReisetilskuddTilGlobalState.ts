@@ -1,9 +1,9 @@
 import { useAppStore } from '../../data/stores/app-store'
-import { ReisetilskuddInterface } from '../../models/reisetilskudd'
+import { Reisetilskudd } from '../../types/reisetilskudd'
 import { validerTall } from '../../utils/skjemavalidering'
 import { utbetalingSpørsmålVerdier } from '../sporsmal/sporsmal-tekster'
 
-const useReisetilskuddTilGlobalState = (): (reisetilskudd: ReisetilskuddInterface) => void => {
+const useReisetilskuddTilGlobalState = (): (reisetilskudd: Reisetilskudd) => void => {
     const {
         setActiveMegArbeidsgiver,
         setDagensTransportMiddelGårChecked,
@@ -16,7 +16,7 @@ const useReisetilskuddTilGlobalState = (): (reisetilskudd: ReisetilskuddInterfac
         setKvitteringer,
     } = useAppStore()
 
-    return (valgtReisetilskudd: ReisetilskuddInterface) => {
+    return (valgtReisetilskudd: Reisetilskudd) => {
         setAktivtReisetilskuddId(valgtReisetilskudd.reisetilskuddId)
 
         if (valgtReisetilskudd.utbetalingTilArbeidsgiver === true) {

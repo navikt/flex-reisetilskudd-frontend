@@ -2,7 +2,7 @@ import { Element } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { KvitteringInterface } from '../../models/kvittering'
+import { Kvittering } from '../../types/kvittering'
 import Vis from '../vis'
 import FilMedInfo from './fil-med-info/fil-med-info'
 
@@ -22,7 +22,7 @@ const OpplastedeFiler = ({ fjernKnapp }: Props) => {
                     <Element className="dato-tittel">Dato</Element>
                 </div>
             </Vis>
-            {kvitteringer.map((fil: KvitteringInterface, index: number) => (
+            {kvitteringer.map((fil: Kvittering, index: number) => (
                 <div key={fil.kvitteringId}>
                     <FilMedInfo fil={fil} fjernKnapp={fjernKnapp} />
                     {index === kvitteringer.length - 1 ? '' : <hr />}

@@ -1,22 +1,16 @@
-import './dine-reisetilskudd.less'
+import './reisetilskudd-side.less'
 
 import { Element, Normaltekst, Sidetittel } from 'nav-frontend-typografi'
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
-import Reisetilskudd from '../../components/dine-reisetilskudd/reisetilskudd'
+import DineReisetilskudd from '../../components/dine-reisetilskudd/dine-reisetilskudd'
 import Vis from '../../components/vis'
-import hentReisetilskudd from '../../data/fetcher/hent-reisetilskudd'
 import { useAppStore } from '../../data/stores/app-store'
 
-function DineReisetilskudd() {
-    const { reisetilskuddene, setReisetilskuddene } = useAppStore()
-    const [ isFirstRender, setIsFirstRender ] = useState<boolean>(true)
+const ReisetilskuddSide = () => {
+    const { reisetilskuddene } = useAppStore()
 
-    if (isFirstRender) {
-        hentReisetilskudd(setReisetilskuddene)
-        setIsFirstRender(false)
-    }
     return (
         <div className="app-page dine-reisetilskudd-side">
             <Sidetittel tag="h1" className="sidetopp__tittel">
@@ -35,15 +29,16 @@ function DineReisetilskudd() {
             <div className="dine-reisetilskudd-wrapper">
                 <Vis hvis={reisetilskuddene}>
                     <Element className="nye-reisetilskuddsøknader">Nye søknader om reisetilskudd</Element>
-                    {reisetilskuddene?.map((value) => <Reisetilskudd key={`reisetilskudd-${value?.reisetilskuddId}`} reisetilskudd={value} />)}
+                    {reisetilskuddene?.map((value) => {
+                        return <DineReisetilskudd key={`reisetilskudd-${value?.reisetilskuddId}`} reisetilskudd={value} />
+                    })}
                 </Vis>
             </div>
             <Vis hvis={reisetilskuddene === undefined}>
                 <Normaltekst>Teknisk feil, kunne ikke finne noen reisetilskudd</Normaltekst>
             </Vis>
-
         </div>
     )
 }
 
-export default DineReisetilskudd
+export default ReisetilskuddSide

@@ -1,4 +1,4 @@
-import mockReisetilskudd from '../../src/data/mock/reisetilskudd';
+import mockReisetilskudd from '../../src/data/mock/data/reisetilskudd';
 
 describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
       const url:string = `http://localhost:3000/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`

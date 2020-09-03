@@ -13,9 +13,9 @@ import { RouteParams } from '../../../app'
 import { post, put } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
 import {
-    KvitteringInterface, OpplastetKvitteringInterface, Transportmiddel,
+    Kvittering, OpplastetKvittering, Transportmiddel,
     TransportmiddelAlternativer,
-} from '../../../models/kvittering'
+} from '../../../types/kvittering'
 import { DatoFormat, formatertDato, getIDag } from '../../../utils/dato'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
@@ -47,7 +47,7 @@ const FilopplasterModal = () => {
 
     Modal.setAppElement('#root') // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
 
-    const nyKvittering = (kvittering: KvitteringInterface) => {
+    const nyKvittering = (kvittering: Kvittering) => {
         setKvitteringer([ ...kvitteringer, kvittering ])
     }
 
@@ -140,10 +140,10 @@ const FilopplasterModal = () => {
             }
 
             setLaster(true)
-            post<OpplastetKvitteringInterface>(`${env.mockBucketUrl}/kvittering`, requestData)
+            post<OpplastetKvittering>(`${env.mockBucketUrl}/kvittering`, requestData)
                 .then((response) => {
                     if (response.parsedBody?.id) {
-                        const kvittering: KvitteringInterface = {
+                        const kvittering: Kvittering = {
                             reisetilskuddId: reisetilskuddID,
                             navn: fil.name,
                             storrelse: fil.size,
@@ -161,7 +161,7 @@ const FilopplasterModal = () => {
                     return null
                 })
                 .then((kvittering) => {
-                    put<KvitteringInterface>(`${env.apiUrl}/kvittering`, kvittering)
+                    put<Kvittering>(`${env.apiUrl}/kvittering`, kvittering)
                         .then(() => {
                             setLaster(false)
                             lukkModal()

@@ -12,7 +12,7 @@ export enum SykmeldingOpplysningEnum {
     AKTIVITET_IKKE_MULIG_434 = 'aktivitetIkkeMulig434',
 }
 
-export interface SykmeldingOpplysningInterface {
+export interface SykmeldingOpplysning {
     [SykmeldingOpplysningEnum.ID]: string;
     [SykmeldingOpplysningEnum.FRA_DATO]: string;
     [SykmeldingOpplysningEnum.TIL_DATO]: string;

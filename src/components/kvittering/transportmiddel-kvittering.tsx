@@ -3,7 +3,7 @@ import { Element } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { Transportmiddel, TransportmiddelAlternativer } from '../../models/kvittering'
+import { Transportmiddel, TransportmiddelAlternativer } from '../../types/kvittering'
 
 interface Props {
     handleChange? : (transportmiddel : TransportmiddelAlternativer) => void

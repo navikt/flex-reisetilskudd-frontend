@@ -1,7 +1,7 @@
 import { filstørrelseTilBytes } from './fil-utils'
 
 class Environment {
-    /* eslint-disable-next-line */
+
     private env = (window as any)._env_;
 
     get apiUrl() {
@@ -10,6 +10,10 @@ class Environment {
 
     get mockApiUrl() {
         return this.env.MOCK_API_URL
+    }
+
+    get isMockBackend() {
+        return this.env.MOCK_BACKEND === 'true'
     }
 
     get isQ1() {
@@ -22,6 +26,10 @@ class Environment {
 
     get loginServiceUrl() {
         return this.env.LOGIN_SERVICE_URL
+    }
+
+    get loginServiceRedirectUrl() {
+        return this.env.LOGINSERVICE_REDIRECT_URL
     }
 
     get maksFilstørrelse() {

@@ -1,6 +1,6 @@
-import { KvitteringInterface } from './kvittering'
+import { Kvittering } from './kvittering'
 
-export interface ReisetilskuddInterface {
+export interface Reisetilskudd {
     fnr?: string,
     fom?: string,
     tom?: string,
@@ -17,5 +17,5 @@ export interface ReisetilskuddInterface {
     reisetilskuddId?: string,
     sykmeldingId?: string,
 
-    kvitteringer: KvitteringInterface[]
+    kvitteringer: Kvittering[]
 }

@@ -1,5 +1,5 @@
 export const sideTitler = {
-    UTBETALING: 'Utbetaling av pengene',
+    UTBETALING: 'Utbetaling<br/>av pengene',
     DAGENS_TRANSPORTMIDDEL: 'Dagens transportmiddel',
     REISETILSKUDD_PERIODE: 'Transportmiddel i reisetilskuddperioden',
     OPPSUMMERING: 'Oppsummering',

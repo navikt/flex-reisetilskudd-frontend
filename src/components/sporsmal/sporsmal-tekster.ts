@@ -1,6 +1,6 @@
-import { Transportmiddel } from '../../models/kvittering'
-import { CheckboxProps, InputProps, RadioSpørsmålProps, } from '../../models/sporsmal'
 import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling/constants'
+import { Transportmiddel } from '../../types/kvittering'
+import { CheckboxProps, InputProps, RadioSpørsmålProps, } from '../../types/sporsmal'
 
 export const utbetalingSpørsmålVerdier = {
     NAME: 'UTBETALINGARBEIDSGIVER',

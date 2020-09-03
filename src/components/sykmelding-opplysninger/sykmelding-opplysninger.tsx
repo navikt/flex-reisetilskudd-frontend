@@ -4,7 +4,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { SykmeldingOpplysningEnum } from '../../models/sykmelding'
+import { SykmeldingOpplysningEnum } from '../../types/sykmelding'
 import Vis from '../vis'
 import PeriodeTekst from './periode-tekst'
 import VisVerdi from './vis-verdi'
@@ -15,7 +15,6 @@ const SykmeldingOpplysninger = (): ReactElement => {
 
     const fraDato: string = vårSykmelding?.[SykmeldingOpplysningEnum.FRA_DATO] || ''
     const tilDato: string = vårSykmelding?.[SykmeldingOpplysningEnum.TIL_DATO] || ''
-
     const tittelKlasseNavn = 'soknad-tittel'
 
     const visVårVerdi = (hvilkenVerdi: SykmeldingOpplysningEnum) => (

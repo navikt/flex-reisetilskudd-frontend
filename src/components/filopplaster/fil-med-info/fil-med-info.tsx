@@ -8,7 +8,7 @@ import React from 'react'
 import vedlegg from '../../../assets/vedlegg.svg'
 import { del } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
-import { KvitteringInterface } from '../../../models/kvittering'
+import { Kvittering } from '../../../types/kvittering'
 import { DatoFormat, formatertDato } from '../../../utils/dato'
 import env from '../../../utils/environment'
 import formaterFilstørrelse from '../../../utils/fil-utils'
@@ -17,14 +17,14 @@ import Vis from '../../vis'
 import SlettFilIkon from './slett-fil-ikon.svg'
 
 interface Props {
-    fil: KvitteringInterface;
+    fil: Kvittering;
     fjernKnapp?: boolean;
 }
 
 const FilMedInfo = ({ fil, fjernKnapp }: Props) => {
     const { kvitteringer, setKvitteringer } = useAppStore()
 
-    const slettKvittering = (kvitteringSomSkalSlettes: KvitteringInterface) => {
+    const slettKvittering = (kvitteringSomSkalSlettes: Kvittering) => {
         setKvitteringer(kvitteringer.filter(
             (kvittering) => kvittering.kvitteringId !== kvitteringSomSkalSlettes.kvitteringId,
         ))

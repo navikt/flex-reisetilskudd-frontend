@@ -1,19 +1,19 @@
 import constate from 'constate'
 import { useState } from 'react'
 
-import { KvitteringInterface, TransportmiddelAlternativer } from '../../models/kvittering'
-import { ReisetilskuddInterface } from '../../models/reisetilskudd'
-import { SykmeldingOpplysningInterface } from '../../models/sykmelding'
-import mockKvitteringer from '../mock/kvitteringer'
+import { Kvittering, TransportmiddelAlternativer } from '../../types/kvittering'
+import { Reisetilskudd } from '../../types/reisetilskudd'
+import { SykmeldingOpplysning } from '../../types/sykmelding'
+import mockKvitteringer from '../mock/data/kvitteringer'
 
 export const [ AppStoreProvider, useAppStore ] = constate(() => {
     /* GENERELT */
-    const [ reisetilskuddene, setReisetilskuddene ] = useState<ReisetilskuddInterface[] | undefined>()
+    const [ reisetilskuddene, setReisetilskuddene ] = useState<Reisetilskudd[]>([])
     const [ aktivtReisetilskuddId, setAktivtReisetilskuddId ] = useState<string>()
 
     /* UTBETALINGSSPØRSMÅL */
     const [ activeMegArbeidsgiver, setActiveMegArbeidsgiver ] = useState<string>('')
-    const [ utbetalingspørsmålValidert, setUtbetalingspørsmålValidert ] = useState<boolean | undefined>(undefined)
+    const [ utbetalingspørsmålValidert, setUtbetalingspørsmålValidert ] = useState<boolean>()
 
     /* DAGENS TRANSPORTMIDDEL */
     const [ dagensTransportMiddelEgenBilChecked, setDagensTransportMiddelEgenBilChecked ] = useState<boolean>(false)
@@ -22,17 +22,17 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
     const [ dagensTransportMiddelKollektivChecked, setDagensTransportMiddelKollektivChecked ] = useState<boolean>(false)
     const [ månedligeUtgifterState, setMånedligeUtgifterState ] = useState<string>('')
     const [ antallKilometerState, setAntallKilometerState ] = useState<string>('')
-    const [ dagensTransportmiddelValidert, setDagensTransportmiddelValidert ] = useState<boolean | undefined>(undefined)
+    const [ dagensTransportmiddelValidert, setDagensTransportmiddelValidert ] = useState<boolean>()
 
     /* KVITTERINGSOPPLASTING */
-    const [ kvitteringer, setKvitteringer ] = useState<KvitteringInterface[]>(mockKvitteringer)
+    const [ kvitteringer, setKvitteringer ] = useState<Kvittering[]>(mockKvitteringer)
     const [ uopplastetFil, setUopplastetFil ] = useState<File | null>(null)
     const [ filopplasterFeilmeldinger, setFilopplasterFeilmeldinger ] = useState<string[]>([])
     const [ åpenFilopplasterModal, setÅpenFilopplasterModal ] = useState<boolean>(false)
     const [ transportmiddelKvittering, setTransportmiddelKvittering ] = useState<TransportmiddelAlternativer>()
 
     /* OPPLYSNINGER FRA SYKMELDINGEN */
-    const [ opplysningerSykmeldinger, setOpplysningerSykmeldinger ] = useState<SykmeldingOpplysningInterface[] | undefined>(undefined)
+    const [ opplysningerSykmeldinger, setOpplysningerSykmeldinger ] = useState<SykmeldingOpplysning[]>()
     const [ sykmeldingID, setSykmeldingID ] = useState<string>('')
 
     return {

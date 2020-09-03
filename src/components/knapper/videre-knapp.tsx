@@ -3,7 +3,7 @@ import './knapper.less'
 import { Knapp } from 'nav-frontend-knapper'
 import React from 'react'
 
-import { AktivtStegProps } from '../../models/navigasjon'
+import { AktivtStegProps } from '../../types/navigasjon'
 
 const VidereKnapp = ({ onClick }: AktivtStegProps) => {
     return (

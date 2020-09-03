@@ -1,4 +1,4 @@
-import './reisetilskudd.less'
+import './dine-reisetilskudd.less'
 
 import { HoyreChevron } from 'nav-frontend-chevron'
 import { Element, Systemtittel } from 'nav-frontend-typografi'
@@ -6,16 +6,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { SøknadsIkon } from '../../assets/ikoner'
-import { ReisetilskuddInterface } from '../../models/reisetilskudd'
+import { Reisetilskudd } from '../../types/reisetilskudd'
 import { DatoFormat, formatertDato } from '../../utils/dato'
 import Vis from '../vis'
 import useReisetilskuddTilGlobalState from './useReisetilskuddTilGlobalState'
 
 interface Props {
-    reisetilskudd: ReisetilskuddInterface,
+    reisetilskudd: Reisetilskudd,
 }
 
-const Reisetilskudd = ({ reisetilskudd }: Props) => {
+const DineReisetilskudd = ({ reisetilskudd }: Props) => {
     const settReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState()
 
     return (
@@ -51,4 +51,4 @@ const Reisetilskudd = ({ reisetilskudd }: Props) => {
     )
 }
 
-export default Reisetilskudd
+export default DineReisetilskudd

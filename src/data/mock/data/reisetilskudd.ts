@@ -1,6 +1,6 @@
-import { ReisetilskuddInterface } from '../../models/reisetilskudd'
+import { Reisetilskudd } from '../../../types/reisetilskudd'
 
-const mockReisetilskudd : ReisetilskuddInterface[] = [
+const mockReisetilskudd : Reisetilskudd[] = [
     {
         fnr: '01010112345',
         fom: '2020-08-03',

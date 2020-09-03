@@ -1,4 +1,4 @@
-export interface KvitteringInterface {
+export interface Kvittering {
     reisetilskuddId: string;
     kvitteringId: string;
     navn: string;
@@ -9,7 +9,7 @@ export interface KvitteringInterface {
     transportmiddel?: string;
 }
 
-export interface OpplastetKvitteringInterface {
+export interface OpplastetKvittering {
     id: string;
 }
 

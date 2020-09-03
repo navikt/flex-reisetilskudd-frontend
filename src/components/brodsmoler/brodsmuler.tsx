@@ -5,7 +5,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { sideTitler } from '../../constants/side-titler'
-import { AktivtStegProps } from '../../models/navigasjon'
+import { AktivtStegProps } from '../../types/navigasjon'
 import { SEPARATOR } from '../../utils/constants'
 
 export const pathUtenSteg = (pathname: string): string => {

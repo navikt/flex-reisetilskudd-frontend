@@ -5,6 +5,10 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './app'
 import env from './utils/environment'
 
+if (env.isMockBackend) {
+    require('./data/mock')
+}
+
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter basename={env.baseName}>

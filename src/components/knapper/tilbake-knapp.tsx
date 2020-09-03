@@ -4,7 +4,7 @@ import { Tilbakeknapp } from 'nav-frontend-ikonknapper'
 import React, { ReactElement } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { AktivtStegProps } from '../../models/navigasjon'
+import { AktivtStegProps } from '../../types/navigasjon'
 import { pathTilSide } from '../../utils/navigasjon'
 import Vis from '../vis'
 

@@ -88,7 +88,8 @@
         "jest-environment-jsdom-fifteen": "^1.0.2",
         "jest-react-hooks-shallow": "^1.4.1",
         "react-test-renderer": "^16.13.1",
-        "source-map": "^0.7.3"
+        "source-map": "^0.7.3",
+        "yet-another-fetch-mock": "^4.0.0"
     },
     "scripts": {
         "start-mock": "MOCK_BACKEND=true npm run generate-env-config && REACT_APP_DECORATOR_URL=https://www.nav.no/dekoratoren craco start",

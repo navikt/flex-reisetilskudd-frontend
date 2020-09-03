@@ -7,7 +7,6 @@ import useReisetilskuddTilGlobalState from '../../components/dine-reisetilskudd/
 import TilbakeKnapp from '../../components/knapper/tilbake-knapp'
 import SykmeldingPanel from '../../components/sykmelding-opplysninger/sykmelding-panel'
 import Vis from '../../components/vis'
-import hentReisetilskudd from '../../data/fetcher/hent-reisetilskudd'
 import { useAppStore } from '../../data/stores/app-store'
 import DagensTransportmiddel from '../dagens-transportmiddel/dagens-transportmiddel'
 import KvitteringsOpplasting from '../kvitterings-opplasting/kvitterings-opplasting'
@@ -15,7 +14,7 @@ import Oppsummering from '../oppsummering/oppsummering'
 import Utbetaling from '../utbetaling/utbetaling'
 
 const Soknaden = () => {
-    const { aktivtReisetilskuddId, setAktivtReisetilskuddId, reisetilskuddene, setReisetilskuddene } = useAppStore()
+    const { aktivtReisetilskuddId, setAktivtReisetilskuddId, reisetilskuddene } = useAppStore()
     const setReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState()
 
     const history = useHistory()
@@ -24,7 +23,8 @@ const Soknaden = () => {
 
     useEffect(() => {
         if (aktivtReisetilskuddId !== reisetilskuddID) {
-            hentReisetilskudd(setReisetilskuddene)
+            // hentReisetilskudd(setReisetilskuddene)
+            setAktivtReisetilskuddId(reisetilskuddID)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ aktivtReisetilskuddId, reisetilskuddID ])

@@ -5,7 +5,7 @@ import { Systemtittel } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { useAppStore } from '../../../data/stores/app-store'
-import { RadioSpørsmålProps } from '../../../models/sporsmal'
+import { RadioSpørsmålProps } from '../../../types/sporsmal'
 import { utbetalingSpørsmålVerdier } from '../sporsmal-tekster'
 
 const RadioSpørsmålUtbetaling = ({ tittel, name, spørsmålstekst, svaralternativer }: RadioSpørsmålProps) => {

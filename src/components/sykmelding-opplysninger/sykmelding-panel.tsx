@@ -27,7 +27,9 @@ const SykmeldingPanel = (): ReactElement => {
 
     return (
         <div className="sykmelding-panel-wrapper">
-            <Ekspanderbartpanel className="sykmelding-innhold" tittel={<Undertittel>Opplysninger fra sykmeldingen</Undertittel>}>
+            <Ekspanderbartpanel className="sykmelding-innhold" tittel={
+                <Undertittel>Opplysninger fra sykmeldingen</Undertittel>
+            }>
                 <hr className="sykmelding-linje" />
                 <SykmeldingOpplysninger />
             </Ekspanderbartpanel>
