@@ -19,7 +19,7 @@ import {
 } from '../../components/sporsmal/sporsmal-tekster'
 import Vis from '../../components/vis'
 import { hjelpetekstDagensTransportmiddel } from '../../constants/hjelpetekster'
-import { post } from '../../data/fetcher/fetcher'
+import { put } from '../../data/fetcher/fetcher'
 import { useAppStore } from '../../data/stores/app-store'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
@@ -177,7 +177,7 @@ const DagensTransportmiddel = () => {
     ])
 
     const handleVidereKlikk = () => {
-        post<TransportmiddelInterface>(`${env.apiUrl}/reisetilskudd`, {
+        put<TransportmiddelInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${reisetilskuddID}`, {
             reisetilskuddId: reisetilskuddID,
             går: dagensTransportMiddelGårChecked,
             sykler: dagensTransportMiddelSyklerChecked,

@@ -10,7 +10,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../../app'
-import { post, put } from '../../../data/fetcher/fetcher'
+import { post } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
 import {
     Kvittering, OpplastetKvittering, Transportmiddel,
@@ -161,7 +161,7 @@ const FilopplasterModal = () => {
                     return null
                 })
                 .then((kvittering) => {
-                    put<Kvittering>(`${env.apiUrl}/kvittering`, kvittering)
+                    post<Kvittering>(`${env.apiUrl}/api/v1/kvittering`, kvittering)
                         .then(() => {
                             setLaster(false)
                             lukkModal()

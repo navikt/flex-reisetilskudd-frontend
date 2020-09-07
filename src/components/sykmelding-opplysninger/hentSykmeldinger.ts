@@ -43,7 +43,7 @@ export const faaRiktigSykmelding = (
 export const fåSykmeldingIDFraAktivtReisetilskuddID = (aktivtReisetilskuddID: string,
     callback: (s: string) => void) : void => {
     const { apiUrl } = env
-    fetch(`${apiUrl}/reisetilskudd`, {
+    fetch(`${apiUrl}/api/v1/reisetilskudd`, {
         credentials: 'include',
     })
         .then(
@@ -69,8 +69,8 @@ export const hentSykmeldinger = (
     callback : (s : SykmeldingOpplysning[]) => void,
     sykmeldingID: string,
 ) : void => {
-    const { syfoRestSykmeldingerApiUrl } = env
-    fetch(syfoRestSykmeldingerApiUrl, {
+
+    fetch(env.sykmeldingerBackendProxyRoot + '/api/v1/syforest/sykmeldinger', {
         credentials: 'include',
     })
         .then(

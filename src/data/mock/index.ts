@@ -1,7 +1,6 @@
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock'
 
 import env from '../../utils/environment'
-import mockKvitteringer from './data/kvitteringer'
 import reisetilskudd from './data/reisetilskudd'
 
 const mock = FetchMock.configure({
@@ -11,8 +10,5 @@ const mock = FetchMock.configure({
     )
 })
 
-mock.get(`${env.apiUrl}/kvitteringer`,
-    (req, res, ctx) => res(ctx.json(mockKvitteringer)))
-
-mock.get(`${env.apiUrl}//reisetilskudd`,
+mock.get(`${env.apiUrl}/api/v1/reisetilskudd`,
     (req, res, ctx) => res(ctx.json(reisetilskudd)))
