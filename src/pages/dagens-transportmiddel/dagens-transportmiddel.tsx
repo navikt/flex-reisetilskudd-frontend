@@ -17,7 +17,7 @@ import {
     transportalternativerKollektivt,
 } from '../../components/sporsmal-svar/sporsmal-konstanter'
 import Vis from '../../components/vis'
-import { post } from '../../data/fetcher/fetcher'
+import { put } from '../../data/fetcher/fetcher'
 import { useAppStore } from '../../data/stores/app-store'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
@@ -176,7 +176,7 @@ const DagensTransportmiddel = () => {
     ])
 
     const handleVidereKlikk = () => {
-        post<TransportmiddelInterface>(`${env.apiUrl}/reisetilskudd`, {
+        put<TransportmiddelInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${reisetilskuddID}`, {
             reisetilskuddId: reisetilskuddID,
             går: dagensTransportMiddelGårChecked,
             sykler: dagensTransportMiddelSyklerChecked,

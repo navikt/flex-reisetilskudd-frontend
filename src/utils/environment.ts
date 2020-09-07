@@ -52,8 +52,8 @@ class Environment {
         return this.env.BASE_NAME
     }
 
-    get syfoRestSykmeldingerApiUrl() {
-        return this.env.SYFOREST_SYKMELDINGER_API
+    get sykmeldingerBackendProxyRoot() {
+        return this.env.SYKMELDINGER_BACKEND_PROXY_ROOT
     }
 }
 
