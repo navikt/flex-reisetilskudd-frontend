@@ -46,7 +46,7 @@ const FilopplasterModal = () => {
     const [ valideringsFeil, setValideringsFeil ] = useState<FeiloppsummeringFeil[]>([])
     const [ harAlleredeBlittValidert, setHarAlleredeBlittValidert ] = useState<boolean>(false)
 
-    Modal.setAppElement('#root')
+    Modal.setAppElement('#maincontent')
 
     const nyKvittering = (kvittering: Kvittering) => {
         setKvitteringer([ ...kvitteringer, kvittering ])
