@@ -5,9 +5,10 @@ import React, { ReactElement } from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
 import { SykmeldingOpplysningEnum } from '../../types/sykmelding'
+import { tekst } from '../../utils/tekster'
+import CheckedMedTekst from '../checked-med-tekst/checked-med-tekst'
 import Vis from '../vis'
 import PeriodeTekst from './periode-tekst'
-import VisVerdi from './vis-verdi'
 
 const SykmeldingOpplysninger = (): ReactElement => {
     const { opplysningerSykmeldinger } = useAppStore()
@@ -18,46 +19,61 @@ const SykmeldingOpplysninger = (): ReactElement => {
     const tittelKlasseNavn = 'soknad-tittel'
 
     const visVårVerdi = (hvilkenVerdi: SykmeldingOpplysningEnum) => (
-        <VisVerdi hvilkenVerdi={hvilkenVerdi} vårSykmelding={vårSykmelding} />
+        (vårSykmelding && vårSykmelding?.[hvilkenVerdi])
+            ? <CheckedMedTekst tekst={vårSykmelding?.[hvilkenVerdi]} />
+            : <span className="sykmelding-manglende-opplysninger"> - </span>
     )
 
     return (
         <div className="sykmelding-opplysninger-wrapper">
             <Vis hvis={vårSykmelding !== undefined}>
-                <Element className={tittelKlasseNavn}>Periode</Element>
+                <Element className={tittelKlasseNavn}>
+                    {tekst('sykmelding.periode')}
+                </Element>
                 <PeriodeTekst fraDato={fraDato} tilDato={tilDato} />
                 <div className="diagnose-wrapper">
                     <>
                         <Element>
-                            Diagnose
+                            {tekst('sykmelding.diagnose')}
                         </Element>
                         {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSE)}
                     </>
                     <>
                         <Element>
-                            Diagnosekode
+                            {tekst('sykmelding.diagnosekode')}
                         </Element>
                         {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSEKODE)}
                     </>
                 </div>
-                <Element className={tittelKlasseNavn}>Bidiagnose </Element>
-                {visVårVerdi(SykmeldingOpplysningEnum.BI_DIAGNOSER)}
-                <Element className={tittelKlasseNavn}>Reisetilskudd</Element>
-                {visVårVerdi(SykmeldingOpplysningEnum.REISETILSKUDD)}
+
                 <Element className={tittelKlasseNavn}>
-                    Beskriv eventelle hesyn som må tas på arbeidsplassen
+                    {tekst('sykmelding.bidiagnose')}
+                </Element>
+                {visVårVerdi(SykmeldingOpplysningEnum.BI_DIAGNOSER)}
+
+                <Element className={tittelKlasseNavn}>
+                    {tekst('sykmelding.reisetilskudd')}
+                </Element>
+                {visVårVerdi(SykmeldingOpplysningEnum.REISETILSKUDD)}
+
+                <Element className={tittelKlasseNavn}>
+                    {tekst('sykmelding.beskriv')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
+
                 <Element className={tittelKlasseNavn}>
-                    Arbeidsgiver som legen har skrevet inn
+                    {tekst('sykmelding.arbeidsgiver')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.ARBEIDSGIVER)}
-                <Element className={tittelKlasseNavn}>Lege/sykmelder</Element>
+
+                <Element className={tittelKlasseNavn}>
+                    {tekst('sykmelding.lege-sykmelder')}
+                </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.SYKMELDER)}
             </Vis>
             <Vis hvis={vårSykmelding === undefined}>
                 <Normaltekst>
-                    Vi kunne dessverre ikke hente opplysninger fra sykmeldingen din, prøv igjen senere
+                    {tekst('sykmelding.dessverre')}
                 </Normaltekst>
             </Vis>
         </div>

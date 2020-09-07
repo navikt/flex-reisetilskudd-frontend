@@ -7,6 +7,7 @@ import React from 'react'
 
 import vedlegg from '../../../assets/vedlegg.svg'
 import formaterFilstørrelse from '../../../utils/fil-utils'
+import { tekst } from '../../../utils/tekster'
 
 interface Props {
     fil: File | null;
@@ -35,7 +36,7 @@ const Fil = ({ fil }: Props) => (
             </div>
             :
             <AlertStripeFeil key="" className="feilmelding-alert">
-                Det skjedde noe feil ved opplastingen av filen din. Vennligst prøv å på nytt
+                {tekst('fil.feilmelding')}
             </AlertStripeFeil>
         }
     </>

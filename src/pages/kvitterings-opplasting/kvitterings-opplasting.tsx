@@ -9,10 +9,10 @@ import { RouteParams } from '../../app'
 import DragAndDrop from '../../components/filopplaster/drag-and-drop/drag-and-drop'
 import FilopplasterModal from '../../components/filopplaster/filopplaster-modal/filopplaster-modal'
 import OpplastedeFiler from '../../components/filopplaster/opplastede-filer'
-import VidereKnapp from '../../components/knapper/videre-knapp'
-import TotalBelop from '../../components/kvittering/totalt-belop/TotaltBelop'
-import { hjelpetekstKvitteringopplasting } from '../../constants/hjelpetekster'
+import VidereKnapp from '../../components/klikkbar/videre-knapp'
+import TotalBelop from '../../components/kvittering/total-belop/total-belop'
 import { gåTilNesteSide } from '../../utils/navigasjon'
+import { tekst } from '../../utils/tekster'
 
 const KvitteringsOpplasting = () => {
     const { soknadssideID } = useParams<RouteParams>()
@@ -25,12 +25,20 @@ const KvitteringsOpplasting = () => {
 
     return (
         <div className="last-opp-kvittering-wrapper">
-            <Systemtittel className="last-opp-kvittering-overskrift">Last opp dine kvitteringer</Systemtittel>
+            <Systemtittel className="last-opp-kvittering-overskrift">
+                {tekst('kvitterings.last-opp')}
+            </Systemtittel>
             <div className="last-opp-kvittering-tekst">
-                <Normaltekst id="kvitteringsopplastning-overskrift" aria-describedby="min-hjelpetekst-kvitteringsopplastning">Her kan du laste opp kvitteringer fra
-                    reisetilskuddsperioden.</Normaltekst>
-                <Hjelpetekst className="kvitteringsopplasting-hjelpetekst" id="min-hjelpetekst-kvitteringsopplastning" aria-describedby="kvitteringsopplastning-overskrift">
-                    {hjelpetekstKvitteringopplasting.hjelpetekst}
+                <Normaltekst id="kvitteringsopplastning-overskrift"
+                    aria-describedby="min-hjelpetekst-kvitteringsopplastning"
+                >
+                    {tekst('kvitterings.her-kan')}
+                </Normaltekst>
+                <Hjelpetekst className="kvitteringsopplasting-hjelpetekst"
+                    id="min-hjelpetekst-kvitteringsopplastning"
+                    aria-describedby="kvitteringsopplastning-overskrift"
+                >
+                    {tekst('kvitterings.hjelpetekst')}
                 </Hjelpetekst>
             </div>
             <div className="filopplaster-wrapper">

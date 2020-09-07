@@ -1,0 +1,25 @@
+.horisontal-radio {
+    .utbetaling-tittel {
+        padding-bottom: 1rem;
+    }
+
+    .inputPanelGruppe__inner {
+        display: flex;
+        justify-content: space-between;
+
+        .inputPanel {
+            margin-bottom: 0.5em;
+            width: 48.5%;
+        }
+    }
+
+    @media screen and (max-width: 750px) {
+        .inputPanelGruppe__inner {
+            flex-direction: column;
+        }
+
+        .inputPanel.radioPanel {
+            width: unset;
+        }
+    }
+}

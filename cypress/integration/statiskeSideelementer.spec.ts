@@ -13,9 +13,9 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         cy.get('.header-icons').should('be.visible')
     })
 
-    it('tilbake-knapp eksisterer på siden', ()=> {
-        let tilbakeKnapp = cy.get('.tilbake-knapp')
-        tilbakeKnapp.should('be.visible')
+    it('tilbake-lenke eksisterer på siden', ()=> {
+        let tilbakeLenke = cy.get('.tilbake-lenke')
+        tilbakeLenke.should('be.visible')
     })
 
     it('Laster inn stegindikator', function() {

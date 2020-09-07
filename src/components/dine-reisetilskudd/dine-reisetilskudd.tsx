@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { SøknadsIkon } from '../../assets/ikoner'
 import { Reisetilskudd } from '../../types/reisetilskudd'
 import { DatoFormat, formatertDato } from '../../utils/dato'
+import { getLedetekst, tekst } from '../../utils/tekster'
 import Vis from '../vis'
 import useReisetilskuddTilGlobalState from './useReisetilskuddTilGlobalState'
 
@@ -27,23 +28,22 @@ const DineReisetilskudd = ({ reisetilskudd }: Props) => {
                 <SøknadsIkon />
             </div>
             <div className="reisetilskudd-innhold">
-                <Systemtittel className="reisetilskudd-innhold-tittel">Søknad om reisetilskudd</Systemtittel>
+                <Systemtittel className="reisetilskudd-innhold-tittel">
+                    {tekst('dine_reisetilskudd.tittel')}
+                </Systemtittel>
                 <Vis hvis={reisetilskudd.fom && reisetilskudd.tom}>
                     <Element className="reisetilskudd-periode">
-                        Gjelder perioden fra
-                        {' '}
-                        {reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : ''}
-                        {' '}
-                        til
-                        {' '}
-                        {reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''}
+                        {getLedetekst(tekst('dine_reisetilskudd.periode'), {
+                            '%FOM%': reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : '',
+                            '%TOM%': reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''
+                        })}
                     </Element>
                 </Vis>
                 <Element className="reisetilskudd-orgnavn">
-                    {reisetilskudd.orgNavn}
-                    {' '}
-                    org.nr
-                    {reisetilskudd.orgNummer}
+                    {getLedetekst(tekst('dine_reisetilskudd.org'), {
+                        '%ORGNAVN%': reisetilskudd.orgNavn,
+                        '%ORGNUMMER%': reisetilskudd.orgNummer
+                    })}
                 </Element>
             </div>
             <HoyreChevron className="reisetilskudd-chevron" />

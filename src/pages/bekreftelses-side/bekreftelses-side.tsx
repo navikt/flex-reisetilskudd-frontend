@@ -7,7 +7,7 @@ import VeienVidereBox from './veien-videre'
 
 const BekreftelsesSide = () => {
     return (
-        <div className="bekreftelsesside-page-wrapper">
+        <div className="limit">
             <ListeTekstbox />
             <VeienVidereBox />
         </div>

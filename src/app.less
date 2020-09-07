@@ -1,56 +1,53 @@
 @import 'node_modules/nav-frontend-core/less/_variabler';
 @import './basic';
 
-body {
-    margin: 0;
-    box-sizing: content-box;
-    background-color: @navLysGra;
-    font-family: @font-family;
+* {
+    box-sizing: border-box;
 }
 
-.app-main-content {
-    background-color: @white;
-    margin: 0;
-    flex: 1;
-}
+html, body, #app-root {
+    height: 100%;
 
-.app-main-content.grey {
-    background-color: @navLysGra;
-}
-
-.app-page {
-    width: 700px;
-    margin: 0 auto;
-    padding: 1rem 0;
-    flex: 1;
-}
-
-@media screen and (max-width: 750px) {
-    .app-page {
-        position: relative;
-        width: unset;
-        margin: 0;
-        padding: 3rem 2rem;
+    .spinner {
+        display: block;
+        margin: 0 auto;
     }
 }
 
-.sentrert {
+.limit {
     display: flex;
-    justify-content: center;
-}
-
-.seksjon {
-    padding-bottom: 3rem;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+    background-color: @white;
+    padding: 1rem 1rem 2rem;
 }
 
 .pagewrapper {
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
     min-height: 100vh;
 
-    #root {
+    .maincontent {
         display: flex;
         flex-direction: column;
         flex: 1;
+        background-color: @navLysGra;
+    }
+}
+
+.vekk {
+    line-height: 0;
+    color: transparent;
+    font-size: 0;
+    width: 0;
+    height: 0;
+}
+
+@media (min-width: @screen-sm) {
+    .limit {
+        width: @desktopLimitWidth;
+        margin: 0 auto;
+        padding: 2rem 5rem 3.5rem;
     }
 }
