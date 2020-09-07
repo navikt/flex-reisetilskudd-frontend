@@ -11,8 +11,8 @@ const mock = FetchMock.configure({
     )
 })
 
-mock.get(`${env.apiUrl}/kvitteringer`,
+mock.get(`${env.apiUrl}/api/v1/kvitteringer`,
     (req, res, ctx) => res(ctx.json(mockKvitteringer)))
 
-mock.get(`${env.apiUrl}//reisetilskudd`,
+mock.get(`${env.apiUrl}/api/v1/reisetilskudd`,
     (req, res, ctx) => res(ctx.json(reisetilskudd)))

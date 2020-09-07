@@ -17,7 +17,7 @@ export function DataFetcher(props: { children: any }) {
 
     useEffect(() => {
         if (isNotStarted(kvitteringer)) {
-            kvitteringer.fetch(env.apiUrl + '/kvitteringer', {
+            kvitteringer.fetch(env.apiUrl + '/api/v1/kvitteringer', {
                 credentials: 'include',
             }, (fetchState: FetchState<Kvittering[]>) => {
                 if (hasData(fetchState)) {
@@ -26,7 +26,7 @@ export function DataFetcher(props: { children: any }) {
             })
         }
         if (isNotStarted(reisetilskuddene)) {
-            reisetilskuddene.fetch(env.apiUrl + '/reisetilskudd', {
+            reisetilskuddene.fetch(env.apiUrl + '/api/v1/reisetilskudd', {
                 credentials: 'include',
             }, (fetchState: FetchState<Reisetilskudd[]>) => {
                 if (hasData(fetchState)) {

@@ -28,7 +28,7 @@ const FilMedInfo = ({ fil, fjernKnapp }: Props) => {
         setKvitteringer(kvitteringer.filter(
             (kvittering) => kvittering.kvitteringId !== kvitteringSomSkalSlettes.kvitteringId,
         ))
-        del<string>(`${env.apiUrl}/kvittering`, { kvitteringId: fil.kvitteringId })
+        del<string>(`${env.apiUrl}/api/v1/kvittering/${fil.kvitteringId}`)
             .catch((error) => logger.error('Feil under sletting av kvittering', error))
     }
 
