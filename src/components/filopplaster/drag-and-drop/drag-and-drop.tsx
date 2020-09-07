@@ -8,6 +8,7 @@ import opplasting from '../../../assets/opplasting.svg'
 import { useAppStore } from '../../../data/stores/app-store'
 import env from '../../../utils/environment'
 import formaterFilstørrelse from '../../../utils/fil-utils'
+import { getLedetekst, tekst } from '../../../utils/tekster'
 
 const DragAndDrop = () => {
     const {
@@ -23,14 +24,27 @@ const DragAndDrop = () => {
         (filer) => {
             filer.forEach((fil: File) => {
                 setUopplastetFil(fil)
+
                 if (maxFilstørrelse && fil.size > maxFilstørrelse) {
                     const maks = formaterFilstørrelse(maxFilstørrelse)
-                    setFilopplasterFeilmeldinger([ ...filopplasterFeilmeldinger, `Filen ${fil.name} er for stor. Maks filstørrelse er ${maks}` ])
+                    setFilopplasterFeilmeldinger([
+                        ...filopplasterFeilmeldinger,
+                        getLedetekst(tekst('drag_and_drop.maks'), {
+                            '%FILNAVN%': fil.name,
+                            '%MAKSSTOR%': maks
+                        })
+                    ])
                     return
                 }
 
                 if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-                    setFilopplasterFeilmeldinger([ ...filopplasterFeilmeldinger, `Filtypen til ${fil.name} er ugyldig. Gyldige typer er ${tillatteFiltyper}` ])
+                    setFilopplasterFeilmeldinger([
+                        ...filopplasterFeilmeldinger,
+                        getLedetekst(tekst('drag_and_drop.maks'), {
+                            '%FILNAVN%': fil.name,
+                            '%TILLATTEFILTYPER%': tillatteFiltyper
+                        })
+                    ])
                     return
                 }
 
@@ -47,17 +61,15 @@ const DragAndDrop = () => {
         multiple: false,
     })
 
-    const dropText = isDragActive ? 'Slipp filen her...' : 'Last opp dokumentasjon'
-
     return (
         <div className="filopplasteren" {...getRootProps()}>
             <input {...getInputProps()} />
-            <img src={opplasting}
-                className="opplastingsikon"
-                alt="Opplastingsikon"
-            />
+            <img src={opplasting} className="opplastingsikon" alt="Opplastingsikon" />
             <Normaltekst className="tekst">
-                {dropText}
+                {isDragActive
+                    ? tekst('drag_and_drop.dragtekst.aktiv')
+                    : tekst('drag_and_drop.dragtekst')
+                }
             </Normaltekst>
         </div>
     )

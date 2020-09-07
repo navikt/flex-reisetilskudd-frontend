@@ -20,13 +20,14 @@ import { DatoFormat, formatertDato, getIDag } from '../../../utils/dato'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
 import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering'
+import { tekst } from '../../../utils/tekster'
 import Datovelger from '../../kvittering/datovelger/datovelger'
 import TransportmiddelKvittering from '../../kvittering/transportmiddel-kvittering'
 import {
     kvitteringDatoSpørsmål,
     kvitteringTotaltBeløpSpørsmål,
     kvitteringTransportmiddelSpørsmål,
-} from '../../sporsmal/sporsmal-tekster'
+} from '../../sporsmal-svar/sporsmal-konstanter'
 import Vis from '../../vis'
 import Fil from '../fil/fil'
 
@@ -45,7 +46,7 @@ const FilopplasterModal = () => {
     const [ valideringsFeil, setValideringsFeil ] = useState<FeiloppsummeringFeil[]>([])
     const [ harAlleredeBlittValidert, setHarAlleredeBlittValidert ] = useState<boolean>(false)
 
-    Modal.setAppElement('#root') // accessibility measure: https://reactcommunity.org/react-modal/accessibility/
+    Modal.setAppElement('#root')
 
     const nyKvittering = (kvittering: Kvittering) => {
         setKvitteringer([ ...kvitteringer, kvittering ])
@@ -66,9 +67,7 @@ const FilopplasterModal = () => {
         setÅpenFilopplasterModal(false)
     }
 
-    const fåFeilmeldingTilInput = (
-        hvilkenInput: string,
-    ): string | undefined => valideringsFeil.find(
+    const fåFeilmeldingTilInput = (hvilkenInput: string): string | undefined => valideringsFeil.find(
         (element) => element.skjemaelementId === hvilkenInput,
     )?.feilmelding
 
@@ -76,7 +75,7 @@ const FilopplasterModal = () => {
         if (!nyttBeløp || !validerKroner(nyttBeløp)) {
             return [ {
                 skjemaelementId: kvitteringTotaltBeløpSpørsmål.id,
-                feilmelding: 'Vennligst skriv inn et gyldig beløp',
+                feilmelding: tekst('filopplaster_modal.belop.feilmelding'),
             } ]
         }
         return []
@@ -86,14 +85,14 @@ const FilopplasterModal = () => {
         if (!nyDato) {
             return [ {
                 skjemaelementId: kvitteringDatoSpørsmål.id,
-                feilmelding: 'Vennligst velg en gyldig dato',
+                feilmelding: tekst('filopplaster_modal.dato.feilmelding'),
             } ]
         }
         if (moment(formatertDato(nyDato, DatoFormat.FLATPICKR))
             .isAfter(getIDag(DatoFormat.FLATPICKR))) {
             return [ {
                 skjemaelementId: kvitteringDatoSpørsmål.id,
-                feilmelding: 'Vennligst velg en dato før dagens dato',
+                feilmelding: tekst('filopplaster_modal.dagensdato.feilmelding'),
             } ]
         }
         return []
@@ -103,7 +102,7 @@ const FilopplasterModal = () => {
         if (nyttTransportmiddel === undefined) {
             return [ {
                 skjemaelementId: kvitteringTransportmiddelSpørsmål.id,
-                feilmelding: 'Vennligst velg minst ett transportmiddel',
+                feilmelding: tekst('filopplaster_modal.transportmiddel.feilmelding'),
             } ]
         }
         return []
@@ -129,7 +128,6 @@ const FilopplasterModal = () => {
         requestData.append('file', fil)
 
         if (validerKvittering()) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             requestData.append('dato', dato!.toString())
             requestData.append('beløp', beløp.toString())
 
@@ -149,7 +147,6 @@ const FilopplasterModal = () => {
                             storrelse: fil.size,
                             belop: parsedBeløp,
                             fom: (dato || new Date()),
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                             kvitteringId: response.parsedBody!.id,
                             transportmiddel: Object.entries(Transportmiddel)
                                 .find(([ , v ]) => v === transportmiddelKvittering)?.[0],
@@ -224,9 +221,7 @@ const FilopplasterModal = () => {
                             value={beløp}
                             pattern="[0-9]*"
                             bredde={kvitteringTotaltBeløpSpørsmål.bredde}
-                            onChange={(e) => {
-                                handleBeløpChange(e.target.value)
-                            }}
+                            onChange={(e) => handleBeløpChange(e.target.value)}
                             id={kvitteringTotaltBeløpSpørsmål.id}
                             feil={fåFeilmeldingTilInput(kvitteringTotaltBeløpSpørsmål.id)}
                         />
@@ -256,7 +251,7 @@ const FilopplasterModal = () => {
                         </Knapp>
                     )}
                 <Vis hvis={valideringsFeil.length > 0}>
-                    <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={valideringsFeil} />
+                    <Feiloppsummering tittel={tekst('filopplaster_modal.feiloppsummering')} feil={valideringsFeil} />
                 </Vis>
             </div>
         </Modal>

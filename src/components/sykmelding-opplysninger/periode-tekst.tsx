@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react'
 
 import { DatoFormat, formatertDato } from '../../utils/dato'
-import CheckedMedTekst from '../common/checked-med-tekst/checked-med-tekst'
+import { getLedetekst, tekst } from '../../utils/tekster'
+import CheckedMedTekst from '../checked-med-tekst/checked-med-tekst'
 import Vis from '../vis'
 
 interface PeriodeTekstProps {
@@ -13,7 +14,10 @@ const PeriodeTekst = ({ fraDato, tilDato }: PeriodeTekstProps): ReactElement => 
     <span className="sykmelding-periode-tekst">
         <Vis hvis={fraDato !== '' && tilDato !== ''}>
             <CheckedMedTekst
-                tekst={`${formatertDato(new Date(fraDato), DatoFormat.NATURLIG_LANG)} til ${formatertDato(new Date(tilDato), DatoFormat.NATURLIG_LANG)}`}
+                tekst={getLedetekst(tekst('dine_reisetilskudd.periode'), {
+                    '%FRA%': formatertDato(fraDato, DatoFormat.NATURLIG_LANG),
+                    '%TIL%': formatertDato(tilDato, DatoFormat.NATURLIG_LANG)
+                })}
             />
         </Vis>
 
@@ -22,7 +26,7 @@ const PeriodeTekst = ({ fraDato, tilDato }: PeriodeTekstProps): ReactElement => 
         </Vis>
 
         <Vis hvis={fraDato === '' && tilDato === ''}>
-            Kunne dessverre ikke finne perioden
+            {tekst('sykmelding.fant-ikke')}
         </Vis>
     </span>
 )

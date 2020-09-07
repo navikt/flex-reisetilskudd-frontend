@@ -13,6 +13,7 @@ import { DatoFormat, formatertDato } from '../../../utils/dato'
 import env from '../../../utils/environment'
 import formaterFilstørrelse from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
+import { tekst } from '../../../utils/tekster'
 import Vis from '../../vis'
 import SlettFilIkon from './slett-fil-ikon.svg'
 
@@ -42,13 +43,6 @@ const FilMedInfo = ({ fil, fjernKnapp }: Props) => {
         if (fullString.length <= stringLen) {
             return fullString
         }
-        /* const sepLen = separator.length;
-    const charsToShow:number = stringLen - sepLen;
-    const frontChars = Math.ceil(charsToShow / 2);
-    const backChars = Math.floor(charsToShow / 2);
-    return fullString.substr(0, frontChars)
-    + separator
-    + fullString.substr(fullString.length - backChars); */
         return fullString.substr(0, 2) + separator + fullString.substr(-3)
     }
 
@@ -70,11 +64,11 @@ const FilMedInfo = ({ fil, fjernKnapp }: Props) => {
             <Vis hvis={fjernKnapp}>
                 <Knapp className="slett-knapp" onClick={håndterKlikk}>
                     <img src={SlettFilIkon} alt="" />
-                    <span>Fjern</span>
+                    <span>{tekst('fil_med_info.fjern')}</span>
                 </Knapp>
             </Vis>
-            <Element className="mobil-belop">Beløp:</Element>
-            <Element className="mobil-dato">Dato:</Element>
+            <Element className="mobil-belop">{tekst('fil_med_info.belop')}:</Element>
+            <Element className="mobil-dato">{tekst('fil_med_info.dato')}:</Element>
         </div>
     )
 }

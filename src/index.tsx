@@ -15,7 +15,7 @@ ReactDOM.render(
             <App />
         </BrowserRouter>
     </React.StrictMode>,
-    document.getElementById('root') as HTMLElement
+    document.getElementById('maincontent') as HTMLElement
 )
 
 if (env.isQ1 || env.isProd) {

@@ -1,4 +1,4 @@
-import { getAntallSider } from '../constants/side-titler'
+import { getAntallSider } from './constants'
 import { SEPARATOR } from './constants'
 
 export const pathUtenSteg = (pathname: string): string => {

@@ -6,14 +6,21 @@ import { Undertittel } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { DatoFormat, getIDag, getNåTid } from '../../utils/dato'
+import { getLedetekst, tekst } from '../../utils/tekster'
 
 const VeienVidereBox = () => {
     return (
         <div className="veien-videre-wrapper">
             <AlertStripe className="gronn-checkbox" type="suksess">
-                <Undertittel>Sykmeldingen er sendt til NAV</Undertittel>
-                {`Sendt: ${getIDag(DatoFormat.NATURLIG_FULL)}, kl: ${getNåTid()}`}
+                <Undertittel>
+                    {tekst('bekreftelses.sendt-til')}
+                </Undertittel>
+                {getLedetekst(tekst('bekreftelses.sendt-kl'), {
+                    '%DATO': getIDag(DatoFormat.NATURLIG_FULL),
+                    '%%KL': getNåTid()
+                })}
             </AlertStripe>
+
             <AlertStripe className="bla-info" type="info">
                 <Undertittel>Hva skjer videre?</Undertittel>
                 <span className="uthevet-tittel">Du trenger ikke å søke om sykepenger</span>

@@ -1,7 +1,7 @@
 import Spinner from 'nav-frontend-spinner'
 import React, { useEffect } from 'react'
 
-import IngenData from '../pages/feil/ingen-data'
+import IngenData from '../pages/feilsider/ingen-data'
 import { Kvittering } from '../types/kvittering'
 import { Reisetilskudd } from '../types/reisetilskudd'
 import env from '../utils/environment'

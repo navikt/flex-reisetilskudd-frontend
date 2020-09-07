@@ -7,24 +7,23 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
-import VidereKnapp from '../../components/knapper/videre-knapp'
-import DagensTransportmiddelCheckbox
-    from '../../components/sporsmal/dagens-transportmiddel-checkbox/dagens-transportmiddel-checkbox'
-import InputSporsmal from '../../components/sporsmal/input-sporsmal/input-sporsmal'
+import VidereKnapp from '../../components/klikkbar/videre-knapp'
+import CheckboxSvar from '../../components/sporsmal-svar/checkbox-svar/checkbox-svar'
+import InputSporsmal from '../../components/sporsmal-svar/input-sporsmal/input-sporsmal'
 import {
     antallKilometerSpørsmål,
     månedligeUtgifterSpørsmål,
     transportalternativer,
     transportalternativerKollektivt,
-} from '../../components/sporsmal/sporsmal-tekster'
+} from '../../components/sporsmal-svar/sporsmal-konstanter'
 import Vis from '../../components/vis'
-import { hjelpetekstDagensTransportmiddel } from '../../constants/hjelpetekster'
 import { post } from '../../data/fetcher/fetcher'
 import { useAppStore } from '../../data/stores/app-store'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
 import { gåTilNesteSide } from '../../utils/navigasjon'
 import { validerKroner, validerNumerisk } from '../../utils/skjemavalidering'
+import { tekst } from '../../utils/tekster'
 
 interface TransportmiddelInterface {
     reisetilskuddId: string;
@@ -62,7 +61,7 @@ const DagensTransportmiddel = () => {
                 return [
                     {
                         skjemaelementId: antallKilometerSpørsmål.id,
-                        feilmelding: 'Du må oppgi gyldig verdi for kilometer',
+                        feilmelding: tekst('transportmiddel.feil-kilometer'),
                     },
                 ]
             }
@@ -98,7 +97,7 @@ const DagensTransportmiddel = () => {
             return [
                 {
                     skjemaelementId: transportalternativer.svaralternativer[0].id,
-                    feilmelding: 'Du må velge minst étt av alternativene for fremkomstmiddel',
+                    feilmelding: tekst('transportmiddel.minst-et'),
                 },
             ]
         }
@@ -197,46 +196,56 @@ const DagensTransportmiddel = () => {
 
     return (
         <div className="dagens-transportmiddel-wrapper">
-            <Systemtittel> Transportmiddel til daglig </Systemtittel>
+            <Systemtittel>
+                {tekst('transportmiddel.daglig')}
+            </Systemtittel>
             <div className="transportmiddel-tekst">
-                <Normaltekst className="transportmiddel-spørsmål" id="transportmiddel-spørsmål" aria-describedby="min-hjelpetekst-kollektivtransport">
-                    Hvilke transportmidler brukte du til og fra jobb før du ble sykmeldt?
+                <Normaltekst className="transportmiddel-spørsmål"
+                    id="transportmiddel-spørsmål"
+                    aria-describedby="min-hjelpetekst-kollektivtransport"
+                >
+                    {tekst('transportmiddel.hvilke')}
                 </Normaltekst>
-                <Hjelpetekst className="kollektivtransport-hjelpetekst" id="min-hjelpetekst-kollektivtransport" aria-describedby="transportmiddel-spørsmål">
-                    {hjelpetekstDagensTransportmiddel.hjelpetekst}
+                <Hjelpetekst className="kollektivtransport-hjelpetekst"
+                    id="min-hjelpetekst-kollektivtransport"
+                    aria-describedby="transportmiddel-spørsmål"
+                >
+                    {tekst('transportmiddel.hjelpetekst')}
                 </Hjelpetekst>
             </div>
-            {DagensTransportmiddelCheckbox(transportalternativer)}
+
+            {CheckboxSvar(transportalternativer)}
+
             <Vis hvis={dagensTransportMiddelEgenBilChecked === true}>
-                {InputSporsmal(
-                    {
-                        ...{
-                            onChange: handleKilometerChange,
-                            value: antallKilometerState,
-                            feil: fåFeilmeldingTilInput(antallKilometerSpørsmål.id),
-                        },
-                        ...antallKilometerSpørsmål,
+                {InputSporsmal({
+                    ...{
+                        onChange: handleKilometerChange,
+                        value: antallKilometerState,
+                        feil: fåFeilmeldingTilInput(antallKilometerSpørsmål.id),
                     },
+                    ...antallKilometerSpørsmål,
+                },
                 )}
             </Vis>
             <div className="transportalternativerKollektivt">
-                {DagensTransportmiddelCheckbox(transportalternativerKollektivt)}
+                {CheckboxSvar(transportalternativerKollektivt)}
                 <Vis hvis={dagensTransportMiddelKollektivChecked === true}>
-                    {InputSporsmal(
-                        {
-                            ...{
-                                onChange: handleMånedligeUtgifterChange,
-                                value: månedligeUtgifterState,
-                                feil: fåFeilmeldingTilInput(månedligeUtgifterSpørsmål.id),
-                            },
-                            ...månedligeUtgifterSpørsmål,
+                    {InputSporsmal({
+                        ...{
+                            onChange: handleMånedligeUtgifterChange,
+                            value: månedligeUtgifterState,
+                            feil: fåFeilmeldingTilInput(månedligeUtgifterSpørsmål.id),
                         },
+                        ...månedligeUtgifterSpørsmål,
+                    },
                     )}
                 </Vis>
             </div>
+
             <Vis hvis={skalViseFeil && visningsFeilmeldinger.length > 0}>
-                <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={visningsFeilmeldinger} />
+                <Feiloppsummering tittel={tekst('transportmiddel.feiloppsummering')} feil={visningsFeilmeldinger} />
             </Vis>
+
             <VidereKnapp aktivtSteg={soknadssideIDTall} onClick={handleVidereKlikk} />
         </div>
     )
