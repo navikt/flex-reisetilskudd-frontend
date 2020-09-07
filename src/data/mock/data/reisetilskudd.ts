@@ -17,7 +17,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
         egenBil: 0,
 
         reisetilskuddId: '28fa10b8-c9af-4a7a-a0b2-90caed65ab4c',
-        sykmeldingId: '72ea12dd-eabc-49ed-910f-5ecd50e7dd5c',
+        sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
         kvitteringer: [],
     },
@@ -35,7 +35,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
         egenBil: 13,
 
         reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
-        sykmeldingId: '72ea1sdd-eabc-49ed-910f-5ecd50e7dd5c',
+        sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
         kvitteringer: [],
     },
@@ -53,7 +53,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
         egenBil: 1,
 
         reisetilskuddId: '1ajsdlkajlsdkjalksjdlkajd',
-        sykmeldingId: '72ea1sdd-eabc-910f-5ecd50e7dd5c',
+        sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
         kvitteringer: [],
     },
@@ -71,7 +71,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
         egenBil: 1,
 
         reisetilskuddId: '1ajsdlkajlsdkjalksjdlkajd',
-        sykmeldingId: '72ea1sdd-eabc-910f-5ecd50e7dd5c',
+        sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
         kvitteringer: [],
     },
