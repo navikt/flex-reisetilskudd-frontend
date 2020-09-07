@@ -237,19 +237,20 @@ const FilopplasterModal = () => {
                 </div>
                 <Fil fil={uopplastetFil} className="opplastede-filer" />
                 {laster
-                    ? (<NavFrontendSpinner className="lagre-kvittering" />)
-                    : (
-                        <Knapp htmlType="submit"
-                            className="lagre-kvittering"
-                            onClick={() => (
-                                uopplastetFil
-                                    ? lagreKvittering(uopplastetFil)
-                                    : logger.info('Noen har prøvd å laste opp en tom fil')
-                            )}
-                        >
-                            Lagre kvittering
-                        </Knapp>
-                    )}
+                    ?
+                    <NavFrontendSpinner className="lagre-kvittering" />
+                    :
+                    <Knapp htmlType="submit"
+                        className="lagre-kvittering"
+                        onClick={() => (
+                            uopplastetFil
+                                ? lagreKvittering(uopplastetFil)
+                                : logger.info('Noen har prøvd å laste opp en tom fil')
+                        )}
+                    >
+                        {tekst('filopplaster_modal.lagre')}
+                    </Knapp>
+                }
                 <Vis hvis={valideringsFeil.length > 0}>
                     <Feiloppsummering tittel={tekst('filopplaster_modal.feiloppsummering')} feil={valideringsFeil} />
                 </Vis>
