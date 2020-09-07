@@ -2,7 +2,6 @@ import Spinner from 'nav-frontend-spinner'
 import React, { useEffect } from 'react'
 
 import IngenData from '../pages/feil/ingen-data'
-import { Kvittering } from '../types/kvittering'
 import { Reisetilskudd } from '../types/reisetilskudd'
 import env from '../utils/environment'
 import { logger } from '../utils/logger'
@@ -11,20 +10,10 @@ import { FetchState, hasAny401, hasAnyFailed, hasData, isAnyNotStartedOrPending,
 import { useAppStore } from './stores/app-store'
 
 export function DataFetcher(props: { children: any }) {
-    const { setKvitteringer, setReisetilskuddene } = useAppStore()
-    const kvitteringer = useFetch<Kvittering[]>()
+    const { setReisetilskuddene } = useAppStore()
     const reisetilskuddene = useFetch<Reisetilskudd[]>()
 
     useEffect(() => {
-        if (isNotStarted(kvitteringer)) {
-            kvitteringer.fetch(env.apiUrl + '/api/v1/kvitteringer', {
-                credentials: 'include',
-            }, (fetchState: FetchState<Kvittering[]>) => {
-                if (hasData(fetchState)) {
-                    setKvitteringer(fetchState.data)
-                }
-            })
-        }
         if (isNotStarted(reisetilskuddene)) {
             reisetilskuddene.fetch(env.apiUrl + '/api/v1/reisetilskudd', {
                 credentials: 'include',
@@ -37,13 +26,13 @@ export function DataFetcher(props: { children: any }) {
         // eslint-disable-next-line
     }, [reisetilskuddene]);
 
-    if (hasAny401([ kvitteringer, reisetilskuddene ])) {
+    if (hasAny401([ reisetilskuddene ])) {
         window.location.href = hentLoginUrl()
 
-    } else if (isAnyNotStartedOrPending([ kvitteringer, reisetilskuddene ])) {
+    } else if (isAnyNotStartedOrPending([ reisetilskuddene ])) {
         return <Spinner type={'XXL'} />
 
-    } else if (hasAnyFailed([ kvitteringer, reisetilskuddene ])) {
+    } else if (hasAnyFailed([ reisetilskuddene ])) {
         logger.error('Klarer ikke hente en av disse [ kvitteringer, reisetilskudd ]')
         return <IngenData />
     }
