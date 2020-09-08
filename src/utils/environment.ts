@@ -25,7 +25,7 @@ class Environment {
     }
 
     get loginServiceUrl() {
-        return this.env.LOGIN_SERVICE_URL
+        return this.env.LOGINSERVICE_URL
     }
 
     get loginServiceRedirectUrl() {
