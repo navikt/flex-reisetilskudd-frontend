@@ -20,7 +20,7 @@ const Steg = ({ aktivtSteg }: AktivtStegProps) => {
     const genererteSteg: StegindikatorStegProps[] =
         Object.values(sideTitler).map(
             (verdi, index) => ({
-                label: `${verdi}`,
+                label: verdi,
                 index: index,
                 disabled: (index >= aktivtSteg)
             }))
