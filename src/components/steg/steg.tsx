@@ -1,6 +1,7 @@
 import './steg.less'
 
 import Stegindikator from 'nav-frontend-stegindikator'
+import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindikator-steg'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
@@ -16,9 +17,13 @@ export const pathUtenSteg = (pathname: string): string => {
 
 const Steg = ({ aktivtSteg }: AktivtStegProps) => {
 
-    const genererteSteg = Object.entries(sideTitler).map(
-        ([ , verdi ], index) => ({ label: `${verdi}`, index })
-    )
+    const genererteSteg: StegindikatorStegProps[] =
+        Object.values(sideTitler).map(
+            (verdi, index) => ({
+                label: `${verdi}`,
+                index: index,
+                disabled: (index >= aktivtSteg)
+            }))
 
     const history = useHistory()
 
