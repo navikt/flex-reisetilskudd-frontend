@@ -30,6 +30,8 @@ spec:
       value: "https://flex-reisetilskudd-backend-proxy.dev.nav.no"
     - name: LOGINSERVICE_URL
       value: "https://loginservice.dev.nav.no/login"
+    - name: LOGINSERVICE_REDIRECT_URL
+      value: "https://reisetilskudd.dev.nav.no"
     - name: DECORATOR_URL
       value: "https://dekoratoren.dev.nav.no"
     - name: ENVIRONMENT

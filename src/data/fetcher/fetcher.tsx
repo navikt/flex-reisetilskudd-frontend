@@ -1,4 +1,5 @@
 import { logger } from '../../utils/logger'
+import { redirectTilLoginHvis401 } from '../../utils/utils'
 
 interface HttpResponse<T>
     extends Response {
@@ -15,7 +16,11 @@ async function fetcher<T>(
         logger.error(ex)
     }
     if (!response.ok) {
-        throw new Error(response.statusText)
+        if (redirectTilLoginHvis401(response)) {
+            return Promise.reject()
+        } else {
+            throw new Error(response.statusText)
+        }
     }
     return response
 }

@@ -6,6 +6,7 @@ import { Reisetilskudd } from '../types/reisetilskudd'
 import { Sykmelding } from '../types/sykmelding'
 import env from '../utils/environment'
 import { logger } from '../utils/logger'
+import { hentLoginUrl } from '../utils/utils'
 import useFetch from './rest/use-fetch'
 import { FetchState, hasAny401, hasAnyFailed, hasData, isAnyNotStartedOrPending, isNotStarted } from './rest/utils'
 import { useAppStore } from './stores/app-store'
@@ -37,7 +38,7 @@ export function DataFetcher(props: { children: any }) {
         // eslint-disable-next-line
     }, [reisetilskuddene]);
 
-    if (hasAny401([ reisetilskuddene ])) {
+    if (hasAny401([ reisetilskuddene, sykmeldinger ])) {
         window.location.href = hentLoginUrl()
 
     } else if (isAnyNotStartedOrPending([ reisetilskuddene, sykmeldinger ])) {
@@ -49,9 +50,4 @@ export function DataFetcher(props: { children: any }) {
     }
 
     return props.children
-}
-
-
-export const hentLoginUrl = () => {
-    return `${env.loginServiceUrl}?redirect=${env.loginServiceRedirectUrl}`
 }

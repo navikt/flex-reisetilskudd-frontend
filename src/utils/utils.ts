@@ -1,6 +1,9 @@
-import { hentLoginUrl } from '../data/data-fetcher'
+import env from './environment'
 import { logger } from './logger'
 
+export const hentLoginUrl = () => {
+    return `${env.loginServiceUrl}?redirect=${env.loginServiceRedirectUrl}`
+}
 
 export const redirectTilLoginHvis401 = (res: Response) => {
     if (res.status === 401) {
