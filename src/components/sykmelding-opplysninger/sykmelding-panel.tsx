@@ -3,27 +3,24 @@ import './sykmelding-opplysninger.less'
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 import { Undertittel } from 'nav-frontend-typografi'
 import React, { ReactElement, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
+import { RouteParams } from '../../app'
 import { useAppStore } from '../../data/stores/app-store'
-import { fåSykmeldingIDFraAktivtReisetilskuddID, hentSykmeldinger } from './hentSykmeldinger'
+import { Sykmelding } from '../../types/sykmelding'
 import SykmeldingOpplysninger from './sykmelding-opplysninger'
 
 const SykmeldingPanel = (): ReactElement => {
-    const { setOpplysningerSykmeldinger, sykmeldingID, setSykmeldingID, aktivtReisetilskuddId } = useAppStore()
+    const { sykmeldinger, setValgtSykmelding, reisetilskuddene } = useAppStore()
+    const { reisetilskuddID } = useParams<RouteParams>()
 
     useEffect(() => {
-        if (sykmeldingID) {
-            hentSykmeldinger(setOpplysningerSykmeldinger, sykmeldingID)
-        }
+        // TODO: Bytt ut med valgtReisetilskudd
+        const sykmeldingId = reisetilskuddene.find(r => r.reisetilskuddId === reisetilskuddID)?.sykmeldingId
+        const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === sykmeldingId)
+        setValgtSykmelding(sykmelding)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ setOpplysningerSykmeldinger, sykmeldingID ])
-
-    useEffect(() => {
-        if (aktivtReisetilskuddId) {
-            fåSykmeldingIDFraAktivtReisetilskuddID(aktivtReisetilskuddId, setSykmeldingID)
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ aktivtReisetilskuddId ])
+    }, [ reisetilskuddID ])
 
     return (
         <div className="sykmelding-panel-wrapper">
