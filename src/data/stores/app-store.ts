@@ -3,13 +3,15 @@ import { useState } from 'react'
 
 import { Kvittering, TransportmiddelAlternativer } from '../../types/kvittering'
 import { Reisetilskudd } from '../../types/reisetilskudd'
-import { SykmeldingOpplysning } from '../../types/sykmelding'
+import { Sykmelding } from '../../types/sykmelding'
 import mockKvitteringer from '../mock/data/kvitteringer'
 
 export const [ AppStoreProvider, useAppStore ] = constate(() => {
     /* GENERELT */
     const [ reisetilskuddene, setReisetilskuddene ] = useState<Reisetilskudd[]>([])
     const [ aktivtReisetilskuddId, setAktivtReisetilskuddId ] = useState<string>()
+    const [ sykmeldinger, setSykmeldinger ] = useState<Sykmelding[]>([])
+    const [ valgtSykmelding, setValgtSykmelding ] = useState<Sykmelding>()
 
     /* UTBETALINGSSPØRSMÅL */
     const [ activeMegArbeidsgiver, setActiveMegArbeidsgiver ] = useState<string>('')
@@ -31,14 +33,12 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
     const [ åpenFilopplasterModal, setÅpenFilopplasterModal ] = useState<boolean>(false)
     const [ transportmiddelKvittering, setTransportmiddelKvittering ] = useState<TransportmiddelAlternativer>()
 
-    /* OPPLYSNINGER FRA SYKMELDINGEN */
-    const [ opplysningerSykmeldinger, setOpplysningerSykmeldinger ] = useState<SykmeldingOpplysning[]>()
-    const [ sykmeldingID, setSykmeldingID ] = useState<string>('')
-
     return {
         /* GENERELT */
         reisetilskuddene, setReisetilskuddene,
         aktivtReisetilskuddId, setAktivtReisetilskuddId,
+        sykmeldinger, setSykmeldinger,
+        valgtSykmelding, setValgtSykmelding,
 
         /* UTBETALINGSSPØRSMÅL */
         activeMegArbeidsgiver, setActiveMegArbeidsgiver,
@@ -59,9 +59,5 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
         filopplasterFeilmeldinger, setFilopplasterFeilmeldinger,
         åpenFilopplasterModal, setÅpenFilopplasterModal,
         transportmiddelKvittering, setTransportmiddelKvittering,
-
-        /* OPPLYSNINGER FRA SYKMELDINGEN */
-        opplysningerSykmeldinger, setOpplysningerSykmeldinger,
-        sykmeldingID, setSykmeldingID,
     }
 })
