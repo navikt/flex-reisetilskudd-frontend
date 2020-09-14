@@ -1,6 +1,6 @@
 const FilopplasterModalTekster: any = {
     'nb': {
-        'total_belop.totalbelop': 'Totalt beløp: %TOTALBELOP%}',
+        'total_belop.totalbelop': 'Totalt beløp: %TOTALBELOP%',
     }, 'en': {}
 }
 

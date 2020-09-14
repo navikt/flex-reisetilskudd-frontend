@@ -1,75 +1,49 @@
 @import 'node_modules/nav-frontend-core/less/_variabler';
 
-.bekreftelsesside-page-wrapper {
-    padding-top: 5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    span.nummer-circle-separator:before {
-        content: ' ';
-        display: inline-block;
-        width: 32px;
+.bekreftelses-side {
+    .limit {
+        background-color: @grayBackground;
     }
 
-    .liste-wrapper {
-        max-width: 670px;
-        justify-content: center;
+    .liste__bakgrunn {
         background-color: @white;
-        padding-top: 3rem;
-        padding-bottom: 2rem;
+        padding: 2rem 0 0;
+        margin: 2rem 0 4rem;
     }
 
-    .tekstwrapper {
-        padding-left: 3rem;
-        padding-right: 3rem;
-    }
-
-    .veien-videre-wrapper {
-        padding-top: 3rem;
-        padding-bottom: 10rem;
-    }
-
-    .gronn-checkbox {
-        border-top: 1px solid @navGronn;
-        border-left: 1px solid @navGronn;
-        border-right: 1px solid @navGronn;
-        border-bottom: none;
-        justify-content: center;
-    }
-
-    .bla-info {
-        background-color: @white;
-        justify-content: center;
-    }
-
-    .numberCircle {
-        border-radius: 50%;
-        min-width: 1em;
-        height: 1em;
-        padding: 8px;
-
-        background: rgb(125, 181, 141);
-        color: black;
-        text-align: center;
-        font: 14px Arial, sans-serif;
-    }
-
-    .inline-container {
+    .sirkel {
         display: flex;
-        flex-direction: row;
-        vertical-align: text-top;
-        padding-bottom: 1.5rem;
+        margin: 1rem 5rem;
+        background-color: @white;
+
+        .sirkel__tall {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background-color: @navGronnLighten40;
+            border-radius: 50%;
+            width: 2.25rem;
+            height: 2.25rem;
+        }
+
+        .sirkel__tekst {
+            max-width: calc(100% - 4rem);
+            margin-left: 1.5rem;
+        }
     }
 
-    .uthevet-tittel {
-        display: block;
-        width: 100%;
+    .listetekst {
+        margin: 0.5rem 5rem 2rem 8.75rem;
     }
 
-    span.tekstblokk {
-        display: block;
-        width: 100%;
-        margin-bottom: 0.5rem;
+    .alertstripe--suksess {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .alertstripe--info {
+        margin-top: -1px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
     }
 }
