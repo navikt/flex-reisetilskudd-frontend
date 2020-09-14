@@ -1,11 +1,11 @@
 FROM nginx:alpine
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY /build /usr/share/nginx/html
+COPY /build /usr/share/nginx/html/syk/reisetilskudd
 
 
 # Copy .env file and shell script to container
-WORKDIR /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html/syk/reisetilskudd
 COPY ./env.sh .
 COPY ./process-index-html.sh .
 COPY .env .
@@ -19,6 +19,5 @@ RUN chmod +x process-index-html.sh
 
 EXPOSE 8080
 
-ENV BASE_NAME=/
 
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && /usr/share/nginx/html/process-index-html.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/syk/reisetilskudd/env.sh && /usr/share/nginx/html/syk/reisetilskudd/process-index-html.sh && nginx -g \"daemon off;\""]
