@@ -50,6 +50,7 @@
         "nav-frontend-typografi-style": "^1.0.22",
         "nav-frontend-veileder": "^2.0.21",
         "nav-frontend-veileder-style": "^2.0.15",
+        "node-forge": ">=0.10.0",
         "npm": "^6.14.8",
         "prop-types": "^15.7.2",
         "react": "^16.13.1",
