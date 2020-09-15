@@ -1,26 +1,15 @@
 @import 'node_modules/nav-frontend-core/less/_variabler';
 
-.reisetilskudd-element-wrapper {
+.dine-reisetilskudd {
     display: flex;
-    position: relative;
-    padding: 2rem 3rem 2rem 0;
-    background-color: @white;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem 2rem 1.4rem 0;
     color: @navGra80;
     text-decoration: none;
-    border-bottom: solid;
-    border-bottom-width: thin;
-    border-color: lightgrey;
-
-    .reisetilskudd-chevron {
-        position: absolute;
-        right: 1rem;
-        top: 2.4rem;
-    }
-
-    .reisetilskudd-periode {
-        margin-bottom: 1rem;
-        font-weight: 400;
-    }
+    border: 1px solid @navGra40;
+    border-radius: 4px;
 
     .reisetilskudd-ikon {
         display: flex;
@@ -28,7 +17,16 @@
         justify-content: flex-start;
         align-items: center;
         flex-direction: column;
-        margin-left: 18px;
+        margin: 0 14px 0 22px;
+    }
+
+    .reisetilskudd-innhold {
+        min-width: calc(100% - 68px)
+    }
+
+    .reisetilskudd-periode {
+        margin-bottom: 1rem;
+        font-weight: 400;
     }
 
     &:hover {

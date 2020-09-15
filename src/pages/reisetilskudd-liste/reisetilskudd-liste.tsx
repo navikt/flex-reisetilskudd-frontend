@@ -31,16 +31,14 @@ const ReisetilskuddListe = () => {
                     {tekst('reisetilskudd_liste.ingen.reisetilskudd2')}
                 </Normaltekst>
             </Vis>
-            <div className="dine-reisetilskudd-wrapper">
-                <Vis hvis={reisetilskuddene}>
-                    <Element className="nye-reisetilskuddsøknader">
-                        {tekst('reisetilskudd_liste.nye.soknader')}
-                    </Element>
-                    {reisetilskuddene?.map((value) => {
-                        return <DineReisetilskudd key={`reisetilskudd-${value?.reisetilskuddId}`} reisetilskudd={value} />
-                    })}
-                </Vis>
-            </div>
+            <Vis hvis={reisetilskuddene}>
+                <Element tag="h2" className="nye-soknader__tittel">
+                    {tekst('reisetilskudd_liste.nye.soknader')}
+                </Element>
+                {reisetilskuddene?.map((value) => {
+                    return <DineReisetilskudd key={`reisetilskudd-${value?.reisetilskuddId}`} reisetilskudd={value} />
+                })}
+            </Vis>
             <Vis hvis={reisetilskuddene === undefined}>
                 <Normaltekst>{tekst('reisetilskudd_liste.feilmelding')}</Normaltekst>
             </Vis>

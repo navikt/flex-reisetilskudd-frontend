@@ -21,7 +21,7 @@ const DineReisetilskudd = ({ reisetilskudd }: Props) => {
 
     return (
         <Link to={`/soknaden/${reisetilskudd.reisetilskuddId}/1`}
-            className="reisetilskudd-element-wrapper"
+            className="dine-reisetilskudd"
             onClick={() => settReisetilskuddTilGlobalState(reisetilskudd)}
         >
             <div className="reisetilskudd-ikon">
