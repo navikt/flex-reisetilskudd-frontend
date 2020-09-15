@@ -11,7 +11,7 @@ if (env.isMockBackend) {
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter basename={env.baseName}>
+        <BrowserRouter basename="/syk/reisetilskudd">
             <App />
         </BrowserRouter>
     </React.StrictMode>,
