@@ -19,6 +19,7 @@ import {
 import { DatoFormat, formatertDato, getIDag } from '../../../utils/dato'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
+import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
 import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering'
 import { tekst } from '../../../utils/tekster'
 import Datovelger from '../../kvittering/datovelger/datovelger'
@@ -37,6 +38,7 @@ const FilopplasterModal = () => {
         transportmiddelKvittering, setTransportmiddelKvittering,
         uopplastetFil, setUopplastetFil,
         åpenFilopplasterModal, setÅpenFilopplasterModal,
+        valgtSykmelding
     } = useAppStore()
 
     const { reisetilskuddID } = useParams<RouteParams>()
@@ -194,6 +196,8 @@ const FilopplasterModal = () => {
         }
     }
 
+    if (valgtSykmelding === undefined) return null
+
     return (
         <Modal
             isOpen={åpenFilopplasterModal}
@@ -212,7 +216,8 @@ const FilopplasterModal = () => {
                         mode="single"
                         onChange={(nyDato) => oppdaterDato(nyDato[0])}
                         feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
-                        maksDato=""
+                        minDato={tidligsteFom(valgtSykmelding.mulighetForArbeid.perioder)}
+                        maxDato={senesteTom(valgtSykmelding.mulighetForArbeid.perioder)}
                     />
                     <div>
                         <Element className="kvittering-beløp-input">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>

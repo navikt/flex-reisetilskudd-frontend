@@ -1,8 +1,8 @@
-import { TidsPeriode } from '../types/tidsperiode'
+import { Periode } from '../types/sykmelding'
 
-export const tidligsteFom = (perioder: TidsPeriode[]) => {
+export const tidligsteFom = (perioder: Periode[]) => {
     if (perioder.length === 0) {
-        return null
+        return undefined
     }
 
     return perioder.map((p) => {
@@ -17,9 +17,9 @@ export const tidligsteFom = (perioder: TidsPeriode[]) => {
     })[0]
 }
 
-export const senesteTom = (perioder: TidsPeriode[]) => {
+export const senesteTom = (perioder: Periode[]) => {
     if (perioder.length === 0) {
-        return null
+        return undefined
     }
     return perioder.map((p) => {
         return p.tom
