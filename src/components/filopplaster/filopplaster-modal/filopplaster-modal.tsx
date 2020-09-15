@@ -1,6 +1,6 @@
 import './filopplaster-modal.less'
 
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { Knapp } from 'nav-frontend-knapper'
 import Modal from 'nav-frontend-modal'
 import { Feiloppsummering, FeiloppsummeringFeil, Input, SkjemaGruppe, } from 'nav-frontend-skjema'
@@ -88,7 +88,7 @@ const FilopplasterModal = () => {
                 feilmelding: tekst('filopplaster_modal.dato.feilmelding'),
             } ]
         }
-        if (moment(formatertDato(nyDato, DatoFormat.FLATPICKR))
+        if (dayjs(formatertDato(nyDato, DatoFormat.FLATPICKR))
             .isAfter(getIDag(DatoFormat.FLATPICKR))) {
             return [ {
                 skjemaelementId: kvitteringDatoSpørsmål.id,
