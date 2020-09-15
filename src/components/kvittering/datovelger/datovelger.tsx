@@ -16,10 +16,11 @@ interface Props {
     mode?: 'single' | 'multiple' | 'range' | 'time';
     id?: string;
     feil?: string;
-    maksDato?: string;
+    minDato?: string;
+    maxDato?: string;
 }
 
-const Datovelger = ({ label, className, onChange, mode = 'single', id, feil, maksDato }: Props) => {
+const Datovelger = ({ label, className, onChange, mode = 'single', id, feil, minDato, maxDato }: Props) => {
     const validerDato = (d: Date[]) => {
         if (onChange) {
             onChange(d)
@@ -41,7 +42,8 @@ const Datovelger = ({ label, className, onChange, mode = 'single', id, feil, mak
                     locale: Norwegian,
                     allowInput: true,
                     disableMobile: true,
-                    maxDate: maksDato,
+                    minDate: minDato,
+                    maxDate: maxDato,
                 }}
                 onChange={(date) => validerDato(date)}
                 id={id}

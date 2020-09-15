@@ -1,6 +1,6 @@
 import './filopplaster-modal.less'
 
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { Knapp } from 'nav-frontend-knapper'
 import Modal from 'nav-frontend-modal'
 import { Feiloppsummering, FeiloppsummeringFeil, Input, SkjemaGruppe, } from 'nav-frontend-skjema'
@@ -19,6 +19,7 @@ import {
 import { DatoFormat, formatertDato, getIDag } from '../../../utils/dato'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
+import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
 import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering'
 import { tekst } from '../../../utils/tekster'
 import Datovelger from '../../kvittering/datovelger/datovelger'
@@ -37,6 +38,7 @@ const FilopplasterModal = () => {
         transportmiddelKvittering, setTransportmiddelKvittering,
         uopplastetFil, setUopplastetFil,
         åpenFilopplasterModal, setÅpenFilopplasterModal,
+        valgtSykmelding
     } = useAppStore()
 
     const { reisetilskuddID } = useParams<RouteParams>()
@@ -88,7 +90,7 @@ const FilopplasterModal = () => {
                 feilmelding: tekst('filopplaster_modal.dato.feilmelding'),
             } ]
         }
-        if (moment(formatertDato(nyDato, DatoFormat.FLATPICKR))
+        if (dayjs(formatertDato(nyDato, DatoFormat.FLATPICKR))
             .isAfter(getIDag(DatoFormat.FLATPICKR))) {
             return [ {
                 skjemaelementId: kvitteringDatoSpørsmål.id,
@@ -194,6 +196,8 @@ const FilopplasterModal = () => {
         }
     }
 
+    if (valgtSykmelding === undefined) return null
+
     return (
         <Modal
             isOpen={åpenFilopplasterModal}
@@ -212,7 +216,8 @@ const FilopplasterModal = () => {
                         mode="single"
                         onChange={(nyDato) => oppdaterDato(nyDato[0])}
                         feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
-                        maksDato=""
+                        minDato={tidligsteFom(valgtSykmelding.mulighetForArbeid.perioder)}
+                        maxDato={senesteTom(valgtSykmelding.mulighetForArbeid.perioder)}
                     />
                     <div>
                         <Element className="kvittering-beløp-input">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>

@@ -1,19 +1,16 @@
 import './reisetilskudd-side.less'
 
-import { Systemtittel } from 'nav-frontend-typografi'
 import React, { useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
-import busImg from '../../assets/buss.png'
-import treImg from '../../assets/tre.png'
+import Banner from '../../components/banner/banner'
 import useReisetilskuddTilGlobalState from '../../components/dine-reisetilskudd/useReisetilskuddTilGlobalState'
 import TilbakeLenke from '../../components/klikkbar/tilbake-lenke'
 import Steg from '../../components/steg/steg'
 import SykmeldingPanel from '../../components/sykmelding-opplysninger/sykmelding-panel'
 import Vis from '../../components/vis'
 import { useAppStore } from '../../data/stores/app-store'
-import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
 import DagensTransportmiddel from '../dagens-transportmiddel/dagens-transportmiddel'
 import KvitteringsOpplasting from '../kvitterings-opplasting/kvitterings-opplasting'
@@ -54,17 +51,8 @@ const ReisetilskuddSide = () => {
 
     return (
         <>
-            <header className="header">
-                <div className="limit">
-                    <Systemtittel tag="h1" className="søknadstittel">
-                        {tekst('reisetilskudd_side.tittel')}
-                    </Systemtittel>
-                    <div className="header-icons">
-                        <img src={busImg} alt="bussikon" width="40" />
-                        <img className="treIkon" src={treImg} alt="treikon" width="15" />
-                    </div>
-                </div>
-            </header>
+            <Banner />
+
             <div className="limit">
                 <TilbakeLenke aktivtSteg={idNum} />
                 <Steg aktivtSteg={idNum} />

@@ -1,15 +1,21 @@
 import './bekreftelses-side.less'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import ListeTekstbox from './liste-tekstbox'
-import VeienVidereBox from './veien-videre'
+import { setBodyClass } from '../../utils/utils'
+import ListeTekster from './liste-tekster'
+import VeienVidere from './veien-videre'
 
 const BekreftelsesSide = () => {
+
+    useEffect(() => {
+        setBodyClass('bekreftelses-side')
+    }, [])
+
     return (
         <div className="limit">
-            <ListeTekstbox />
-            <VeienVidereBox />
+            <ListeTekster />
+            <VeienVidere />
         </div>
     )
 }

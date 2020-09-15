@@ -1,17 +1,15 @@
-import './bekreftelses-side.less'
-
 import AlertStripe from 'nav-frontend-alertstriper'
 import Lenke from 'nav-frontend-lenker'
-import { Undertittel } from 'nav-frontend-typografi'
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { DatoFormat, getIDag, getNåTid } from '../../utils/dato'
 import { getLedetekst, tekst } from '../../utils/tekster'
 
-const VeienVidereBox = () => {
+const VeienVidere = () => {
     return (
-        <div className="veien-videre-wrapper">
-            <AlertStripe className="gronn-checkbox" type="suksess">
+        <>
+            <AlertStripe type="suksess">
                 <Undertittel>
                     {tekst('bekreftelses.sendt-til')}
                 </Undertittel>
@@ -21,32 +19,34 @@ const VeienVidereBox = () => {
                 })}
             </AlertStripe>
 
-            <AlertStripe className="bla-info" type="info">
+            <AlertStripe type="info">
                 <Undertittel>Hva skjer videre?</Undertittel>
-                <span className="uthevet-tittel">Du trenger ikke å søke om sykepenger</span>
-                <span className="tekstblokk">
+                <Normaltekst tag="strong">Du trenger ikke å søke om sykepenger</Normaltekst>
+                <Normaltekst>
                     NAV dekker ikke sykepenger de første 16 dagene.
                     Dette sykefraværet er kortere, derfor trenger du ikke søke.
-                </span>
+                </Normaltekst>
 
-                <span className="tekstblokk">
+                <Normaltekst>
                     Les gjerne om
                     <Lenke href="www.nav.no">sykepenger til selvstendig næringsdrivende og frilansere</Lenke>
-                </span>
+                </Normaltekst>
 
-                <span className="uthevet-tittel">Har du flere jobber?</span>
+                <Normaltekst tag="strong">Har du flere jobber?</Normaltekst>
 
-                <span className="tekstblokk">
+                <Normaltekst>
                     Du må levere én sykmelding per jobb.
                     Kontakt den som har sykmeldt deg hvis du trenger flere sykmeldinger.
-                </span>
-                <span className="tekstblokk">
+                </Normaltekst>
+                <Normaltekst>
                     <strong>Skal du ut og reise?</strong>
-                </span>
-                <Lenke href="www.nav.no">Les om hva du må gjøre for å beholde sykepengene.</Lenke>
+                </Normaltekst>
+                <Normaltekst>
+                    <Lenke href="www.nav.no">Les om hva du må gjøre for å beholde sykepengene.</Lenke>
+                </Normaltekst>
             </AlertStripe>
-        </div>
+        </>
     )
 }
 
-export default VeienVidereBox
+export default VeienVidere

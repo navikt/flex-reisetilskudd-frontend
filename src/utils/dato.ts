@@ -1,8 +1,8 @@
-import 'moment/locale/nb'
+import 'dayjs/locale/nb'
 
-import moment from 'moment'
+import dayjs from 'dayjs'
 
-moment.locale('nb')
+dayjs.locale('nb')
 
 export enum DatoFormat {
     TALL = 'DD.MM.YYYY',
@@ -18,10 +18,10 @@ export enum TidsFormat {
     MINUTTER = 'mm'
 }
 
-export const getIDag = (format?: string): string => moment().format(format || DatoFormat.TALL)
+export const getIDag = (format?: string): string => dayjs().format(format || DatoFormat.TALL)
 
-export const getNåTid = (format?: string): string => moment().format(format || TidsFormat.VANLIG)
+export const getNåTid = (format?: string): string => dayjs().format(format || TidsFormat.VANLIG)
 
 export const formatertDato = (date: Date | string, format?: string): string => (
-    moment(date).format(format || DatoFormat.TALL)
+    dayjs(date).format(format || DatoFormat.TALL)
 )

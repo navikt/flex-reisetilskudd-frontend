@@ -1,0 +1,21 @@
+@import '../../../node_modules/nav-frontend-core/less/core';
+@import '../../../src/basic';
+
+.sidebanner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5em;
+    background-color: @navLysBlaLighten60;
+
+    .sidebanner__tittel {
+        text-align: center;
+        padding-bottom: 0.2em;
+    }
+
+    .bannerikoner {
+        position: absolute;
+        right: calc(50% - @desktopLimitWidth/2 + 5rem)
+    }
+}
