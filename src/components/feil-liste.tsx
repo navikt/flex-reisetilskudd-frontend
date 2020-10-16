@@ -34,7 +34,6 @@ class FeilListe
     extends React.Component<FeiloppsummeringProps> {
 
     render() {
-        // eslint-disable-next-line
         const {
             className,
             innerRef,
