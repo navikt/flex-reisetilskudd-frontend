@@ -55,6 +55,14 @@ class Environment {
     get sykmeldingerBackendProxyRoot() {
         return this.env.SYKMELDINGER_BACKEND_PROXY_ROOT
     }
+
+    get sykefravaerUrl() {
+        return this.env.SYKEFRAVAER_URL
+    }
+
+    get dittNavUrl() {
+        return this.env.DITTNAV_URL
+    }
 }
 
 const env = new Environment()

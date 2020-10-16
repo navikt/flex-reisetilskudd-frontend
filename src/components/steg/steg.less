@@ -1,23 +1,55 @@
+@import '../../../node_modules/nav-frontend-core/less/_variabler';
+@import '../../../src/basic';
+
 .stegindikator {
     padding-bottom: 2rem;
 
+    .stegindikator__steg--labelled {
+        min-width: auto;
+        max-width: none;
+
+        &:after {
+            width: 1.25rem;
+            left: 2rem;
+        }
+    }
+
     .stegindikator__steg {
-
         .stegindikator__steg-label {
-            max-width: 9rem;
-            white-space: pre-wrap;
+            display: none;
         }
+    }
 
-        &:first-child {
+    .stegindikator__steg-inner--disabled .stegindikator__steg-num {
+        background: @white;
+    }
+}
+
+@media (min-width: @screen-sm) {
+    .stegindikator {
+        .stegindikator__steg {
             .stegindikator__steg-label {
-                max-width: 5rem;
+                display: block;
+                max-width: 9rem;
+                white-space: pre-wrap;
+            }
+
+            &:first-child {
+                .stegindikator__steg-label {
+                    max-width: 5rem;
+                }
+            }
+
+            &:nth-child(3) {
+                .stegindikator__steg-label {
+                    max-width: 10rem;
+                }
             }
         }
 
-        &:nth-child(3) {
-            .stegindikator__steg-label {
-                max-width: 10rem;
-            }
+        .stegindikator__steg--labelled::after {
+            left: 2.75rem;
+            width: 11.5rem;
         }
     }
 }

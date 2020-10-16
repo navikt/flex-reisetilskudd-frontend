@@ -15,24 +15,25 @@ html, body, #app-root {
 }
 
 .limit {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
     position: relative;
-    background-color: @white;
-    padding: 1rem 1rem 2rem;
+    padding: 1rem 1rem 0;
 }
 
 .pagewrapper {
+    min-height: 100vh;
+}
+
+.maincontent {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    flex: 1;
 
-    .maincontent {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        background-color: @navLysGra;
+    &:focus {
+        outline: 0;
+    }
+
+    .limit {
+        padding-top: 1rem;
     }
 }
 

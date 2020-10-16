@@ -15,7 +15,16 @@
     }
 
     .bannerikoner {
-        position: absolute;
-        right: calc(50% - @desktopLimitWidth/2 + 5rem)
+        display: none;
+    }
+}
+
+@media (min-width: @screen-sm) {
+    .sidebanner {
+        .bannerikoner {
+            display: block;
+            position: absolute;
+            right: calc(50% - @desktopLimitWidth/2 + 5rem)
+        }
     }
 }
