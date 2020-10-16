@@ -38,3 +38,7 @@ spec:
       value: "q1"
     - name: SYKMELDINGER_BACKEND_PROXY_ROOT
       value: "https://sykmeldinger-backend-proxy.dev.nav.no"
+    - name: SYKEFRAVAER_URL
+      value: "https://tjenester-q1.nav.no/sykefravaer"
+    - name: DITTNAV_URL
+      value: "https://www-q1.nav.no/person/dittnav/"

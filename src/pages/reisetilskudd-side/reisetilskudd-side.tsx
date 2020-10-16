@@ -5,17 +5,33 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
 import Banner from '../../components/banner/banner'
+import Brodsmuler from '../../components/brodsmuler/brodsmuler'
 import useReisetilskuddTilGlobalState from '../../components/dine-reisetilskudd/useReisetilskuddTilGlobalState'
 import TilbakeLenke from '../../components/klikkbar/tilbake-lenke'
 import Steg from '../../components/steg/steg'
 import SykmeldingPanel from '../../components/sykmelding-opplysninger/sykmelding-panel'
 import Vis from '../../components/vis'
 import { useAppStore } from '../../data/stores/app-store'
+import { Brodsmule } from '../../types/brodsmule'
+import { SEPARATOR } from '../../utils/constants'
+import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
 import DagensTransportmiddel from '../dagens-transportmiddel/dagens-transportmiddel'
 import KvitteringsOpplasting from '../kvitterings-opplasting/kvitterings-opplasting'
 import OppsummeringSide from '../oppsummering-side/oppsummering-side'
 import UtbetalingSide from '../utbetaling-side/utbetaling-side'
+
+const brodsmuler: Brodsmule[] = [
+    {
+        tittel: tekst('reisetilskudd_liste.tittel'),
+        sti: SEPARATOR,
+        erKlikkbar: true
+    }, {
+        tittel: tekst('vedtak.sidetittel'),
+        sti: '/reisetilskudd',
+        erKlikkbar: false
+    }
+]
 
 const ReisetilskuddSide = () => {
     const { aktivtReisetilskuddId, setAktivtReisetilskuddId, reisetilskuddene } = useAppStore()
@@ -52,6 +68,7 @@ const ReisetilskuddSide = () => {
     return (
         <>
             <Banner />
+            <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
                 <TilbakeLenke aktivtSteg={idNum} />
