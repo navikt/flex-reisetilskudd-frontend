@@ -3,7 +3,7 @@ import './filopplaster-modal.less'
 import dayjs from 'dayjs'
 import { Knapp } from 'nav-frontend-knapper'
 import Modal from 'nav-frontend-modal'
-import { Feiloppsummering, FeiloppsummeringFeil, Input, SkjemaGruppe, } from 'nav-frontend-skjema'
+import { FeiloppsummeringFeil, Input, SkjemaGruppe, } from 'nav-frontend-skjema'
 import NavFrontendSpinner from 'nav-frontend-spinner'
 import { Element, Systemtittel } from 'nav-frontend-typografi'
 import React, { useState } from 'react'
@@ -22,6 +22,7 @@ import { logger } from '../../../utils/logger'
 import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
 import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering'
 import { tekst } from '../../../utils/tekster'
+import FeilListe from '../../feil-liste'
 import Datovelger from '../../kvittering/datovelger/datovelger'
 import TransportmiddelKvittering from '../../kvittering/transportmiddel-kvittering'
 import {
@@ -257,7 +258,7 @@ const FilopplasterModal = () => {
                     </Knapp>
                 }
                 <Vis hvis={valideringsFeil.length > 0}>
-                    <Feiloppsummering tittel={tekst('filopplaster_modal.feiloppsummering')} feil={valideringsFeil} />
+                    <FeilListe tittel={tekst('filopplaster_modal.feiloppsummering')} feil={valideringsFeil} />
                 </Vis>
             </div>
         </Modal>

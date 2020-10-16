@@ -7,7 +7,8 @@ const BekreftelsesTekster: any = {
         'bekreftelses.lurer-du': 'Lurer du på hva saksbehandler gjør?',
         'bekreftelses.les-mer': 'Les mer om reglene for reisetilskudd.',
         'bekreftelses.sendt-til': 'Sykmeldingen er sendt til NAV',
-        'bekreftelses.sendt-kl': 'Sendt: %DATO%, kl: %KL%'
+        'bekreftelses.sendt-kl': 'Sendt: %DATO%, kl: %KL%',
+        'bekreftelses.sidetittel': 'Bekreftelse'
     }, 'en': {}
 }
 

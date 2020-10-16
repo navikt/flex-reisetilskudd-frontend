@@ -16,7 +16,8 @@ html, body, #app-root {
 
 .limit {
     position: relative;
-    padding: 1rem 1rem 0;
+    margin: 0 auto;
+    padding: 1rem 1rem 2rem;
 }
 
 .pagewrapper {
@@ -31,10 +32,6 @@ html, body, #app-root {
     &:focus {
         outline: 0;
     }
-
-    .limit {
-        padding-top: 1rem;
-    }
 }
 
 .vekk {
@@ -46,9 +43,15 @@ html, body, #app-root {
 }
 
 @media (min-width: @screen-sm) {
-    .limit {
-        width: @desktopLimitWidth;
-        margin: 0 auto;
-        padding: 2rem 5rem 3.5rem;
+    .bekreftelses-side {
+        .limit {
+            width: @desktopLimitWidth;
+            margin: 0 auto;
+            padding: 2rem 5rem 3.5rem;
+
+            .listetekst {
+                margin-left: 8.5rem;
+            }
+        }
     }
 }
