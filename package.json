@@ -52,7 +52,6 @@
         "nav-frontend-veileder": "^2.0.24",
         "nav-frontend-veileder-style": "^2.0.18",
         "node-forge": ">=0.10.0",
-        "npm": "^6.14.8",
         "object-path": ">=0.11.5",
         "prop-types": "^15.7.2",
         "react": "^16.13.1",
