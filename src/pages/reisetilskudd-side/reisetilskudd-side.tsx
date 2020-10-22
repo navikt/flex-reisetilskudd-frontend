@@ -27,7 +27,7 @@ const brodsmuler: Brodsmule[] = [
         sti: SEPARATOR,
         erKlikkbar: true
     }, {
-        tittel: tekst('vedtak.sidetittel'),
+        tittel: tekst('reisetilskudd.sidetittel'),
         sti: '/reisetilskudd',
         erKlikkbar: false
     }

@@ -1,6 +1,6 @@
 {
-  "extends": [
-    "../.eslintrc.json",
-    "plugin:cypress/recommended"
-  ]
+    "extends": [
+        "../.eslintrc.json",
+        "plugin:cypress/recommended"
+    ]
 }

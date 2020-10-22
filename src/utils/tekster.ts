@@ -15,12 +15,14 @@ import TransportmiddelTekster from '../pages/dagens-transportmiddel/transportmid
 import KvitteringsTekster from '../pages/kvitterings-opplasting/kvitterings-tekster'
 import OppsummeringSideTekster from '../pages/oppsummering-side/oppsummering-tekster'
 import ReisetilskuddListeTekster from '../pages/reisetilskudd-liste/reisetilskudd-liste-tekster'
+import ReisetilskuddTekster from '../pages/reisetilskudd-side/reisetilskudd-tekster'
 import UtbetalingTekster from '../pages/utbetaling-side/utbetaling-tekster'
 import { logger } from './logger'
 
 const tekster = {
     ...BannerTekster.nb,
     ...ReisetilskuddListeTekster.nb,
+    ...ReisetilskuddTekster.nb,
     ...StegTekster.nb,
     ...KlikkbarTekster.nb,
     ...DineReisetilskuddTekster.nb,
