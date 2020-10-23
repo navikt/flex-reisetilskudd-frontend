@@ -49,16 +49,16 @@ describe('Tester reisetilskuddsøknaden', () => {
         it('fyller ut går, egen bil, klikker på hjelpetekst, fyller inn km', () => {
             cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/2`)
 
-            cy.get('label[for=transport-går]').click()
-            cy.get('label[for=transport-sykler]').click()
+            cy.get('label[for=transport-går]').click({ force: true })
+            cy.get('label[for=transport-sykler]').click({ force: true })
 
-            cy.get('label[for=transport-egen-bil]').click()
+            cy.get('label[for=transport-egen-bil]').click({ force: true })
             cy.get('.transportmiddel-kilometer-hjelpetekst').should('be.visible').click()
 
             cy.get('#dagens-transportmiddel-kilometer-input').should('be.visible')
                 .type('1337').should('have.value', '1337')
 
-            cy.get('label[for=transport-kollektiv]').click()
+            cy.get('label[for=transport-kollektiv]').click({ force: true })
             cy.get('#dagens-transportmiddel-manedlige-utgifter-input').should('be.visible')
                 .type('900').should('have.value', '900')
 
