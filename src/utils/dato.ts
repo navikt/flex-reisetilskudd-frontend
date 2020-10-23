@@ -6,9 +6,9 @@ dayjs.locale('nb')
 
 export enum DatoFormat {
     TALL = 'DD.MM.YYYY',
-    NATURLIG_KORT = 'Do MMMM',
-    NATURLIG_LANG = 'Do MMMM YYYY',
-    NATURLIG_FULL = 'dddd Do MMMM YYYY',
+    NATURLIG_KORT = 'D. MMMM',
+    NATURLIG_LANG = 'D. MMMM YYYY',
+    NATURLIG_FULL = 'dddd D. MMMM YYYY',
     FLATPICKR = 'YYYY-MM-DD',
 }
 

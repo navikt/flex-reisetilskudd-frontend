@@ -58,12 +58,10 @@ const DagensTransportmiddel = () => {
     const validerAntallKilometerInput = (): FeiloppsummeringFeil[] => {
         if (dagensTransportMiddelEgenBilChecked) {
             if (!validerNumerisk(antallKilometerState)) {
-                return [
-                    {
-                        skjemaelementId: antallKilometerSpørsmål.id,
-                        feilmelding: tekst('transportmiddel.feil-kilometer'),
-                    },
-                ]
+                return [ {
+                    skjemaelementId: antallKilometerSpørsmål.id,
+                    feilmelding: tekst('transportmiddel.feil-kilometer'),
+                } ]
             }
         }
         /* Gyldig verdi skrevet inn,
@@ -74,8 +72,7 @@ const DagensTransportmiddel = () => {
     }
 
     const validerMånedligeUtgifter = (nyesteVerdi: string | null = null): FeiloppsummeringFeil[] => {
-        if (
-            dagensTransportMiddelKollektivChecked
+        if (dagensTransportMiddelKollektivChecked
             && !validerKroner(nyesteVerdi || månedligeUtgifterState)
         ) {
             return [ { skjemaelementId: månedligeUtgifterSpørsmål.id, feilmelding: 'Du må oppgi gyldig kroneverdi' } ]
@@ -195,7 +192,7 @@ const DagensTransportmiddel = () => {
     }
 
     return (
-        <div className="dagens-transportmiddel-wrapper">
+        <div className="dagens-transportmiddel">
             <Systemtittel>
                 {tekst('transportmiddel.daglig')}
             </Systemtittel>

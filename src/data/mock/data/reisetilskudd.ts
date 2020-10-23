@@ -11,9 +11,9 @@ const mockReisetilskudd : Reisetilskudd[] = [
 
         utbetalingTilArbeidsgiver: false,
 
-        går: true,
-        sykler: true,
-        kollektivtransport: 42,
+        går: false,
+        sykler: false,
+        kollektivtransport: 0,
         egenBil: 0,
 
         reisetilskuddId: '28fa10b8-c9af-4a7a-a0b2-90caed65ab4c',
