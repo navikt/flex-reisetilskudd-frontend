@@ -14,21 +14,24 @@ const OpplastedeFiler = ({ fjernKnapp }: Props) => {
     const { kvitteringer } = useAppStore()
 
     return (
-        <div className="opplastede-filer">
-            <Vis hvis={kvitteringer.length > 0}>
-                <div className={` ${fjernKnapp ? 'kvitteringstitler' : 'kvitteringstitler-uten-slettknapp'}`}>
-                    <Element className="kvittering-tittel">Kvittering</Element>
-                    <Element className="belop-tittel">Beløp</Element>
-                    <Element className="dato-tittel">Dato</Element>
-                </div>
-            </Vis>
-            {kvitteringer.map((fil: Kvittering, index: number) => (
-                <div key={fil.kvitteringId}>
-                    <FilMedInfo fil={fil} fjernKnapp={fjernKnapp} />
-                    {index === kvitteringer.length - 1 ? '' : <hr />}
-                </div>
-            ))}
-        </div>
+        <Vis hvis={kvitteringer.length > 0}>
+            <table className="opplastede-filer">
+                <Vis hvis={fjernKnapp}>
+                    <thead>
+                        <tr>
+                            <Element tag="th">Kvittering</Element>
+                            <Element tag="th">Beløp</Element>
+                            <Element tag="th">Dato</Element>
+                        </tr>
+                    </thead>
+                </Vis>
+                <tbody>
+                    {kvitteringer.map((fil: Kvittering) => (
+                        <FilMedInfo fil={fil} fjernKnapp={fjernKnapp} key={fil.kvitteringId} />
+                    ))}
+                </tbody>
+            </table>
+        </Vis>
     )
 }
 

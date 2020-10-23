@@ -1,7 +1,6 @@
 import './fil-med-info.less'
 
 import { Knapp } from 'nav-frontend-knapper'
-import Lenke from 'nav-frontend-lenker'
 import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React from 'react'
 
@@ -39,37 +38,34 @@ const FilMedInfo = ({ fil, fjernKnapp }: Props) => {
         }
     }
 
-    function truncate(fullString: string, stringLen: number, separator: string) {
-        if (fullString.length <= stringLen) {
-            return fullString
-        }
-        return fullString.substr(0, 2) + separator + fullString.substr(-3)
-    }
-
     return (
-        <div className={` ${fjernKnapp ? 'fil-med-info' : 'fil-med-info-uten-slettknapp'}`}>
-            <div className="kvittering">
+        <tr className={` ${fjernKnapp ? 'fil-med-info' : 'fil-med-info-uten-slettknapp'}`}>
+            <td className="kvittering">
                 <img className="vedleggsikon" src={vedlegg} alt="Vedleggsikon" />
-                <Lenke href="#" className="filnavn">{truncate(fil.navn, 15, '...')}</Lenke>
-            </div>
-            <Normaltekst className="filstorrelse">
+                <button className="lenke filnavn">
+                    {fil.navn}
+                </button>
+            </td>
+            <Normaltekst tag="td" className="filstorrelse">
                 {formaterFilstørrelse(fil.storrelse)}
             </Normaltekst>
-            <Normaltekst className="belop">
+            <Normaltekst tag="td" className="belop">
                 {fil.belop + ' kr'}
             </Normaltekst>
-            <Normaltekst className="dato">
+            <Normaltekst tag="td" className="dato">
                 {fil.fom ? formatertDato(fil.fom, DatoFormat.NATURLIG_LANG) : ''}
             </Normaltekst>
             <Vis hvis={fjernKnapp}>
-                <Knapp className="slett-knapp" onClick={håndterKlikk}>
-                    <img src={SlettFilIkon} alt="" />
-                    <span>{tekst('fil_med_info.fjern')}</span>
-                </Knapp>
+                <td>
+                    <Knapp className="slett-knapp" onClick={håndterKlikk}>
+                        <img src={SlettFilIkon} alt="" />
+                        <span>{tekst('fil_med_info.fjern')}</span>
+                    </Knapp>
+                </td>
             </Vis>
-            <Element className="mobil-belop">{tekst('fil_med_info.belop')}:</Element>
-            <Element className="mobil-dato">{tekst('fil_med_info.dato')}:</Element>
-        </div>
+            <Element tag="td" className="mobil-belop">{tekst('fil_med_info.belop')}:</Element>
+            <Element tag="td" className="mobil-dato">{tekst('fil_med_info.dato')}:</Element>
+        </tr>
     )
 }
 

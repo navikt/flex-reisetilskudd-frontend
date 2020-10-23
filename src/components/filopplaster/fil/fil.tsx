@@ -30,7 +30,7 @@ const Fil = ({ fil }: Props) => (
             <div key={fil.name} className="modal-fil">
                 <img className="vedleggsikon" src={vedlegg} alt="Vedleggsikon" />
                 <Lenke href="#" className="filnavn">{customTruncet(fil.name, 20)}</Lenke>
-                <Normaltekst className="filstørrelse">
+                <Normaltekst className="filstorrelse">
                     {formaterFilstørrelse(fil.size)}
                 </Normaltekst>
             </div>
