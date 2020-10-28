@@ -1,13 +1,12 @@
 @import 'node_modules/nav-frontend-core/less/_variabler';
 
-.videre-knapp{
-    margin-top: 5rem;
-    margin-bottom: 2rem;
+.knapperad {
     display: flex;
     justify-content: center;
+    padding: 2rem 0 1rem;
 }
 
-.tilbake-lenke{
+.tilbake-lenke {
     padding-bottom: 1.5rem;
 }
 
@@ -16,18 +15,18 @@
     border-color: @navGronnLighten40;
     display: flex;
     justify-content: center;
-}
 
-.send-knapp:hover{
-    background-color: @navGronnLighten20;
-    border-color: @navGronnLighten20;
-}
+    &:hover {
+        background-color: @navGronnLighten20;
+        border-color: @navGronnLighten20;
+    }
 
-.send-knapp:active{
-    background-color: @navGronnLighten40;
-    border-color: @navGronnLighten40;
-}
+    &:active {
+        background-color: @navGronnLighten40;
+        border-color: @navGronnLighten40;
+    }
 
-.send-knapp:focus{
-    color: @navGronnLighten20;
+    &:focus {
+        color: @navGronnLighten20;
+    }
 }

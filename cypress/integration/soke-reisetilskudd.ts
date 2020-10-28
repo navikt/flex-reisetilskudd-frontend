@@ -41,7 +41,7 @@ describe('Tester reisetilskuddsøknaden', () => {
         })
 
         it('finner videreknappen', () => {
-            cy.get('.videre-knapp').should('be.visible').click()
+            cy.get('.knapperad').should('be.visible').click()
         })
     })
 
@@ -72,7 +72,7 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.get('#transport-sykler').should('be.checked')
             cy.get('#transport-egen-bil').should('be.checked')
             cy.get('#transport-kollektiv').should('be.checked')
-            cy.get('.videre-knapp').click()
+            cy.get('.knapperad').click()
         })
     })
 
@@ -92,7 +92,7 @@ describe('Tester reisetilskuddsøknaden', () => {
         it('Sjekker at oppsummeringssiden inneholder kvitteringer', () => {
             cy.get('.filopplasteren input[type=file]').attachFile('icon.png')
 
-            cy.get('.datovelger-wrapper .skjemaelement__input.form-control').focus()
+            cy.get('.datovelger .skjemaelement__input.form-control').focus()
             cy.get('.flatpickr-calendar').contains('10').click({ force: true })
 
             cy.get('#filopplaster-totalt-beløp-input').type('1000')
@@ -100,7 +100,7 @@ describe('Tester reisetilskuddsøknaden', () => {
 
             cy.get('.lagre-kvittering').click()
 
-            cy.get('.videre-knapp').click()
+            cy.get('.knapperad').click()
         })
     })
 
@@ -113,10 +113,9 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.contains('Opplastede kvitteringer')
             cy.contains('Totalt beløp:')
 
-            if (!(cy.contains('Kvittering') && cy.contains('Beløp') && cy.contains('Dato'))) {
+            if (!(cy.contains('Beløp') && cy.contains('Dato'))) {
                 cy.log('Oppsummeringssiden inneholder ingen kvitteringsoverskrift og kanskje ingen kvitteringer')
             } else {
-                cy.contains('Kvittering')
                 cy.contains('Beløp')
                 cy.contains('Dato')
                 cy.log('Kvitteringer displayes på oppsummeringssiden')

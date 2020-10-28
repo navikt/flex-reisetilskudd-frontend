@@ -1,11 +1,11 @@
 const sizes = [ 'Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB' ]
 const k = 1024
 
-const formaterFilstørrelse = (bytes: number, decimals = 2) : string => {
+export const formaterFilstørrelse = (bytes: number, decimals = 1) : string => {
     if (bytes === 0) return '0 Bytes'
     const dm = decimals < 0 ? 0 : decimals
     const i = Math.floor(Math.log(bytes) / Math.log(k))
-    return `${parseFloat((bytes / (k ** i)).toFixed(dm))} ${sizes[i]}`
+    return `${parseFloat((bytes / (k ** i)).toFixed(dm)).toLocaleString()} ${sizes[i]}`
 }
 
 export const filstørrelseTilBytes = (filstørrelse: string): number => {
@@ -16,4 +16,8 @@ export const filstørrelseTilBytes = (filstørrelse: string): number => {
     return verdi * (k ** i)
 }
 
-export default formaterFilstørrelse
+export const customTruncet = (text: string, size: number) => {
+    return text.length <= size
+        ? text
+        : text.substr(0, size) + '...' + text.substr(-3)
+}

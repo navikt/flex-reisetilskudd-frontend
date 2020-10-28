@@ -1,9 +1,10 @@
 import './reisetilskudd-liste.less'
 
-import { Element, Normaltekst, Sidetittel } from 'nav-frontend-typografi'
+import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
+import Banner from '../../components/banner/banner'
 import Brodsmuler from '../../components/brodsmuler/brodsmuler'
 import DineReisetilskudd from '../../components/dine-reisetilskudd/dine-reisetilskudd'
 import Vis from '../../components/vis'
@@ -28,12 +29,10 @@ const ReisetilskuddListe = () => {
 
     return (
         <>
+            <Banner tittel={tekst('reisetilskudd_liste.tittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
-                <Sidetittel tag="h1" className="sidetopp__tittel">
-                    {tekst('reisetilskudd_liste.tittel')}
-                </Sidetittel>
                 <Vis hvis={reisetilskuddene && reisetilskuddene.length < 1}>
                     <Normaltekst>
                         {tekst('reisetilskudd_liste.ingen.reisetilskudd1')}

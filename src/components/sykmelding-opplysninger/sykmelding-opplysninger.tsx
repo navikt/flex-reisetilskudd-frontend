@@ -3,10 +3,10 @@ import './sykmelding-opplysninger.less'
 import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
+import { CheckedIkon } from '../../assets/ikoner'
 import { useAppStore } from '../../data/stores/app-store'
 import { Sykmelding, SykmeldingOpplysning, SykmeldingOpplysningEnum } from '../../types/sykmelding'
 import { tekst } from '../../utils/tekster'
-import CheckedMedTekst from '../checked-med-tekst/checked-med-tekst'
 import Vis from '../vis'
 import PeriodeTekst from './periode-tekst'
 
@@ -38,7 +38,7 @@ const SykmeldingOpplysninger = (): ReactElement => {
 
     const visVårVerdi = (hvilkenVerdi: SykmeldingOpplysningEnum) => (
         (vårSykmelding && vårSykmelding?.[hvilkenVerdi])
-            ? <CheckedMedTekst tekst={vårSykmelding?.[hvilkenVerdi]} />
+            ? <Normaltekst><CheckedIkon />{vårSykmelding?.[hvilkenVerdi]}</Normaltekst>
             : <span className="sykmelding-manglende-opplysninger"> - </span>
     )
 

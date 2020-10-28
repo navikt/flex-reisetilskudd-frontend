@@ -1,0 +1,21 @@
+@import '../../../node_modules/nav-frontend-core/less/_variabler';
+
+.opplastede-filer {
+    width: 100%;
+
+    thead {
+        display: none;
+    }
+
+    th {
+        text-align: left;
+    }
+}
+
+@media (min-width: @screen-sm) {
+    .opplastede-filer {
+        thead {
+            display: table-header-group;
+        }
+    }
+}

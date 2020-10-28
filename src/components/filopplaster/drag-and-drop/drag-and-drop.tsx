@@ -7,7 +7,7 @@ import { useDropzone } from 'react-dropzone'
 import opplasting from '../../../assets/opplasting.svg'
 import { useAppStore } from '../../../data/stores/app-store'
 import env from '../../../utils/environment'
-import formaterFilstørrelse from '../../../utils/fil-utils'
+import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 
 const DragAndDrop = () => {
@@ -64,7 +64,7 @@ const DragAndDrop = () => {
         <div className="filopplasteren" {...getRootProps()}>
             <input {...getInputProps()} />
             <img src={opplasting} className="opplastingsikon" alt="Opplastingsikon" />
-            <Normaltekst className="tekst">
+            <Normaltekst tag="span" className="tekst">
                 {isDragActive
                     ? tekst('drag_and_drop.dragtekst.aktiv')
                     : tekst('drag_and_drop.dragtekst')

@@ -224,42 +224,36 @@ const FilopplasterModal = () => {
                 {filopplasterFeilmeldinger.length > 0
                     ? <div>
                         <Systemtittel className="kvittering-header"> Feil i filopplasting </Systemtittel>
-                        <FeilListe tittel="" feil={ feilliste } />
+                        <FeilListe tittel="" feil={feilliste} />
                     </div>
                     : <>
-                        <Systemtittel className="kvittering-header"> Ny kvittering </Systemtittel>
-                        <div className="input-rad">
-                            <Datovelger
-                                id={kvitteringDatoSpørsmål.id}
-                                className="periode-element"
-                                label="Dato"
-                                mode="single"
-                                onChange={(nyDato) => oppdaterDato(nyDato[0])}
-                                feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
-                                minDato={tidligsteFom(valgtSykmelding.mulighetForArbeid.perioder)}
-                                maxDato={senesteTom(valgtSykmelding.mulighetForArbeid.perioder)}
+                        <Systemtittel className="kvittering-header">Ny kvittering</Systemtittel>
+                        <Datovelger
+                            id={kvitteringDatoSpørsmål.id}
+                            className="periode-element"
+                            label="Dato"
+                            mode="single"
+                            onChange={(nyDato) => oppdaterDato(nyDato[0])}
+                            feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
+                            minDato={tidligsteFom(valgtSykmelding.mulighetForArbeid.perioder)}
+                            maxDato={senesteTom(valgtSykmelding.mulighetForArbeid.perioder)}
+                        />
+                        <Input
+                            label={<Element className="belop-label">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>}
+                            inputMode={kvitteringTotaltBeløpSpørsmål.inputMode}
+                            value={beløp}
+                            pattern="[0-9]*"
+                            bredde={kvitteringTotaltBeløpSpørsmål.bredde}
+                            onChange={(e) => handleBeløpChange(e.target.value)}
+                            id={kvitteringTotaltBeløpSpørsmål.id}
+                            feil={fåFeilmeldingTilInput(kvitteringTotaltBeløpSpørsmål.id)}
+                        />
+                        <SkjemaGruppe feil={fåFeilmeldingTilInput(kvitteringTransportmiddelSpørsmål.id)}>
+                            <TransportmiddelKvittering handleChange={(
+                                transportmiddel,
+                            ) => handleTransportmiddelChange(transportmiddel)}
                             />
-                            <div>
-                                <Element className="kvittering-beløp-input">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>
-                                <Input
-                                    inputMode={kvitteringTotaltBeløpSpørsmål.inputMode}
-                                    value={beløp}
-                                    pattern="[0-9]*"
-                                    bredde={kvitteringTotaltBeløpSpørsmål.bredde}
-                                    onChange={(e) => handleBeløpChange(e.target.value)}
-                                    id={kvitteringTotaltBeløpSpørsmål.id}
-                                    feil={fåFeilmeldingTilInput(kvitteringTotaltBeløpSpørsmål.id)}
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <SkjemaGruppe feil={fåFeilmeldingTilInput(kvitteringTransportmiddelSpørsmål.id)}>
-                                <TransportmiddelKvittering handleChange={(
-                                    transportmiddel,
-                                ) => handleTransportmiddelChange(transportmiddel)}
-                                />
-                            </SkjemaGruppe>
-                        </div>
+                        </SkjemaGruppe>
                         <Fil fil={uopplastetFil} className="opplastede-filer" />
                         {laster
                             ?
@@ -281,7 +275,6 @@ const FilopplasterModal = () => {
                         </Vis>
                     </>
                 }
-
             </div>
         </Modal>
     )

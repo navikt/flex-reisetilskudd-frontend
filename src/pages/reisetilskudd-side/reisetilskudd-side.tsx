@@ -27,7 +27,7 @@ const brodsmuler: Brodsmule[] = [
         sti: SEPARATOR,
         erKlikkbar: true
     }, {
-        tittel: tekst('reisetilskudd.sidetittel'),
+        tittel: tekst('reisetilskudd.tittel'),
         sti: '/reisetilskudd',
         erKlikkbar: false
     }
@@ -67,7 +67,7 @@ const ReisetilskuddSide = () => {
 
     return (
         <>
-            <Banner />
+            <Banner tittel={tekst('banner.sidetittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">

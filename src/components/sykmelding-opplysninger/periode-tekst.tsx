@@ -1,8 +1,9 @@
+import { Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
+import { CheckedIkon } from '../../assets/ikoner'
 import { DatoFormat, formatertDato } from '../../utils/dato'
 import { getLedetekst, tekst } from '../../utils/tekster'
-import CheckedMedTekst from '../checked-med-tekst/checked-med-tekst'
 import Vis from '../vis'
 
 interface PeriodeTekstProps {
@@ -13,12 +14,13 @@ interface PeriodeTekstProps {
 const PeriodeTekst = ({ fraDato, tilDato }: PeriodeTekstProps): ReactElement => (
     <span className="sykmelding-periode-tekst">
         <Vis hvis={fraDato !== '' && tilDato !== ''}>
-            <CheckedMedTekst
-                tekst={getLedetekst(tekst('dine_reisetilskudd.periode'), {
+            <Normaltekst className="checkedblock">
+                <CheckedIkon />
+                {getLedetekst(tekst('dine_reisetilskudd.periode'), {
                     '%FRA%': formatertDato(fraDato, DatoFormat.NATURLIG_LANG),
                     '%TIL%': formatertDato(tilDato, DatoFormat.NATURLIG_LANG)
                 })}
-            />
+            </Normaltekst>
         </Vis>
 
         <Vis hvis={fraDato !== '' && tilDato === ''}>

@@ -5,13 +5,16 @@ import React from 'react'
 
 import busImg from '../../assets/buss.png'
 import treImg from '../../assets/tre.png'
-import { tekst } from '../../utils/tekster'
 
-const Banner = () => {
+interface BannerProps {
+    tittel: string;
+}
+
+const Banner = ({ tittel }: BannerProps) => {
     return (
         <header className="sidebanner">
             <Systemtittel tag="h1" className="sidebanner__tittel">
-                {tekst('banner.sidetittel')}
+                {tittel}
             </Systemtittel>
             <div className="bannerikoner">
                 <img src={busImg} className="bannerikon" alt="" width="40" />

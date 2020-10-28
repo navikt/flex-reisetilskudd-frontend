@@ -1,3 +1,5 @@
+import './transportmiddel-kvittering.less'
+
 import { RadioPanelGruppe } from 'nav-frontend-skjema'
 import { Element } from 'nav-frontend-typografi'
 import React from 'react'
@@ -17,7 +19,7 @@ const TransportmiddelKvittering = ({ handleChange }: Props) => {
             key={Transportmiddel.SPØRSMÅLS_KEY}
             className="kvittering-element"
             name="transportmiddel"
-            legend={<Element>Transportmiddel</Element>}
+            legend={<Element tag="span">Transportmiddel</Element>}
             radios={[
                 {
                     label: Transportmiddel.TAXI,

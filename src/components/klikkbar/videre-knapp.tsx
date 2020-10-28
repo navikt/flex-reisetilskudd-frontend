@@ -8,7 +8,7 @@ import { tekst } from '../../utils/tekster'
 
 const VidereKnapp = ({ onClick }: AktivtStegProps) => {
     return (
-        <div className="videre-knapp">
+        <div className="knapperad">
             <Knapp type="hoved" onClick={() => onClick!()}>
                 {tekst('klikkbar.videre-knapp.tekst')}
             </Knapp>

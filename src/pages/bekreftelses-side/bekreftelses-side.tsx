@@ -31,7 +31,7 @@ const BekreftelsesSide = () => {
 
     return (
         <>
-            <Banner />
+            <Banner tittel={tekst('bekreftelses.sidetittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
