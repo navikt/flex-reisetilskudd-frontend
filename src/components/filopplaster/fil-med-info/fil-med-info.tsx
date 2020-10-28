@@ -1,6 +1,5 @@
 import './fil-med-info.less'
 
-import { Knapp } from 'nav-frontend-knapper'
 import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React from 'react'
 
@@ -10,11 +9,11 @@ import { useAppStore } from '../../../data/stores/app-store'
 import { Kvittering } from '../../../types/kvittering'
 import { DatoFormat, formatertDato } from '../../../utils/dato'
 import env from '../../../utils/environment'
-import formaterFilstørrelse from '../../../utils/fil-utils'
+import { customTruncet,formaterFilstørrelse } from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
 import { tekst } from '../../../utils/tekster'
 import Vis from '../../vis'
-import SlettFilIkon from './slett-fil-ikon.svg'
+import slettFilIkon from './slett-fil-ikon.svg'
 
 interface Props {
     fil: Kvittering;
@@ -28,8 +27,10 @@ const FilMedInfo = ({ fil, fjernKnapp }: Props) => {
         setKvitteringer(kvitteringer.filter(
             (kvittering) => kvittering.kvitteringId !== kvitteringSomSkalSlettes.kvitteringId,
         ))
-        del<string>(`${env.apiUrl}/api/v1/kvittering/${fil.kvitteringId}`)
-            .catch((error) => logger.error('Feil under sletting av kvittering', error))
+        del(`${env.apiUrl}/api/v1/kvittering/${fil.kvitteringId}`).catch((error) => {
+            logger.error('Feil under sletting av kvittering', error)
+        }
+        )
     }
 
     const håndterKlikk = () => {
@@ -41,30 +42,30 @@ const FilMedInfo = ({ fil, fjernKnapp }: Props) => {
     return (
         <tr className={` ${fjernKnapp ? 'fil-med-info' : 'fil-med-info-uten-slettknapp'}`}>
             <td className="kvittering">
-                <img className="vedleggsikon" src={vedlegg} alt="Vedleggsikon" />
-                <button className="lenke filnavn">
-                    {fil.navn}
-                </button>
+                <img className="vedleggsikon" src={vedlegg} alt="" />
+                <Normaltekst tag="span" className="filnavn">
+                    {customTruncet(fil.navn, 20)}
+                </Normaltekst>
+                <Normaltekst tag="span" className="filstr">
+                    ({formaterFilstørrelse(fil.storrelse)})
+                </Normaltekst>
             </td>
-            <Normaltekst tag="td" className="filstorrelse">
-                {formaterFilstørrelse(fil.storrelse)}
-            </Normaltekst>
             <Normaltekst tag="td" className="belop">
-                {fil.belop + ' kr'}
+                <Element tag="span">{tekst('fil_med_info.belop')}:</Element>
+                {fil.belop} kr
             </Normaltekst>
             <Normaltekst tag="td" className="dato">
+                <Element tag="span">{tekst('fil_med_info.dato')}:</Element>
                 {fil.fom ? formatertDato(fil.fom, DatoFormat.NATURLIG_LANG) : ''}
             </Normaltekst>
             <Vis hvis={fjernKnapp}>
                 <td>
-                    <Knapp className="slett-knapp" onClick={håndterKlikk}>
-                        <img src={SlettFilIkon} alt="" />
+                    <button className="slett-knapp knapp knapp--fare knapp--mini" onClick={håndterKlikk}>
+                        <img src={slettFilIkon} className="slett-img" alt="" />
                         <span>{tekst('fil_med_info.fjern')}</span>
-                    </Knapp>
+                    </button>
                 </td>
             </Vis>
-            <Element tag="td" className="mobil-belop">{tekst('fil_med_info.belop')}:</Element>
-            <Element tag="td" className="mobil-dato">{tekst('fil_med_info.dato')}:</Element>
         </tr>
     )
 }

@@ -1,165 +1,77 @@
 @import '../../../../node_modules/nav-frontend-core/less/_variabler';
 
-.fil-med-info-uten-slettknapp {
-    display: grid;
-    margin: 0 auto;
-    grid-template-areas:
-      'kvittering storrelse belop dato';
-    grid-template-columns: 30% 25% 25% 20%;
+.fil-med-info {
+    display: block;
+    margin-bottom: 1.4rem;
 
-    .typo-normal {
-        display: inline;
+    td {
+        display: block;
     }
 
     .kvittering {
-        grid-area: kvittering;
+        display: flex;
+        align-items: center;
+
+        .vedleggsikon {
+            width: 18px;
+            margin-right: 0.7rem;
+        }
+
+        .filnavn {
+            margin-right: 0.7rem;
+        }
+    }
+
+    .slett-knapp {
+        margin: 0.5rem 0 0 1.85rem;
+
+        .slett-img {
+            margin-right: 0.7rem;
+        }
+    }
+
+    .belop, .dato {
+        span {
+            display: inline-block;
+            width: 3.5rem;
+            margin-left: 1.85rem;
+        }
+    }
+}
+
+.fil-med-info-uten-slettknapp {
+    .kvittering {
         display: flex;
         align-items: center;
     }
-
-    .belop {
-        padding-top: 0.3rem;
-        grid-area: belop;
-    }
-
-    .dato {
-        padding-top: 0.3rem;
-        grid-area: dato;
-        white-space: nowrap;
-    }
 }
 
-.mobil-belop {
-    display: none;
-}
-
-.mobil-dato {
-    display: none;
-}
-
-@media screen and (max-width: 450px) {
-    .kvitteringstitler-uten-slettknapp {
-        display: none;
-    }
-
-    .last-opp-kvittering-tekst {
-        .hjelpetekst__ikon {
-            transform: scale(1.5);
-        }
-    }
-
-    .vedleggsikon {
-        transform: scale(0.7);
-    }
-
+@media (min-width: @screen-sm) {
     .fil-med-info {
-        border: 1px solid @navGra60;
-        border-radius: 0.3rem;
-        grid-template-areas:
-      'kvittering storrelse slett'
-      'beloptittel belop 1'
-      'datotittel dato dato';
-        grid-template-columns: 30% 35% 35%;
+        display: table-row;
 
-        .slett-knapp {
-            transform: scale(0.85);
-            margin: 1.4rem 0 0 0;
-            padding: 0 0 0 0.5rem;
-        }
-    }
+        td {
+            display: table-cell;
 
-    .mobil-belop {
-        margin-top: 0.3rem;
-        padding-top: 0.3rem;
-        display: flex;
-        padding-left: 2.2rem;
-        grid-area: beloptittel;
-    }
-
-    .mobil-dato {
-        margin-top: 0.5rem;
-        display: flex;
-        padding-left: 2.2rem;
-        grid-area: datotittel;
-    }
-
-    .kvitteringstitler {
-        display: none;
-    }
-
-    .kvittering {
-        margin-top: 1.5rem;
-        grid-area: kvittering;
-        margin-left: 0.5rem;
-    }
-
-    .filstorrelse {
-        margin-top: 1.5rem;
-        grid-area: storrelse;
-        padding-top: 0.2rem;
-        margin-left: 1rem;
-    }
-
-    .belop {
-        margin-top: 0.1rem;
-        padding-top: 0.2rem;
-        padding-bottom: 0.4rem;
-        grid-area: belop;
-        text-align: left;
-        margin-left: 1rem;
-    }
-
-    .dato {
-        padding-bottom: 1.4rem;
-        grid-area: dato;
-        text-align: left;
-        margin-left: 1rem;
-    }
-
-    .fil-med-info-uten-slettknapp {
-        border: 1px solid @navGra60;
-        border-radius: 0.3rem;
-        grid-template-areas:
-      'kvittering storrelse'
-      'beloptittel belop '
-      'datotittel dato';
-        grid-template-columns: 50% 50%;
-
-        .vedleggsikon {
-            margin-left: 0.1rem;
-            transform: scale(0.7);
-        }
-
-        .mobil-belop {
-            margin: 0.7rem 0 0 0.5rem;
-            padding-right: 0;
-            padding-left: 1.5rem;
-        }
-
-        .mobil-dato {
-            padding-left: 1.5rem;
-            margin-left: 0.5rem;
-        }
-
-        .kvittering {
-            padding-left: 0;
-
-            .filnavn {
-                margin-left: 0.3rem;
+            &:nth-child(4) {
+                text-align: right;
             }
         }
 
-        .belop {
-            margin: 0.7rem 0 0 0;
+        .belop, .dato {
+            span {
+                display: none;
+            }
         }
 
-        .dato {
-            margin: 0.25rem 0 0 0;
-            white-space: unset;
-        }
 
-        .filstorrelse {
-            margin: 1.4rem 0 0 0;
+        .slett-knapp {
+            padding: 0.25rem 0.5rem;
+            margin: 0;
+
+            .slett-img {
+                display: inline;
+            }
         }
     }
 }

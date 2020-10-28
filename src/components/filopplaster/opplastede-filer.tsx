@@ -1,3 +1,5 @@
+import './opplastede-filer.less'
+
 import { Element } from 'nav-frontend-typografi'
 import React from 'react'
 

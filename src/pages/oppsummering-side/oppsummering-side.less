@@ -1,53 +1,32 @@
-.oppsummering-wrapper {
-    padding: 4rem;
-    border: 1px solid black;
-    border-radius: 3px;
+@import '../../../node_modules/nav-frontend-core/less/_variabler';
 
-    .oppsummering-overskrift {
-        margin-bottom: 2rem;
+.oppsummering {
+    padding: 1rem;
+    border: 1px solid @navMorkGra;
+    border-radius: 4px;
+
+    h3 {
+        margin: 1rem 0;
+
+        &+ .checkedblock {
+            margin-top: -0.75rem;
+        }
     }
 
-    .oppsummering-element {
-        margin: 2rem 0;
-    }
+    .checkedblock {
+        display: flex;
+        align-items: center;
 
-    .oppsummering-element-split {
-        border-top: 3px dashed black;
-    }
-
-    .checked-med-tekst {
-        margin-top: 0.5rem;
-    }
-
-    .oppsummering-totalt-belop {
-        margin-top: 1rem;
-    }
-
-    .opplastede-kvitteringer-tittel {
-        margin-bottom: 1rem;
+        .checkedikon {
+            margin-left: 0.2rem;
+            margin-right: 0.5rem;
+        }
     }
 }
 
 @media screen and (max-width: 750px) {
-    .oppsummering-wrapper {
-        padding: 2rem 1rem;
-
-        .oppsummering-overskrift {
-            transform: scale(0.90);
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            justify-content: center;
-        }
-
-        .oppsummering-element {
-            margin: 0;
-            transform: scale(0.90);
-            justify-content: center;
-        }
-
-        .checked-med-tekst {
-            margin-top: 0.5rem;
-        }
+    .oppsummering {
+        padding: 1.4rem 1rem;
     }
 }
 

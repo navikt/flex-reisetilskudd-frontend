@@ -27,9 +27,17 @@ const Datovelger = ({ label, className, onChange, mode = 'single', id, feil, min
         }
     }
 
+    const datoInputFokus = () => {
+        const selektor = '.datovelger input[type=text].skjemaelement__input'
+        const input: HTMLInputElement | null = document.querySelector(selektor)
+        input!.focus()
+    }
+
     return (
-        <div className={`datovelger-wrapper ${className} ${feil ? 'datovelger-med-feil' : ''}`}>
-            <Element className="label">{label}</Element>
+        <div className={`datovelger ${className} ${feil ? 'datovelger-med-feil' : ''}`}>
+            <label onClick={datoInputFokus}>
+                <Element tag="strong">{label}</Element>
+            </label>
             <Flatpickr
                 className="skjemaelement__input input--m"
                 placeholder={(mode === 'range') ? 'dd.mm.åååå til dd.mm.åååå' : 'dd.mm.åååå'}

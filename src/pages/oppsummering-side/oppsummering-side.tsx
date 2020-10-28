@@ -11,21 +11,17 @@ import Utbetaling from '../../components/oppsummering/utbetaling'
 import { tekst } from '../../utils/tekster'
 
 const OppsummeringSide = () => (
-    <div className="oppsummering-wrapper oppsummering-element">
-        <Systemtittel className="oppsummering-overskrift">
+    <div className="oppsummering">
+        <Systemtittel>
             {tekst('oppsummering.tittel')}
         </Systemtittel>
         <Utbetaling />
         <DagensTransportmiddel />
-        <div className="oppsummering-element oppsummering-vedlegg">
-            <Undertittel className="opplastede-kvitteringer-tittel">
-                {tekst('oppsummering.undertittel')}
-            </Undertittel>
-            <OpplastedeFiler />
-            <div className="oppsummering-totalt-belop">
-                <TotalBelop />
-            </div>
-        </div>
+        <Undertittel tag="h3">
+            {tekst('oppsummering.undertittel')}
+        </Undertittel>
+        <OpplastedeFiler />
+        <TotalBelop />
         <SendKnapp />
     </div>
 )

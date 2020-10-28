@@ -208,55 +208,46 @@ const FilopplasterModal = () => {
             className="filopplaster-modal"
         >
             <div className="modal-content">
-                <Systemtittel className="kvittering-header"> Ny kvittering </Systemtittel>
-                <div className="input-rad">
-                    <Datovelger
-                        id={kvitteringDatoSpørsmål.id}
-                        className="periode-element"
-                        label="Dato"
-                        mode="single"
-                        onChange={(nyDato) => oppdaterDato(nyDato[0])}
-                        feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
-                        minDato={tidligsteFom(valgtSykmelding.mulighetForArbeid.perioder)}
-                        maxDato={senesteTom(valgtSykmelding.mulighetForArbeid.perioder)}
+                <Systemtittel className="kvittering-header">Ny kvittering</Systemtittel>
+                <Datovelger
+                    id={kvitteringDatoSpørsmål.id}
+                    className="periode-element"
+                    label="Dato"
+                    mode="single"
+                    onChange={(nyDato) => oppdaterDato(nyDato[0])}
+                    feil={fåFeilmeldingTilInput(kvitteringDatoSpørsmål.id)}
+                    minDato={tidligsteFom(valgtSykmelding.mulighetForArbeid.perioder)}
+                    maxDato={senesteTom(valgtSykmelding.mulighetForArbeid.perioder)}
+                />
+                <Input
+                    label={<Element className="belop-label">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>}
+                    inputMode={kvitteringTotaltBeløpSpørsmål.inputMode}
+                    value={beløp}
+                    pattern="[0-9]*"
+                    bredde={kvitteringTotaltBeløpSpørsmål.bredde}
+                    onChange={(e) => handleBeløpChange(e.target.value)}
+                    id={kvitteringTotaltBeløpSpørsmål.id}
+                    feil={fåFeilmeldingTilInput(kvitteringTotaltBeløpSpørsmål.id)}
+                />
+                <SkjemaGruppe feil={fåFeilmeldingTilInput(kvitteringTransportmiddelSpørsmål.id)}>
+                    <TransportmiddelKvittering handleChange={(
+                        transportmiddel,
+                    ) => handleTransportmiddelChange(transportmiddel)}
                     />
-                    <div>
-                        <Element className="kvittering-beløp-input">{kvitteringTotaltBeløpSpørsmål.tittel}</Element>
-                        <Input
-                            inputMode={kvitteringTotaltBeløpSpørsmål.inputMode}
-                            value={beløp}
-                            pattern="[0-9]*"
-                            bredde={kvitteringTotaltBeløpSpørsmål.bredde}
-                            onChange={(e) => handleBeløpChange(e.target.value)}
-                            id={kvitteringTotaltBeløpSpørsmål.id}
-                            feil={fåFeilmeldingTilInput(kvitteringTotaltBeløpSpørsmål.id)}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <SkjemaGruppe feil={fåFeilmeldingTilInput(kvitteringTransportmiddelSpørsmål.id)}>
-                        <TransportmiddelKvittering handleChange={(
-                            transportmiddel,
-                        ) => handleTransportmiddelChange(transportmiddel)}
-                        />
-                    </SkjemaGruppe>
-                </div>
+                </SkjemaGruppe>
                 <Fil fil={uopplastetFil} className="opplastede-filer" />
-                {laster
-                    ?
+                <Vis hvis={laster}>
                     <NavFrontendSpinner className="lagre-kvittering" />
-                    :
-                    <Knapp htmlType="submit"
-                        className="lagre-kvittering"
-                        onClick={() => (
-                            uopplastetFil
-                                ? lagreKvittering(uopplastetFil)
-                                : logger.info('Noen har prøvd å laste opp en tom fil')
-                        )}
-                    >
+                </Vis>
+                <Vis hvis={!laster}>
+                    <Knapp htmlType="submit" className="lagre-kvittering" onClick={() => (
+                        uopplastetFil
+                            ? lagreKvittering(uopplastetFil)
+                            : logger.info('Noen har prøvd å laste opp en tom fil')
+                    )}>
                         {tekst('filopplaster_modal.lagre')}
                     </Knapp>
-                }
+                </Vis>
                 <Vis hvis={valideringsFeil.length > 0}>
                     <FeilListe tittel={tekst('filopplaster_modal.feiloppsummering')} feil={valideringsFeil} />
                 </Vis>

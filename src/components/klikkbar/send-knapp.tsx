@@ -14,7 +14,7 @@ const SendKnapp = (): ReactElement => {
     }
 
     return (
-        <div className="videre-knapp">
+        <div className="knapperad">
             <Knapp className="send-knapp" type="hoved" onClick={() => handleClick()}>
                 {tekst('klikkbar.send-knapp.tekst')}
             </Knapp>

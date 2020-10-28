@@ -1,48 +1,26 @@
+@import '../../../../node_modules/nav-frontend-core/less/core';
+@import '../../../../src/basic';
+
 .filopplaster-modal {
     width: 550px;
 
     .modal-content {
-        min-width: 200px;
-        padding: 0 5%;
-        display: grid;
+        padding: 0 0.4rem;
 
         .lagre-kvittering {
-            place-self: center;
             margin-bottom: 1rem;
         }
     }
 
     .kvittering-header {
-        margin-bottom: 30px;
-    }
-
-    .input-rad {
-        padding-bottom: 1rem;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr;
-        grid-column-gap: 1em;
-        justify-content: space-between;
-        align-items: baseline;
-
-        .skjemaelement__label {
-            font-size: 20px;
-        }
+        margin-bottom: 1.5rem;
     }
 
     .feilmelding-alert {
         margin-top: 1rem;
     }
 
-    .kvittering-beløp-input {
-        margin-bottom: 8px;
-    }
-
-}
-
-@media screen and (max-width: 390px) {
-    .modal-content {
-        transform: scale(0.85);
-        justify-content: center;
+    .belop-label {
+        margin-bottom: 0.5rem;
     }
 }
