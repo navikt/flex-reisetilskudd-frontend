@@ -12,7 +12,7 @@ interface PeriodeTekstProps {
 }
 
 const PeriodeTekst = ({ fraDato, tilDato }: PeriodeTekstProps): ReactElement => (
-    <span className="sykmelding-periode-tekst">
+    <>
         <Vis hvis={fraDato !== '' && tilDato !== ''}>
             <Normaltekst className="checkedblock">
                 <CheckedIkon />
@@ -30,7 +30,7 @@ const PeriodeTekst = ({ fraDato, tilDato }: PeriodeTekstProps): ReactElement => 
         <Vis hvis={fraDato === '' && tilDato === ''}>
             {tekst('sykmelding.fant-ikke')}
         </Vis>
-    </span>
+    </>
 )
 
 export default PeriodeTekst

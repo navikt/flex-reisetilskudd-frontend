@@ -15,7 +15,6 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
 
     /* UTBETALINGSSPØRSMÅL */
     const [ activeMegArbeidsgiver, setActiveMegArbeidsgiver ] = useState<string>('')
-    const [ utbetalingspørsmålValidert, setUtbetalingspørsmålValidert ] = useState<boolean>()
 
     /* DAGENS TRANSPORTMIDDEL */
     const [ dagensTransportMiddelEgenBilChecked, setDagensTransportMiddelEgenBilChecked ] = useState<boolean>(false)
@@ -42,7 +41,6 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
 
         /* UTBETALINGSSPØRSMÅL */
         activeMegArbeidsgiver, setActiveMegArbeidsgiver,
-        utbetalingspørsmålValidert, setUtbetalingspørsmålValidert,
 
         /* DAGENS TRANSPORTMIDDEL */
         dagensTransportMiddelEgenBilChecked, setDagensTransportMiddelEgenBilChecked,

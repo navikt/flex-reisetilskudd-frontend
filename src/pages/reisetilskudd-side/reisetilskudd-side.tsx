@@ -1,5 +1,7 @@
 import './reisetilskudd-side.less'
 
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
+import { Undertittel } from 'nav-frontend-typografi'
 import React, { useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
@@ -9,10 +11,11 @@ import Brodsmuler from '../../components/brodsmuler/brodsmuler'
 import useReisetilskuddTilGlobalState from '../../components/dine-reisetilskudd/useReisetilskuddTilGlobalState'
 import TilbakeLenke from '../../components/klikkbar/tilbake-lenke'
 import Steg from '../../components/steg/steg'
-import SykmeldingPanel from '../../components/sykmelding-opplysninger/sykmelding-panel'
+import SykmeldingOpplysninger from '../../components/sykmelding-opplysninger/sykmelding-opplysninger'
 import Vis from '../../components/vis'
 import { useAppStore } from '../../data/stores/app-store'
 import { Brodsmule } from '../../types/brodsmule'
+import { Sykmelding } from '../../types/sykmelding'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
@@ -34,7 +37,8 @@ const brodsmuler: Brodsmule[] = [
 ]
 
 const ReisetilskuddSide = () => {
-    const { aktivtReisetilskuddId, setAktivtReisetilskuddId, reisetilskuddene } = useAppStore()
+    const { aktivtReisetilskuddId, setAktivtReisetilskuddId,
+        reisetilskuddene, setValgtSykmelding, sykmeldinger } = useAppStore()
     const setReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState()
 
     const history = useHistory()
@@ -65,6 +69,14 @@ const ReisetilskuddSide = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ reisetilskuddene, reisetilskuddID ])
 
+    useEffect(() => {
+        // TODO: Bytt ut med valgtReisetilskudd
+        const sykmeldingId = reisetilskuddene.find(r => r.reisetilskuddId === reisetilskuddID)?.sykmeldingId
+        const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === sykmeldingId)
+        setValgtSykmelding(sykmelding)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ reisetilskuddID ])
+
     return (
         <>
             <Banner tittel={tekst('banner.sidetittel')} />
@@ -73,16 +85,25 @@ const ReisetilskuddSide = () => {
             <div className="limit">
                 <TilbakeLenke aktivtSteg={idNum} />
                 <Steg aktivtSteg={idNum} />
-                <SykmeldingPanel />
+
+                <Ekspanderbartpanel className="sykmelding-panel" tittel={
+                    <Undertittel>Opplysninger fra sykmeldingen</Undertittel>
+                }>
+                    <SykmeldingOpplysninger />
+                </Ekspanderbartpanel>
+
                 <Vis hvis={idNum === 1}>
                     <UtbetalingSide />
                 </Vis>
+
                 <Vis hvis={idNum === 2}>
                     <DagensTransportmiddel />
                 </Vis>
+
                 <Vis hvis={idNum === 3}>
                     <KvitteringsOpplasting />
                 </Vis>
+
                 <Vis hvis={idNum === 4}>
                     <OppsummeringSide />
                 </Vis>

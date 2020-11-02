@@ -1,46 +1,22 @@
-.sykmelding-panel-wrapper {
+@import '../../../node_modules/nav-frontend-core/less/_variabler';
+
+.sykmelding-panel {
     margin-bottom: 2rem;
 
-    .sykmelding-linje {
-        margin-top: -0.5rem;
-    }
-
-    .typo-normal {
-        font-weight: bold;
-    }
-}
-
-
-.sykmelding-opplysninger-wrapper {
-    display: flex;
-    flex-direction: column;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    padding-bottom: 2rem;
-
-    .soknad-tittel {
-        margin-top: 2rem;
-    }
-
-    .diagnose-wrapper {
-        margin-top: 2rem;
+    .checkedblock {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-}
+        align-items: center;
 
-@media screen and (max-width: 750px) {
-    .sykmelding-opplysninger-wrapper {
-        .diagnose-wrapper {
-            flex-direction: column;
+        .checkedikon {
+            margin: -2px 0.5rem 0 0.2rem;
         }
     }
 }
 
+.ekspanderbartPanel__innhold {
+    padding: 0 2rem 2rem;
 
-
-
-
-
-
+    .soknad-tittel {
+        margin-top: 2rem;
+    }
+}

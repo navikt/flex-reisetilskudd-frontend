@@ -2,8 +2,8 @@ import { useCallback, useMemo, useState } from 'react'
 
 import { FetchState, FetchStatus } from './utils'
 
-export interface Fetch<D = any, FP = any> extends FetchState<D> {
-    fetch: (url: string, request?: RequestInit, onFinished?: (fetchState: FetchState<D>) => void) => void;
+export interface Fetch<D = any> extends FetchState<D> {
+    fetch: (url: string, request?: any, onFinished?: (fetchState: FetchState<D>) => void) => void;
     reset: () => void;
 }
 
@@ -31,7 +31,7 @@ const createFinishedFetchState = <D = {}>(data: D | null, error: any, httpCode: 
 const useFetch = <D = {}>(): Fetch<D> => {
     const [ fetchState, setFetchState ] = useState<FetchState<D>>(createInitialFetchState())
 
-    const apiFetch = (url: string, request?: RequestInit, onFinished?: (fetchState: FetchState<D>) => void) => {
+    const apiFetch = (url: string, request?: any, onFinished?: (fetchState: FetchState<D>) => void) => {
         setFetchState(createPendingFetchState())
 
         fetch(url, request)

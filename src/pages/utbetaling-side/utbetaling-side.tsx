@@ -23,7 +23,8 @@ interface UtbetalingInterface {
 }
 
 const UtbetalingSide = () => {
-    const { activeMegArbeidsgiver, utbetalingspørsmålValidert, setUtbetalingspørsmålValidert } = useAppStore()
+    const { activeMegArbeidsgiver } = useAppStore()
+    const [ utbetalingspørsmålValidert, setUtbetalingspørsmålValidert ] = useState<boolean>()
     const [ visningsfeilmeldinger, setVisningsfeilmeldinger ] = useState<FeiloppsummeringFeil[]>([])
     const [ skalViseFeil, setSkalViseFeil ] = useState<boolean>(false)
 

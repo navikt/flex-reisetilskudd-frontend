@@ -11,8 +11,8 @@ import Vis from '../vis'
 import PeriodeTekst from './periode-tekst'
 
 // TODO: Se litt mer på denne
-const fåSykmeldingOpplysningSomInterface = (syk?: Sykmelding) : SykmeldingOpplysning | undefined => {
-    if(!syk) return undefined
+const fåSykmeldingOpplysningSomInterface = (syk?: Sykmelding): SykmeldingOpplysning | undefined => {
+    if (!syk) return undefined
     return {
         id: syk.id,
         fraDato: syk.mulighetForArbeid?.perioder[0]?.fom,
@@ -34,57 +34,52 @@ const SykmeldingOpplysninger = (): ReactElement => {
 
     const fraDato: string = vårSykmelding?.[SykmeldingOpplysningEnum.FRA_DATO] || ''
     const tilDato: string = vårSykmelding?.[SykmeldingOpplysningEnum.TIL_DATO] || ''
-    const tittelKlasseNavn = 'soknad-tittel'
 
     const visVårVerdi = (hvilkenVerdi: SykmeldingOpplysningEnum) => (
         (vårSykmelding && vårSykmelding?.[hvilkenVerdi])
-            ? <Normaltekst><CheckedIkon />{vårSykmelding?.[hvilkenVerdi]}</Normaltekst>
+            ? <Normaltekst className="checkedblock"><CheckedIkon />{vårSykmelding?.[hvilkenVerdi]}</Normaltekst>
             : <span className="sykmelding-manglende-opplysninger"> - </span>
     )
 
     return (
-        <div className="sykmelding-opplysninger-wrapper">
+        <>
             <Vis hvis={vårSykmelding !== undefined}>
-                <Element className={tittelKlasseNavn}>
+                <Element className="soknad-tittel">
                     {tekst('sykmelding.periode')}
                 </Element>
                 <PeriodeTekst fraDato={fraDato} tilDato={tilDato} />
-                <div className="diagnose-wrapper">
-                    <>
-                        <Element>
-                            {tekst('sykmelding.diagnose')}
-                        </Element>
-                        {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSE)}
-                    </>
-                    <>
-                        <Element>
-                            {tekst('sykmelding.diagnosekode')}
-                        </Element>
-                        {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSEKODE)}
-                    </>
-                </div>
 
-                <Element className={tittelKlasseNavn}>
+                <Element className="soknad-tittel">
+                    {tekst('sykmelding.diagnose')}
+                </Element>
+                {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSE)}
+
+                <Element className="soknad-tittel">
+                    {tekst('sykmelding.diagnosekode')}
+                </Element>
+                {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSEKODE)}
+
+                <Element className="soknad-tittel">
                     {tekst('sykmelding.bidiagnose')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.BI_DIAGNOSER)}
 
-                <Element className={tittelKlasseNavn}>
+                <Element className="soknad-tittel">
                     {tekst('sykmelding.reisetilskudd')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.REISETILSKUDD)}
 
-                <Element className={tittelKlasseNavn}>
+                <Element className="soknad-tittel">
                     {tekst('sykmelding.beskriv')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
 
-                <Element className={tittelKlasseNavn}>
+                <Element className="soknad-tittel">
                     {tekst('sykmelding.arbeidsgiver')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.ARBEIDSGIVER)}
 
-                <Element className={tittelKlasseNavn}>
+                <Element className="soknad-tittel">
                     {tekst('sykmelding.lege-sykmelder')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.SYKMELDER)}
@@ -94,7 +89,7 @@ const SykmeldingOpplysninger = (): ReactElement => {
                     {tekst('sykmelding.dessverre')}
                 </Normaltekst>
             </Vis>
-        </div>
+        </>
     )
 }
 

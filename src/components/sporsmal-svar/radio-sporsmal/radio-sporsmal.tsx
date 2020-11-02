@@ -18,7 +18,7 @@ const RadioSporsmal = ({ tittel, name, spørsmålstekst, svaralternativer }: Rad
     }
 
     return (
-        <div className="horisontal-radio">
+        <form className="horisontal-radio">
             <Systemtittel className="utbetaling-tittel">
                 {tittel}
             </Systemtittel>
@@ -31,7 +31,7 @@ const RadioSporsmal = ({ tittel, name, spørsmålstekst, svaralternativer }: Rad
                     skrivEndringTilGlobalState(nyVerdi)
                 }}
             />
-        </div>
+        </form>
     )
 }
 

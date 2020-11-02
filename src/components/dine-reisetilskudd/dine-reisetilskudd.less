@@ -29,13 +29,20 @@
         font-weight: 400;
     }
 
+    &:focus {
+        outline: 0;
+        box-shadow: 0 0 0 3px @fokusFarge;
+    }
+
     &:hover {
-        position: relative;
-        z-index: 100;
         box-shadow: @navLysGra 0 0 4px 2px;
 
         .reisetilskudd-chevron {
             color: @navBla;
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 2px @fokusFarge, @navGra20 0 0 3px 4px;
         }
     }
 }
