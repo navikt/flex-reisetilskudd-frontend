@@ -1,4 +1,4 @@
-import './bekreftelses-side.less'
+import './bekreft-side.less'
 
 import React, { useEffect } from 'react'
 
@@ -17,13 +17,13 @@ const brodsmuler: Brodsmule[] = [
         sti: SEPARATOR,
         erKlikkbar: true
     }, {
-        tittel: tekst('bekreftelses.sidetittel'),
+        tittel: tekst('bekreft.sidetittel'),
         sti: '/reisetilskudd',
         erKlikkbar: false
     }
 ]
 
-const BekreftelsesSide = () => {
+const BekreftSide = () => {
 
     useEffect(() => {
         setBodyClass('bekreftelses-side')
@@ -42,4 +42,4 @@ const BekreftelsesSide = () => {
     )
 }
 
-export default BekreftelsesSide
+export default BekreftSide

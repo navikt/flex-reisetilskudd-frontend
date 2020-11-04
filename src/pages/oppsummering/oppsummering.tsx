@@ -1,4 +1,4 @@
-import './oppsummering-side.less'
+import './oppsummering.less'
 
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi'
 import React from 'react'
@@ -10,7 +10,7 @@ import DagensTransportmiddel from '../../components/oppsummering/dagens-transpor
 import Utbetaling from '../../components/oppsummering/utbetaling'
 import { tekst } from '../../utils/tekster'
 
-const OppsummeringSide = () => (
+const Oppsummering = () => (
     <div className="oppsummering">
         <Systemtittel>
             {tekst('oppsummering.tittel')}
@@ -26,4 +26,4 @@ const OppsummeringSide = () => (
     </div>
 )
 
-export default OppsummeringSide
+export default Oppsummering

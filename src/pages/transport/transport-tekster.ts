@@ -1,4 +1,4 @@
-const TransportmiddelTekster: any = {
+const TransportTekster: any = {
     'nb': {
         'transportmiddel.feil-kilometer': 'Du må oppgi gyldig verdi for kilometer',
         'transportmiddel.minst-et': 'Du må velge minst et av alternativene for fremkomstmiddel',
@@ -9,4 +9,4 @@ const TransportmiddelTekster: any = {
     }, 'en': {}
 }
 
-export default TransportmiddelTekster
+export default TransportTekster

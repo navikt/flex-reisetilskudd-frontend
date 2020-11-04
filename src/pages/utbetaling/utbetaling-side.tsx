@@ -1,10 +1,12 @@
-import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema'
+import './radio-sporsmal.less'
+
+import { Feiloppsummering, FeiloppsummeringFeil, RadioPanelGruppe } from 'nav-frontend-skjema'
+import { Systemtittel } from 'nav-frontend-typografi'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
 import VidereKnapp from '../../components/klikkbar/videre-knapp'
-import RadioSpørsmålUtbetaling from '../../components/sporsmal-svar/radio-sporsmal/radio-sporsmal'
 import { utbetalingSpørsmål, utbetalingSpørsmålVerdier } from '../../components/sporsmal-svar/sporsmal-konstanter'
 import Vis from '../../components/vis'
 import { put } from '../../data/fetcher/fetcher'
@@ -23,7 +25,7 @@ interface UtbetalingInterface {
 }
 
 const UtbetalingSide = () => {
-    const { activeMegArbeidsgiver } = useAppStore()
+    const { activeMegArbeidsgiver, setActiveMegArbeidsgiver } = useAppStore()
     const [ utbetalingspørsmålValidert, setUtbetalingspørsmålValidert ] = useState<boolean>()
     const [ visningsfeilmeldinger, setVisningsfeilmeldinger ] = useState<FeiloppsummeringFeil[]>([])
     const [ skalViseFeil, setSkalViseFeil ] = useState<boolean>(false)
@@ -90,20 +92,31 @@ const UtbetalingSide = () => {
         }
     }
 
+    const skrivEndringTilGlobalState = (nyValgt: string) => {
+        if (name === utbetalingSpørsmålVerdier.NAME) {
+            setActiveMegArbeidsgiver(nyValgt)
+        }
+    }
+
     return (
-        <>
-            <RadioSpørsmålUtbetaling
-                tittel={utbetalingSpørsmål.tittel}
+        <form className="horisontal-radio" onSubmit={e => e.preventDefault()}>
+            <Systemtittel className="utbetaling-tittel">
+                {utbetalingSpørsmål.tittel}
+            </Systemtittel>
+            <RadioPanelGruppe
                 name={utbetalingSpørsmål.name}
-                spørsmålstekst={leggInnArbeidsGiverIString(utbetalingSpørsmål.spørsmålstekst)}
-                svaralternativer={byttUtSpørsmålsTekster(utbetalingSpørsmål.svaralternativer)}
-                id={utbetalingSpørsmål.id}
+                description={leggInnArbeidsGiverIString(utbetalingSpørsmål.spørsmålstekst)}
+                radios={byttUtSpørsmålsTekster(utbetalingSpørsmål.svaralternativer)}
+                checked={activeMegArbeidsgiver}
+                onChange={(_, nyVerdi) => {
+                    skrivEndringTilGlobalState(nyVerdi)
+                }}
             />
             <Vis hvis={skalViseFeil && visningsfeilmeldinger.length > 0}>
                 <Feiloppsummering tittel={tekst('utbetaling.videre')} feil={visningsfeilmeldinger} />
             </Vis>
             <VidereKnapp aktivtSteg={soknadssideIDTall} onClick={handleVidereKlikk} />
-        </>
+        </form>
     )
 }
 

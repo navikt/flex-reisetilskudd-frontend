@@ -1,4 +1,4 @@
-import './kvitterings-opplasting.less'
+import './opplasting.less'
 
 import Hjelpetekst from 'nav-frontend-hjelpetekst'
 import { Normaltekst, Systemtittel, } from 'nav-frontend-typografi'
@@ -14,7 +14,7 @@ import TotalBelop from '../../components/kvittering/total-belop/total-belop'
 import { gåTilNesteSide } from '../../utils/navigasjon'
 import { tekst } from '../../utils/tekster'
 
-const KvitteringsOpplasting = () => {
+const Opplasting = () => {
     const { soknadssideID } = useParams<RouteParams>()
     const soknadssideIDTall = Number(soknadssideID)
     const history = useHistory()
@@ -26,19 +26,19 @@ const KvitteringsOpplasting = () => {
     return (
         <div className="last-opp-kvittering-wrapper">
             <Systemtittel className="last-opp-kvittering-overskrift">
-                {tekst('kvitterings.last-opp')}
+                {tekst('opplasting.last-opp')}
             </Systemtittel>
             <div className="last-opp-kvittering-tekst">
                 <Normaltekst id="kvitteringsopplastning-overskrift"
                     aria-describedby="min-hjelpetekst-kvitteringsopplastning"
                 >
-                    {tekst('kvitterings.her-kan')}
+                    {tekst('opplasting.her-kan')}
                 </Normaltekst>
                 <Hjelpetekst className="kvitteringsopplasting-hjelpetekst"
                     id="min-hjelpetekst-kvitteringsopplastning"
                     aria-describedby="kvitteringsopplastning-overskrift"
                 >
-                    {tekst('kvitterings.hjelpetekst')}
+                    {tekst('opplasting.hjelpetekst')}
                 </Hjelpetekst>
             </div>
             <div className="filopplaster-wrapper">
@@ -56,4 +56,4 @@ const KvitteringsOpplasting = () => {
     )
 }
 
-export default KvitteringsOpplasting
+export default Opplasting

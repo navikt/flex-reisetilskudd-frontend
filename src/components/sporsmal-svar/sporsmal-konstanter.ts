@@ -1,4 +1,4 @@
-import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling-side/constants'
+import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling/constants'
 import { Transportmiddel } from '../../types/kvittering'
 import { CheckboxProps, InputProps, RadioSpørsmålProps, } from '../../types/sporsmal'
 

@@ -1,4 +1,4 @@
-import './reisetilskudd-side.less'
+import './tilskudd-side.less'
 
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 import { Undertittel } from 'nav-frontend-typografi'
@@ -19,10 +19,10 @@ import { Sykmelding } from '../../types/sykmelding'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
-import DagensTransportmiddel from '../dagens-transportmiddel/dagens-transportmiddel'
-import KvitteringsOpplasting from '../kvitterings-opplasting/kvitterings-opplasting'
-import OppsummeringSide from '../oppsummering-side/oppsummering-side'
-import UtbetalingSide from '../utbetaling-side/utbetaling-side'
+import Opplasting from '../opplasting/opplasting'
+import Oppsummering from '../oppsummering/oppsummering'
+import Transport from '../transport/transport'
+import UtbetalingSide from '../utbetaling/utbetaling-side'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -30,13 +30,13 @@ const brodsmuler: Brodsmule[] = [
         sti: SEPARATOR,
         erKlikkbar: true
     }, {
-        tittel: tekst('reisetilskudd.tittel'),
+        tittel: tekst('reisetilskudd.side.tittel'),
         sti: '/reisetilskudd',
         erKlikkbar: false
     }
 ]
 
-const ReisetilskuddSide = () => {
+const TilskuddSide = () => {
     const { aktivtReisetilskuddId, setAktivtReisetilskuddId,
         reisetilskuddene, setValgtSykmelding, sykmeldinger } = useAppStore()
     const setReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState()
@@ -97,19 +97,19 @@ const ReisetilskuddSide = () => {
                 </Vis>
 
                 <Vis hvis={idNum === 2}>
-                    <DagensTransportmiddel />
+                    <Transport />
                 </Vis>
 
                 <Vis hvis={idNum === 3}>
-                    <KvitteringsOpplasting />
+                    <Opplasting />
                 </Vis>
 
                 <Vis hvis={idNum === 4}>
-                    <OppsummeringSide />
+                    <Oppsummering />
                 </Vis>
             </div>
         </>
     )
 }
 
-export default ReisetilskuddSide
+export default TilskuddSide

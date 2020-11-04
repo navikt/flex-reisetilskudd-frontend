@@ -11,9 +11,9 @@ const VeienVidere = () => {
         <>
             <AlertStripe type="suksess">
                 <Undertittel>
-                    {tekst('bekreftelses.sendt-til')}
+                    {tekst('bekreft.sendt-til')}
                 </Undertittel>
-                {getLedetekst(tekst('bekreftelses.sendt-kl'), {
+                {getLedetekst(tekst('bekreft.sendt-kl'), {
                     '%DATO': getIDag(DatoFormat.NATURLIG_FULL),
                     '%%KL': getNåTid()
                 })}

@@ -11,10 +11,10 @@ const ListeTekster = () => {
                 <Normaltekst className="sirkel__tall">1</Normaltekst>
                 <div className="sirkel__tekst">
                     <Undertittel>
-                        {tekst('bekreftelses.sendt-inn')}
+                        {tekst('bekreft.sendt-inn')}
                     </Undertittel>
                     <Normaltekst>
-                        {tekst('bekreftelses.sendt-beskjed')}
+                        {tekst('bekreft.sendt-beskjed')}
                     </Normaltekst>
                 </div>
             </div>
@@ -23,21 +23,21 @@ const ListeTekster = () => {
                 <Normaltekst className="sirkel__tall">2</Normaltekst>
                 <div className="sirkel__tekst">
                     <Undertittel>
-                        {tekst('bekreftelses.blir-behandlet')}
+                        {tekst('bekreft.blir-behandlet')}
                     </Undertittel>
                     <Normaltekst>
-                        {tekst('bekreftelses.dekker-utgiftene')}
+                        {tekst('bekreft.dekker-utgiftene')}
                     </Normaltekst>
                 </div>
             </div>
 
             <div className="listetekst">
                 <Element tag="h3">
-                    {tekst('bekreftelses.lurer-du')}
+                    {tekst('bekreft.lurer-du')}
                 </Element>
                 <Lenke href="www.nav.no">
                     <Normaltekst tag="span">
-                        {tekst('bekreftelses.les-mer')}
+                        {tekst('bekreft.les-mer')}
                     </Normaltekst>
                 </Lenke>
             </div>

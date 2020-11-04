@@ -1,4 +1,4 @@
-import './dagens-transportmiddel.less'
+import './transport.less'
 
 import Hjelpetekst from 'nav-frontend-hjelpetekst'
 import { Feiloppsummering, FeiloppsummeringFeil } from 'nav-frontend-skjema'
@@ -33,7 +33,7 @@ interface TransportmiddelInterface {
     kollektivtransport?: number;
 }
 
-const DagensTransportmiddel = () => {
+const Transport = () => {
 
     const {
         dagensTransportMiddelEgenBilChecked,
@@ -248,4 +248,4 @@ const DagensTransportmiddel = () => {
     )
 }
 
-export default DagensTransportmiddel
+export default Transport

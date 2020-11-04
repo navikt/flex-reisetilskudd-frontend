@@ -10,18 +10,16 @@ import OppsummeringTekster from '../components/oppsummering/oppsummering-tekster
 import SporsmalTekster from '../components/sporsmal-svar/sporsmal-tekster'
 import StegTekster from '../components/steg/steg-tekster'
 import SykmeldingTekster from '../components/sykmelding-opplysninger/sykmelding-tekster'
-import BekreftelsesTekster from '../pages/bekreftelses-side/bekreftelses-tekster'
-import TransportmiddelTekster from '../pages/dagens-transportmiddel/transportmiddel-tekster'
-import KvitteringsTekster from '../pages/kvitterings-opplasting/kvitterings-tekster'
-import OppsummeringSideTekster from '../pages/oppsummering-side/oppsummering-tekster'
-import ReisetilskuddListeTekster from '../pages/reisetilskudd-liste/reisetilskudd-liste-tekster'
-import ReisetilskuddTekster from '../pages/reisetilskudd-side/reisetilskudd-tekster'
-import UtbetalingTekster from '../pages/utbetaling-side/utbetaling-tekster'
+import BekreftTekster from '../pages/bekreftelse/bekreft-tekster'
+import OpplastingTekster from '../pages/opplasting/opplasting-tekster'
+import OppsummeringSideTekster from '../pages/oppsummering/oppsummering-tekster'
+import ReisetilskuddTekster from '../pages/reisetilskudd/tilskudd-tekster'
+import Transport from '../pages/transport/transport-tekster'
+import UtbetalingTekster from '../pages/utbetaling/utbetaling-tekster'
 import { logger } from './logger'
 
 const tekster = {
     ...BannerTekster.nb,
-    ...ReisetilskuddListeTekster.nb,
     ...ReisetilskuddTekster.nb,
     ...StegTekster.nb,
     ...KlikkbarTekster.nb,
@@ -33,9 +31,9 @@ const tekster = {
     ...TotalBelopTekster.nb,
     ...OppsummeringTekster.nb,
     ...SykmeldingTekster.nb,
-    ...BekreftelsesTekster.nb,
-    ...TransportmiddelTekster.nb,
-    ...KvitteringsTekster.nb,
+    ...BekreftTekster.nb,
+    ...Transport.nb,
+    ...OpplastingTekster.nb,
     ...OppsummeringSideTekster.nb,
     ...UtbetalingTekster.nb,
     ...SporsmalTekster.nb,
