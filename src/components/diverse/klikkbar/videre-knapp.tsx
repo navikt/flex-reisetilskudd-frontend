@@ -3,8 +3,8 @@ import './klikkbar.less'
 import { Knapp } from 'nav-frontend-knapper'
 import React from 'react'
 
-import { AktivtStegProps } from '../../types'
-import { tekst } from '../../utils/tekster'
+import { AktivtStegProps } from '../../../types'
+import { tekst } from '../../../utils/tekster'
 
 const VidereKnapp = ({ onClick }: AktivtStegProps) => {
     return (

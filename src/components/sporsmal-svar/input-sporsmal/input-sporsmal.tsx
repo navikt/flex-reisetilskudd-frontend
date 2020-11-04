@@ -6,7 +6,7 @@ import React from 'react'
 
 import { InputProps } from '../../../types'
 import { tekst } from '../../../utils/tekster'
-import Vis from '../../vis'
+import Vis from '../../diverse/vis'
 import { antallKilometerSpørsmål, månedligeUtgifterSpørsmål } from '../sporsmal-konstanter'
 
 const InputSporsmal = ({ tittel, inputMode, bredde, value, onChange, id, feil }: InputProps) => (

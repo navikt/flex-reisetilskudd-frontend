@@ -4,7 +4,7 @@ import { Knapp } from 'nav-frontend-knapper'
 import React, { ReactElement } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { tekst } from '../../utils/tekster'
+import { tekst } from '../../../utils/tekster'
 
 const SendKnapp = (): ReactElement => {
     const history = useHistory()

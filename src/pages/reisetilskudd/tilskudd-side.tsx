@@ -3,15 +3,15 @@ import './tilskudd-side.less'
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 import { Undertittel } from 'nav-frontend-typografi'
 import React, { useEffect } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
-import Banner from '../../components/banner/banner'
-import Brodsmuler from '../../components/brodsmuler/brodsmuler'
-import TilbakeLenke from '../../components/klikkbar/tilbake-lenke'
+import Banner from '../../components/diverse/banner/banner'
+import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
+import TilbakeLenke from '../../components/diverse/klikkbar/tilbake-lenke'
+import Vis from '../../components/diverse/vis'
 import Steg from '../../components/steg/steg'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
-import Vis from '../../components/vis'
 import { useAppStore } from '../../data/stores/app-store'
 import { Brodsmule, Sykmelding } from '../../types'
 import { SEPARATOR } from '../../utils/constants'
@@ -20,7 +20,7 @@ import { setBodyClass } from '../../utils/utils'
 import Opplasting from '../opplasting/opplasting'
 import Oppsummering from '../oppsummering/oppsummering'
 import Transport from '../transport/transport'
-import UtbetalingSide from '../utbetaling/utbetaling-side'
+import UtbetalingSide from '../utbetaling-til/utbetaling-side'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -36,8 +36,6 @@ const brodsmuler: Brodsmule[] = [
 
 const TilskuddSide = () => {
     const { reisetilskuddene, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
-
-    const history = useHistory()
     const { stegnr, id } = useParams<RouteParams>()
     const idNum = Number(stegnr)
 
@@ -46,19 +44,12 @@ const TilskuddSide = () => {
     }, [])
 
     useEffect(() => {
-        const funnetTilskudd = reisetilskuddene?.find(
-            (reisetilskudd) => reisetilskudd.id === id
-        )
-        if (funnetTilskudd) {
-            setValgtReisetilskudd(funnetTilskudd)
-        } else if (reisetilskuddene !== undefined) {
-            history.push('/')
-        }
+        const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.id === id)
+        setValgtReisetilskudd(funnetTilskudd)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ reisetilskuddene, id ])
 
     useEffect(() => {
-        // TODO: Bytt ut med valgtReisetilskudd
         const sykmeldingId = reisetilskuddene.find(r => r.id === id)?.sykmeldingId
         const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === sykmeldingId)
         setValgtSykmelding(sykmelding)

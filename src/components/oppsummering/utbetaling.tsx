@@ -4,9 +4,9 @@ import React from 'react'
 import { useAppStore } from '../../data/stores/app-store'
 import { ArbeidsgiverInterface } from '../../types'
 import { tekst } from '../../utils/tekster'
-import { CheckedIkon } from '../checked-ikon/checked-ikon'
-import { utbetalingSpørsmålVerdier } from '../sporsmal-svar/sporsmal-konstanter'
-import Vis from '../vis'
+import { CheckedIkon } from '../diverse/checked-ikon/checked-ikon'
+import Vis from '../diverse/vis'
+import { utbetalingSporsmalVerdier } from '../sporsmal-svar/sporsmal-konstanter'
 
 const Utbetaling = () => {
     const { activeMegArbeidsgiver } = useAppStore()
@@ -21,13 +21,13 @@ const Utbetaling = () => {
             <Undertittel tag="h3">
                 {tekst('oppsummering.utbetaling.tittel')}
             </Undertittel>
-            <Vis hvis={activeMegArbeidsgiver === utbetalingSpørsmålVerdier.MEG}>
+            <Vis hvis={activeMegArbeidsgiver === utbetalingSporsmalVerdier.MEG}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {tekst('oppsummering.utbetaling.undertittel')}
                 </Normaltekst>
             </Vis>
-            <Vis hvis={activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER}>
+            <Vis hvis={activeMegArbeidsgiver === utbetalingSporsmalVerdier.ARBEIDSGIVER}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {`Pengene skal utbetales til ${getArbeidsgiver().navn} (org.nr. ${getArbeidsgiver().orgNr}).`}

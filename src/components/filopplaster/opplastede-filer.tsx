@@ -5,7 +5,7 @@ import React from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
 import { Kvittering } from '../../types'
-import Vis from '../vis'
+import Vis from '../diverse/vis'
 import FilMedInfo from './fil-med-info/fil-med-info'
 
 interface Props {

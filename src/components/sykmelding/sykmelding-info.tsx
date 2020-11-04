@@ -6,8 +6,8 @@ import React, { ReactElement } from 'react'
 import { useAppStore } from '../../data/stores/app-store'
 import { Sykmelding, SykmeldingOpplysning, SykmeldingOpplysningEnum } from '../../types'
 import { tekst } from '../../utils/tekster'
-import { CheckedIkon } from '../checked-ikon/checked-ikon'
-import Vis from '../vis'
+import { CheckedIkon } from '../diverse/checked-ikon/checked-ikon'
+import Vis from '../diverse/vis'
 import PeriodeTekst from './periode-tekst'
 
 // TODO: Se litt mer på denne

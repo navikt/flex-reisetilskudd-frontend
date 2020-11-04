@@ -6,9 +6,9 @@ import { Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { AktivtStegProps } from '../../types'
-import { pathTilSide } from '../../utils/navigasjon'
-import { tekst } from '../../utils/tekster'
+import { AktivtStegProps } from '../../../types'
+import { pathTilSide } from '../../../utils/navigasjon'
+import { tekst } from '../../../utils/tekster'
 import Vis from '../vis'
 
 function TilbakeLenke({ aktivtSteg }: AktivtStegProps): ReactElement {

@@ -6,8 +6,8 @@ import { Normaltekst } from 'nav-frontend-typografi'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Brodsmule } from '../../types'
-import env from '../../utils/environment'
+import { Brodsmule } from '../../../types'
+import env from '../../../utils/environment'
 import Vis from '../vis'
 import personIkon from './person.svg'
 

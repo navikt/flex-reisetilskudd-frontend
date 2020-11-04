@@ -1,26 +1,26 @@
-import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling/constants'
+import { arbeidsgiverNavnPlaceHolder, arbeidsgiverOrgNrPlaceHolder } from '../../pages/utbetaling-til/constants'
 import { Transportmiddel } from '../../types'
-import { CheckboxProps, InputProps, RadioSpørsmålProps, } from '../../types'
+import { CheckboxProps, InputProps, RadioSporsmalProps, } from '../../types'
 
-export const utbetalingSpørsmålVerdier = {
+export const utbetalingSporsmalVerdier = {
     NAME: 'UTBETALINGARBEIDSGIVER',
     MEG: 'MEG',
     ARBEIDSGIVER: 'ARBEIDSGIVER',
 }
 
-export const utbetalingSpørsmål: RadioSpørsmålProps = {
+export const utbetalingSporsmal: RadioSporsmalProps = {
     tittel: 'Utbetaling til arbeidsgiver',
-    name: utbetalingSpørsmålVerdier.NAME,
+    name: utbetalingSporsmalVerdier.NAME,
     spørsmålstekst: `Skal reisetilskuddet utbetales til deg eller til ${arbeidsgiverNavnPlaceHolder} (org.nr. ${arbeidsgiverOrgNrPlaceHolder})?`,
     svaralternativer: [
         {
             label: 'Meg',
-            value: utbetalingSpørsmålVerdier.MEG,
+            value: utbetalingSporsmalVerdier.MEG,
             id: 'utbetaling-meg',
         },
         {
             label: `${arbeidsgiverNavnPlaceHolder}`,
-            value: utbetalingSpørsmålVerdier.ARBEIDSGIVER,
+            value: utbetalingSporsmalVerdier.ARBEIDSGIVER,
             id: 'utbetaling-arbeidsgiver',
         },
     ],

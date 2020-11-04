@@ -22,7 +22,8 @@ import { logger } from '../../../utils/logger'
 import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
 import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering'
 import { tekst } from '../../../utils/tekster'
-import FeilListe from '../../feil-liste'
+import FeilListe from '../../diverse/feil-liste'
+import Vis from '../../diverse/vis'
 import Datovelger from '../../kvittering/datovelger/datovelger'
 import TransportmiddelKvittering from '../../kvittering/transportmiddel-kvittering'
 import {
@@ -30,7 +31,6 @@ import {
     kvitteringTotaltBeløpSpørsmål,
     kvitteringTransportmiddelSpørsmål,
 } from '../../sporsmal-svar/sporsmal-konstanter'
-import Vis from '../../vis'
 import Fil from '../fil/fil'
 
 const FilopplasterModal = () => {

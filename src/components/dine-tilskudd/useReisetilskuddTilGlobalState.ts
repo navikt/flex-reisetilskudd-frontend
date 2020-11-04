@@ -1,7 +1,7 @@
 import { useAppStore } from '../../data/stores/app-store'
 import { Reisetilskudd } from '../../types'
 import { validerTall } from '../../utils/skjemavalidering'
-import { utbetalingSpørsmålVerdier } from '../sporsmal-svar/sporsmal-konstanter'
+import { utbetalingSporsmalVerdier } from '../sporsmal-svar/sporsmal-konstanter'
 
 const useReisetilskuddTilGlobalState = (): (reisetilskudd: Reisetilskudd) => void => {
     const {
@@ -17,9 +17,9 @@ const useReisetilskuddTilGlobalState = (): (reisetilskudd: Reisetilskudd) => voi
 
     return (valgtReisetilskudd: Reisetilskudd) => {
         if (valgtReisetilskudd.utbetalingTilArbeidsgiver === true) {
-            setActiveMegArbeidsgiver(utbetalingSpørsmålVerdier.ARBEIDSGIVER)
+            setActiveMegArbeidsgiver(utbetalingSporsmalVerdier.ARBEIDSGIVER)
         } else if (valgtReisetilskudd.utbetalingTilArbeidsgiver === false) {
-            setActiveMegArbeidsgiver(utbetalingSpørsmålVerdier.MEG)
+            setActiveMegArbeidsgiver(utbetalingSporsmalVerdier.MEG)
         } else if (valgtReisetilskudd.utbetalingTilArbeidsgiver === undefined) {
             setActiveMegArbeidsgiver('')
         }

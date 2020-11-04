@@ -11,7 +11,7 @@ import env from '../../../utils/environment'
 import { customTruncet,formaterFilstørrelse } from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
 import { tekst } from '../../../utils/tekster'
-import Vis from '../../vis'
+import Vis from '../../diverse/vis'
 import vedlegg from '../fil/vedlegg.svg'
 import slettFilIkon from './slett-fil-ikon.svg'
 

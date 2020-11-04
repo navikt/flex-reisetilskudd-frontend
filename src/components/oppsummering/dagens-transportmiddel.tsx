@@ -3,8 +3,8 @@ import React from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../utils/tekster'
-import { CheckedIkon } from '../checked-ikon/checked-ikon'
-import Vis from '../vis'
+import { CheckedIkon } from '../diverse/checked-ikon/checked-ikon'
+import Vis from '../diverse/vis'
 
 const DagensTransportmiddel = () => {
     const {

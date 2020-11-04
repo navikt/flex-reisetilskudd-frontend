@@ -66,7 +66,7 @@ export interface Svaralternativ {
     value: string,
 }
 
-export interface RadioSpørsmålProps {
+export interface RadioSporsmalProps {
     id: string,
     tittel: string,
     name: string,

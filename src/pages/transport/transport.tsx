@@ -7,7 +7,8 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
-import VidereKnapp from '../../components/klikkbar/videre-knapp'
+import VidereKnapp from '../../components/diverse/klikkbar/videre-knapp'
+import Vis from '../../components/diverse/vis'
 import CheckboxSvar from '../../components/sporsmal-svar/checkbox-svar/checkbox-svar'
 import InputSporsmal from '../../components/sporsmal-svar/input-sporsmal/input-sporsmal'
 import {
@@ -16,7 +17,6 @@ import {
     transportalternativer,
     transportalternativerKollektivt,
 } from '../../components/sporsmal-svar/sporsmal-konstanter'
-import Vis from '../../components/vis'
 import { put } from '../../data/fetcher/fetcher'
 import { useAppStore } from '../../data/stores/app-store'
 import env from '../../utils/environment'

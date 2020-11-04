@@ -7,7 +7,7 @@ import { Element } from 'nav-frontend-typografi'
 import React, { ReactNode } from 'react'
 import Flatpickr from 'react-flatpickr'
 
-import Vis from '../../vis'
+import Vis from '../../diverse/vis'
 
 interface Props {
     label?: ReactNode;

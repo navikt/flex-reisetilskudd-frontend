@@ -2,8 +2,8 @@ import './bekreft-side.less'
 
 import React, { useEffect } from 'react'
 
-import Banner from '../../components/banner/banner'
-import Brodsmuler from '../../components/brodsmuler/brodsmuler'
+import Banner from '../../components/diverse/banner/banner'
+import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import { Brodsmule } from '../../types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'

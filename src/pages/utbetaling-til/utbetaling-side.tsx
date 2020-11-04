@@ -6,9 +6,9 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
-import VidereKnapp from '../../components/klikkbar/videre-knapp'
-import { utbetalingSpørsmål, utbetalingSpørsmålVerdier } from '../../components/sporsmal-svar/sporsmal-konstanter'
-import Vis from '../../components/vis'
+import VidereKnapp from '../../components/diverse/klikkbar/videre-knapp'
+import Vis from '../../components/diverse/vis'
+import { utbetalingSporsmal, utbetalingSporsmalVerdier } from '../../components/sporsmal-svar/sporsmal-konstanter'
 import { put } from '../../data/fetcher/fetcher'
 import { useAppStore } from '../../data/stores/app-store'
 import { ArbeidsgiverInterface, Svaralternativ } from '../../types'
@@ -53,7 +53,7 @@ const UtbetalingSide = () => {
         if (activeMegArbeidsgiver === '') {
             return [
                 {
-                    skjemaelementId: utbetalingSpørsmål.svaralternativer[0].id,
+                    skjemaelementId: utbetalingSporsmal.svaralternativer[0].id,
                     feilmelding: tekst('utbetaling.feil-alternativ'),
                 },
             ]
@@ -80,7 +80,7 @@ const UtbetalingSide = () => {
         if (utbetalingspørsmålValidert) {
             put<UtbetalingInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${id}`, {
                 reisetilskuddId: id,
-                utbetalingTilArbeidsgiver: activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER,
+                utbetalingTilArbeidsgiver: activeMegArbeidsgiver === utbetalingSporsmalVerdier.ARBEIDSGIVER,
             }).then(() => {
                 gåTilNesteSide(history, soknadssideIDTall)
             }).catch((error) => {
@@ -92,7 +92,7 @@ const UtbetalingSide = () => {
     }
 
     const skrivEndringTilGlobalState = (nyValgt: string) => {
-        if (name === utbetalingSpørsmålVerdier.NAME) {
+        if (name === utbetalingSporsmalVerdier.NAME) {
             setActiveMegArbeidsgiver(nyValgt)
         }
     }
@@ -100,12 +100,12 @@ const UtbetalingSide = () => {
     return (
         <form className="horisontal-radio" onSubmit={e => e.preventDefault()}>
             <Systemtittel className="utbetaling-tittel">
-                {utbetalingSpørsmål.tittel}
+                {utbetalingSporsmal.tittel}
             </Systemtittel>
             <RadioPanelGruppe
-                name={utbetalingSpørsmål.name}
-                description={leggInnArbeidsGiverIString(utbetalingSpørsmål.spørsmålstekst)}
-                radios={byttUtSpørsmålsTekster(utbetalingSpørsmål.svaralternativer)}
+                name={utbetalingSporsmal.name}
+                description={leggInnArbeidsGiverIString(utbetalingSporsmal.spørsmålstekst)}
+                radios={byttUtSpørsmålsTekster(utbetalingSporsmal.svaralternativer)}
                 checked={activeMegArbeidsgiver}
                 onChange={(_, nyVerdi) => {
                     skrivEndringTilGlobalState(nyVerdi)
