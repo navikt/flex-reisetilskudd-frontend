@@ -25,7 +25,7 @@ const DineReisetilskudd = ({ reisetilskudd }: Props) => {
             onClick={() => settReisetilskuddTilGlobalState(reisetilskudd)}
         >
             <div className="reisetilskudd-ikon">
-                <SoknadsIkon />
+                <img src={SoknadsIkon} alt="" />
             </div>
             <div className="reisetilskudd-innhold">
                 <Systemtittel className="reisetilskudd-innhold-tittel">
