@@ -5,11 +5,11 @@ import { Element, Systemtittel } from 'nav-frontend-typografi'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { SøknadsIkon } from '../../assets/ikoner'
 import { Reisetilskudd } from '../../types'
 import { DatoFormat, formatertDato } from '../../utils/dato'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import Vis from '../vis'
+import SoknadsIkon from './soknads-ikon.svg'
 import useReisetilskuddTilGlobalState from './useReisetilskuddTilGlobalState'
 
 interface Props {
@@ -25,7 +25,7 @@ const DineReisetilskudd = ({ reisetilskudd }: Props) => {
             onClick={() => settReisetilskuddTilGlobalState(reisetilskudd)}
         >
             <div className="reisetilskudd-ikon">
-                <SøknadsIkon />
+                <SoknadsIkon />
             </div>
             <div className="reisetilskudd-innhold">
                 <Systemtittel className="reisetilskudd-innhold-tittel">

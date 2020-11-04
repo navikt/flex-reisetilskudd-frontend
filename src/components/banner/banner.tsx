@@ -3,8 +3,8 @@ import './banner.less'
 import { Systemtittel } from 'nav-frontend-typografi'
 import React from 'react'
 
-import busImg from '../../assets/buss.png'
-import treImg from '../../assets/tre.png'
+import busImg from './buss.png'
+import treImg from './tre.png'
 
 interface BannerProps {
     tittel: string;

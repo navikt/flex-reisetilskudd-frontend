@@ -3,7 +3,6 @@ import './fil-med-info.less'
 import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React from 'react'
 
-import vedlegg from '../../../assets/vedlegg.svg'
 import { del } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
 import { Kvittering } from '../../../types'
@@ -13,6 +12,7 @@ import { customTruncet,formaterFilstørrelse } from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
 import { tekst } from '../../../utils/tekster'
 import Vis from '../../vis'
+import vedlegg from '../fil/vedlegg.svg'
 import slettFilIkon from './slett-fil-ikon.svg'
 
 interface Props {

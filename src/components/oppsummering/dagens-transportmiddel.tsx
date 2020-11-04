@@ -1,9 +1,9 @@
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import React from 'react'
 
-import { CheckedIkon } from '../../assets/ikoner'
 import { useAppStore } from '../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../utils/tekster'
+import { CheckedIkon } from '../checked-ikon/checked-ikon'
 import Vis from '../vis'
 
 const DagensTransportmiddel = () => {

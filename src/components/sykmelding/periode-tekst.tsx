@@ -1,9 +1,9 @@
 import { Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
-import { CheckedIkon } from '../../assets/ikoner'
 import { DatoFormat, formatertDato } from '../../utils/dato'
 import { getLedetekst, tekst } from '../../utils/tekster'
+import { CheckedIkon } from '../checked-ikon/checked-ikon'
 import Vis from '../vis'
 
 interface PeriodeTekstProps {

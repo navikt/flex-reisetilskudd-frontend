@@ -3,10 +3,10 @@ import './sykmelding-info.less'
 import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
-import { CheckedIkon } from '../../assets/ikoner'
 import { useAppStore } from '../../data/stores/app-store'
 import { Sykmelding, SykmeldingOpplysning, SykmeldingOpplysningEnum } from '../../types'
 import { tekst } from '../../utils/tekster'
+import { CheckedIkon } from '../checked-ikon/checked-ikon'
 import Vis from '../vis'
 import PeriodeTekst from './periode-tekst'
 

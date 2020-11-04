@@ -4,9 +4,9 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper'
 import { Normaltekst } from 'nav-frontend-typografi'
 import React from 'react'
 
-import vedlegg from '../../../assets/vedlegg.svg'
 import { customTruncet, formaterFilstørrelse } from '../../../utils/fil-utils'
 import { tekst } from '../../../utils/tekster'
+import vedlegg from './vedlegg.svg'
 
 interface Props {
     fil: File | null;
