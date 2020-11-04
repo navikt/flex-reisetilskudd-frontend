@@ -12,13 +12,10 @@ const useReisetilskuddTilGlobalState = (): (reisetilskudd: Reisetilskudd) => voi
         setDagensTransportMiddelKollektivChecked,
         setMånedligeUtgifterState,
         setAntallKilometerState,
-        setAktivtReisetilskuddId,
         setKvitteringer,
     } = useAppStore()
 
     return (valgtReisetilskudd: Reisetilskudd) => {
-        setAktivtReisetilskuddId(valgtReisetilskudd.reisetilskuddId)
-
         if (valgtReisetilskudd.utbetalingTilArbeidsgiver === true) {
             setActiveMegArbeidsgiver(utbetalingSpørsmålVerdier.ARBEIDSGIVER)
         } else if (valgtReisetilskudd.utbetalingTilArbeidsgiver === false) {

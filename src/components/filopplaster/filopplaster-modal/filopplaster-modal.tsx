@@ -43,7 +43,7 @@ const FilopplasterModal = () => {
         valgtSykmelding
     } = useAppStore()
 
-    const { reisetilskuddID } = useParams<RouteParams>()
+    const { id } = useParams<RouteParams>()
     const [ laster, setLaster ] = useState<boolean>(false)
     const [ dato, setDato ] = useState<Date | null>(null)
     const [ beløp, setBeløp ] = useState<string>('')
@@ -158,7 +158,7 @@ const FilopplasterModal = () => {
                 .then((response) => {
                     if (response.parsedBody?.id) {
                         const kvittering: Kvittering = {
-                            reisetilskuddId: reisetilskuddID,
+                            reisetilskuddId: id,
                             navn: fil.name,
                             storrelse: fil.size,
                             belop: parsedBeløp,

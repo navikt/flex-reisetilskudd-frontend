@@ -13,7 +13,7 @@ import VeienVidere from './veien-videre'
 
 const brodsmuler: Brodsmule[] = [
     {
-        tittel: tekst('reisetilskudd_liste.tittel'),
+        tittel: tekst('tilskudd.liste.tittel'),
         sti: SEPARATOR,
         erKlikkbar: true
     }, {

@@ -16,7 +16,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
         kollektivtransport: 0,
         egenBil: 0,
 
-        reisetilskuddId: '28fa10b8-c9af-4a7a-a0b2-90caed65ab4c',
+        id: '28fa10b8-c9af-4a7a-a0b2-90caed65ab4c',
         sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
         kvitteringer: [],
@@ -34,7 +34,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
         kollektivtransport: 0,
         egenBil: 13,
 
-        reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
+        id: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
         sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
         kvitteringer: [],
@@ -52,7 +52,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
         kollektivtransport: 2,
         egenBil: 1,
 
-        reisetilskuddId: '1ajsdlkajlsdkjalksjdlkajd',
+        id: '1ajsdlkajlsdkjalksjdlkajd',
         sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
         kvitteringer: [],
@@ -70,7 +70,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
         kollektivtransport: 2,
         egenBil: 1,
 
-        reisetilskuddId: '1ajsdlkajlsdkjalksjdlkajd',
+        id: '1ajsdlkajlsdkjalksjdlkajd',
         sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
         kvitteringer: [],

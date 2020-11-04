@@ -29,8 +29,8 @@ const UtbetalingSide = () => {
     const [ visningsfeilmeldinger, setVisningsfeilmeldinger ] = useState<FeiloppsummeringFeil[]>([])
     const [ skalViseFeil, setSkalViseFeil ] = useState<boolean>(false)
 
-    const { soknadssideID, reisetilskuddID } = useParams<RouteParams>()
-    const soknadssideIDTall = Number(soknadssideID)
+    const { stegnr, id } = useParams<RouteParams>()
+    const soknadssideIDTall = Number(stegnr)
     const getArbeidsgiver = (): ArbeidsgiverInterface => ({
         navn: 'Arbeids- og velferdsetaten',
         orgNr: '392392482849',
@@ -78,8 +78,8 @@ const UtbetalingSide = () => {
 
     const handleVidereKlikk = () => {
         if (utbetalingspørsmålValidert) {
-            put<UtbetalingInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${reisetilskuddID}`, {
-                reisetilskuddId: reisetilskuddID,
+            put<UtbetalingInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${id}`, {
+                reisetilskuddId: id,
                 utbetalingTilArbeidsgiver: activeMegArbeidsgiver === utbetalingSpørsmålVerdier.ARBEIDSGIVER,
             }).then(() => {
                 gåTilNesteSide(history, soknadssideIDTall)

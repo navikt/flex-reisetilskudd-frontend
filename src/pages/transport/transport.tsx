@@ -26,7 +26,7 @@ import { validerKroner, validerNumerisk } from '../../utils/skjemavalidering'
 import { tekst } from '../../utils/tekster'
 
 interface TransportmiddelInterface {
-    reisetilskuddId: string;
+    id: string;
     går?: boolean;
     sykler?: boolean;
     egenBil?: number;
@@ -50,8 +50,8 @@ const Transport = () => {
     const [ skalViseKilometerFeil, setSkalViseKilometerFeil ] = useState<boolean>(false)
     const [ skalViseMånedligeUtgifterFeil, setSkalViseMånedligeUtgifterFeil ] = useState<boolean>(false)
 
-    const { soknadssideID, reisetilskuddID } = useParams<RouteParams>()
-    const soknadssideIDTall = Number(soknadssideID)
+    const { stegnr, id } = useParams<RouteParams>()
+    const soknadssideIDTall = Number(stegnr)
 
     const history = useHistory()
 
@@ -173,8 +173,8 @@ const Transport = () => {
     ])
 
     const handleVidereKlikk = () => {
-        put<TransportmiddelInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${reisetilskuddID}`, {
-            reisetilskuddId: reisetilskuddID,
+        put<TransportmiddelInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${id}`, {
+            reisetilskuddId: id,
             går: dagensTransportMiddelGårChecked,
             sykler: dagensTransportMiddelSyklerChecked,
             egenBil: parseFloat(antallKilometerState),

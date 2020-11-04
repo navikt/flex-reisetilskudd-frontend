@@ -7,7 +7,7 @@ import mockKvitteringer from '../mock/data/kvitteringer'
 export const [ AppStoreProvider, useAppStore ] = constate(() => {
     /* GENERELT */
     const [ reisetilskuddene, setReisetilskuddene ] = useState<Reisetilskudd[]>([])
-    const [ aktivtReisetilskuddId, setAktivtReisetilskuddId ] = useState<string>()
+    const [ valgtReisetilskudd, setValgtReisetilskudd ] = useState<Reisetilskudd>()
     const [ sykmeldinger, setSykmeldinger ] = useState<Sykmelding[]>([])
     const [ valgtSykmelding, setValgtSykmelding ] = useState<Sykmelding>()
 
@@ -33,7 +33,7 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
     return {
         /* GENERELT */
         reisetilskuddene, setReisetilskuddene,
-        aktivtReisetilskuddId, setAktivtReisetilskuddId,
+        valgtReisetilskudd, setValgtReisetilskudd,
         sykmeldinger, setSykmeldinger,
         valgtSykmelding, setValgtSykmelding,
 

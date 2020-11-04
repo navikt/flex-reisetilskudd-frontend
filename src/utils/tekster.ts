@@ -1,5 +1,4 @@
 import BannerTekster from '../components/banner/banner-tekster'
-import DineTilskuddTekster from '../components/dine-tilskudd/dine-tilskudd-tekster'
 import DragAndDropTekster from '../components/filopplaster/drag-and-drop/drag-and-drop-tekster'
 import FilMedInfoTekster from '../components/filopplaster/fil-med-info/fil-med-info-tekster'
 import FilTekster from '../components/filopplaster/fil/fil-tekster'
@@ -23,7 +22,6 @@ const tekster = {
     ...ReisetilskuddTekster.nb,
     ...StegTekster.nb,
     ...KlikkbarTekster.nb,
-    ...DineTilskuddTekster.nb,
     ...DragAndDropTekster.nb,
     ...FilTekster.nb,
     ...FilMedInfoTekster.nb,

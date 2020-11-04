@@ -8,7 +8,6 @@ import { useHistory, useParams } from 'react-router-dom'
 import { RouteParams } from '../../app'
 import Banner from '../../components/banner/banner'
 import Brodsmuler from '../../components/brodsmuler/brodsmuler'
-import useReisetilskuddTilGlobalState from '../../components/dine-tilskudd/useReisetilskuddTilGlobalState'
 import TilbakeLenke from '../../components/klikkbar/tilbake-lenke'
 import Steg from '../../components/steg/steg'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
@@ -25,56 +24,46 @@ import UtbetalingSide from '../utbetaling/utbetaling-side'
 
 const brodsmuler: Brodsmule[] = [
     {
-        tittel: tekst('reisetilskudd_liste.tittel'),
+        tittel: tekst('tilskudd.liste.tittel'),
         sti: SEPARATOR,
         erKlikkbar: true
     }, {
-        tittel: tekst('reisetilskudd.side.tittel'),
+        tittel: tekst('tilskudd.side.tittel'),
         sti: '/reisetilskudd',
         erKlikkbar: false
     }
 ]
 
 const TilskuddSide = () => {
-    const { aktivtReisetilskuddId, setAktivtReisetilskuddId,
-        reisetilskuddene, setValgtSykmelding, sykmeldinger } = useAppStore()
-    const setReisetilskuddTilGlobalState = useReisetilskuddTilGlobalState()
+    const { reisetilskuddene, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
 
     const history = useHistory()
-    const { soknadssideID, reisetilskuddID } = useParams<RouteParams>()
-    const idNum = Number(soknadssideID)
+    const { stegnr, id } = useParams<RouteParams>()
+    const idNum = Number(stegnr)
 
     useEffect(() => {
         setBodyClass('reisetilskudd-side')
     }, [])
 
     useEffect(() => {
-        if (aktivtReisetilskuddId !== reisetilskuddID) {
-            setAktivtReisetilskuddId(reisetilskuddID)
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ aktivtReisetilskuddId, reisetilskuddID ])
-
-    useEffect(() => {
-        const eksisterendeReisetilskudd = reisetilskuddene?.find(
-            (reisetilskudd) => reisetilskudd.reisetilskuddId === reisetilskuddID
+        const funnetTilskudd = reisetilskuddene?.find(
+            (reisetilskudd) => reisetilskudd.id === id
         )
-        if (eksisterendeReisetilskudd) {
-            setAktivtReisetilskuddId(reisetilskuddID)
-            setReisetilskuddTilGlobalState(eksisterendeReisetilskudd)
+        if (funnetTilskudd) {
+            setValgtReisetilskudd(funnetTilskudd)
         } else if (reisetilskuddene !== undefined) {
             history.push('/')
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ reisetilskuddene, reisetilskuddID ])
+    }, [ reisetilskuddene, id ])
 
     useEffect(() => {
         // TODO: Bytt ut med valgtReisetilskudd
-        const sykmeldingId = reisetilskuddene.find(r => r.reisetilskuddId === reisetilskuddID)?.sykmeldingId
+        const sykmeldingId = reisetilskuddene.find(r => r.id === id)?.sykmeldingId
         const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === sykmeldingId)
         setValgtSykmelding(sykmelding)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ reisetilskuddID ])
+    }, [ id ])
 
     return (
         <>
