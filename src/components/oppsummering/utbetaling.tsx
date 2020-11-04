@@ -3,7 +3,7 @@ import React from 'react'
 
 import { CheckedIkon } from '../../assets/ikoner'
 import { useAppStore } from '../../data/stores/app-store'
-import { ArbeidsgiverInterface } from '../../types/arbeidsgiver'
+import { ArbeidsgiverInterface } from '../../types'
 import { tekst } from '../../utils/tekster'
 import { utbetalingSpørsmålVerdier } from '../sporsmal-svar/sporsmal-konstanter'
 import Vis from '../vis'

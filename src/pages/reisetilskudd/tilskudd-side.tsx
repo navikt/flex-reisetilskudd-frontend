@@ -8,14 +8,13 @@ import { useHistory, useParams } from 'react-router-dom'
 import { RouteParams } from '../../app'
 import Banner from '../../components/banner/banner'
 import Brodsmuler from '../../components/brodsmuler/brodsmuler'
-import useReisetilskuddTilGlobalState from '../../components/dine-reisetilskudd/useReisetilskuddTilGlobalState'
+import useReisetilskuddTilGlobalState from '../../components/dine-tilskudd/useReisetilskuddTilGlobalState'
 import TilbakeLenke from '../../components/klikkbar/tilbake-lenke'
 import Steg from '../../components/steg/steg'
-import SykmeldingOpplysninger from '../../components/sykmelding-opplysninger/sykmelding-opplysninger'
+import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import Vis from '../../components/vis'
 import { useAppStore } from '../../data/stores/app-store'
-import { Brodsmule } from '../../types/brodsmule'
-import { Sykmelding } from '../../types/sykmelding'
+import { Brodsmule, Sykmelding } from '../../types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
@@ -89,7 +88,7 @@ const TilskuddSide = () => {
                 <Ekspanderbartpanel className="sykmelding-panel" tittel={
                     <Undertittel>Opplysninger fra sykmeldingen</Undertittel>
                 }>
-                    <SykmeldingOpplysninger />
+                    <SykmeldingInfo />
                 </Ekspanderbartpanel>
 
                 <Vis hvis={idNum === 1}>

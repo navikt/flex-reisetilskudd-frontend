@@ -4,7 +4,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst'
 import { Input } from 'nav-frontend-skjema'
 import React from 'react'
 
-import { InputProps } from '../../../types/sporsmal'
+import { InputProps } from '../../../types'
 import { tekst } from '../../../utils/tekster'
 import Vis from '../../vis'
 import { antallKilometerSpørsmål, månedligeUtgifterSpørsmål } from '../sporsmal-konstanter'

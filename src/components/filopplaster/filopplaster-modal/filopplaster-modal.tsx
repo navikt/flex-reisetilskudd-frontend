@@ -15,7 +15,7 @@ import { useAppStore } from '../../../data/stores/app-store'
 import {
     Kvittering, OpplastetKvittering, Transportmiddel,
     TransportmiddelAlternativer,
-} from '../../../types/kvittering'
+} from '../../../types'
 import { DatoFormat, formatertDato, getIDag } from '../../../utils/dato'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'

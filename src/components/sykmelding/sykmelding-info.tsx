@@ -1,11 +1,11 @@
-import './sykmelding-opplysninger.less'
+import './sykmelding-info.less'
 
 import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
 import { CheckedIkon } from '../../assets/ikoner'
 import { useAppStore } from '../../data/stores/app-store'
-import { Sykmelding, SykmeldingOpplysning, SykmeldingOpplysningEnum } from '../../types/sykmelding'
+import { Sykmelding, SykmeldingOpplysning, SykmeldingOpplysningEnum } from '../../types'
 import { tekst } from '../../utils/tekster'
 import Vis from '../vis'
 import PeriodeTekst from './periode-tekst'
@@ -28,7 +28,7 @@ const fåSykmeldingOpplysningSomInterface = (syk?: Sykmelding): SykmeldingOpplys
     }
 }
 
-const SykmeldingOpplysninger = (): ReactElement => {
+const SykmeldingInfo = (): ReactElement => {
     const { valgtSykmelding } = useAppStore()
     const vårSykmelding = fåSykmeldingOpplysningSomInterface(valgtSykmelding)
 
@@ -93,4 +93,4 @@ const SykmeldingOpplysninger = (): ReactElement => {
     )
 }
 
-export default SykmeldingOpplysninger
+export default SykmeldingInfo

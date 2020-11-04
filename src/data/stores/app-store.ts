@@ -1,9 +1,7 @@
 import constate from 'constate'
 import { useState } from 'react'
 
-import { Kvittering, TransportmiddelAlternativer } from '../../types/kvittering'
-import { Reisetilskudd } from '../../types/reisetilskudd'
-import { Sykmelding } from '../../types/sykmelding'
+import { Kvittering, Reisetilskudd, Sykmelding,TransportmiddelAlternativer } from '../../types'
 import mockKvitteringer from '../mock/data/kvitteringer'
 
 export const [ AppStoreProvider, useAppStore ] = constate(() => {

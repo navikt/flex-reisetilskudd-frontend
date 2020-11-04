@@ -1,5 +1,5 @@
 import BannerTekster from '../components/banner/banner-tekster'
-import DineReisetilskuddTekster from '../components/dine-reisetilskudd/dine-reisetilskudd-tekster'
+import DineTilskuddTekster from '../components/dine-tilskudd/dine-tilskudd-tekster'
 import DragAndDropTekster from '../components/filopplaster/drag-and-drop/drag-and-drop-tekster'
 import FilMedInfoTekster from '../components/filopplaster/fil-med-info/fil-med-info-tekster'
 import FilTekster from '../components/filopplaster/fil/fil-tekster'
@@ -9,7 +9,7 @@ import TotalBelopTekster from '../components/kvittering/total-belop/total-belop-
 import OppsummeringTekster from '../components/oppsummering/oppsummering-tekster'
 import SporsmalTekster from '../components/sporsmal-svar/sporsmal-tekster'
 import StegTekster from '../components/steg/steg-tekster'
-import SykmeldingTekster from '../components/sykmelding-opplysninger/sykmelding-tekster'
+import SykmeldingTekster from '../components/sykmelding/sykmelding-tekster'
 import BekreftTekster from '../pages/bekreftelse/bekreft-tekster'
 import OpplastingTekster from '../pages/opplasting/opplasting-tekster'
 import OppsummeringSideTekster from '../pages/oppsummering/oppsummering-tekster'
@@ -23,7 +23,7 @@ const tekster = {
     ...ReisetilskuddTekster.nb,
     ...StegTekster.nb,
     ...KlikkbarTekster.nb,
-    ...DineReisetilskuddTekster.nb,
+    ...DineTilskuddTekster.nb,
     ...DragAndDropTekster.nb,
     ...FilTekster.nb,
     ...FilMedInfoTekster.nb,

@@ -1,4 +1,4 @@
-import './dine-reisetilskudd.less'
+import './dine-tilskudd.less'
 
 import { HoyreChevron } from 'nav-frontend-chevron'
 import { Element, Systemtittel } from 'nav-frontend-typografi'
@@ -6,7 +6,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { SøknadsIkon } from '../../assets/ikoner'
-import { Reisetilskudd } from '../../types/reisetilskudd'
+import { Reisetilskudd } from '../../types'
 import { DatoFormat, formatertDato } from '../../utils/dato'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import Vis from '../vis'
@@ -29,18 +29,18 @@ const DineReisetilskudd = ({ reisetilskudd }: Props) => {
             </div>
             <div className="reisetilskudd-innhold">
                 <Systemtittel className="reisetilskudd-innhold-tittel">
-                    {tekst('dine_reisetilskudd.tittel')}
+                    {tekst('dine.tilskudd.tittel')}
                 </Systemtittel>
                 <Vis hvis={reisetilskudd.fom && reisetilskudd.tom}>
                     <Element className="reisetilskudd-periode">
-                        {getLedetekst(tekst('dine_reisetilskudd.periode'), {
+                        {getLedetekst(tekst('dine.tilskudd.periode'), {
                             '%FOM%': reisetilskudd.fom ? formatertDato(reisetilskudd.fom, DatoFormat.NATURLIG_LANG) : '',
                             '%TOM%': reisetilskudd.tom ? formatertDato(reisetilskudd.tom, DatoFormat.NATURLIG_LANG) : ''
                         })}
                     </Element>
                 </Vis>
                 <Element className="reisetilskudd-orgnavn">
-                    {getLedetekst(tekst('dine_reisetilskudd.org'), {
+                    {getLedetekst(tekst('dine.tilskudd.org'), {
                         '%ORGNAVN%': reisetilskudd.orgNavn,
                         '%ORGNUMMER%': reisetilskudd.orgNummer
                     })}

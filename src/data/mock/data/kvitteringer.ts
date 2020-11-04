@@ -1,4 +1,4 @@
-import { Kvittering, Transportmiddel } from '../../../types/kvittering'
+import { Kvittering, Transportmiddel } from '../../../types'
 
 const mockKvitteringer: Kvittering[] = [
     {

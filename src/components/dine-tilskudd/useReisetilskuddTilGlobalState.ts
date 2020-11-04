@@ -1,5 +1,5 @@
 import { useAppStore } from '../../data/stores/app-store'
-import { Reisetilskudd } from '../../types/reisetilskudd'
+import { Reisetilskudd } from '../../types'
 import { validerTall } from '../../utils/skjemavalidering'
 import { utbetalingSpørsmålVerdier } from '../sporsmal-svar/sporsmal-konstanter'
 

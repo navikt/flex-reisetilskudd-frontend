@@ -5,7 +5,7 @@ import { StegindikatorStegProps } from 'nav-frontend-stegindikator/lib/stegindik
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { AktivtStegProps } from '../../types/navigasjon'
+import { AktivtStegProps } from '../../types'
 import { SEPARATOR } from '../../utils/constants'
 import { sideTitler } from '../../utils/constants'
 
