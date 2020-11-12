@@ -1,7 +1,7 @@
 import { useAppStore } from '../../data/stores/app-store'
 import { Reisetilskudd } from '../../types'
 import { validerTall } from '../../utils/skjemavalidering'
-import { utbetalingSporsmalVerdier } from '../sporsmal-svar/sporsmal-konstanter'
+import { utbetalingSporsmalVerdier } from '../sporsmal/sporsmal-konstanter'
 
 const useReisetilskuddTilGlobalState = (): (reisetilskudd: Reisetilskudd) => void => {
     const {

@@ -1,7 +1,43 @@
 @import 'node_modules/nav-frontend-core/less/_variabler';
+@import '../../basic';
 
 .reisetilskudd-side {
     .pagewrapper .maincontent {
         background-color: @white;
+    }
+}
+
+.horisontal-radio {
+    .utbetaling-tittel {
+        padding-bottom: 1rem;
+    }
+
+    .inputPanelGruppe__inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .inputPanel {
+            margin-bottom: 0.5em;
+            width: 100%;
+        }
+    }
+}
+
+@media (min-width: @screen-sm) {
+    .reisetilskudd-side {
+        .limit {
+            width: @desktopLimitWidth;
+        }
+    }
+
+    .horisontal-radio {
+        .inputPanelGruppe__inner {
+            flex-direction: row;
+
+            .inputPanel {
+                width: 48.5%;
+            }
+        }
     }
 }

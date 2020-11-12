@@ -1,10 +1,9 @@
 import './klikkbar.less'
 
 import { VenstreChevron } from 'nav-frontend-chevron'
-import Lenke from 'nav-frontend-lenker'
 import { Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { AktivtStegProps } from '../../../types'
 import { pathTilSide } from '../../../utils/navigasjon'
@@ -17,20 +16,20 @@ function TilbakeLenke({ aktivtSteg }: AktivtStegProps): ReactElement {
     return (
         <div className="tilbake-lenke">
             <Vis hvis={aktivtSteg === 1}>
-                <Lenke href="/">
+                <Link to="/">
                     <VenstreChevron />
                     <Normaltekst tag="span">
                         {tekst('klikkbar.tilbake-lenke.tekst.aktiv')}
                     </Normaltekst>
-                </Lenke>
+                </Link>
             </Vis>
             <Vis hvis={aktivtSteg > 1}>
-                <Lenke href={pathTilSide((aktivtSteg - 1), history)}>
+                <Link to={pathTilSide((aktivtSteg - 1), history)}>
                     <VenstreChevron />
                     <Normaltekst tag="span">
                         {tekst('klikkbar.tilbake-lenke.tekst')}
                     </Normaltekst>
-                </Lenke>
+                </Link>
             </Vis>
         </div>
     )

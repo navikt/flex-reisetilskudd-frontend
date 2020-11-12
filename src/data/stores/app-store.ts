@@ -10,6 +10,7 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
     const [ valgtReisetilskudd, setValgtReisetilskudd ] = useState<Reisetilskudd>()
     const [ sykmeldinger, setSykmeldinger ] = useState<Sykmelding[]>([])
     const [ valgtSykmelding, setValgtSykmelding ] = useState<Sykmelding>()
+    const [ feilmeldingTekst, setFeilmeldingTekst ] = useState<string>('')
 
     /* UTBETALINGSSPØRSMÅL */
     const [ activeMegArbeidsgiver, setActiveMegArbeidsgiver ] = useState<string>('')
@@ -36,6 +37,7 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
         valgtReisetilskudd, setValgtReisetilskudd,
         sykmeldinger, setSykmeldinger,
         valgtSykmelding, setValgtSykmelding,
+        feilmeldingTekst, setFeilmeldingTekst,
 
         /* UTBETALINGSSPØRSMÅL */
         activeMegArbeidsgiver, setActiveMegArbeidsgiver,

@@ -6,15 +6,13 @@ import FilTekster from '../components/filopplaster/fil/fil-tekster'
 import FilopplasterModal from '../components/filopplaster/filopplaster-modal/filopplaster-modal-tekster'
 import TotalBelopTekster from '../components/kvittering/total-belop/total-belop-tekster'
 import OppsummeringTekster from '../components/oppsummering/oppsummering-tekster'
-import SporsmalTekster from '../components/sporsmal-svar/sporsmal-tekster'
+import SporsmalTekster from '../components/sporsmal/sporsmal-tekster'
 import StegTekster from '../components/steg/steg-tekster'
 import SykmeldingTekster from '../components/sykmelding/sykmelding-tekster'
 import BekreftTekster from '../pages/bekreftelse/bekreft-tekster'
 import OpplastingTekster from '../pages/opplasting/opplasting-tekster'
 import OppsummeringSideTekster from '../pages/oppsummering/oppsummering-tekster'
 import ReisetilskuddTekster from '../pages/reisetilskudd/tilskudd-tekster'
-import Transport from '../pages/transport/transport-tekster'
-import UtbetalingTekster from '../pages/utbetaling-til/utbetaling-tekster'
 import { logger } from './logger'
 
 const tekster = {
@@ -30,10 +28,8 @@ const tekster = {
     ...OppsummeringTekster.nb,
     ...SykmeldingTekster.nb,
     ...BekreftTekster.nb,
-    ...Transport.nb,
     ...OpplastingTekster.nb,
     ...OppsummeringSideTekster.nb,
-    ...UtbetalingTekster.nb,
     ...SporsmalTekster.nb,
 }
 

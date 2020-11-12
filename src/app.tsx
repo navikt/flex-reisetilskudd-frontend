@@ -11,7 +11,7 @@ import TilskuddSide from './pages/reisetilskudd/tilskudd-side'
 
 export interface RouteParams {
     id: string;
-    stegnr: string;
+    steg: string;
 }
 
 function App(): ReactElement {
@@ -20,7 +20,7 @@ function App(): ReactElement {
             <DataFetcher>
                 <Switch>
                     <Route exact={true} path="/" component={TilskuddListe} />
-                    <Route path={'/soknaden/:id/:stegnr'} component={TilskuddSide} />
+                    <Route path={'/soknaden/:id/:steg'} component={TilskuddSide} />
                     <Route path={'/bekreftelse'} component={BekreftSide} />
                 </Switch>
             </DataFetcher>

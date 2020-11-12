@@ -2,19 +2,13 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { ArbeidsgiverInterface } from '../../types'
-import { tekst } from '../../utils/tekster'
+import { getLedetekst, tekst } from '../../utils/tekster'
 import { CheckedIkon } from '../diverse/checked-ikon/checked-ikon'
 import Vis from '../diverse/vis'
-import { utbetalingSporsmalVerdier } from '../sporsmal-svar/sporsmal-konstanter'
+import { ArbeidsOgVelferdsetaten, utbetalingSporsmalVerdier } from '../sporsmal/sporsmal-konstanter'
 
 const Utbetaling = () => {
     const { activeMegArbeidsgiver } = useAppStore()
-
-    const getArbeidsgiver = () : ArbeidsgiverInterface => ({
-        navn: 'Arbeids- og velferdsetaten',
-        orgNr: '392392482849',
-    })
 
     return (
         <>
@@ -30,7 +24,10 @@ const Utbetaling = () => {
             <Vis hvis={activeMegArbeidsgiver === utbetalingSporsmalVerdier.ARBEIDSGIVER}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
-                    {`Pengene skal utbetales til ${getArbeidsgiver().navn} (org.nr. ${getArbeidsgiver().orgNr}).`}
+                    {getLedetekst(tekst('oppsummering.utbetaling.til'), {
+                        '%ARBEIDSGIVER_NAVN%': ArbeidsOgVelferdsetaten.navn,
+                        '%ARBEIDSGIVER_ORGNR%': ArbeidsOgVelferdsetaten.orgNr
+                    })}
                 </Normaltekst>
             </Vis>
         </>

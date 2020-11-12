@@ -30,7 +30,7 @@ import {
     kvitteringDatoSpørsmål,
     kvitteringTotaltBeløpSpørsmål,
     kvitteringTransportmiddelSpørsmål,
-} from '../../sporsmal-svar/sporsmal-konstanter'
+} from '../../sporsmal/sporsmal-konstanter'
 import Fil from '../fil/fil'
 
 const FilopplasterModal = () => {

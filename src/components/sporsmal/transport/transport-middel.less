@@ -1,0 +1,45 @@
+.transportmiddel {
+    padding-top: 1rem;
+
+    .transportmiddel__tekst {
+        display: flex;
+        padding-top: 1rem;
+    }
+
+    .transportmiddel__sporsmal {
+        margin-bottom: 1rem;
+    }
+
+    .ekstrasporsmal {
+        max-height: 0;
+        transition: max-height 0.3s ease-in-out;
+        overflow: hidden;
+
+        &.aktiv {
+            max-height: 100px;
+        }
+
+        padding-top: 0;
+
+        .transportmiddel__tekst {
+            padding-top: 0.5rem;
+        }
+
+        .transportmiddel__sporsmal {
+            margin-bottom: 0.5rem;
+        }
+
+        .input--s {
+            margin-bottom: 1rem;
+        }
+    }
+
+    .transportmiddel__hjelpetekst {
+        margin-left: 1rem;
+        align-self: flex-start;
+    }
+
+    .skjemaelement__label + .input--s {
+        margin-top: -1rem;
+    }
+}

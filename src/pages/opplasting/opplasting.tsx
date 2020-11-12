@@ -15,8 +15,8 @@ import { gåTilNesteSide } from '../../utils/navigasjon'
 import { tekst } from '../../utils/tekster'
 
 const Opplasting = () => {
-    const { stegnr } = useParams<RouteParams>()
-    const soknadssideIDTall = Number(stegnr)
+    const { steg } = useParams<RouteParams>()
+    const soknadssideIDTall = Number(steg)
     const history = useHistory()
 
     const handleVidereKlikk = () => {

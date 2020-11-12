@@ -10,6 +10,8 @@ import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import TilbakeLenke from '../../components/diverse/klikkbar/tilbake-lenke'
 import Vis from '../../components/diverse/vis'
+import TransportMiddel from '../../components/sporsmal/transport/transport-middel'
+import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
 import Steg from '../../components/steg/steg'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import { useAppStore } from '../../data/stores/app-store'
@@ -19,8 +21,6 @@ import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
 import Opplasting from '../opplasting/opplasting'
 import Oppsummering from '../oppsummering/oppsummering'
-import Transport from '../transport/transport'
-import UtbetalingSide from '../utbetaling-til/utbetaling-side'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -36,8 +36,8 @@ const brodsmuler: Brodsmule[] = [
 
 const TilskuddSide = () => {
     const { reisetilskuddene, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
-    const { stegnr, id } = useParams<RouteParams>()
-    const idNum = Number(stegnr)
+    const { steg, id } = useParams<RouteParams>()
+    const idNum = Number(steg)
 
     useEffect(() => {
         setBodyClass('reisetilskudd-side')
@@ -72,11 +72,11 @@ const TilskuddSide = () => {
                 </Ekspanderbartpanel>
 
                 <Vis hvis={idNum === 1}>
-                    <UtbetalingSide />
+                    <UtbetalingTil />
                 </Vis>
 
                 <Vis hvis={idNum === 2}>
-                    <Transport />
+                    <TransportMiddel />
                 </Vis>
 
                 <Vis hvis={idNum === 3}>
