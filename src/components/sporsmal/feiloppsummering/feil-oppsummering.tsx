@@ -14,7 +14,7 @@ interface FeiloppsummeringProps {
 
 const FeilOppsummering = (props: FeiloppsummeringProps) => {
     const oppsummering = useRef<HTMLDivElement>(null)
-    const { settFokus, errors, sporsmal } = props
+    const { settFokus, errors } = props
     const entries: any[] = Object.entries(errors)
 
     useEffect(() => {
@@ -35,28 +35,9 @@ const FeilOppsummering = (props: FeiloppsummeringProps) => {
 
     const handleClick = (list: any) => {
         const id = `${list[0]}`
-        const idarr = id.split('_')
+        const element = document.getElementById(id as any)
 
-        let elmid
-        if (id.includes('_')) {
-            elmid = idarr[0] + '_t_' + idarr[1]
-
-        } else if (sporsmal.svartype.includes('JA_NEI')) {
-            elmid = idarr[0] += '_0'
-
-        } else if (sporsmal.svartype.includes('CHECK') || sporsmal.svartype.includes('RADIO') ||
-            sporsmal.svartype.includes('TIMER') || sporsmal.svartype.includes('PROSENT')) {
-            elmid = idarr[0]
-
-        } else if (sporsmal.svartype.includes('DATO')) {
-            elmid = 'input' + idarr[0]
-        }
-
-        const element = document.getElementById(elmid as any)
         if (element) {
-            if (sporsmal.erHovedsporsmal && sporsmal.svartype.includes('JA_NEI')) {
-                element!.parentElement!.classList.add('inputPanel--focused')
-            }
             element.focus()
             element.scrollIntoView({ behavior: 'smooth' })
         }

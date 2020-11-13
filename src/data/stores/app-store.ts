@@ -12,18 +12,6 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
     const [ valgtSykmelding, setValgtSykmelding ] = useState<Sykmelding>()
     const [ feilmeldingTekst, setFeilmeldingTekst ] = useState<string>('')
 
-    /* UTBETALINGSSPØRSMÅL */
-    const [ activeMegArbeidsgiver, setActiveMegArbeidsgiver ] = useState<string>('')
-
-    /* DAGENS TRANSPORTMIDDEL */
-    const [ dagensTransportMiddelEgenBilChecked, setDagensTransportMiddelEgenBilChecked ] = useState<boolean>(false)
-    const [ dagensTransportMiddelSyklerChecked, setDagensTransportMiddelSyklerChecked ] = useState<boolean>(false)
-    const [ dagensTransportMiddelGårChecked, setDagensTransportMiddelGårChecked ] = useState<boolean>(false)
-    const [ dagensTransportMiddelKollektivChecked, setDagensTransportMiddelKollektivChecked ] = useState<boolean>(false)
-    const [ månedligeUtgifterState, setMånedligeUtgifterState ] = useState<string>('')
-    const [ antallKilometerState, setAntallKilometerState ] = useState<string>('')
-    const [ dagensTransportmiddelValidert, setDagensTransportmiddelValidert ] = useState<boolean>()
-
     /* KVITTERINGSOPPLASTING */
     const [ kvitteringer, setKvitteringer ] = useState<Kvittering[]>(mockKvitteringer)
     const [ uopplastetFil, setUopplastetFil ] = useState<File | null>(null)
@@ -38,18 +26,6 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
         sykmeldinger, setSykmeldinger,
         valgtSykmelding, setValgtSykmelding,
         feilmeldingTekst, setFeilmeldingTekst,
-
-        /* UTBETALINGSSPØRSMÅL */
-        activeMegArbeidsgiver, setActiveMegArbeidsgiver,
-
-        /* DAGENS TRANSPORTMIDDEL */
-        dagensTransportMiddelEgenBilChecked, setDagensTransportMiddelEgenBilChecked,
-        dagensTransportMiddelSyklerChecked, setDagensTransportMiddelSyklerChecked,
-        dagensTransportMiddelGårChecked, setDagensTransportMiddelGårChecked,
-        dagensTransportMiddelKollektivChecked, setDagensTransportMiddelKollektivChecked,
-        månedligeUtgifterState, setMånedligeUtgifterState,
-        antallKilometerState, setAntallKilometerState,
-        dagensTransportmiddelValidert, setDagensTransportmiddelValidert,
 
         /* KVITTERINGSOPPLASTING */
         kvitteringer, setKvitteringer,

@@ -1,19 +1,16 @@
-import { useAppStore } from '../../data/stores/app-store'
 import { Reisetilskudd } from '../../types'
 import { validerTall } from '../../utils/skjemavalidering'
 import { utbetalingSporsmalVerdier } from '../sporsmal/sporsmal-konstanter'
 
 const useReisetilskuddTilGlobalState = (): (reisetilskudd: Reisetilskudd) => void => {
-    const {
-        setActiveMegArbeidsgiver,
-        setDagensTransportMiddelGårChecked,
-        setDagensTransportMiddelSyklerChecked,
-        setDagensTransportMiddelEgenBilChecked,
-        setDagensTransportMiddelKollektivChecked,
-        setMånedligeUtgifterState,
-        setAntallKilometerState,
-        setKvitteringer,
-    } = useAppStore()
+    const setActiveMegArbeidsgiver: any = {},
+        setDagensTransportMiddelGårChecked: any = {},
+        setDagensTransportMiddelSyklerChecked: any = {},
+        setDagensTransportMiddelEgenBilChecked: any = {},
+        setDagensTransportMiddelKollektivChecked: any = {},
+        setMånedligeUtgifterState: any = {},
+        setAntallKilometerState: any = {},
+        setKvitteringer: any = {}
 
     return (valgtReisetilskudd: Reisetilskudd) => {
         if (valgtReisetilskudd.utbetalingTilArbeidsgiver === true) {

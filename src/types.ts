@@ -52,10 +52,10 @@ export interface Reisetilskudd {
     orgNavn?: string,
     utbetalingTilArbeidsgiver?: boolean,
 
-    går?: boolean,
-    sykler?: boolean,
-    kollektivtransport?: number,
-    egenBil?: number,
+    går: boolean,
+    sykler: boolean,
+    kollektivtransport: number,
+    egenBil: number,
 
     kvitteringer: Kvittering[]
 }

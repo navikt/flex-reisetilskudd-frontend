@@ -1,6 +1,6 @@
 const SporsmalTekster: any = {
     'nb': {
-        'transportmiddel.feil-kilometer': 'Du må oppgi gyldig verdi for kilometer',
+        'transportmiddel.feil-mengde': 'Du må oppgi gyldig verdi for %FELTNAVN%',
         'transportmiddel.minst-et': 'Du må velge minst et av alternativene for fremkomstmiddel',
         'transportmiddel.feiloppsummering': 'For å gå videre må du rette opp følgende:',
 

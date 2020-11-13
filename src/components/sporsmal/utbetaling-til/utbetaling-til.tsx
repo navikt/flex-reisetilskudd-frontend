@@ -14,6 +14,11 @@ import { getLedetekst, tekst } from '../../../utils/tekster'
 import FeilOppsummering from '../../sporsmal/feiloppsummering/feil-oppsummering'
 import { ArbeidsOgVelferdsetaten, utbetalingSporsmal, utbetalingSporsmalVerdier } from '../sporsmal-konstanter'
 
+interface UtbetalingInterface {
+    reisetilskuddId: string
+    utbetalingTilArbeidsgiver?: boolean
+}
+
 const UtbetalingTil = () => {
     const { valgtReisetilskudd, setValgtReisetilskudd } = useAppStore()
     const [ utbetalTil, setUtbetalTil ] = useState<string>(
@@ -32,13 +37,11 @@ const UtbetalingTil = () => {
         if (valg !== 'MEG') {
             valgtReisetilskudd!.orgNummer = ArbeidsOgVelferdsetaten.orgNr
             valgtReisetilskudd!.orgNavn = ArbeidsOgVelferdsetaten.navn
-            setValgtReisetilskudd(valgtReisetilskudd)
+        } else {
+            valgtReisetilskudd!.orgNummer = ''
+            valgtReisetilskudd!.orgNavn = ''
         }
-    }
-
-    interface UtbetalingInterface {
-        reisetilskuddId: string
-        utbetalingTilArbeidsgiver?: boolean
+        setValgtReisetilskudd(valgtReisetilskudd)
     }
 
     const onSubmit = () => {

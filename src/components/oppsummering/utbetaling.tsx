@@ -5,23 +5,23 @@ import { useAppStore } from '../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import { CheckedIkon } from '../diverse/checked-ikon/checked-ikon'
 import Vis from '../diverse/vis'
-import { ArbeidsOgVelferdsetaten, utbetalingSporsmalVerdier } from '../sporsmal/sporsmal-konstanter'
+import { ArbeidsOgVelferdsetaten } from '../sporsmal/sporsmal-konstanter'
 
 const Utbetaling = () => {
-    const { activeMegArbeidsgiver } = useAppStore()
+    const { valgtReisetilskudd } = useAppStore()
 
     return (
         <>
             <Undertittel tag="h3">
                 {tekst('oppsummering.utbetaling.tittel')}
             </Undertittel>
-            <Vis hvis={activeMegArbeidsgiver === utbetalingSporsmalVerdier.MEG}>
+            <Vis hvis={valgtReisetilskudd!.orgNavn === ''}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {tekst('oppsummering.utbetaling.undertittel')}
                 </Normaltekst>
             </Vis>
-            <Vis hvis={activeMegArbeidsgiver === utbetalingSporsmalVerdier.ARBEIDSGIVER}>
+            <Vis hvis={valgtReisetilskudd!.orgNavn !== ''}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {getLedetekst(tekst('oppsummering.utbetaling.til'), {
