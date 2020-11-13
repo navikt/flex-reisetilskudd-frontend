@@ -26,6 +26,6 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
     })
 
     it('Laster inn sykemeldingpanel', ()=> {
-        cy.get('.sykmelding-panel-wrapper').should('be.visible').and('have.text', 'Opplysninger fra sykmeldingen').click()
+        cy.get('.sykmelding-panel').should('be.visible').and('have.text', 'Opplysninger fra sykmeldingen').click()
     })
 })

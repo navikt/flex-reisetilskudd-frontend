@@ -172,12 +172,12 @@ const TransportMiddel = () => {
                         <Input id="kilometer-bil" name="kilometer-bil" bredde="S" inputMode="numeric"
                             label={
                                 <div className="transportmiddel__tekst">
-                                    <Normaltekst id="transportmiddel-spørsmål" className="transportmiddel__sporsmal"
+                                    <Normaltekst id="egen-bil-spørsmål" className="transportmiddel__sporsmal"
                                         aria-describedby="min-hjelpetekst-kollektivtransport"
                                     >
                                         {tekst('sporsmal.egen-bil.hjelpetekst.tittel')}
                                     </Normaltekst>
-                                    <Hjelpetekst className="transportmiddel__hjelpetekst">
+                                    <Hjelpetekst className="transportmiddel__hjelpetekst-egen-bil">
                                         Roper på Rolf!
                                         {tekst('sporsmal.egen-bil.hjelpetekst')}
                                     </Hjelpetekst>
@@ -196,12 +196,12 @@ const TransportMiddel = () => {
                         <Input id="utgifter-koll" name="utgifter-koll" bredde="S" inputMode="numeric"
                             label={
                                 <div className="transportmiddel__tekst">
-                                    <Normaltekst id="transportmiddel-spørsmål" className="transportmiddel__sporsmal"
+                                    <Normaltekst id="kollektiv-spørsmål" className="transportmiddel__sporsmal"
                                         aria-describedby="min-hjelpetekst-kollektivtransport"
                                     >
                                         {tekst('sporsmal.kollektiv.hjelpetekst.tittel')}
                                     </Normaltekst>
-                                    <Hjelpetekst className="transportmiddel__hjelpetekst">
+                                    <Hjelpetekst className="transportmiddel__hjelpetekst-kollektiv">
                                         {tekst('sporsmal.kollektiv.hjelpetekst')}
                                     </Hjelpetekst>
                                 </div>

@@ -23,8 +23,8 @@ describe('Tester reisetilskuddsøknaden', () => {
         cy.get('.horisontal-radio').should('be.visible')
     })
 
-    it('Laster tekst', function() {
-        cy.get('.utbetaling-tittel').should('be.visible')
+    it('Laster tekst', () => {
+        cy.get('.skjemagruppe__legend .typo-systemtittel').should('be.visible')
         cy.contains('Utbetaling til arbeidsgiver')
         cy.contains('Skal reisetilskuddet utbetales til deg eller til Arbeids- og velferdsetaten (org.nr. 392392482849)?')
     })
@@ -49,29 +49,29 @@ describe('Tester reisetilskuddsøknaden', () => {
         it('fyller ut går, egen bil, klikker på hjelpetekst, fyller inn km', () => {
             cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/2`)
 
-            cy.get('label[for=transport-går]').click({ force: true })
-            cy.get('label[for=transport-sykler]').click({ force: true })
+            cy.get('label[for=gaa]').click({ force: true })
+            cy.get('label[for=skl]').click({ force: true })
 
-            cy.get('label[for=transport-egen-bil]').click({ force: true })
-            cy.get('.transportmiddel-kilometer-hjelpetekst').should('be.visible').click()
+            cy.get('label[for=bil]').click({ force: true })
+            cy.get('.transportmiddel__hjelpetekst-egen-bil').should('be.visible').click()
 
-            cy.get('#dagens-transportmiddel-kilometer-input').should('be.visible')
-                .type('1337').should('have.value', '1337')
+            cy.get('#kilometer-bil').should('be.visible')
+                .type('1337').should('have.value', '01337')
 
-            cy.get('label[for=transport-kollektiv]').click({ force: true })
-            cy.get('#dagens-transportmiddel-manedlige-utgifter-input').should('be.visible')
-                .type('900').should('have.value', '900')
+            cy.get('label[for=kol]').click({ force: true })
+            cy.get('#utgifter-koll').should('be.visible')
+                .type('900').should('have.value', '0900')
 
-            cy.get('#dagens-transportmiddel-transportalternativer').should('be.visible')
+            cy.get('form.transportmiddel .checkboksPanel').should('be.visible')
         })
     })
 
     describe('Checkboxvalidering side 2', () => {
         it('Sjekker at Checkboxene er checked', () => {
-            cy.get('#transport-går').should('be.checked')
-            cy.get('#transport-sykler').should('be.checked')
-            cy.get('#transport-egen-bil').should('be.checked')
-            cy.get('#transport-kollektiv').should('be.checked')
+            cy.get('#gaa').should('be.checked')
+            cy.get('#skl').should('be.checked')
+            cy.get('#bil').should('be.checked')
+            cy.get('#kol').should('be.checked')
             cy.get('.knapperad').click()
         })
     })
@@ -143,4 +143,5 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.contains('Les om hva du må gjøre for å beholde sykepengene')
         })
     })
+
 })
