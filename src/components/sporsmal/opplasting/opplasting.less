@@ -1,0 +1,42 @@
+@import 'node_modules/nav-frontend-core/less/_variabler';
+
+.opplasting {
+    .opplasting__tekst {
+        display: flex;
+        align-items: center;
+        margin-top: 0.5rem;
+
+        .opplasting__hjelpetekst {
+            align-self: flex-start;
+            margin-left: 1rem;
+        }
+    }
+
+    ul.opplasting-liste {
+        padding-inline-start: 1.3em;
+        line-height: 40px;
+    }
+
+    li {
+        font-size: 25px;
+    }
+
+    .tekst {
+        margin-left: 10px;
+    }
+
+    .feilmeldinger {
+        margin: 1rem 0 0 0;
+        text-align: left;
+    }
+
+    .kvitteringer-total {
+        display: none;
+    }
+}
+
+@media (min-width: @screen-sm) {
+    .kvitteringer-total {
+        margin: 1rem 0;
+    }
+}
