@@ -1,51 +1,44 @@
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import React from 'react'
 
-import { CheckedIkon } from '../../assets/ikoner'
 import { useAppStore } from '../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../utils/tekster'
-import Vis from '../vis'
+import { CheckedIkon } from '../diverse/checked-ikon/checked-ikon'
+import Vis from '../diverse/vis'
 
 const DagensTransportmiddel = () => {
-    const {
-        dagensTransportMiddelEgenBilChecked,
-        dagensTransportMiddelSyklerChecked,
-        dagensTransportMiddelGårChecked,
-        dagensTransportMiddelKollektivChecked,
-        månedligeUtgifterState,
-        antallKilometerState,
-    } = useAppStore()
+    const { valgtReisetilskudd } = useAppStore()
 
     return (
         <>
             <Undertittel tag="h3">
                 {tekst('oppsummering.dagens_transportmiddel.tittel')}
             </Undertittel>
-            <Vis hvis={dagensTransportMiddelEgenBilChecked}>
-                <Normaltekst className="checkedblock">
-                    <CheckedIkon />
-                    {getLedetekst(tekst('oppsummering.egenbil'), {
-                        '%KILOMETER%': antallKilometerState
-                    })}
-                </Normaltekst>
-            </Vis>
-            <Vis hvis={dagensTransportMiddelGårChecked}>
+            <Vis hvis={valgtReisetilskudd!.går}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {tekst('oppsummering.går')}
                 </Normaltekst>
             </Vis>
-            <Vis hvis={dagensTransportMiddelSyklerChecked}>
+            <Vis hvis={valgtReisetilskudd!.sykler}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {tekst('oppsummering.sykler')}
                 </Normaltekst>
             </Vis>
-            <Vis hvis={dagensTransportMiddelKollektivChecked}>
+            <Vis hvis={valgtReisetilskudd!.kollektivtransport && valgtReisetilskudd!.kollektivtransport > 0}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {getLedetekst(tekst('oppsummering.kollektivt'), {
-                        '%UTGIFTER%': månedligeUtgifterState
+                        '%UTGIFTER%': valgtReisetilskudd!.kollektivtransport!.toFixed(2)
+                    })}
+                </Normaltekst>
+            </Vis>
+            <Vis hvis={valgtReisetilskudd!.egenBil && valgtReisetilskudd!.egenBil > 0}>
+                <Normaltekst className="checkedblock">
+                    <CheckedIkon />
+                    {getLedetekst(tekst('oppsummering.egenbil'), {
+                        '%KILOMETER%': valgtReisetilskudd!.egenBil!.toFixed(2)
                     })}
                 </Normaltekst>
             </Vis>

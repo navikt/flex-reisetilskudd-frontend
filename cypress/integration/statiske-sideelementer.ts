@@ -1,7 +1,7 @@
 import mockReisetilskudd from '../../src/data/mock/data/reisetilskudd'
 
 describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
-    const url = `http://localhost:3000/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`
+    const url = `http://localhost:3000/soknaden/${mockReisetilskudd[0].id}/1`
 
     before(() => {
         cy.visit(url)
@@ -26,6 +26,6 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
     })
 
     it('Laster inn sykemeldingpanel', ()=> {
-        cy.get('.sykmelding-panel-wrapper').should('be.visible').and('have.text', 'Opplysninger fra sykmeldingen').click()
+        cy.get('.sykmelding-panel').should('be.visible').and('have.text', 'Opplysninger fra sykmeldingen').click()
     })
 })

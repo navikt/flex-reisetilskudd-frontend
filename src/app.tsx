@@ -5,13 +5,13 @@ import { Route, Switch, } from 'react-router-dom'
 
 import { DataFetcher } from './data/data-fetcher'
 import StoreProvider from './data/stores/store-provider'
-import BekreftelsesSide from './pages/bekreftelses-side/bekreftelses-side'
-import ReisetilskuddListe from './pages/reisetilskudd-liste/reisetilskudd-liste'
-import ReisetilskuddSide from './pages/reisetilskudd-side/reisetilskudd-side'
+import BekreftSide from './pages/bekreftelse/bekreft-side'
+import TilskuddListe from './pages/reisetilskudd/tilskudd-liste'
+import TilskuddSide from './pages/reisetilskudd/tilskudd-side'
 
 export interface RouteParams {
-    reisetilskuddID: string;
-    soknadssideID: string;
+    id: string;
+    steg: string;
 }
 
 function App(): ReactElement {
@@ -19,9 +19,9 @@ function App(): ReactElement {
         <StoreProvider>
             <DataFetcher>
                 <Switch>
-                    <Route exact={true} path="/" component={ReisetilskuddListe} />
-                    <Route path={'/soknaden/:reisetilskuddID/:soknadssideID'} component={ReisetilskuddSide} />
-                    <Route path={'/bekreftelse'} component={BekreftelsesSide} />
+                    <Route exact={true} path="/" component={TilskuddListe} />
+                    <Route path={'/soknaden/:id/:steg'} component={TilskuddSide} />
+                    <Route path={'/bekreftelse'} component={BekreftSide} />
                 </Switch>
             </DataFetcher>
         </StoreProvider>

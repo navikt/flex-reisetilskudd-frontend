@@ -4,11 +4,11 @@ import { Normaltekst } from 'nav-frontend-typografi'
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-import opplasting from '../../../assets/opplasting.svg'
 import { useAppStore } from '../../../data/stores/app-store'
 import env from '../../../utils/environment'
 import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { getLedetekst, tekst } from '../../../utils/tekster'
+import opplasting from './opplasting.svg'
 
 const DragAndDrop = () => {
     const {

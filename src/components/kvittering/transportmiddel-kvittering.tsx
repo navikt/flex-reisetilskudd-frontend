@@ -5,7 +5,7 @@ import { Element } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { Transportmiddel, TransportmiddelAlternativer } from '../../types/kvittering'
+import { Transportmiddel, TransportmiddelAlternativer } from '../../types'
 
 interface Props {
     handleChange? : (transportmiddel : TransportmiddelAlternativer) => void

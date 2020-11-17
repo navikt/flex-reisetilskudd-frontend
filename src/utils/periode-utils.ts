@@ -1,4 +1,4 @@
-import { Periode } from '../types/sykmelding'
+import { Periode } from '../types'
 
 export const tidligsteFom = (perioder: Periode[]) => {
     if (perioder.length === 0) {

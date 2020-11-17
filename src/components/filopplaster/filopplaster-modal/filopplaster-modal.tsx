@@ -15,22 +15,22 @@ import { useAppStore } from '../../../data/stores/app-store'
 import {
     Kvittering, OpplastetKvittering, Transportmiddel,
     TransportmiddelAlternativer,
-} from '../../../types/kvittering'
+} from '../../../types'
 import { DatoFormat, formatertDato, getIDag } from '../../../utils/dato'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
 import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
 import { validerKroner, validerOgReturnerKroner } from '../../../utils/skjemavalidering'
 import { tekst } from '../../../utils/tekster'
-import FeilListe from '../../feil-liste'
+import FeilListe from '../../diverse/feil-liste'
+import Vis from '../../diverse/vis'
 import Datovelger from '../../kvittering/datovelger/datovelger'
 import TransportmiddelKvittering from '../../kvittering/transportmiddel-kvittering'
 import {
     kvitteringDatoSpørsmål,
     kvitteringTotaltBeløpSpørsmål,
     kvitteringTransportmiddelSpørsmål,
-} from '../../sporsmal-svar/sporsmal-konstanter'
-import Vis from '../../vis'
+} from '../../sporsmal/sporsmal-konstanter'
 import Fil from '../fil/fil'
 
 const FilopplasterModal = () => {
@@ -43,7 +43,7 @@ const FilopplasterModal = () => {
         valgtSykmelding
     } = useAppStore()
 
-    const { reisetilskuddID } = useParams<RouteParams>()
+    const { id } = useParams<RouteParams>()
     const [ laster, setLaster ] = useState<boolean>(false)
     const [ dato, setDato ] = useState<Date | null>(null)
     const [ beløp, setBeløp ] = useState<string>('')
@@ -158,7 +158,7 @@ const FilopplasterModal = () => {
                 .then((response) => {
                     if (response.parsedBody?.id) {
                         const kvittering: Kvittering = {
-                            reisetilskuddId: reisetilskuddID,
+                            reisetilskuddId: id,
                             navn: fil.name,
                             storrelse: fil.size,
                             belop: parsedBeløp,

@@ -2,7 +2,7 @@ import mockReisetilskudd from '../../src/data/mock/data/reisetilskudd'
 
 describe('Tester reisetilskuddsøknaden', () => {
 
-    const url = `http://localhost:3000/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`
+    const url = `http://localhost:3000/soknaden/${mockReisetilskudd[0].id}/1`
 
     before(() => {
         cy.server()
@@ -23,15 +23,15 @@ describe('Tester reisetilskuddsøknaden', () => {
         cy.get('.horisontal-radio').should('be.visible')
     })
 
-    it('Laster tekst', function() {
-        cy.get('.utbetaling-tittel').should('be.visible')
+    it('Laster tekst', () => {
+        cy.get('.skjemagruppe__legend .typo-systemtittel').should('be.visible')
         cy.contains('Utbetaling til arbeidsgiver')
         cy.contains('Skal reisetilskuddet utbetales til deg eller til Arbeids- og velferdsetaten (org.nr. 392392482849)?')
     })
 
     describe('Utfylling og validering av side 1', () => {
         it('Tar tak i meg-knapp og clicker', () => {
-            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/1`)
             cy.get('.inputPanel').children().eq(1).should('be.visible').click()
         })
 
@@ -47,38 +47,38 @@ describe('Tester reisetilskuddsøknaden', () => {
 
     describe('Utfylling av side 2', () => {
         it('fyller ut går, egen bil, klikker på hjelpetekst, fyller inn km', () => {
-            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/2`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/2`)
 
-            cy.get('label[for=transport-går]').click({ force: true })
-            cy.get('label[for=transport-sykler]').click({ force: true })
+            cy.get('label[for=gaa]').click({ force: true })
+            cy.get('label[for=skl]').click({ force: true })
 
-            cy.get('label[for=transport-egen-bil]').click({ force: true })
-            cy.get('.transportmiddel-kilometer-hjelpetekst').should('be.visible').click()
+            cy.get('label[for=bil]').click({ force: true })
+            cy.get('.transportmiddel__hjelpetekst-egen-bil').should('be.visible').click()
 
-            cy.get('#dagens-transportmiddel-kilometer-input').should('be.visible')
-                .type('1337').should('have.value', '1337')
+            cy.get('#kilometer-bil').should('be.visible')
+                .type('1337').should('have.value', '01337')
 
-            cy.get('label[for=transport-kollektiv]').click({ force: true })
-            cy.get('#dagens-transportmiddel-manedlige-utgifter-input').should('be.visible')
-                .type('900').should('have.value', '900')
+            cy.get('label[for=kol]').click({ force: true })
+            cy.get('#utgifter-koll').should('be.visible')
+                .type('900').should('have.value', '0900')
 
-            cy.get('#dagens-transportmiddel-transportalternativer').should('be.visible')
+            cy.get('form.transportmiddel .checkboksPanel').should('be.visible')
         })
     })
 
     describe('Checkboxvalidering side 2', () => {
         it('Sjekker at Checkboxene er checked', () => {
-            cy.get('#transport-går').should('be.checked')
-            cy.get('#transport-sykler').should('be.checked')
-            cy.get('#transport-egen-bil').should('be.checked')
-            cy.get('#transport-kollektiv').should('be.checked')
+            cy.get('#gaa').should('be.checked')
+            cy.get('#skl').should('be.checked')
+            cy.get('#bil').should('be.checked')
+            cy.get('#kol').should('be.checked')
             cy.get('.knapperad').click()
         })
     })
 
     describe('Innholdsvalidering side 3', () => {
         it('Sjekker at siden inneholder elementer', () => {
-            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/3`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/3`)
             cy.contains('Last opp dine kvitteringer')
             cy.contains('Her kan du laste opp kvitteringer fra reisetilskuddsperioden.')
             cy.get('.last-opp-kvittering-tekst').should('be.visible')
@@ -106,7 +106,7 @@ describe('Tester reisetilskuddsøknaden', () => {
 
     describe('Innholdsvalidering side 4', () => {
         it('sjekker at oppsummeringssiden inneholder elementer', () => {
-            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/4`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/4`)
             cy.contains('Oppsummering av søknaden')
             cy.contains('Hvem skal pengene utbetales til?')
             cy.contains('Hvordan reiste du før sykmeldingen?')
@@ -143,4 +143,5 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.contains('Les om hva du må gjøre for å beholde sykepengene')
         })
     })
+
 })

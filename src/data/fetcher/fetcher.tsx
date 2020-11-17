@@ -7,7 +7,7 @@ interface HttpResponse<T>
 }
 
 async function fetcher<T>(
-    request: RequestInfo,
+    request: any,
 ): Promise<HttpResponse<T>> {
     const response: HttpResponse<T> = await fetch(request)
     try {
@@ -28,7 +28,7 @@ async function fetcher<T>(
 // eslint-disable-next-line func-names
 export const get = async function <T>(
     path: string,
-    args: RequestInit = { method: 'get', credentials: 'include' },
+    args: any = { method: 'get', credentials: 'include' },
 ): Promise<HttpResponse<T>> {
     return fetcher<T>(new Request(path, args))
 }
@@ -38,7 +38,7 @@ export const post = async function <T>(
     path: string,
     // eslint-disable-next-line
     body: any,
-    args: RequestInit = {
+    args: any = {
         method: 'post', body: JSON.stringify(body), credentials: 'include', headers: { 'Content-Type': 'application/json' },
     },
 ): Promise<HttpResponse<T>> {
@@ -50,7 +50,7 @@ export const put = async function <T>(
     path: string,
     // eslint-disable-next-line
     body: any,
-    args: RequestInit = {
+    args: any = {
         method: 'put', body: JSON.stringify(body), credentials: 'include', headers: { 'Content-Type': 'application/json' },
     },
 ): Promise<HttpResponse<T>> {
