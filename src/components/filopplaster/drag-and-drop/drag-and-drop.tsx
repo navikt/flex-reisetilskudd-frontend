@@ -1,7 +1,7 @@
 import './drag-and-drop.less'
 
 import { Normaltekst } from 'nav-frontend-typografi'
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
 import { useAppStore } from '../../../data/stores/app-store'
@@ -11,11 +11,8 @@ import { getLedetekst, tekst } from '../../../utils/tekster'
 import opplasting from './opplasting.svg'
 
 const DragAndDrop = () => {
-    const {
-        setUopplastetFil,
-        setFilopplasterFeilmeldinger,
-        setÅpenFilopplasterModal
-    } = useAppStore()
+    const { setUopplastetFil, setOpenModal } = useAppStore()
+    const [ filFeil, setFilFeil ] = useState<string[]>([])
 
     const tillatteFiltyper = env.tillatteFiltyper
     const maxFilstørrelse = env.maksFilstørrelse
@@ -24,31 +21,28 @@ const DragAndDrop = () => {
         (filer) => {
             filer.forEach((fil: File) => {
                 setUopplastetFil(fil)
-                setÅpenFilopplasterModal(true)
-
-                const filFeilmeldinger = []
+                setOpenModal(true)
 
                 if (maxFilstørrelse && fil.size > maxFilstørrelse) {
                     const maks = formaterFilstørrelse(maxFilstørrelse)
-
-                    filFeilmeldinger.push(
+                    filFeil.push(
                         getLedetekst(tekst('drag_and_drop.maks'), {
                             '%FILNAVN%': fil.name,
                             '%MAKSSTOR%': maks
-                        }))
+                        })
+                    )
                 }
 
-
                 if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-
-                    filFeilmeldinger.push(
+                    filFeil.push(
                         getLedetekst(tekst('drag_and_drop.filtype'), {
                             '%FILNAVN%': fil.name,
                             '%TILLATTEFILTYPER%': tillatteFiltyper
-                        }))
+                        })
+                    )
                 }
 
-                setFilopplasterFeilmeldinger([ ...filFeilmeldinger ])
+                setFilFeil(filFeil)
             })
         },
         // eslint-disable-next-line

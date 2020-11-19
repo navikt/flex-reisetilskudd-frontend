@@ -1,5 +1,6 @@
 const FilopplasterModalTekster: any = {
     'nb': {
+        'filopplaster_model.tittel': 'Totalt beløp',
         'filopplaster_modal.belop.feilmelding': 'Vennligst skriv inn et gyldig beløp',
         'filopplaster_modal.dato.feilmelding': 'Vennligst velg en gyldig dato',
         'filopplaster_modal.dagensdato.feilmelding': 'Vennligst velg en dato før dagens dato',

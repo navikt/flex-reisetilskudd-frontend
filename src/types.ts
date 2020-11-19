@@ -25,6 +25,13 @@ export interface OpplastetKvittering {
     id: string;
 }
 
+export enum Transport {
+    GÅR = 'GÅR',
+    SYKLER = 'SYKLER',
+    KOLLEKTIVTRANSPORT = 'KOLLEKTIVTRANSPORT',
+    EGEN_BIL = 'EGEN BIL',
+}
+
 export enum Transportmiddel {
     SPØRSMÅLS_KEY = 'kvittering-transportmiddel-spørsmål',
     TAXI = 'Taxi',
@@ -32,7 +39,7 @@ export enum Transportmiddel {
     EGEN_BIL = 'Egen bil'
 }
 
-export type TransportmiddelAlternativer = Transportmiddel.EGEN_BIL | Transportmiddel.KOLLEKTIVT | Transportmiddel.TAXI | undefined;
+export type Transportmidler = Transportmiddel.EGEN_BIL | Transportmiddel.KOLLEKTIVT | Transportmiddel.TAXI | undefined;
 
 export type AktivtStegProps = {
     aktivtSteg: number,

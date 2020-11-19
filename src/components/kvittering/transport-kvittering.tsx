@@ -1,18 +1,18 @@
-import './transportmiddel-kvittering.less'
+import './transport-kvittering.less'
 
 import { RadioPanelGruppe } from 'nav-frontend-skjema'
 import { Element } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { Transportmiddel, TransportmiddelAlternativer } from '../../types'
+import { Transportmiddel, Transportmidler } from '../../types'
 
 interface Props {
-    handleChange? : (transportmiddel : TransportmiddelAlternativer) => void
+    handleChange? : (transportmiddel : Transportmidler) => void
 }
 
-const TransportmiddelKvittering = ({ handleChange }: Props) => {
-    const { transportmiddelKvittering, setTransportmiddelKvittering } = useAppStore()
+const TransportKvittering = ({ handleChange }: Props) => {
+    const { typeKvittering, setTypeKvittering } = useAppStore()
 
     return (
         <RadioPanelGruppe
@@ -37,15 +37,15 @@ const TransportmiddelKvittering = ({ handleChange }: Props) => {
                     id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.KOLLEKTIVT}`,
                 },
             ]}
-            checked={transportmiddelKvittering}
+            checked={typeKvittering}
             onChange={(_, nyttTransportmiddel) => {
                 if (handleChange) {
-                    handleChange(nyttTransportmiddel as TransportmiddelAlternativer)
+                    handleChange(nyttTransportmiddel as Transportmidler)
                 }
-                setTransportmiddelKvittering(nyttTransportmiddel)
+                setTypeKvittering(nyttTransportmiddel)
             }}
         />
     )
 }
 
-export default TransportmiddelKvittering
+export default TransportKvittering
