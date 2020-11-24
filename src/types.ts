@@ -15,7 +15,7 @@ export interface Kvittering {
     kvitteringId: string;
     navn: string;
     storrelse: number;
-    belop: number;
+    belop?: number;
     fom: Date;
     tom?: Date;
     transportmiddel?: string;

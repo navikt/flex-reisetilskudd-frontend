@@ -6,14 +6,19 @@
     align-items: center;
     padding: 1.5rem 0;
     font-weight: bold;
-    border: 2px dashed @navGra80;
     border-radius: 4px;
     background-color: rgba(204, 222, 230, 0.5);
     color: @navBla;
-    margin: 2rem auto;
+    margin: 1rem auto;
     cursor: pointer;
+
+    &:focus {
+        outline: 0;
+        box-shadow: 0 0 0 3px @fokusFarge;
+    }
 }
 
 .opplastingsikon {
     display: inline-block;
+    margin-right: 0.3rem;
 }

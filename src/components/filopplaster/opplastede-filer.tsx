@@ -13,10 +13,10 @@ interface Props {
 }
 
 const OpplastedeFiler = ({ fjernKnapp }: Props) => {
-    const { kvitteringer } = useAppStore()
+    const { valgtReisetilskudd } = useAppStore()
 
     return (
-        <Vis hvis={kvitteringer.length > 0}>
+        <Vis hvis={valgtReisetilskudd!.kvitteringer.length > 0}>
             <table className="opplastede-filer">
                 <Vis hvis={fjernKnapp}>
                     <thead>
@@ -28,7 +28,7 @@ const OpplastedeFiler = ({ fjernKnapp }: Props) => {
                     </thead>
                 </Vis>
                 <tbody>
-                    {kvitteringer.map((fil: Kvittering) => (
+                    {valgtReisetilskudd!.kvitteringer.map((fil: Kvittering) => (
                         <FilMedInfo fil={fil} fjernKnapp={fjernKnapp} key={fil.kvitteringId} />
                     ))}
                 </tbody>

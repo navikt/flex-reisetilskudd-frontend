@@ -1,16 +1,15 @@
 import constate from 'constate'
 import { useState } from 'react'
 
-import { Kvittering, Reisetilskudd, Sykmelding, Transportmidler } from '../../types'
-import mockKvitteringer from '../mock/data/kvitteringer'
+import { Reisetilskudd, Sykmelding, Transportmidler } from '../../types'
 
 export const [ AppStoreProvider, useAppStore ] = constate(() => {
     const [ reisetilskuddene, setReisetilskuddene ] = useState<Reisetilskudd[]>([])
     const [ valgtReisetilskudd, setValgtReisetilskudd ] = useState<Reisetilskudd>()
     const [ sykmeldinger, setSykmeldinger ] = useState<Sykmelding[]>([])
     const [ valgtSykmelding, setValgtSykmelding ] = useState<Sykmelding>()
-    const [ kvitteringer, setKvitteringer ] = useState<Kvittering[]>(mockKvitteringer)
     const [ openModal, setOpenModal ] = useState<boolean>(false)
+    const [ lasteFeil, setLasteFeil ] = useState<string[]>([])
     const [ uopplastetFil, setUopplastetFil ] = useState<File | null>(null)
     const [ typeKvittering, setTypeKvittering ] = useState<Transportmidler>()
 
@@ -19,8 +18,8 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
         valgtReisetilskudd, setValgtReisetilskudd,
         sykmeldinger, setSykmeldinger,
         valgtSykmelding, setValgtSykmelding,
-        kvitteringer, setKvitteringer,
         openModal, setOpenModal,
+        lasteFeil, setLasteFeil,
         uopplastetFil, setUopplastetFil,
         typeKvittering, setTypeKvittering
     }

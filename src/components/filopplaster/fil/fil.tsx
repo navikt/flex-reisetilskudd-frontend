@@ -8,18 +8,16 @@ import { customTruncet, formaterFilstørrelse } from '../../../utils/fil-utils'
 import { tekst } from '../../../utils/tekster'
 import vedlegg from './vedlegg.svg'
 
-interface Props {
-    fil: File | null;
-    href?: string;
-    className?: string;
+interface filProps {
+    fil: File;
 }
 
-const Fil = ({ fil }: Props) => {
+const Fil = ({ fil }: filProps) => {
     return (
         <>
             {fil
                 ?
-                <div key={fil!.name} className="modal-fil">
+                <div key={fil!.name} className="modal-fil opplastede-filer">
                     <img className="vedleggsikon" src={vedlegg} alt="" />
                     <Normaltekst tag="span" className="filnavn">
                         {customTruncet(fil!.name, 20)}

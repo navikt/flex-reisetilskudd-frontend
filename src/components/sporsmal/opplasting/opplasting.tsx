@@ -6,21 +6,23 @@ import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../../app'
+import { useAppStore } from '../../../data/stores/app-store'
 import { gåTilNesteSide } from '../../../utils/navigasjon'
 import { tekst } from '../../../utils/tekster'
 import VidereKnapp from '../../diverse/klikkbar/videre-knapp'
-import DragAndDrop from '../../filopplaster/drag-and-drop/drag-and-drop'
 import FilopplasterModal from '../../filopplaster/filopplaster-modal/filopplaster-modal'
 import OpplastedeFiler from '../../filopplaster/opplastede-filer'
 import TotalBelop from '../../kvittering/total-belop/total-belop'
+import PlussIkon from './pluss-ikon.svg'
 
 const Opplasting = () => {
+    const { setOpenModal } = useAppStore()
     const { steg } = useParams<RouteParams>()
-    const soknadssideIDTall = Number(steg)
+    const stegNr = Number(steg)
     const history = useHistory()
 
     const handleVidereKlikk = () => {
-        gåTilNesteSide(history, soknadssideIDTall)
+        gåTilNesteSide(history, stegNr)
     }
 
     return (
@@ -42,14 +44,18 @@ const Opplasting = () => {
                 </Hjelpetekst>
             </div>
 
-            <FilopplasterModal />
-            <DragAndDrop />
+            <button className="fler-vedlegg" onClick={() => setOpenModal(true)}>
+                <img className="pluss-ikon" src={PlussIkon} alt="" />
+                <Normaltekst tag="span">{tekst('opplasting.legg-til')}</Normaltekst>
+            </button>
 
+            <FilopplasterModal />
             <OpplastedeFiler fjernKnapp />
+
             <div className="kvitteringer-total">
                 <TotalBelop />
             </div>
-            <VidereKnapp aktivtSteg={soknadssideIDTall} onClick={handleVidereKlikk} />
+            <VidereKnapp aktivtSteg={stegNr} onClick={handleVidereKlikk} />
         </div>
     )
 }

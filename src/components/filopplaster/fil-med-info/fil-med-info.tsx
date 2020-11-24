@@ -21,12 +21,16 @@ interface Props {
 }
 
 const FilMedInfo = ({ fil, fjernKnapp }: Props) => {
-    const { kvitteringer, setKvitteringer } = useAppStore()
+    const { valgtReisetilskudd, setValgtReisetilskudd } = useAppStore()
+    let kvitteringer = valgtReisetilskudd!.kvitteringer
 
     const slettKvittering = (kvitteringSomSkalSlettes: Kvittering) => {
-        setKvitteringer(kvitteringer.filter(
+        kvitteringer = kvitteringer.filter(
             (kvittering) => kvittering.kvitteringId !== kvitteringSomSkalSlettes.kvitteringId,
-        ))
+        )
+        valgtReisetilskudd!.kvitteringer = kvitteringer
+        setValgtReisetilskudd(valgtReisetilskudd)
+
         del(`${env.apiUrl}/api/v1/kvittering/${fil.kvitteringId}`).catch((error) => {
             logger.error('Feil under sletting av kvittering', error)
         })

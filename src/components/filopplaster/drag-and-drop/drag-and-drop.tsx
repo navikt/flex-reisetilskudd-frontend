@@ -8,11 +8,12 @@ import { useAppStore } from '../../../data/stores/app-store'
 import env from '../../../utils/environment'
 import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { getLedetekst, tekst } from '../../../utils/tekster'
-import opplasting from './opplasting.svg'
+import Fil from '../fil/fil'
+import binders from './binders.svg'
 
 const DragAndDrop = () => {
-    const { setUopplastetFil, setOpenModal } = useAppStore()
-    const [ filFeil, setFilFeil ] = useState<string[]>([])
+    const { setUopplastetFil, lasteFeil, setLasteFeil } = useAppStore()
+    const [ filer ] = useState<File[]>([])
 
     const tillatteFiltyper = env.tillatteFiltyper
     const maxFilstørrelse = env.maksFilstørrelse
@@ -21,11 +22,10 @@ const DragAndDrop = () => {
         (filer) => {
             filer.forEach((fil: File) => {
                 setUopplastetFil(fil)
-                setOpenModal(true)
 
                 if (maxFilstørrelse && fil.size > maxFilstørrelse) {
                     const maks = formaterFilstørrelse(maxFilstørrelse)
-                    filFeil.push(
+                    lasteFeil.push(
                         getLedetekst(tekst('drag_and_drop.maks'), {
                             '%FILNAVN%': fil.name,
                             '%MAKSSTOR%': maks
@@ -34,15 +34,14 @@ const DragAndDrop = () => {
                 }
 
                 if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-                    filFeil.push(
+                    lasteFeil.push(
                         getLedetekst(tekst('drag_and_drop.filtype'), {
                             '%FILNAVN%': fil.name,
                             '%TILLATTEFILTYPER%': tillatteFiltyper
                         })
                     )
                 }
-
-                setFilFeil(filFeil)
+                setLasteFeil(lasteFeil)
             })
         },
         // eslint-disable-next-line
@@ -57,13 +56,18 @@ const DragAndDrop = () => {
     return (
         <div className="filopplasteren" {...getRootProps()}>
             <input {...getInputProps()} />
-            <img src={opplasting} className="opplastingsikon" alt="Opplastingsikon" />
+            <img src={binders} className="opplastingsikon" alt="Opplastingsikon" />
             <Normaltekst tag="span" className="tekst">
                 {isDragActive
                     ? tekst('drag_and_drop.dragtekst.aktiv')
                     : tekst('drag_and_drop.dragtekst')
                 }
             </Normaltekst>
+
+            {filer.map((fil, idx) => {
+                return <Fil fil={fil} key={idx} />
+            })}
+
         </div>
     )
 }
