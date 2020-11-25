@@ -38,7 +38,7 @@ jobs:
       - name: Run tests
         run: CI=true npm run test
       - name: Run cypress
-        uses: cypress-io/github-action@v1
+        uses: cypress-io/github-action@v2
         with:
             install: false
             record: false
