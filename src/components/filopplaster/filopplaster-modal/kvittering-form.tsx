@@ -25,7 +25,7 @@ import DragAndDrop from '../drag-and-drop/drag-and-drop'
 const KvitteringForm = () => {
     const {
         valgtReisetilskudd, setValgtReisetilskudd, valgtSykmelding, setOpenModal,
-        typeKvittering, setTypeKvittering
+        typeKvittering, setTypeKvittering, uopplastetFil
     } = useAppStore()
 
     const [ dato ] = useState<Date | null>()
@@ -90,6 +90,11 @@ const KvitteringForm = () => {
         input!.click()
     }
 
+    const valider = () => {
+        validerDato()
+        validerFil()
+    }
+
     const validerDato = () => {
         const selektor = 'input[type=text].dato_input'
         const input: HTMLInputElement | null = document.querySelector(selektor)
@@ -99,6 +104,17 @@ const KvitteringForm = () => {
             methods.setValue('dato_input', input!.value)
             methods.clearErrors('dato_input') // eslint-disable-line.log('dato_input', dato_input); //tslint:disable-line
             input!.classList.remove('skjemaelement__input--harFeil')
+        }
+    }
+
+    const validerFil = () => {
+        const selektor = '.filopplasteren'
+        const div: HTMLDivElement | null = document.querySelector(selektor)
+        if (!uopplastetFil) {
+            div!.classList.add('skjemaelement__input--harFeil')
+        } else {
+            methods.clearErrors('fil_input') // eslint-disable-line
+            div!.classList.remove('skjemaelement__input--harFeil')
         }
     }
 
@@ -188,7 +204,7 @@ const KvitteringForm = () => {
                         <Knapp htmlType="button" className="lagre-kvittering" onClick={() => setOpenModal(false)}>
                             {tekst('filopplaster_modal.tilbake')}
                         </Knapp>
-                        <Knapp htmlType="submit" className="lagre-kvittering" onClick={validerDato}>
+                        <Knapp htmlType="submit" className="lagre-kvittering" onClick={valider}>
                             {tekst('filopplaster_modal.bekreft')}
                         </Knapp>
                     </div>

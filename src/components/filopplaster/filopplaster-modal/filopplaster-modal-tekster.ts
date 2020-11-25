@@ -5,6 +5,7 @@ const FilopplasterModalTekster: any = {
         'filopplaster_modal.belop.feilmelding': 'Du må skrive inn totalbeløp',
         'filopplaster_modal.dato.feilmelding': 'Du må velge dato',
         'filopplaster_modal.dagensdato.feilmelding': 'Du må velge dato før dagens dato',
+        'filopplaster_modal.filopplasting.feilmelding': 'Du må laste opp kvittering',
         'filopplaster_modal.transportmiddel.feilmelding': 'Du må velge transportmiddel',
         'filopplaster_modal.feiloppsummering': 'For å gå videre må du rette opp følgende:',
         'filopplaster_modal.bekreft': 'Bekreft',
