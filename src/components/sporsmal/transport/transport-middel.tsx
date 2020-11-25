@@ -12,7 +12,7 @@ import useForceUpdate from 'use-force-update'
 import { RouteParams } from '../../../app'
 import { put } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
-import { Reisetilskudd } from '../../../types'
+import { Reisetilskudd, Transport } from '../../../types'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
 import { getLedetekst, tekst } from '../../../utils/tekster'
@@ -24,13 +24,6 @@ interface TransportmiddelInterface {
     sykler?: boolean
     egenBil?: number
     kollektivtransport?: number
-}
-
-enum Transport {
-    GÅR = 'GÅR',
-    SYKLER = 'SYKLER',
-    KOLLEKTIVTRANSPORT = 'KOLLEKTIVTRANSPORT',
-    EGEN_BIL = 'EGEN BIL',
 }
 
 const initTransport = (reiseTilskudd: Reisetilskudd) => {

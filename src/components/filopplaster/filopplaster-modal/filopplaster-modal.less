@@ -2,18 +2,44 @@
 @import '../../../../src/basic';
 
 .filopplaster-modal {
-    width: 550px;
+    width: 475px;
 
     .modal-content {
         padding: 0 0.4rem;
 
-        .lagre-kvittering {
-            margin-bottom: 1rem;
+        .knapperad {
+            padding: 1rem 0 0;
+
+            .lagre-kvittering {
+                margin: 0 0.5rem 1rem;
+            }
         }
     }
 
     .kvittering-header {
         margin-bottom: 1.5rem;
+    }
+
+    .cols {
+        display: flex;
+        justify-content: space-between;
+
+        .col {
+            width: 48%;
+        }
+    }
+
+    .skjemaelement + .skjemaelement {
+        margin-top: 1rem;
+    }
+
+    .skjemaelement__feilmelding {
+        font-weight: 600;
+        color: @redError;
+
+        p {
+            margin: 0;
+        }
     }
 
     .feilmelding-alert {

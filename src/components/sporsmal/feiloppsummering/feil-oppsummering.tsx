@@ -9,7 +9,6 @@ import Vis from '../../diverse/vis'
 interface FeiloppsummeringProps {
     settFokus?: boolean;
     errors: any;
-    sporsmal?: any;
 }
 
 const FeilOppsummering = (props: FeiloppsummeringProps) => {
@@ -35,8 +34,13 @@ const FeilOppsummering = (props: FeiloppsummeringProps) => {
 
     const handleClick = (list: any) => {
         const id = `${list[0]}`
-        const element = document.getElementById(id as any)
-
+        let element: any
+        if (id === 'dato_input') {
+            const selektor = 'input[type=text].dato_input'
+            element = document.querySelector(selektor)
+        } else {
+            element = document.getElementById(id as any)
+        }
         if (element) {
             element.focus()
             element.scrollIntoView({ behavior: 'smooth' })

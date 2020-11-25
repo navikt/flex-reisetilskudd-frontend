@@ -5,10 +5,10 @@ import { useAppStore } from '../../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 
 const TotalBelop = (): ReactElement => {
-    const { kvitteringer } = useAppStore()
+    const { valgtReisetilskudd } = useAppStore()
 
-    const totaltBeløp = (): number => (kvitteringer
-        ? kvitteringer
+    const totaltBeløp = (): number => (valgtReisetilskudd!.kvitteringer
+        ? valgtReisetilskudd!.kvitteringer
             .filter((kvittering) => kvittering.belop)
             .map((kvittering) => kvittering.belop!)
             .reduce((a, b) => a + b, 0.0)

@@ -1,7 +1,7 @@
 import { Knapp } from 'nav-frontend-knapper'
 import { RadioPanelGruppe } from 'nav-frontend-skjema'
 import { Systemtittel } from 'nav-frontend-typografi'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useHistory, useParams } from 'react-router-dom'
 
@@ -12,7 +12,7 @@ import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import FeilOppsummering from '../../sporsmal/feiloppsummering/feil-oppsummering'
-import { ArbeidsOgVelferdsetaten, utbetalingSporsmal, utbetalingSporsmalVerdier } from '../sporsmal-konstanter'
+import { ArbeidsOgVelferdsetaten, utbetalingSporsmal } from '../sporsmal-konstanter'
 
 interface UtbetalingInterface {
     reisetilskuddId: string
@@ -21,15 +21,19 @@ interface UtbetalingInterface {
 
 const UtbetalingTil = () => {
     const { valgtReisetilskudd, setValgtReisetilskudd } = useAppStore()
-    const [ utbetalTil, setUtbetalTil ] = useState<string>(
-        valgtReisetilskudd && valgtReisetilskudd!.orgNavn !== ''
-            ? utbetalingSporsmalVerdier.ARBEIDSGIVER
-            : utbetalingSporsmalVerdier.MEG
-    )
+    const [ utbetalTil, setUtbetalTil ] = useState<string>('')
     const { steg, id } = useParams<RouteParams>()
     const stegNum = Number(steg)
     const history = useHistory()
     const methods = useForm({ reValidateMode: 'onSubmit' })
+
+    useEffect(() => {
+        const til = valgtReisetilskudd && valgtReisetilskudd!.orgNavn !== ''
+            ? tekst('sporsmal.utbetaling.verdi.ARBEIDSGIVER')
+            : tekst('sporsmal.utbetaling.verdi.MEG')
+        setUtbetalTil(til)
+        // eslint-disable-next-line
+    }, [ valgtReisetilskudd ])
 
     const handleChange = (e: any) => {
         const valg = e.target.value
@@ -53,7 +57,7 @@ const UtbetalingTil = () => {
         } else {
             put<UtbetalingInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${id}`, {
                 reisetilskuddId: id,
-                utbetalingTilArbeidsgiver: utbetalTil === utbetalingSporsmalVerdier.ARBEIDSGIVER,
+                utbetalingTilArbeidsgiver: utbetalTil === tekst('sporsmal.utbetaling.verdi.ARBEIDSGIVER'),
             }).then(() => {
                 history.push('/soknaden/' + id + '/' + (stegNum + 1))
             }).catch((error) => {
@@ -65,7 +69,6 @@ const UtbetalingTil = () => {
     return (
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)} className="horisontal-radio">
-
                 <RadioPanelGruppe
                     name={utbetalingSporsmal.name}
                     legend={<Systemtittel>{utbetalingSporsmal.tittel}</Systemtittel>}

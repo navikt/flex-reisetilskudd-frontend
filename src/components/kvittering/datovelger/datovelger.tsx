@@ -1,4 +1,4 @@
-import './flatpickr.less'
+import '../../filopplaster/filopplaster-modal/flatpickr.less'
 import './datovelger.less'
 
 import { Norwegian } from 'flatpickr/dist/l10n/no'
@@ -39,6 +39,7 @@ const Datovelger = ({ label, className, onChange, mode = 'single', id, feil, min
                 <Element tag="strong">{label}</Element>
             </label>
             <Flatpickr
+                name={id}
                 className="skjemaelement__input input--m"
                 placeholder={(mode === 'range') ? 'dd.mm.åååå til dd.mm.åååå' : 'dd.mm.åååå'}
                 options={{

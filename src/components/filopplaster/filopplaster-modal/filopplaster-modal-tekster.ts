@@ -1,11 +1,15 @@
 const FilopplasterModalTekster: any = {
     'nb': {
-        'filopplaster_modal.belop.feilmelding': 'Vennligst skriv inn et gyldig beløp',
-        'filopplaster_modal.dato.feilmelding': 'Vennligst velg en gyldig dato',
-        'filopplaster_modal.dagensdato.feilmelding': 'Vennligst velg en dato før dagens dato',
-        'filopplaster_modal.transportmiddel.feilmelding': 'Vennligst velg minst ett transportmiddel',
+        'filopplaster_modal.tittel': 'Totalt beløp',
+        'filopplaster_modal.nytt-utlegg.tittel': 'Legg til utlegg',
+        'filopplaster_modal.belop.feilmelding': 'Du må skrive inn totalbeløp',
+        'filopplaster_modal.dato.feilmelding': 'Du må velge dato',
+        'filopplaster_modal.dagensdato.feilmelding': 'Du må velge dato før dagens dato',
+        'filopplaster_modal.filopplasting.feilmelding': 'Du må laste opp kvittering',
+        'filopplaster_modal.transportmiddel.feilmelding': 'Du må velge transportmiddel',
         'filopplaster_modal.feiloppsummering': 'For å gå videre må du rette opp følgende:',
-        'filopplaster_modal.lagre': 'Lagre kvittering',
+        'filopplaster_modal.bekreft': 'Bekreft',
+        'filopplaster_modal.tilbake': 'Tilbake',
     }, 'en': {}
 }
 

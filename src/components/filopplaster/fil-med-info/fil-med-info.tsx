@@ -8,7 +8,7 @@ import { useAppStore } from '../../../data/stores/app-store'
 import { Kvittering } from '../../../types'
 import { DatoFormat, formatertDato } from '../../../utils/dato'
 import env from '../../../utils/environment'
-import { customTruncet,formaterFilstørrelse } from '../../../utils/fil-utils'
+import { customTruncet, formaterFilstørrelse } from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
 import { tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
@@ -21,16 +21,19 @@ interface Props {
 }
 
 const FilMedInfo = ({ fil, fjernKnapp }: Props) => {
-    const { kvitteringer, setKvitteringer } = useAppStore()
+    const { valgtReisetilskudd, setValgtReisetilskudd } = useAppStore()
+    let kvitteringer = valgtReisetilskudd!.kvitteringer
 
     const slettKvittering = (kvitteringSomSkalSlettes: Kvittering) => {
-        setKvitteringer(kvitteringer.filter(
+        kvitteringer = kvitteringer.filter(
             (kvittering) => kvittering.kvitteringId !== kvitteringSomSkalSlettes.kvitteringId,
-        ))
+        )
+        valgtReisetilskudd!.kvitteringer = kvitteringer
+        setValgtReisetilskudd(valgtReisetilskudd)
+
         del(`${env.apiUrl}/api/v1/kvittering/${fil.kvitteringId}`).catch((error) => {
             logger.error('Feil under sletting av kvittering', error)
-        }
-        )
+        })
     }
 
     const håndterKlikk = () => {
