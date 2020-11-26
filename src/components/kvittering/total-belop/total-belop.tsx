@@ -1,4 +1,4 @@
-import { Element } from 'nav-frontend-typografi'
+import { Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
 import { useAppStore } from '../../../data/stores/app-store'
@@ -15,11 +15,11 @@ const TotalBelop = (): ReactElement => {
         : (0.0))
 
     return (
-        <Element>
+        <Normaltekst>
             {getLedetekst(tekst('total_belop.totalbelop'), {
                 '%TOTALBELOP%': totaltBeløp().toFixed(2)
             })}
-        </Element>
+        </Normaltekst>
     )
 }
 

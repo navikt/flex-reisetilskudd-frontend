@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom'
 import { RouteParams } from '../../../app'
 import { post } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
-import { Kvittering, OpplastetKvittering, Transportmiddel } from '../../../types'
+import { Kvittering, OpplastetKvittering } from '../../../types'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
 import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
@@ -23,13 +23,7 @@ import FeilOppsummering from '../../sporsmal/feiloppsummering/feil-oppsummering'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
 
 const KvitteringForm = () => {
-    const {
-        valgtReisetilskudd, setValgtReisetilskudd, valgtSykmelding, setOpenModal,
-        typeKvittering, setTypeKvittering, uopplastetFil
-    } = useAppStore()
-
-    const [ dato ] = useState<Date | null>()
-    const [ beløp ] = useState<number>()
+    const { valgtReisetilskudd, setValgtReisetilskudd, valgtSykmelding, setOpenModal, valgtFil } = useAppStore()
     const [ laster, setLaster ] = useState<boolean>(false)
     const methods = useForm({ reValidateMode: 'onSubmit' })
     const { id } = useParams<RouteParams>()
@@ -37,8 +31,8 @@ const KvitteringForm = () => {
     const lagreKvittering = (fil: File) => {
         const requestData = new FormData()
         requestData.append('file', fil)
-        requestData.append('dato', dato!.toString())
-        requestData.append('beløp', beløp ? beløp.toString() : '')
+        requestData.append('dato', methods.getValues('dato_input'))
+        requestData.append('beløp', methods.getValues('belop_input'))
         setLaster(true)
 
         post<OpplastetKvittering>(`${env.mockBucketUrl}/kvittering`, requestData)
@@ -48,11 +42,10 @@ const KvitteringForm = () => {
                         reisetilskuddId: id,
                         navn: fil.name,
                         storrelse: fil.size,
-                        belop: beløp,
-                        fom: (dato || new Date()),
+                        belop: methods.getValues('belop_input'),
+                        fom: (methods.getValues('dato_input') || new Date()),
                         kvitteringId: response.parsedBody!.id,
-                        transportmiddel: Object.entries(Transportmiddel)
-                            .find(([ , v ]) => v === typeKvittering)?.[0],
+                        transportmiddel: methods.getValues('transportmiddel')
                     }
                     nyKvittering(kvittering)
                     return kvittering
@@ -64,7 +57,6 @@ const KvitteringForm = () => {
                 post<Kvittering>(`${env.apiUrl}/api/v1/kvittering`, kvittering)
                     .then(() => {
                         setLaster(false)
-                        setTypeKvittering(undefined)
                     })
                     .catch((error) => {
                         logger.error('Feil under opplasting av kvittering', error)
@@ -110,7 +102,7 @@ const KvitteringForm = () => {
     const validerFil = () => {
         const selektor = '.filopplasteren'
         const div: HTMLDivElement | null = document.querySelector(selektor)
-        if (!uopplastetFil) {
+        if (!valgtFil) {
             div!.classList.add('skjemaelement__input--harFeil')
         } else {
             methods.clearErrors('fil_input') // eslint-disable-line
@@ -174,7 +166,6 @@ const KvitteringForm = () => {
                                 id="belop_input"
                                 name="belop_input"
                                 inputMode={'numeric'}
-                                defaultValue={beløp}
                                 pattern="[0-9]*"
                                 className={
                                     'skjemaelement__input input--m periode-element' +

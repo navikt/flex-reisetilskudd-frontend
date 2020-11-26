@@ -5,13 +5,14 @@ import FilMedInfoTekster from '../components/filopplaster/fil-med-info/fil-med-i
 import FilTekster from '../components/filopplaster/fil/fil-tekster'
 import FilopplasterModal from '../components/filopplaster/filopplaster-modal/filopplaster-modal-tekster'
 import TotalBelopTekster from '../components/kvittering/total-belop/total-belop-tekster'
+import HovedpunkterTekster from '../components/oppsummering/hovedpunkter/hovedpunkter-tekster'
 import OppsummeringTekster from '../components/oppsummering/oppsummering-tekster'
+import OppsummeringSideTekster from '../components/oppsummering/soknad-info-utvid/soknad-info-utvid-tekster'
 import OpplastingTekster from '../components/sporsmal/opplasting/opplasting-tekster'
 import SporsmalTekster from '../components/sporsmal/sporsmal-tekster'
 import StegTekster from '../components/steg/steg-tekster'
 import SykmeldingTekster from '../components/sykmelding/sykmelding-tekster'
 import BekreftTekster from '../pages/bekreftelse/bekreft-tekster'
-import OppsummeringSideTekster from '../pages/oppsummering/oppsummering-tekster'
 import ReisetilskuddTekster from '../pages/reisetilskudd/tilskudd-tekster'
 import { logger } from './logger'
 
@@ -31,6 +32,7 @@ const tekster = {
     ...OpplastingTekster.nb,
     ...OppsummeringSideTekster.nb,
     ...SporsmalTekster.nb,
+    ...HovedpunkterTekster.nb,
 }
 
 export const tekst = (tekst: string): string => {

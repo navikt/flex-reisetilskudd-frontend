@@ -10,6 +10,8 @@ import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import TilbakeLenke from '../../components/diverse/klikkbar/tilbake-lenke'
 import Vis from '../../components/diverse/vis'
+import Hovedpunkter from '../../components/oppsummering/hovedpunkter/hovedpunkter'
+import SoknadInfoUtvid from '../../components/oppsummering/soknad-info-utvid/soknad-info-utvid'
 import Opplasting from '../../components/sporsmal/opplasting/opplasting'
 import TransportMiddel from '../../components/sporsmal/transport/transport-middel'
 import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
@@ -20,7 +22,6 @@ import { Brodsmule, Sykmelding } from '../../types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
-import Oppsummering from '../oppsummering/oppsummering'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -65,8 +66,12 @@ const TilskuddSide = () => {
                 <TilbakeLenke aktivtSteg={idNum} />
                 <Steg aktivtSteg={idNum} />
 
+                <Vis hvis={idNum === 4}>
+                    <SoknadInfoUtvid />
+                </Vis>
+
                 <Ekspanderbartpanel className="sykmelding-panel" tittel={
-                    <Undertittel>Opplysninger fra sykmeldingen</Undertittel>
+                    <Undertittel>{tekst('tilskudd.side.sykmeldinginfo')}</Undertittel>
                 }>
                     <SykmeldingInfo />
                 </Ekspanderbartpanel>
@@ -84,7 +89,7 @@ const TilskuddSide = () => {
                 </Vis>
 
                 <Vis hvis={idNum === 4}>
-                    <Oppsummering />
+                    <Hovedpunkter />
                 </Vis>
             </div>
         </>

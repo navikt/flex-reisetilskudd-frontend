@@ -8,6 +8,7 @@ const ReisetilskuddTekster: any = {
         'tilskudd.liste.nye.soknader': 'Nye søknader om reisetilskudd',
         'tilskudd.liste.feilmelding': 'Teknisk feil, kunne ikke finne noen reisetilskudd',
         'tilskudd.side.tittel': 'Dine reisetilskudd',
+        'tilskudd.side.sykmeldinginfo': 'Opplysninger fra sykmeldingen',
         'dine.tilskudd.tittel': 'Søknad om reisetilskudd',
         'dine.tilskudd.periode': 'Gjelder perioden fra %FOM% til %TOM%',
         'dine.tilskudd.org': '%ORGNAVN% org.nr %ORGNUMMER%',

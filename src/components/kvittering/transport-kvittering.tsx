@@ -4,13 +4,11 @@ import { Normaltekst } from 'nav-frontend-typografi'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
-import { useAppStore } from '../../data/stores/app-store'
 import { Transportmiddel } from '../../types'
 import { tekst } from '../../utils/tekster'
 import Vis from '../diverse/vis'
 
 const TransportKvittering = () => {
-    const { typeKvittering } = useAppStore()
     const { register, errors, trigger } = useFormContext()
 
     const options = [
@@ -34,7 +32,6 @@ const TransportKvittering = () => {
                     }
                     id="transportmiddel"
                     name="transportmiddel"
-                    value={typeKvittering}
                     onChange={() => trigger('transportmiddel')}
                 >
                     <option value="">Velg</option>
