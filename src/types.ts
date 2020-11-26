@@ -48,7 +48,7 @@ export type AktivtStegProps = {
 }
 
 export interface Reisetilskudd {
-    id: string,
+    reisetilskuddId: string,
     sykmeldingId: string,
     fnr: string,
 
