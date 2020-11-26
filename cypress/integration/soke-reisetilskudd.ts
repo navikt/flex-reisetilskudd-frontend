@@ -2,7 +2,7 @@ import mockReisetilskudd from '../../src/data/mock/data/reisetilskudd'
 
 describe('Tester reisetilskuddsøknaden', () => {
 
-    const url = `http://localhost:3000/soknaden/${mockReisetilskudd[0].id}/1`
+    const url = `http://localhost:3000/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`
 
     before(() => {
         cy.server()
@@ -31,7 +31,7 @@ describe('Tester reisetilskuddsøknaden', () => {
 
     describe('Utfylling og validering av side 1', () => {
         it('Tar tak i meg-knapp og clicker', () => {
-            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/1`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`)
             cy.get('.inputPanel').children().eq(1).should('be.visible').click()
         })
 
@@ -47,7 +47,7 @@ describe('Tester reisetilskuddsøknaden', () => {
 
     describe('Utfylling av side 2', () => {
         it('fyller ut går, egen bil, klikker på hjelpetekst, fyller inn km', () => {
-            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/2`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/2`)
 
             cy.get('label[for=gaa]').click({ force: true })
             cy.get('label[for=skl]').click({ force: true })
@@ -79,7 +79,7 @@ describe('Tester reisetilskuddsøknaden', () => {
     describe('Innholdsvalidering side 3', () => {
 
         it('Sjekker at siden inneholder elementer', () => {
-            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/3`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/3`)
             cy.contains('Kvitteringer for utlegg')
             cy.contains('Her kan du laste opp kvitteringer fra reisetilskuddsperioden.')
             cy.get('.hjelpetekst').should('be.visible').click().click()
@@ -102,7 +102,7 @@ describe('Tester reisetilskuddsøknaden', () => {
 
     describe('Innholdsvalidering side 4', () => {
         it('sjekker at oppsummeringssiden inneholder elementer', () => {
-            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/4`)
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/4`)
             cy.get('.soknad-info-utvid').click()
             cy.contains('Oppsummering av søknaden')
             cy.contains('Hvem skal pengene utbetales til?')

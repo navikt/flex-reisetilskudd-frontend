@@ -1,6 +1,6 @@
-echo "Bygger sykepengesok latest for docker compose utvikling"
+echo "Bygger flex-reisetilskudd-frontend:latest for docker compose utvikling"
 
-npm i
+npm ci
 
 npm run build
 docker build . -t flex-reisetilskudd-frontend:latest

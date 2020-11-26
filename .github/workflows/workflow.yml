@@ -38,7 +38,7 @@ jobs:
       - name: Run tests
         run: CI=true npm run test
       - name: Run cypress
-        uses: cypress-io/github-action@v1
+        uses: cypress-io/github-action@v2
         with:
             install: false
             record: false
@@ -88,6 +88,26 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais-dev.yaml
+
+  deploy-to-prod-gcp:
+    if: github.ref == 'refs/heads/master'
+    name: Deploy to prod-gcp
+    needs: build-and-publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/download-artifact@v1
+        with:
+          name: VERSION.txt
+          path: .
+      - run: echo "VERSION=`cat VERSION.txt`" >> $GITHUB_ENV
+      - run: echo "IMAGE=docker.pkg.github.com/${GITHUB_REPOSITORY}/$APP:$VERSION" >> $GITHUB_ENV
+      - name: Deploy to dev-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: nais-prod.yaml
 
   deploy-to-labs-gcp:
     if: github.ref == 'refs/heads/master'

@@ -44,13 +44,13 @@ const TilskuddSide = () => {
     }, [])
 
     useEffect(() => {
-        const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.id === id)
+        const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.reisetilskuddId === id)
         setValgtReisetilskudd(funnetTilskudd)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ reisetilskuddene, id ])
 
     useEffect(() => {
-        const sykmeldingId = reisetilskuddene.find(r => r.id === id)?.sykmeldingId
+        const sykmeldingId = reisetilskuddene.find(r => r.reisetilskuddId === id)?.sykmeldingId
         const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === sykmeldingId)
         setValgtSykmelding(sykmelding)
         // eslint-disable-next-line react-hooks/exhaustive-deps
