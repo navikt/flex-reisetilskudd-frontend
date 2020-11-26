@@ -44,42 +44,42 @@ const SykmeldingInfo = (): ReactElement => {
     return (
         <>
             <Vis hvis={vårSykmelding !== undefined}>
-                <Element className="soknad-tittel">
+                <Element className="element-tittel">
                     {tekst('sykmelding.periode')}
                 </Element>
                 <PeriodeTekst fraDato={fraDato} tilDato={tilDato} />
 
-                <Element className="soknad-tittel">
+                <Element className="element-tittel">
                     {tekst('sykmelding.diagnose')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSE)}
 
-                <Element className="soknad-tittel">
+                <Element className="element-tittel">
                     {tekst('sykmelding.diagnosekode')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.DIAGNOSEKODE)}
 
-                <Element className="soknad-tittel">
+                <Element className="element-tittel">
                     {tekst('sykmelding.bidiagnose')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.BI_DIAGNOSER)}
 
-                <Element className="soknad-tittel">
+                <Element className="element-tittel">
                     {tekst('sykmelding.reisetilskudd')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.REISETILSKUDD)}
 
-                <Element className="soknad-tittel">
+                <Element className="element-tittel">
                     {tekst('sykmelding.beskriv')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.BESKRIV_HENSYN)}
 
-                <Element className="soknad-tittel">
+                <Element className="element-tittel">
                     {tekst('sykmelding.arbeidsgiver')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.ARBEIDSGIVER)}
 
-                <Element className="soknad-tittel">
+                <Element className="element-tittel">
                     {tekst('sykmelding.lege-sykmelder')}
                 </Element>
                 {visVårVerdi(SykmeldingOpplysningEnum.SYKMELDER)}

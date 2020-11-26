@@ -1,7 +1,7 @@
 import './drag-and-drop.less'
 
 import { Normaltekst } from 'nav-frontend-typografi'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useFormContext } from 'react-hook-form'
 
@@ -13,19 +13,20 @@ import Vis from '../../diverse/vis'
 import Fil from '../fil/fil'
 import binders from './binders.svg'
 
-const tillatteFiltyper = env.tillatteFiltyper
+const tillatteFiltyper = 'png og jpg'
 const maxFilstørrelse = env.maksFilstørrelse
 const maks = formaterFilstørrelse(maxFilstørrelse)
 
 const DragAndDrop = () => {
-    const { uopplastetFil, setUopplastetFil } = useAppStore()
-    const { setError, errors, register } = useFormContext()
+    const { valgtFil, setValgtFil } = useAppStore()
+    const { setError, errors, register, setValue, getValues } = useFormContext()
+    const filRef = useRef<HTMLInputElement>(null)
 
     const onDropCallback = useCallback(
         (filer) => {
             filer.forEach((fil: File) => {
                 if (maxFilstørrelse && fil.size > maxFilstørrelse) {
-                    setError('maks_fil', {
+                    setError('fil_input', {
                         type: 'skjema-feil',
                         message: getLedetekst(tekst('drag_and_drop.maks'),
                             { '%FILNAVN%': fil.name, '%MAKSSTOR%': maks }
@@ -34,7 +35,7 @@ const DragAndDrop = () => {
                 }
 
                 if (tillatteFiltyper && !tillatteFiltyper.includes(fil.type)) {
-                    setError('tillatt_fil', {
+                    setError('fil_input', {
                         type: 'skjema-feil',
                         message: getLedetekst(tekst('drag_and_drop.filtype'),
                             { '%FILNAVN%': fil.name, '%TILLATTEFILTYPER%': tillatteFiltyper }
@@ -42,8 +43,8 @@ const DragAndDrop = () => {
                     })
                 }
 
-                if (!errors.valgt_fil) {
-                    setUopplastetFil(fil)
+                if (!errors.fil_input) {
+                    setValgtFil(fil)
                 }
             })
         },
@@ -56,13 +57,21 @@ const DragAndDrop = () => {
         multiple: false,
     })
 
+    useEffect(() => {
+        setValue('fil_input', filRef.current && filRef.current.value)
+        console.log('getValues', getValues('fil_input')) // eslint-disable-line
+        console.log('filRef', filRef) // eslint-disable-line
+        console.log('valgtFil', valgtFil) // eslint-disable-line
+        // eslint-disable-next-line
+    }, [ filRef, valgtFil ])
+
     return (
         <>
-            <Vis hvis={!uopplastetFil}>
+            <Vis hvis={!valgtFil}>
                 <div className="filopplasteren" {...getRootProps()}>
-                    <input {...getInputProps()} />
+                    <input ref={filRef} {...getInputProps()} />
                     <input type="hidden" name="fil_input" id="fil_input"
-                        defaultValue={uopplastetFil && uopplastetFil!.name ? uopplastetFil!.name : ''}
+                        defaultValue={filRef.current && filRef.current.name as any}
                         ref={register({ required: tekst('filopplaster_modal.filopplasting.feilmelding') })}
                     />
                     <img src={binders} className="opplastingsikon" alt="Opplastingsikon" />
@@ -82,19 +91,19 @@ const DragAndDrop = () => {
 
             </Vis>
 
-            {uopplastetFil && uopplastetFil!.name
+            {valgtFil && valgtFil!.name
                 ? <>
-                    <Fil fil={uopplastetFil} />
+                    <Fil fil={valgtFil} />
 
                     <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                         <Vis hvis={errors['maks_fil']}>
                             <p>{getLedetekst(tekst('drag_and_drop.maks'),
-                                { '%FILNAVN%': uopplastetFil!.name, '%MAKSSTOR%': maks }
+                                { '%FILNAVN%': valgtFil!.name, '%MAKSSTOR%': maks }
                             )}</p>
                         </Vis>
                         <Vis hvis={errors['tillatt_fil']}>
                             <p>{getLedetekst(tekst('drag_and_drop.filtype'),
-                                { '%FILNAVN%': uopplastetFil!.name, '%TILLATTEFILTYPER%': tillatteFiltyper }
+                                { '%FILNAVN%': valgtFil!.name, '%TILLATTEFILTYPER%': tillatteFiltyper }
                             )}</p>
                         </Vis>
                     </Normaltekst>

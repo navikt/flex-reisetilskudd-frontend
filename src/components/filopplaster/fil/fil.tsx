@@ -15,7 +15,7 @@ interface filProps {
 }
 
 const Fil = ({ fil }: filProps) => {
-    const { setUopplastetFil } = useAppStore()
+    const { setValgtFil } = useAppStore()
 
     return (
         <>
@@ -29,7 +29,7 @@ const Fil = ({ fil }: filProps) => {
                     <Normaltekst tag="span" className="filstr">
                         ({formaterFilstørrelse(fil!.size)})
                     </Normaltekst>
-                    <button className="endreknapp" onClick={() => setUopplastetFil(null)}>
+                    <button className="endreknapp" onClick={() => setValgtFil(null)}>
                         <img className="endreikon" src={endre} alt="" />
                         Endre
                     </button>
