@@ -4,47 +4,53 @@ import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron'
 import React, { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
+//import useForceUpdate from 'use-force-update'
 import { RouteParams } from '../../app'
-import { SEPARATOR } from '../../utils/constants'
 
-export const sider = [
-    'Forside',
-    'Utbetaling',
-    'Transport',
-    'Kvitteringer',
-    'Send inn',
-]
-
-export const pathUtenSteg = (pathname: string): string => {
-    const arr: string[] = pathname.split(SEPARATOR)
-    arr.pop()
-    return arr.join(SEPARATOR)
-}
+export const sider = [ 'Utbetaling', 'Transport', 'Kvitteringer', 'Send inn' ]
 
 const SideNav = () => {
-    const [ sideNr, setSideNr ] = useState<number>(1)
+    const [ aktivSide, setAktivSide ] = useState<number>(1)
+    // const forceUpdate = useForceUpdate()
     const history = useHistory()
     const { id, steg } = useParams<RouteParams>()
     const stegNum = Number(steg)
+    const min = 1, max = 4
 
     const handleChange = (e: any) => {
-        setSideNr(e.target.value)
-        history.push('/soknaden/' + id + '/' + (sideNr))
+        history.push('/soknaden/' + id + '/' + (e.target.value))
+    }
+
+    const venstreKlikk = () => {
+        if (stegNum > min) {
+            history.push('/soknaden/' + id + '/' + (stegNum - 1))
+            setAktivSide(stegNum - 2)
+        } else {
+            history.push('/soknaden/' + id)
+            setAktivSide(0)
+        }
+    }
+
+    const hoyreKlikk = () => {
+        if (stegNum < max) {
+            history.push('/soknaden/' + id + '/' + (stegNum + 1))
+            setAktivSide(stegNum)
+        }
     }
 
     return (
         <section className="side_nav">
-            <button onClick={() => history.push('/soknaden/' + id + '/' + (stegNum - 1))}>
+            <button onClick={venstreKlikk} disabled={stegNum === min}>
                 <VenstreChevron />
             </button>
-            <select onChange={handleChange}>
+            <select onChange={handleChange} defaultValue={aktivSide}>
                 {sider.map((side, index) => {
                     return (
-                        <option value={index + 1} key={index}>{side}</option>
+                        <option value={index + 1} key={index} selected={aktivSide === (index + 1)}>{side}</option>
                     )
                 })}
             </select>
-            <button onClick={() => history.push('/soknaden/' + id + '/' + (stegNum + 1))}>
+            <button onClick={hoyreKlikk} disabled={stegNum === max}>
                 <HoyreChevron />
             </button>
         </section>

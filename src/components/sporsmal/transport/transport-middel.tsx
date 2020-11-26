@@ -52,11 +52,9 @@ const TransportMiddel = () => {
         setValgtTransport(sett)
         if (valgtReisetilskudd!.egenBil > 0) {
             kmRef.current!.classList.add('aktiv')
-            kmRef.current!.scrollIntoView({ behavior: 'smooth' })
         }
         if (valgtReisetilskudd!.kollektivtransport > 0) {
             utgRef.current!.classList.add('aktiv')
-            utgRef.current!.scrollIntoView({ behavior: 'smooth' })
         }
         // eslint-disable-next-line
     }, [])

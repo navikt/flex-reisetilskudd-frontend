@@ -53,14 +53,14 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.get('label[for=skl]').click({ force: true })
 
             cy.get('label[for=bil]').click({ force: true })
-            cy.get('.transportmiddel__hjelpetekst-egen-bil').should('be.visible').click()
+            cy.get('.transportmiddel__hjelpetekst-egen-bil').should('be.visible').click({ force: true })
 
             cy.get('#kilometer-bil').should('be.visible')
                 .type('1337').should('have.value', '01337')
 
             cy.get('label[for=kol]').click({ force: true })
             cy.get('#utgifter-koll').should('be.visible')
-                .type('900').should('have.value', '0900')
+                .type('900', { force: true }).should('have.value', '0900')
 
             cy.get('form.transportmiddel .checkboksPanel').should('be.visible')
         })
@@ -72,7 +72,7 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.get('#skl').should('be.checked')
             cy.get('#bil').should('be.checked')
             cy.get('#kol').should('be.checked')
-            cy.get('.knapperad').click()
+            cy.get('.knapperad').click({ force: true })
         })
     })
 
