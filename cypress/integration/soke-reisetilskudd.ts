@@ -41,7 +41,7 @@ describe('Tester reisetilskuddsøknaden', () => {
         })
 
         it('finner videreknappen', () => {
-            cy.get('.knapperad').should('be.visible').click()
+            cy.get('.knapperad .knapp--hoved').should('be.visible').click()
         })
     })
 
@@ -72,11 +72,12 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.get('#skl').should('be.checked')
             cy.get('#bil').should('be.checked')
             cy.get('#kol').should('be.checked')
-            cy.get('.knapperad').click({ force: true })
+            cy.get('.knapperad .knapp--hoved').click({ force: true })
         })
     })
 
     describe('Innholdsvalidering side 3', () => {
+
         it('Sjekker at siden inneholder elementer', () => {
             cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/3`)
             cy.contains('Kvitteringer for utlegg')
@@ -95,32 +96,24 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.get('select[name=transportmiddel]').select('Taxi')
 
             cy.get('.filopplasteren input[type=file]').attachFile('icon.png')
-            cy.get('button[type=submit].lagre-kvittering')
+            cy.get('.knapperad .knapp--hoved').click({ force: true })
+        })
+    })
+
+    describe('Innholdsvalidering side 4', () => {
+        it('sjekker at oppsummeringssiden inneholder elementer', () => {
+            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/4`)
+            cy.get('.soknad-info-utvid').click()
+            cy.contains('Oppsummering av søknaden')
+            cy.contains('Hvem skal pengene utbetales til?')
+            cy.contains('Hvordan reiste du før sykmeldingen?')
+            cy.contains('Opplastede kvitteringer')
+            cy.contains('Totalt beløp:')
+
         })
     })
 
     /*
-        describe('Innholdsvalidering side 4', () => {
-            it('sjekker at oppsummeringssiden inneholder elementer', () => {
-                cy.url().should('include', `/soknaden/${mockReisetilskudd[0].id}/4`)
-                cy.contains('Oppsummering av søknaden')
-                cy.contains('Hvem skal pengene utbetales til?')
-                cy.contains('Hvordan reiste du før sykmeldingen?')
-                cy.contains('Opplastede kvitteringer')
-                cy.contains('Totalt beløp:')
-
-                if (!(cy.contains('Beløp') && cy.contains('Dato'))) {
-                    cy.log('Oppsummeringssiden inneholder ingen kvitteringsoverskrift og kanskje ingen kvitteringer')
-                } else {
-                    cy.contains('Beløp')
-                    cy.contains('Dato')
-                    cy.log('Kvitteringer displayes på oppsummeringssiden')
-                }
-
-                cy.get('.send-knapp').click()
-            })
-        })
-
         describe('Bekreftelsesside', () => {
             it('sjekker at bekreftelsessiden inneholder elementer', () => {
                 cy.url().should('include', 'bekreftelse')

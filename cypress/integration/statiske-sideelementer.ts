@@ -14,7 +14,6 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
 
     it('Laster inn sidenavigasjon', function() {
         cy.get('.side_nav').should('be.visible')
-        cy.contains('Forside')
         cy.contains('Utbetaling')
         cy.contains('Transport')
         cy.contains('Kvitteringer')
