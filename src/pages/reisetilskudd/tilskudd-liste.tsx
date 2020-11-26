@@ -52,7 +52,7 @@ const TilskuddListe = () => {
 
                     {reisetilskuddene?.map((tilskudd, idx) => {
                         return (
-                            <Link to={`/soknaden/${tilskudd.id}/1`}
+                            <Link to={`/soknaden/${tilskudd.reisetilskuddId}/1`}
                                 className="dine-reisetilskudd" key={idx}
                             >
                                 <div className="reisetilskudd-ikon">
