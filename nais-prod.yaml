@@ -1,0 +1,46 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: flex-reisetilskudd-frontend
+  namespace: flex
+  labels:
+    team: flex
+spec:
+  image: {{ image }}
+  port: 8080
+  ingresses:
+    - "https://www.nav.no/syk/reisetilskudd"
+  replicas:
+    min: 1
+    max: 2
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  liveness:
+    path: internal/isAlive
+  readiness:
+    path: internal/isReady
+  env:
+    - name: FLEX_REISETILSKUDD_BACKEND_PROXY_ROOT
+      value: "https://flex-reisetilskudd-backend-proxy.nav.no"
+    - name: LOGINSERVICE_URL
+      value: "https://loginservice.nav.no/login"
+    - name: LOGINSERVICE_REDIRECT_URL
+      value: "https://www.nav.no/syk/reisetilskudd"
+    - name: DECORATOR_URL
+      value: "https://dekoratoren.nav.no"
+    - name: ENVIRONMENT
+      value: "prod"
+    - name: SYKMELDINGER_BACKEND_PROXY_ROOT
+      value: "https://sykmeldinger-backend-proxy.nav.no"
+    - name: SYKEFRAVAER_URL
+      value: "https://tjenester.nav.no/sykefravaer"
+    - name: DITTNAV_URL
+      value: "https://www.nav.no/person/dittnav/"
+    - name: FRONTENDLOGGER_ROOT
+      value: "https://tjenester.nav.no"
