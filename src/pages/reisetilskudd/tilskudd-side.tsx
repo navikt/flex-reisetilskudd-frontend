@@ -8,14 +8,13 @@ import { useParams } from 'react-router-dom'
 import { RouteParams } from '../../app'
 import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
-import TilbakeLenke from '../../components/diverse/klikkbar/tilbake-lenke'
 import Vis from '../../components/diverse/vis'
 import Hovedpunkter from '../../components/oppsummering/hovedpunkter/hovedpunkter'
 import SoknadInfoUtvid from '../../components/oppsummering/soknad-info-utvid/soknad-info-utvid'
+import SideNav from '../../components/side-nav/side-nav'
 import Opplasting from '../../components/sporsmal/opplasting/opplasting'
 import TransportMiddel from '../../components/sporsmal/transport/transport-middel'
 import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
-import Steg from '../../components/steg/steg'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import { useAppStore } from '../../data/stores/app-store'
 import { Brodsmule, Sykmelding } from '../../types'
@@ -63,8 +62,7 @@ const TilskuddSide = () => {
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
-                <TilbakeLenke aktivtSteg={idNum} />
-                <Steg aktivtSteg={idNum} />
+                <SideNav />
 
                 <Vis hvis={idNum === 4}>
                     <SoknadInfoUtvid />

@@ -8,9 +8,9 @@ import TotalBelopTekster from '../components/kvittering/total-belop/total-belop-
 import HovedpunkterTekster from '../components/oppsummering/hovedpunkter/hovedpunkter-tekster'
 import OppsummeringTekster from '../components/oppsummering/oppsummering-tekster'
 import OppsummeringSideTekster from '../components/oppsummering/soknad-info-utvid/soknad-info-utvid-tekster'
+import SideNavTekster from '../components/side-nav/side-nav-tekster'
 import OpplastingTekster from '../components/sporsmal/opplasting/opplasting-tekster'
 import SporsmalTekster from '../components/sporsmal/sporsmal-tekster'
-import StegTekster from '../components/steg/steg-tekster'
 import SykmeldingTekster from '../components/sykmelding/sykmelding-tekster'
 import BekreftTekster from '../pages/bekreftelse/bekreft-tekster'
 import ReisetilskuddTekster from '../pages/reisetilskudd/tilskudd-tekster'
@@ -19,7 +19,7 @@ import { logger } from './logger'
 const tekster = {
     ...BannerTekster.nb,
     ...ReisetilskuddTekster.nb,
-    ...StegTekster.nb,
+    ...SideNavTekster.nb,
     ...KlikkbarTekster.nb,
     ...DragAndDropTekster.nb,
     ...FilTekster.nb,

@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../../app'
 import { useAppStore } from '../../../data/stores/app-store'
-import { gåTilNesteSide } from '../../../utils/navigasjon'
+import { pathTilSide } from '../../../utils/navigasjon'
 import { tekst } from '../../../utils/tekster'
 import VidereKnapp from '../../diverse/klikkbar/videre-knapp'
 import FilopplasterModal from '../../filopplaster/filopplaster-modal/filopplaster-modal'
@@ -20,6 +20,12 @@ const Opplasting = () => {
     const { steg } = useParams<RouteParams>()
     const stegNr = Number(steg)
     const history = useHistory()
+
+    const gåTilNesteSide = (history: any, aktivtSteg: number): void => {
+        if (aktivtSteg + 1 <= 4 && aktivtSteg + 1 > 1) {
+            history.push(pathTilSide(aktivtSteg + 1, history))
+        }
+    }
 
     const handleVidereKlikk = () => {
         gåTilNesteSide(history, stegNr)

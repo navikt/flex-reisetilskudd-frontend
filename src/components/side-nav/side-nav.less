@@ -1,8 +1,39 @@
 @import '../../../node_modules/nav-frontend-core/less/_variabler';
 @import '../../../src/basic';
 
-.stegindikator {
+.side_nav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     padding-bottom: 2rem;
+
+    button {
+        border: 0;
+        border-radius: 2px;
+        background: transparent;
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 3px @fokusFarge;
+        }
+    }
+
+    select {
+        width: auto;
+        border-radius: 2px;
+        border: 0;
+        padding: 0;
+        color: @navBla;
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 3px @fokusFarge;
+        }
+    }
+
+    .chevronboks {
+        color: @navBla;
+    }
 
     .stegindikator__steg--labelled {
         min-width: auto;
