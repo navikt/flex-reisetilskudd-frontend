@@ -13,11 +13,11 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         cy.get('.bannerikoner').should('be.visible')
     })
 
-    it('tilbake-lenke eksisterer på siden', ()=> {
+    xit('tilbake-lenke eksisterer på siden', ()=> {
         cy.get('.tilbake-lenke').should('be.visible')
     })
 
-    it('Laster inn stegindikator', function() {
+    xit('Laster inn stegindikator', function() {
         cy.get('.stegindikator').should('be.visible')
         cy.contains('Utbetaling av pengene')
         cy.contains('Dagens transportmiddel')
