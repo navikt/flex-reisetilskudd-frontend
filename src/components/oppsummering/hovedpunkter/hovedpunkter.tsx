@@ -1,7 +1,7 @@
 import './hovedpunkter.less'
 
 import dayjs from 'dayjs'
-import { Element, Normaltekst } from 'nav-frontend-typografi'
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { useAppStore } from '../../../data/stores/app-store'
@@ -18,7 +18,7 @@ const Hovedpunkter = () => {
 
     return (
         <section className="hovedpunkter">
-            <Element tag="h2">{tekst('hovedpunkter.tittel')}</Element>
+            <Undertittel tag="h2">{tekst('hovedpunkter.tittel')}</Undertittel>
 
             <Normaltekst tag="ul" className="punkter">
                 <li>
