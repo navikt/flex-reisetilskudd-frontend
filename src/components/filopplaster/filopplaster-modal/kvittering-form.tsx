@@ -19,7 +19,6 @@ import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
 import { tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import TransportKvittering from '../../kvittering/transport-kvittering'
-import FeilOppsummering from '../../sporsmal/feiloppsummering/feil-oppsummering'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
 
 const KvitteringForm = () => {
@@ -200,8 +199,6 @@ const KvitteringForm = () => {
                         </Knapp>
                     </div>
                 }
-
-                <FeilOppsummering errors={methods.errors} />
             </form>
         </FormProvider>
     )

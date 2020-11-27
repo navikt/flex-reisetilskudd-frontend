@@ -80,14 +80,14 @@ describe('Tester reisetilskuddsøknaden', () => {
 
         it('Sjekker at siden inneholder elementer', () => {
             cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/3`)
-            cy.contains('Kvitteringer for utlegg')
+            cy.contains('Kvitteringer for reise')
             cy.contains('Her kan du laste opp kvitteringer fra reisetilskuddsperioden.')
             cy.get('.hjelpetekst').should('be.visible').click().click()
             cy.get('.fler-vedlegg').should('be.visible').click()
         })
 
         it('Sjekker at utlegg-modalen inneholder opplastingform', () => {
-            cy.contains('Kvitteringer for utlegg')
+            cy.contains('Kvitteringer for reise')
 
             cy.get('input[name=dato_input]').focus().click({ force: true })
             cy.get('.flatpickr-calendar').contains('10').click({ force: true })
@@ -108,7 +108,7 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.contains('Hvem skal pengene utbetales til?')
             cy.contains('Hvordan reiste du før sykmeldingen?')
             cy.contains('Opplastede kvitteringer')
-            cy.contains('Totalt beløp:')
+            cy.contains('Totalbeløp:')
 
         })
     })

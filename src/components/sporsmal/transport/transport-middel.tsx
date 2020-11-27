@@ -118,6 +118,7 @@ const TransportMiddel = () => {
         }).catch((error) => {
             logger.error('Feil ved oppdatering av skjema', error)
         })
+        document.querySelector('.sidebanner')!.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
 
     return (
