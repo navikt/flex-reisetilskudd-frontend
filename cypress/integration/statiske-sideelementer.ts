@@ -10,19 +10,16 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
     it('Laster inn header og headerelementer', function() {
         cy.get('.sidebanner').should('be.visible')
         cy.get('.sidebanner__tittel').should('be.visible').and('have.text', 'Søknad om reisetilskudd')
-        cy.get('.bannerikoner').should('be.visible')
     })
 
-    xit('tilbake-lenke eksisterer på siden', ()=> {
-        cy.get('.tilbake-lenke').should('be.visible')
-    })
-
-    xit('Laster inn stegindikator', function() {
-        cy.get('.stegindikator').should('be.visible')
-        cy.contains('Utbetaling av pengene')
-        cy.contains('Dagens transportmiddel')
-        cy.contains('Transportmiddel i reisetilskuddperioden')
-        cy.contains('Oppsummering')
+    it('Laster inn sidenavigasjon', function() {
+        cy.get('.side_nav').should('be.visible')
+        cy.contains('Utbetaling')
+        cy.contains('Transport')
+        cy.contains('Kvitteringer')
+        cy.contains('Send inn')
+        cy.get('button .chevron--venstre').should('be.visible')
+        cy.get('button .chevron--hoyre').should('be.visible')
     })
 
     it('Laster inn sykemeldingpanel', ()=> {

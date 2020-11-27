@@ -37,14 +37,14 @@ const KvitteringForm = () => {
 
         post<OpplastetKvittering>(`${env.mockBucketUrl}/kvittering`, requestData)
             .then((response) => {
-                if (response.parsedBody?.id) {
+                if (response.parsedBody?.reisetilskuddId) {
                     const kvittering: Kvittering = {
                         reisetilskuddId: id,
                         navn: fil.name,
                         storrelse: fil.size,
                         belop: methods.getValues('belop_input'),
                         fom: (methods.getValues('dato_input') || new Date()),
-                        kvitteringId: response.parsedBody!.id,
+                        kvitteringId: response.parsedBody!.reisetilskuddId,
                         transportmiddel: methods.getValues('transportmiddel')
                     }
                     nyKvittering(kvittering)

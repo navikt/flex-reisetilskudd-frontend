@@ -22,7 +22,7 @@ export interface Kvittering {
 }
 
 export interface OpplastetKvittering {
-    id: string;
+    reisetilskuddId: string;
 }
 
 export enum Transport {

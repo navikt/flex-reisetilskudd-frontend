@@ -10,6 +10,7 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
     const [ valgtSykmelding, setValgtSykmelding ] = useState<Sykmelding>()
     const [ openModal, setOpenModal ] = useState<boolean>(false)
     const [ valgtFil, setValgtFil ] = useState<File | null>(null)
+    const [ erBekreftet, setErBekreftet ] = useState<boolean>(false)
 
     return {
         reisetilskuddene, setReisetilskuddene,
@@ -18,5 +19,6 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
         valgtSykmelding, setValgtSykmelding,
         openModal, setOpenModal,
         valgtFil, setValgtFil,
+        erBekreftet, setErBekreftet
     }
 })
