@@ -80,14 +80,14 @@ describe('Tester reisetilskuddsøknaden', () => {
 
         it('Sjekker at siden inneholder elementer', () => {
             cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/3`)
-            cy.contains('Kvitteringer for utlegg')
+            cy.contains('Kvitteringer for reise')
             cy.contains('Her kan du laste opp kvitteringer fra reisetilskuddsperioden.')
             cy.get('.hjelpetekst').should('be.visible').click().click()
             cy.get('.fler-vedlegg').should('be.visible').click()
         })
 
         it('Sjekker at utlegg-modalen inneholder opplastingform', () => {
-            cy.contains('Kvitteringer for utlegg')
+            cy.contains('Kvitteringer for reise')
 
             cy.get('input[name=dato_input]').focus().click({ force: true })
             cy.get('.flatpickr-calendar').contains('10').click({ force: true })
@@ -113,25 +113,23 @@ describe('Tester reisetilskuddsøknaden', () => {
         })
     })
 
-    /*
-        describe('Bekreftelsesside', () => {
-            it('sjekker at bekreftelsessiden inneholder elementer', () => {
-                cy.url().should('include', 'bekreftelse')
+/*
+    describe('Bekreftelsesside', () => {
+        it('sjekker at bekreftelsessiden inneholder elementer', () => {
+            cy.url().should('include', 'bekreftelse')
 
-                cy.get('.liste__bakgrunn').should('be.visible')
-                cy.get('.sirkel__tall').should('be.visible')
+            cy.get('.liste__bakgrunn').should('be.visible')
+            cy.get('.sirkel__tall').should('be.visible')
 
-                cy.contains('Du har sendt inn søknaden')
-                cy.contains('Søknaden blir behandlet')
+            cy.contains('Du har sendt inn søknaden')
+            cy.contains('Søknaden blir behandlet')
 
-                cy.contains('Les mer om reglene for reisetilskudd')
-                cy.get('a[href*="www.nav.no"]').should('be.visible')
+            cy.contains('Les mer om reglene for reisetilskudd')
+            cy.get('a[href*="www.nav.no"]').should('be.visible')
 
-                cy.contains('sykepenger til selvstendig næringsdrivende og frilansere')
-
-                cy.contains('Les om hva du må gjøre for å beholde sykepengene')
-            })
+            cy.contains('sykepenger til selvstendig næringsdrivende og frilansere')
+            cy.contains('Les om hva du må gjøre for å beholde sykepengene')
         })
-    */
-
+    })
+*/
 })

@@ -1,6 +1,6 @@
 import './drag-and-drop.less'
 
-import { Normaltekst } from 'nav-frontend-typografi'
+import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { useCallback, useEffect, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useFormContext } from 'react-hook-form'
@@ -68,8 +68,11 @@ const DragAndDrop = () => {
     return (
         <>
             <Vis hvis={!valgtFil}>
+                <label htmlFor="ddfil" className="skjemaelement__label">
+                    <Element tag="strong">{tekst('drag_and_drop.label')}</Element>
+                </label>
                 <div className="filopplasteren" {...getRootProps()}>
-                    <input ref={filRef} {...getInputProps()} />
+                    <input ref={filRef} {...getInputProps()} id="ddfil" />
                     <input type="hidden" name="fil_input" id="fil_input"
                         defaultValue={filRef.current && filRef.current.name as any}
                         ref={register({ required: tekst('filopplaster_modal.filopplasting.feilmelding') })}
