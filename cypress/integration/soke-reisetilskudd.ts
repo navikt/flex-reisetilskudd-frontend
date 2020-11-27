@@ -113,25 +113,23 @@ describe('Tester reisetilskuddsøknaden', () => {
         })
     })
 
-    /*
-        describe('Bekreftelsesside', () => {
-            it('sjekker at bekreftelsessiden inneholder elementer', () => {
-                cy.url().should('include', 'bekreftelse')
+/*
+    describe('Bekreftelsesside', () => {
+        it('sjekker at bekreftelsessiden inneholder elementer', () => {
+            cy.url().should('include', 'bekreftelse')
 
-                cy.get('.liste__bakgrunn').should('be.visible')
-                cy.get('.sirkel__tall').should('be.visible')
+            cy.get('.liste__bakgrunn').should('be.visible')
+            cy.get('.sirkel__tall').should('be.visible')
 
-                cy.contains('Du har sendt inn søknaden')
-                cy.contains('Søknaden blir behandlet')
+            cy.contains('Du har sendt inn søknaden')
+            cy.contains('Søknaden blir behandlet')
 
-                cy.contains('Les mer om reglene for reisetilskudd')
-                cy.get('a[href*="www.nav.no"]').should('be.visible')
+            cy.contains('Les mer om reglene for reisetilskudd')
+            cy.get('a[href*="www.nav.no"]').should('be.visible')
 
-                cy.contains('sykepenger til selvstendig næringsdrivende og frilansere')
-
-                cy.contains('Les om hva du må gjøre for å beholde sykepengene')
-            })
+            cy.contains('sykepenger til selvstendig næringsdrivende og frilansere')
+            cy.contains('Les om hva du må gjøre for å beholde sykepengene')
         })
-    */
-
+    })
+*/
 })
