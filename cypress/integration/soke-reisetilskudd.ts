@@ -108,7 +108,7 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.contains('Hvem skal pengene utbetales til?')
             cy.contains('Hvordan reiste du før sykmeldingen?')
             cy.contains('Opplastede kvitteringer')
-            cy.contains('Totalbeløp:')
+            cy.contains('Totalt beløp:')
 
         })
     })
