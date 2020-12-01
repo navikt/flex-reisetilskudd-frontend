@@ -1,4 +1,5 @@
 import { Reisetilskudd } from '../../../types'
+import mockKvitteringer from './kvitteringer'
 
 const mockReisetilskudd : Reisetilskudd[] = [
     {
@@ -37,7 +38,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
         reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
         sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
-        kvitteringer: [],
+        kvitteringer: mockKvitteringer,
     },
     {
         fnr: '01010112345',

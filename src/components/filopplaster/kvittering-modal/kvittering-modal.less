@@ -1,7 +1,7 @@
 @import '../../../../node_modules/nav-frontend-core/less/core';
 @import '../../../../src/basic';
 
-.filopplaster-modal {
+.kvittering_modal {
     width: 475px;
 
     .modal-content {
@@ -49,5 +49,23 @@
 
     .belop-label {
         margin-bottom: 0.5rem;
+    }
+
+    .restriksjoner {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+    }
+}
+
+@media (min-width: @screen-sm) {
+    .kvittering_modal {
+        .restriksjoner {
+            flex-direction: row;
+
+            span + span {
+                margin-left: 0.35rem;
+            }
+        }
     }
 }

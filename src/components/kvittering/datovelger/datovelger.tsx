@@ -1,4 +1,4 @@
-import '../../filopplaster/filopplaster-modal/flatpickr.less'
+import '../../filopplaster/kvittering-modal/flatpickr.less'
 import './datovelger.less'
 
 import { Norwegian } from 'flatpickr/dist/l10n/no'

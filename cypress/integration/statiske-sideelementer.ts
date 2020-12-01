@@ -17,7 +17,7 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         cy.contains('Utbetaling')
         cy.contains('Transport')
         cy.contains('Kvitteringer')
-        cy.contains('Send inn')
+        cy.contains('Bekreft og send')
         cy.get('button .chevron--venstre').should('be.visible')
         cy.get('button .chevron--hoyre').should('be.visible')
     })

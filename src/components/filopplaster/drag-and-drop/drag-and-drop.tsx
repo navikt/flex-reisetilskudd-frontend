@@ -7,13 +7,14 @@ import { useFormContext } from 'react-hook-form'
 
 import { useAppStore } from '../../../data/stores/app-store'
 import env from '../../../utils/environment'
-import { formaterFilstørrelse } from '../../../utils/fil-utils'
+import { customTruncet, formaterFilstørrelse } from '../../../utils/fil-utils'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
-import Fil from '../fil/fil'
 import binders from './binders.svg'
+import endre from './endre.svg'
+import vedlegg from './vedlegg.svg'
 
-const tillatteFiltyper = 'png og jpg'
+const tillatteFiltyper = env.tillatteFiltyper
 const maxFilstørrelse = env.maksFilstørrelse
 const maks = formaterFilstørrelse(maxFilstørrelse)
 
@@ -75,7 +76,7 @@ const DragAndDrop = () => {
                     <input ref={filRef} {...getInputProps()} id="ddfil" />
                     <input type="hidden" name="fil_input" id="fil_input"
                         defaultValue={filRef.current && filRef.current.name as any}
-                        ref={register({ required: tekst('filopplaster_modal.filopplasting.feilmelding') })}
+                        ref={register({ required: tekst('kvittering_modal.filopplasting.feilmelding') })}
                     />
                     <img src={binders} className="opplastingsikon" alt="Opplastingsikon" />
                     <Normaltekst tag="span" className="tekst">
@@ -88,7 +89,7 @@ const DragAndDrop = () => {
 
                 <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                     <Vis hvis={errors.fil_input}>
-                        <p>{tekst('filopplaster_modal.filopplasting.feilmelding')}</p>
+                        <p>{tekst('kvittering_modal.filopplasting.feilmelding')}</p>
                     </Vis>
                 </Normaltekst>
 
@@ -96,7 +97,19 @@ const DragAndDrop = () => {
 
             {valgtFil && valgtFil!.name
                 ? <>
-                    <Fil fil={valgtFil} />
+                    <div key={valgtFil!.name} className="modal-fil fil_liste">
+                        <img className="vedleggsikon" src={vedlegg} alt="" />
+                        <Normaltekst tag="span" className="filnavn">
+                            {customTruncet(valgtFil!.name, 20)}
+                        </Normaltekst>
+                        <Normaltekst tag="span" className="filstr">
+                            ({formaterFilstørrelse(valgtFil!.size)})
+                        </Normaltekst>
+                        <button className="lenkeknapp endreknapp" onClick={() => setValgtFil(null)}>
+                            <img className="endreikon" src={endre} alt="" />
+                            Endre
+                        </button>
+                    </div>
 
                     <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                         <Vis hvis={errors['maks_fil']}>
