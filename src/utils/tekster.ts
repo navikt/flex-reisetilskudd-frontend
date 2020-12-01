@@ -1,9 +1,8 @@
 import BannerTekster from '../components/diverse/banner/banner-tekster'
 import KlikkbarTekster from '../components/diverse/klikkbar/klikkbar-tekster'
 import DragAndDropTekster from '../components/filopplaster/drag-and-drop/drag-and-drop-tekster'
-import FilMedInfoTekster from '../components/filopplaster/fil-med-info/fil-med-info-tekster'
-import FilTekster from '../components/filopplaster/fil/fil-tekster'
-import FilopplasterModal from '../components/filopplaster/filopplaster-modal/filopplaster-modal-tekster'
+import FilListeTekster from '../components/filopplaster/fil-liste-tekster'
+import KvitteringModalTekster from '../components/filopplaster/kvittering-modal/kvittering-modal-tekster'
 import TotalBelopTekster from '../components/kvittering/total-belop/total-belop-tekster'
 import HovedpunkterTekster from '../components/oppsummering/hovedpunkter/hovedpunkter-tekster'
 import OppsummeringTekster from '../components/oppsummering/oppsummering-tekster'
@@ -22,9 +21,8 @@ const tekster = {
     ...SideNavTekster.nb,
     ...KlikkbarTekster.nb,
     ...DragAndDropTekster.nb,
-    ...FilTekster.nb,
-    ...FilMedInfoTekster.nb,
-    ...FilopplasterModal.nb,
+    ...FilListeTekster.nb,
+    ...KvitteringModalTekster.nb,
     ...TotalBelopTekster.nb,
     ...OppsummeringTekster.nb,
     ...SykmeldingTekster.nb,

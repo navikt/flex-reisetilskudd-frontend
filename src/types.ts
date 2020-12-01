@@ -12,11 +12,11 @@ export interface Brodsmule {
 
 export interface Kvittering {
     reisetilskuddId: string;
-    kvitteringId: string;
-    navn: string;
-    storrelse: number;
+    kvitteringId?: string;
+    navn?: string;
+    storrelse?: number;
     belop?: number;
-    fom: Date;
+    fom?: Date;
     tom?: Date;
     transportmiddel?: string;
 }

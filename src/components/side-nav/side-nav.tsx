@@ -1,17 +1,14 @@
 import './side-nav.less'
 
 import { HoyreChevron, VenstreChevron } from 'nav-frontend-chevron'
-import React, { useState } from 'react'
+import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
-//import useForceUpdate from 'use-force-update'
 import { RouteParams } from '../../app'
 
-export const sider = [ 'Utbetaling', 'Transport', 'Kvitteringer', 'Send inn' ]
+export const sider = [ 'Utbetaling', 'Transport', 'Kvitteringer', 'Bekreft og send' ]
 
 const SideNav = () => {
-    const [ aktivSide, setAktivSide ] = useState<number>(1)
-    // const forceUpdate = useForceUpdate()
     const history = useHistory()
     const { id, steg } = useParams<RouteParams>()
     const stegNum = Number(steg)
@@ -24,17 +21,14 @@ const SideNav = () => {
     const venstreKlikk = () => {
         if (stegNum > min) {
             history.push('/soknaden/' + id + '/' + (stegNum - 1))
-            setAktivSide(stegNum - 2)
         } else {
             history.push('/soknaden/' + id)
-            setAktivSide(0)
         }
     }
 
     const hoyreKlikk = () => {
         if (stegNum < max) {
             history.push('/soknaden/' + id + '/' + (stegNum + 1))
-            setAktivSide(stegNum)
         }
     }
 
@@ -43,10 +37,12 @@ const SideNav = () => {
             <button onClick={venstreKlikk} disabled={stegNum === min}>
                 <VenstreChevron />
             </button>
-            <select onChange={handleChange} defaultValue={aktivSide}>
+            <select onChange={handleChange} value={stegNum}>
                 {sider.map((side, index) => {
                     return (
-                        <option value={index + 1} key={index} selected={aktivSide === (index + 1)}>{side}</option>
+                        <option value={index + 1} key={index}>
+                            {`${index + 1} av ${sider.length}: ${side}`}
+                        </option>
                     )
                 })}
             </select>

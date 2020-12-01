@@ -10,25 +10,25 @@ import { useAppStore } from '../../../data/stores/app-store'
 import { pathTilSide } from '../../../utils/navigasjon'
 import { tekst } from '../../../utils/tekster'
 import VidereKnapp from '../../diverse/klikkbar/videre-knapp'
-import FilopplasterModal from '../../filopplaster/filopplaster-modal/filopplaster-modal'
-import OpplastedeFiler from '../../filopplaster/opplastede-filer'
+import FilListe from '../../filopplaster/fil-liste'
 import TotalBelop from '../../kvittering/total-belop/total-belop'
 import PlussIkon from './pluss-ikon.svg'
 
 const Opplasting = () => {
-    const { setOpenModal } = useAppStore()
+    const { setOpenModal, setKvitteringIndex } = useAppStore()
     const { steg } = useParams<RouteParams>()
     const stegNr = Number(steg)
     const history = useHistory()
 
-    const gåTilNesteSide = (history: any, aktivtSteg: number): void => {
-        if (aktivtSteg + 1 <= 4 && aktivtSteg + 1 > 1) {
-            history.push(pathTilSide(aktivtSteg + 1, history))
+    const handleVidereKlikk = () => {
+        if (stegNr + 1 <= 4 && stegNr + 1 > 1) {
+            history.push(pathTilSide(stegNr + 1, history))
         }
     }
 
-    const handleVidereKlikk = () => {
-        gåTilNesteSide(history, stegNr)
+    const aktiverModal = () => {
+        setOpenModal(true)
+        setKvitteringIndex(0)
     }
 
     return (
@@ -50,17 +50,17 @@ const Opplasting = () => {
                 </Hjelpetekst>
             </div>
 
-            <button className="fler-vedlegg" onClick={() => setOpenModal(true)}>
+            <button className="fler-vedlegg" onClick={aktiverModal}>
                 <img className="pluss-ikon" src={PlussIkon} alt="" />
                 <Normaltekst tag="span">{tekst('opplasting.legg-til')}</Normaltekst>
             </button>
 
-            <FilopplasterModal />
-            <OpplastedeFiler fjernKnapp />
+            <FilListe fjernKnapp />
 
             <div className="kvitteringer-total">
                 <TotalBelop />
             </div>
+
             <VidereKnapp aktivtSteg={stegNr} onClick={handleVidereKlikk} />
         </div>
     )

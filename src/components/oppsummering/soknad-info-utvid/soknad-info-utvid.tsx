@@ -5,7 +5,7 @@ import { Element, Undertittel } from 'nav-frontend-typografi'
 import React from 'react'
 
 import { tekst } from '../../../utils/tekster'
-import OpplastedeFiler from '../../filopplaster/opplastede-filer'
+import FilListe from '../../filopplaster/fil-liste'
 import TotalBelop from '../../kvittering/total-belop/total-belop'
 import DagensTransportmiddel from '../dagens-transportmiddel'
 import Utbetaling from '../utbetaling'
@@ -20,7 +20,7 @@ const SoknadInfoUtvid = () => {
             <Element className="element-tittel">
                 {tekst('soknad-info-utvid.undertittel')}
             </Element>
-            <OpplastedeFiler />
+            <FilListe />
             <TotalBelop />
         </Ekspanderbartpanel>
     )

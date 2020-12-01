@@ -5,6 +5,7 @@ const DragAndDropTekster: any = {
         'drag_and_drop.dragtekst.aktiv': 'Slipp filen her...',
         'drag_and_drop.dragtekst': 'Last opp kvittering',
         'drag_and_drop.label': 'Kvittering',
+        'fil.feilmelding': 'Det skjedde noe feil ved opplastingen av filen din. Vennligst prøv på nytt',
     }, 'en': {}
 }
 

@@ -24,7 +24,7 @@ const TransportKvittering = () => {
             </label>
             <div className="selectContainer">
                 <select
-                    ref={register({ required: tekst('filopplaster_modal.transportmiddel.feilmelding') })}
+                    ref={register({ required: tekst('kvittering_modal.transportmiddel.feilmelding') })}
                     key={Transportmiddel.SPØRSMÅLS_KEY}
                     className={
                         'skjemaelement__input kvittering-element' +
@@ -47,7 +47,7 @@ const TransportKvittering = () => {
 
             <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                 <Vis hvis={errors['transportmiddel']}>
-                    <p>{tekst('filopplaster_modal.transportmiddel.feilmelding')}</p>
+                    <p>{tekst('kvittering_modal.transportmiddel.feilmelding')}</p>
                 </Vis>
             </Normaltekst>
         </div>

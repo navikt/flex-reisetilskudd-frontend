@@ -87,7 +87,7 @@ const Brodsmuler = ({ brodsmuler }: BrodsmulerProps) => {
                                     synlige.length === brodsmuler.length
                                         ? 'Vis redusert brødsmulesti'
                                         : 'Vis hele brødsmulestien'}
-                                className="js-toggle"
+                                className="lenkeknapp js-toggle"
                                 onClick={toggleSynlige}
                             >
                                 ...

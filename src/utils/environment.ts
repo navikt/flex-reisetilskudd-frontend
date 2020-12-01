@@ -40,6 +40,10 @@ class Environment {
         return this.env.TILLATTE_FILTYPER.split(',')
     }
 
+    get formaterteFiltyper() {
+        return this.env.FORMATERTE_FILTYPER
+    }
+
     get bucketUrl() {
         return this.env.BUCKET_URL
     }

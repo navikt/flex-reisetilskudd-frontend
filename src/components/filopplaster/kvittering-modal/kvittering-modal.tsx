@@ -1,4 +1,4 @@
-import './filopplaster-modal.less'
+import './kvittering-modal.less'
 
 import Modal from 'nav-frontend-modal'
 import React from 'react'
@@ -6,7 +6,7 @@ import React from 'react'
 import { useAppStore } from '../../../data/stores/app-store'
 import KvitteringForm from './kvittering-form'
 
-const FilopplasterModal = () => {
+const KvitteringModal = () => {
     const { openModal, setOpenModal, valgtSykmelding } = useAppStore()
 
     Modal.setAppElement('#maincontent')
@@ -23,7 +23,7 @@ const FilopplasterModal = () => {
             onRequestClose={() => lukkModal()}
             closeButton
             contentLabel="Modal"
-            className="filopplaster-modal"
+            className="kvittering_modal"
         >
             <div className="modal-content">
                 <KvitteringForm />
@@ -32,4 +32,4 @@ const FilopplasterModal = () => {
     )
 }
 
-export default FilopplasterModal
+export default KvitteringModal

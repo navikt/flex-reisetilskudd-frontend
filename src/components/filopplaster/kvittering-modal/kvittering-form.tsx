@@ -1,10 +1,11 @@
 import './flatpickr.less'
 
 import { Norwegian } from 'flatpickr/dist/l10n/no'
+import parser from 'html-react-parser'
 import { Knapp } from 'nav-frontend-knapper'
 import NavFrontendSpinner from 'nav-frontend-spinner'
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Flatpickr from 'react-flatpickr'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
@@ -14,6 +15,7 @@ import { post } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
 import { Kvittering, OpplastetKvittering } from '../../../types'
 import env from '../../../utils/environment'
+import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
 import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
 import { tekst } from '../../../utils/tekster'
@@ -21,11 +23,29 @@ import Vis from '../../diverse/vis'
 import TransportKvittering from '../../kvittering/transport-kvittering'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
 
+const formaterteFiltyper = env.formaterteFiltyper
+const maksFilstorrelse = formaterFilstørrelse(env.maksFilstørrelse)
+
 const KvitteringForm = () => {
-    const { valgtReisetilskudd, setValgtReisetilskudd, valgtSykmelding, setOpenModal, valgtFil } = useAppStore()
+    const { valgtReisetilskudd, kvitteringIndex, valgtSykmelding, setOpenModal, valgtFil } = useAppStore()
+    const { id } = useParams<RouteParams>()
+    const [ kvittering, setKvittering ] = useState<Kvittering>({ reisetilskuddId: id })
     const [ laster, setLaster ] = useState<boolean>(false)
     const methods = useForm({ reValidateMode: 'onSubmit' })
-    const { id } = useParams<RouteParams>()
+
+    useEffect(() => {
+        console.log('kvitteringIndex', kvitteringIndex) // eslint-disable-line
+        if (kvitteringIndex === 0) {
+            console.log('aha!') // eslint-disable-line
+            setKvittering({ reisetilskuddId: id })
+        } else {
+            console.log('snu!') // eslint-disable-line
+            setKvittering(valgtReisetilskudd!.kvitteringer[kvitteringIndex])
+        }
+        console.log('kvittering', kvittering) // eslint-disable-line
+        datoInputFokus()
+        // eslint-disable-next-line
+    }, [])
 
     const lagreKvittering = (fil: File) => {
         const requestData = new FormData()
@@ -37,7 +57,7 @@ const KvitteringForm = () => {
         post<OpplastetKvittering>(`${env.mockBucketUrl}/kvittering`, requestData)
             .then((response) => {
                 if (response.parsedBody?.reisetilskuddId) {
-                    const kvittering: Kvittering = {
+                    const kvitt: Kvittering = {
                         reisetilskuddId: id,
                         navn: fil.name,
                         storrelse: fil.size,
@@ -46,14 +66,13 @@ const KvitteringForm = () => {
                         kvitteringId: response.parsedBody!.reisetilskuddId,
                         transportmiddel: methods.getValues('transportmiddel')
                     }
-                    nyKvittering(kvittering)
-                    return kvittering
+                    return kvitt
                 }
                 logger.warn('Responsen inneholder ikke noen id', response.parsedBody)
                 return null
             })
-            .then((kvittering) => {
-                post<Kvittering>(`${env.apiUrl}/api/v1/kvittering`, kvittering)
+            .then((kvitt) => {
+                post<Kvittering>(`${env.apiUrl}/api/v1/kvittering`, kvitt)
                     .then(() => {
                         setLaster(false)
                     })
@@ -66,19 +85,16 @@ const KvitteringForm = () => {
             })
     }
 
-    const nyKvittering = (kvittering: Kvittering) => {
-        valgtReisetilskudd!.kvitteringer = [ ...valgtReisetilskudd!.kvitteringer, kvittering ]
-        setValgtReisetilskudd(valgtReisetilskudd)
-    }
-
     const onSubmit = async() => {
         lagreKvittering({} as any)
     }
 
     const datoInputFokus = () => {
-        const selektor = 'input[type=text].dato_input'
-        const input: HTMLInputElement | null = document.querySelector(selektor)
-        input!.click()
+        setTimeout(() => {
+            const selektor = 'input[type=text].dato_input'
+            const input: HTMLInputElement | null = document.querySelector(selektor)
+            input!.click()
+        }, 1)
     }
 
     const valider = () => {
@@ -86,15 +102,22 @@ const KvitteringForm = () => {
         validerFil()
     }
 
+    const lagre = () => {
+        valider()
+        datoInputFokus()
+    }
+
     const validerDato = () => {
         const selektor = 'input[type=text].dato_input'
         const input: HTMLInputElement | null = document.querySelector(selektor)
+        console.log('kvittering', kvittering) // eslint-disable-line
         if (input!.value === '') {
             input!.classList.add('skjemaelement__input--harFeil')
         } else {
             methods.setValue('dato_input', input!.value)
             methods.clearErrors('dato_input') // eslint-disable-line.log('dato_input', dato_input); //tslint:disable-line
             input!.classList.remove('skjemaelement__input--harFeil')
+            kvittering!.fom = new Date(input!.value)
         }
     }
 
@@ -113,7 +136,7 @@ const KvitteringForm = () => {
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
                 <Systemtittel className="kvittering-header">
-                    {tekst('filopplaster_modal.nytt-utlegg.tittel')}
+                    {tekst('kvittering_modal.nytt-utlegg.tittel')}
                 </Systemtittel>
                 <div className="cols">
                     <div className="col">
@@ -123,11 +146,10 @@ const KvitteringForm = () => {
                             </label>
                             <Controller
                                 control={methods.control}
-                                rules={{ required: tekst('filopplaster_modal.dato.feilmelding') }}
+                                rules={{ required: tekst('kvittering_modal.dato.feilmelding') }}
                                 id="dato_input"
                                 name="dato_input"
                                 placeholder="dd.mm.åååå"
-                                defaultValue={null}
                                 render={({ name }) => (
                                     <Flatpickr
                                         onChange={validerDato}
@@ -150,17 +172,17 @@ const KvitteringForm = () => {
                             />
                             <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                                 <Vis hvis={methods.errors['dato_input']}>
-                                    <p>{tekst('filopplaster_modal.dato.feilmelding')}</p>
+                                    <p>{tekst('kvittering_modal.dato.feilmelding')}</p>
                                 </Vis>
                             </Normaltekst>
                         </div>
 
                         <div className="skjemaelement">
                             <label htmlFor="belop_input" className="skjemaelement__label">
-                                <Element tag="strong">{tekst('filopplaster_modal.tittel')}</Element>
+                                <Element tag="strong">{tekst('kvittering_modal.tittel')}</Element>
                             </label>
                             <input
-                                ref={methods.register({ required: tekst('filopplaster_modal.belop.feilmelding') })}
+                                ref={methods.register({ required: tekst('kvittering_modal.belop.feilmelding') })}
                                 type="number"
                                 id="belop_input"
                                 name="belop_input"
@@ -170,11 +192,14 @@ const KvitteringForm = () => {
                                     'skjemaelement__input input--m periode-element' +
                                     (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
                                 }
-                                onChange={() => methods.trigger('belop_input')}
+                                onChange={() => {
+                                    methods.trigger('belop_input')
+                                    kvittering!.belop = methods.getValues('belop_input')
+                                }}
                             />
                             <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                                 <Vis hvis={methods.errors['belop_input']}>
-                                    <p>{tekst('filopplaster_modal.belop.feilmelding')}</p>
+                                    <p>{tekst('kvittering_modal.belop.feilmelding')}</p>
                                 </Vis>
                             </Normaltekst>
                         </div>
@@ -186,16 +211,25 @@ const KvitteringForm = () => {
 
                 <DragAndDrop />
 
+                <Normaltekst className="restriksjoner">
+                    <span className="filtype">
+                        {parser(`Tillatte filtyper er <strong>${formaterteFiltyper}</strong>.`)}
+                    </span>
+                    <span className="filstr">
+                        {parser(`Maks bildestørrelse er <strong>${maksFilstorrelse}</strong>.`)}
+                    </span>
+                </Normaltekst>
+
                 {laster
                     ?
                     <NavFrontendSpinner className="lagre-kvittering" />
                     :
                     <div className="knapperad">
                         <Knapp htmlType="button" className="lagre-kvittering" onClick={() => setOpenModal(false)}>
-                            {tekst('filopplaster_modal.tilbake')}
+                            {tekst('kvittering_modal.tilbake')}
                         </Knapp>
-                        <Knapp htmlType="submit" className="lagre-kvittering" onClick={valider}>
-                            {tekst('filopplaster_modal.bekreft')}
+                        <Knapp htmlType="submit" className="lagre-kvittering" onClick={lagre}>
+                            {tekst('kvittering_modal.bekreft')}
                         </Knapp>
                     </div>
                 }

@@ -56,7 +56,7 @@ const Hovedpunkter = () => {
                     onChange={(e: any) => setErBekreftet(e.target.checked)}
                 >
                     {tekst('hovedpunkter.bekreft.tekst')}
-                    <button className="vis_plikter" onClick={() => setOpenPlikter(true)}>
+                    <button className="lenkeknapp" onClick={() => setOpenPlikter(true)}>
                         {tekst('hovedpunkter.bekreft.lenke')}
                     </button>
                     .
