@@ -6,7 +6,7 @@ import React from 'react'
 
 import { tekst } from '../../../utils/tekster'
 import FilListe from '../../filopplaster/fil-liste'
-import TotalBelop from '../../kvittering/total-belop/total-belop'
+import TotalBelop from '../../total-belop/total-belop'
 import DagensTransportmiddel from '../dagens-transportmiddel'
 import Utbetaling from '../utbetaling'
 

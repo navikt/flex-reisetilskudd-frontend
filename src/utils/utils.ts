@@ -21,3 +21,9 @@ export const setBodyClass = (name: string) => {
     }
     document.body.classList.add(name)
 }
+
+export const nf_des = new Intl.NumberFormat('nb-NO', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+    useGrouping: true
+})

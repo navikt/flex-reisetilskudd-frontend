@@ -1,6 +1,7 @@
 import './opplasting.less'
 
 import Hjelpetekst from 'nav-frontend-hjelpetekst'
+import { Knapp } from 'nav-frontend-knapper'
 import { Normaltekst, Systemtittel, } from 'nav-frontend-typografi'
 import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
@@ -9,9 +10,8 @@ import { RouteParams } from '../../../app'
 import { useAppStore } from '../../../data/stores/app-store'
 import { pathTilSide } from '../../../utils/navigasjon'
 import { tekst } from '../../../utils/tekster'
-import VidereKnapp from '../../diverse/klikkbar/videre-knapp'
 import FilListe from '../../filopplaster/fil-liste'
-import TotalBelop from '../../kvittering/total-belop/total-belop'
+import TotalBelop from '../../total-belop/total-belop'
 import PlussIkon from './pluss-ikon.svg'
 
 const Opplasting = () => {
@@ -61,7 +61,11 @@ const Opplasting = () => {
                 <TotalBelop />
             </div>
 
-            <VidereKnapp aktivtSteg={stegNr} onClick={handleVidereKlikk} />
+            <div className="knapperad">
+                <Knapp type="hoved" onClick={handleVidereKlikk}>
+                    {tekst('klikkbar.videre-knapp.tekst')}
+                </Knapp>
+            </div>
         </div>
     )
 }
