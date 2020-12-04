@@ -1,8 +1,9 @@
 import { Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
-import { useAppStore } from '../../../data/stores/app-store'
-import { getLedetekst, tekst } from '../../../utils/tekster'
+import { useAppStore } from '../../data/stores/app-store'
+import { getLedetekst, tekst } from '../../utils/tekster'
+import { nf_des } from '../../utils/utils'
 
 const TotalBelop = (): ReactElement => {
     const { valgtReisetilskudd } = useAppStore()
@@ -17,7 +18,7 @@ const TotalBelop = (): ReactElement => {
     return (
         <Normaltekst>
             {getLedetekst(tekst('total_belop.totalbelop'), {
-                '%TOTALBELOP%': totaltBeløp().toFixed(2)
+                '%TOTALBELOP%': nf_des.format(totaltBeløp())
             })}
         </Normaltekst>
     )

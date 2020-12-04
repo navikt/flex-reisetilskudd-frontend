@@ -64,7 +64,7 @@ const Hovedpunkter = () => {
 
                 <div className="knapperad">
                     <Knapp type="hoved" onClick={() => history.push('/bekreftelse')} disabled={!erBekreftet}>
-                        {tekst('klikkbar.send-knapp.tekst')}
+                        {tekst('hovedpunkter.send-knapp.tekst')}
                     </Knapp>
                 </div>
             </section>

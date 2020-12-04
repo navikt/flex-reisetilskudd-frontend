@@ -1,18 +1,26 @@
 @import '../../../node_modules/nav-frontend-core/less/_variabler';
 
-.fil_liste {
+.tabell.fil_liste {
+    th, td {
+        padding: 0.75rem 0.5rem;
+    }
+
     th {
-        padding-right: 1rem;
         text-align: left;
     }
 
-    td {
-        padding-right: 1rem;
+    .belop {
+        white-space: nowrap;
+        text-align: right;
     }
 }
 
 @media (min-width: @screen-sm) {
-    .fil_liste {
+    .tabell.fil_liste {
+        .belop {
+            padding-right: 3rem;
+        }
+
         .dato, .transport, .belop {
             strong {
                 display: none;
