@@ -28,7 +28,7 @@ const Opplasting = () => {
 
     const aktiverModal = () => {
         setOpenModal(true)
-        setKvitteringIndex(0)
+        setKvitteringIndex(-1)
     }
 
     return (

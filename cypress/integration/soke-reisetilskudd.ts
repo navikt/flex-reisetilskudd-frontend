@@ -92,26 +92,30 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.get('input[name=dato_input]').focus().click({ force: true })
             cy.get('.flatpickr-calendar').contains('10').click({ force: true })
 
-            cy.get('input[name=belop_input]').type('1000')
-            cy.get('select[name=transportmiddel]').select('Taxi')
+            /*
+                        cy.get('input[name=belop_input]').type('1000')
+                        cy.get('select[name=transportmiddel]').select('Taxi')
 
-            cy.get('.filopplasteren input[type=file]').attachFile('icon.png')
-            cy.get('.knapperad .knapp--hoved').click({ force: true })
+                        cy.get('.filopplasteren input[type=file]').attachFile('icon.png')
+                        cy.get('.knapperad .knapp--hoved').click({ force: true })
+            */
         })
     })
 
-    describe('Innholdsvalidering side 4', () => {
-        it('sjekker at oppsummeringssiden inneholder elementer', () => {
-            cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/4`)
-            cy.get('.soknad-info-utvid').click()
-            cy.contains('Oppsummering av søknaden')
-            cy.contains('Hvem skal pengene utbetales til?')
-            cy.contains('Hvordan reiste du før sykmeldingen?')
-            cy.contains('Opplastede kvitteringer')
-            cy.contains('Totalt beløp:')
+    /*
+        describe('Innholdsvalidering side 4', () => {
+            it('sjekker at oppsummeringssiden inneholder elementer', () => {
+                cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/4`)
+                cy.get('.soknad-info-utvid').click()
+                cy.contains('Oppsummering av søknaden')
+                cy.contains('Hvem skal pengene utbetales til?')
+                cy.contains('Hvordan reiste du før sykmeldingen?')
+                cy.contains('Opplastede kvitteringer')
+                cy.contains('Totalt beløp:')
 
+            })
         })
-    })
+    */
 
 /*
     describe('Bekreftelsesside', () => {

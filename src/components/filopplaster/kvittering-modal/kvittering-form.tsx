@@ -7,7 +7,7 @@ import NavFrontendSpinner from 'nav-frontend-spinner'
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi'
 import React, { useEffect, useState } from 'react'
 import Flatpickr from 'react-flatpickr'
-import { Controller, FormProvider,useForm } from 'react-hook-form'
+import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../../app'
@@ -36,13 +36,7 @@ const KvitteringForm = () => {
 
     const methods =
         useForm({
-            reValidateMode: 'onSubmit',
-            defaultValues: {
-                'dato_input': '',
-                'belop_input': undefined,
-                'fil_input': null,
-                'transportmiddel': ''
-            }
+            reValidateMode: 'onSubmit'
         })
 
     const options = [
@@ -52,12 +46,11 @@ const KvitteringForm = () => {
     ]
 
     useEffect(() => {
-        if (kvitteringIndex === 0) {
-            console.log('useEffect 1') // eslint-disable-line
+        if (kvitteringIndex === -1) {
             setKvittering({ reisetilskuddId: id })
         } else {
-            setKvittering(valgtReisetilskudd!.kvitteringer[kvitteringIndex])
-            console.log('useEffect 2') // eslint-disable-line
+            const kvitto = valgtReisetilskudd!.kvitteringer[kvitteringIndex]
+            setKvittering(kvitto)
         }
         // datoInputFokus()
         // eslint-disable-next-line
@@ -117,7 +110,6 @@ const KvitteringForm = () => {
         if (input!.value === '') {
             input!.classList.add('skjemaelement__input--harFeil')
         } else {
-            methods.setValue('dato_input', input!.value)
             methods.clearErrors('dato_input') // eslint-disable-line
             input!.classList.remove('skjemaelement__input--harFeil')
             valgtReisetilskudd!.kvitteringer[kvitteringIndex].fom = new Date(input!.value)
@@ -142,7 +134,7 @@ const KvitteringForm = () => {
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
                 <Systemtittel className="kvittering-header">
-                    {tekst('kvittering_modal.nytt-utlegg.tittel')}
+                    {tekst('kvittering_modal.nytt-utlegg.tittel')} {kvittering!.fom}
                 </Systemtittel>
                 <div className="cols">
                     <div className="col">
@@ -152,31 +144,24 @@ const KvitteringForm = () => {
                             </label>
                             <Controller
                                 control={methods.control}
+                                as={Flatpickr}
                                 rules={{ required: tekst('kvittering_modal.dato.feilmelding') }}
                                 id="dato_input"
                                 name="dato_input"
-                                defaultValue={kvittering.fom}
                                 placeholder="dd.mm.åååå"
-                                render={({ name }) => (
-                                    <Flatpickr
-                                        onChange={validerDato}
-                                        value={kvittering!.fom}
-                                        name={name}
-                                        className="skjemaelement__input input--m dato_input"
-                                        options={{
-                                            minDate: tidligsteFom(valgtSykmelding!.mulighetForArbeid.perioder),
-                                            maxDate: senesteTom(valgtSykmelding!.mulighetForArbeid.perioder),
-                                            mode: 'single',
-                                            enableTime: false,
-                                            dateFormat: 'Y-m-d',
-                                            altInput: true,
-                                            altFormat: 'd.m.Y',
-                                            locale: Norwegian,
-                                            allowInput: true,
-                                            disableMobile: true,
-                                        }}
-                                    />
-                                )}
+                                defaultValue={kvittering!.fom}
+                                options={{
+                                    minDate: tidligsteFom(valgtSykmelding!.mulighetForArbeid.perioder),
+                                    maxDate: senesteTom(valgtSykmelding!.mulighetForArbeid.perioder),
+                                    mode: 'single',
+                                    enableTime: false,
+                                    dateFormat: 'Y-m-d',
+                                    altInput: true,
+                                    altFormat: 'd.m.Y',
+                                    locale: Norwegian,
+                                    allowInput: true,
+                                    disableMobile: true,
+                                }}
                             />
                             <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                                 <Vis hvis={methods.errors['dato_input']}>
