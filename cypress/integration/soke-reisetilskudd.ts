@@ -89,8 +89,8 @@ describe('Tester reisetilskuddsøknaden', () => {
         it('Sjekker at utlegg-modalen inneholder opplastingform', () => {
             cy.contains('Kvitteringer for reise')
 
-            cy.get('input[name=dato_input]').focus().click({ force: true })
-            cy.get('.flatpickr-calendar').contains('10').click({ force: true })
+            cy.get('.nav-datovelger__kalenderknapp').click()
+            cy.get('.DayPicker-Body').contains('10').click({ force: true })
 
             /*
                         cy.get('input[name=belop_input]').type('1000')
