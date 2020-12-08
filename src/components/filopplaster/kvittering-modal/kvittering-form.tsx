@@ -1,14 +1,13 @@
-import './flatpickr.less'
-
-import { Norwegian } from 'flatpickr/dist/l10n/no'
+import dayjs from 'dayjs'
 import parser from 'html-react-parser'
+import { Datepicker } from 'nav-datovelger'
 import { Knapp } from 'nav-frontend-knapper'
 import NavFrontendSpinner from 'nav-frontend-spinner'
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi'
 import React, { useEffect, useState } from 'react'
-import Flatpickr from 'react-flatpickr'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
+import useForceUpdate from 'use-force-update'
 
 import { RouteParams } from '../../../app'
 import { post } from '../../../data/fetcher/fetcher'
@@ -17,7 +16,7 @@ import { Kvittering, OpplastetKvittering, Transportmiddel } from '../../../types
 import env from '../../../utils/environment'
 import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
-import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
+//import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
 import { tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
@@ -28,11 +27,13 @@ const maksFilstorrelse = formaterFilstørrelse(env.maksFilstørrelse)
 const KvitteringForm = () => {
     const {
         valgtReisetilskudd, setValgtReisetilskudd, kvitteringIndex,
-        valgtSykmelding, setOpenModal, valgtFil
+        setOpenModal, valgtFil
     } = useAppStore()
     const { id } = useParams<RouteParams>()
     const [ laster, setLaster ] = useState<boolean>(false)
     const [ kvittering, setKvittering ] = useState<Kvittering>()
+    const [ dato, setDato ] = useState<string>('')
+    const forceUpdate = useForceUpdate()
 
     const methods =
         useForm({
@@ -51,6 +52,8 @@ const KvitteringForm = () => {
         } else {
             const kvitto = valgtReisetilskudd!.kvitteringer[kvitteringIndex]
             setKvittering(kvitto)
+            setDato(dayjs(kvitto!.fom).format('YYYY-MM-DD'))
+            forceUpdate()
         }
         // datoInputFokus()
         // eslint-disable-next-line
@@ -144,25 +147,26 @@ const KvitteringForm = () => {
                             </label>
                             <Controller
                                 control={methods.control}
-                                as={Flatpickr}
-                                rules={{ required: tekst('kvittering_modal.dato.feilmelding') }}
-                                id="dato_input"
                                 name="dato_input"
-                                placeholder="dd.mm.åååå"
                                 defaultValue={kvittering!.fom}
-                                options={{
-                                    minDate: tidligsteFom(valgtSykmelding!.mulighetForArbeid.perioder),
-                                    maxDate: senesteTom(valgtSykmelding!.mulighetForArbeid.perioder),
-                                    mode: 'single',
-                                    enableTime: false,
-                                    dateFormat: 'Y-m-d',
-                                    altInput: true,
-                                    altFormat: 'd.m.Y',
-                                    locale: Norwegian,
-                                    allowInput: true,
-                                    disableMobile: true,
-                                }}
+                                render={({ name }) => (
+                                    <Datepicker
+                                        locale={'nb'}
+                                        inputId="dato_input"
+                                        onChange={setDato}
+                                        value={dato}
+                                        inputProps={{
+                                            name: name
+                                        }}
+                                        calendarSettings={{ showWeekNumbers: true }}
+                                        showYearSelector={false}
+                                        limitations={{
+                                            weekendsNotSelectable: false,
+                                        }}
+                                    />
+                                )}
                             />
+
                             <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                                 <Vis hvis={methods.errors['dato_input']}>
                                     <p>{tekst('kvittering_modal.dato.feilmelding')}</p>
