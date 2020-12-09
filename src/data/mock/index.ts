@@ -15,10 +15,10 @@ const mock = FetchMock.configure({
 mock.get(`${env.sykmeldingerBackendProxyRoot}/api/v1/syforest/sykmeldinger`,
     (req, res, ctx) => res(ctx.json(sykmeldinger)))
 
-mock.get(`${env.apiUrl}/api/v1/reisetilskudd`,
+mock.get(`${env.backendUrl}/api/v1/reisetilskudd`,
     (req, res, ctx) => res(ctx.json(reisetilskudd)))
 
-mock.put(`${env.apiUrl}/api/v1/reisetilskudd/:id`, () => Promise.resolve({ status: 200 }))
+mock.put(`${env.backendUrl}/api/v1/reisetilskudd/:id`, () => Promise.resolve({ status: 200 }))
 
 mock.post(`${env.mockBucketUrl}/kvittering`,
     (req, res, ctx) =>
@@ -27,9 +27,9 @@ mock.post(`${env.mockBucketUrl}/kvittering`,
             melding: 'opprettet'
         })))
 
-mock.post(`${env.apiUrl}/api/v1/kvittering`, () => Promise.resolve({ status: 200 }))
+mock.post(`${env.backendUrl}/api/v1/kvittering`, () => Promise.resolve({ status: 200 }))
 
-mock.delete(`${env.apiUrl}/api/v1/kvittering/:id`, () => Promise.resolve({ status: 200 }))
+mock.delete(`${env.backendUrl}/api/v1/kvittering/:id`, () => Promise.resolve({ status: 200 }))
 
 // Ser ikke ut som denne er satt opp enda
-mock.post(`${env.apiUrl}/api/v1/reisetilskudd/:id/send`, () => Promise.resolve({ status: 200 }))
+mock.post(`${env.backendUrl}/api/v1/reisetilskudd/:id/send`, () => Promise.resolve({ status: 200 }))

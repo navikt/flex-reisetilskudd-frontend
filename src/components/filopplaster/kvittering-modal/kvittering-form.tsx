@@ -16,7 +16,6 @@ import { Kvittering, OpplastetKvittering, Transportmiddel } from '../../../types
 import env from '../../../utils/environment'
 import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
-//import { senesteTom, tidligsteFom } from '../../../utils/periode-utils'
 import { tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
@@ -72,7 +71,7 @@ const KvitteringForm = () => {
                 return null
             })
             .then((kvitt) => {
-                post<Kvittering>(`${env.apiUrl}/api/v1/kvittering`, kvitt)
+                post<Kvittering>(`${env.backendUrl}/api/v1/kvittering`, kvitt)
                     .then(() => {
                         setLaster(false)
                     })

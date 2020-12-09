@@ -17,7 +17,7 @@ export function DataFetcher(props: { children: any }) {
 
     useEffect(() => {
         if (isNotStarted(reisetilskuddene)) {
-            reisetilskuddene.fetch(env.apiUrl + '/api/v1/reisetilskudd', {
+            reisetilskuddene.fetch(env.backendUrl + '/api/v1/reisetilskudd', {
                 credentials: 'include',
             }, (fetchState: FetchState<Reisetilskudd[]>) => {
                 if (hasData(fetchState)) {

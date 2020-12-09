@@ -10,6 +10,7 @@ import { useAppStore } from '../../../data/stores/app-store'
 import { pathTilSide } from '../../../utils/navigasjon'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import FilListe from '../../filopplaster/fil-liste'
+import KvitteringModal from '../../filopplaster/kvittering-modal/kvittering-modal'
 import TotalBelop from '../../total-belop/total-belop'
 import PlussIkon from './pluss-ikon.svg'
 import { tilLesbarPeriodeMedArstall } from '../../../utils/dato'
@@ -50,11 +51,11 @@ const Opplasting = () => {
                 <Normaltekst tag="span">{tekst('opplasting.legg-til')}</Normaltekst>
             </button>
 
+            <KvitteringModal />
+
             <FilListe fjernKnapp />
 
-            <div className="kvitteringer-total">
-                <TotalBelop />
-            </div>
+            <TotalBelop />
 
             <div className="knapperad">
                 <Knapp type="hoved" onClick={handleVidereKlikk}>

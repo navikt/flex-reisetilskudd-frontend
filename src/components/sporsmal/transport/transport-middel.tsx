@@ -107,7 +107,7 @@ const TransportMiddel = () => {
     }
 
     const onSubmit = () => {
-        put<TransportmiddelInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${id}`, {
+        put<TransportmiddelInterface>(`${env.backendUrl}/api/v1/reisetilskudd/${id}`, {
             reisetilskuddId: id,
             går: valgtReisetilskudd!.går,
             sykler: valgtReisetilskudd!.sykler,

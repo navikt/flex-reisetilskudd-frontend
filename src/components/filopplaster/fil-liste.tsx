@@ -13,7 +13,6 @@ import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
 import { nf_des } from '../../utils/utils'
 import Vis from '../diverse/vis'
-import KvitteringModal from './kvittering-modal/kvittering-modal'
 import slettFilIkon from './slett-fil-ikon.svg'
 
 interface Props {
@@ -32,7 +31,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
         valgtReisetilskudd!.kvitteringer = kvitteringer
         setValgtReisetilskudd(valgtReisetilskudd)
 
-        del(`${env.apiUrl}/api/v1/kvittering/${kvitto.kvitteringId}`).catch((error) => {
+        del(`${env.backendUrl}/api/v1/kvittering/${kvitto.kvitteringId}`).catch((error) => {
             logger.error('Feil under sletting av kvittering', error)
         })
 
@@ -61,60 +60,56 @@ const FilListe = ({ fjernKnapp }: Props) => {
     }
 
     return (
-        <>
-            <KvitteringModal />
-
-            <Vis hvis={valgtReisetilskudd!.kvitteringer.length > 0}>
-                <Normaltekst tag="table" className="tabell tabell--stripet fil_liste">
-                    <Vis hvis={fjernKnapp}>
-                        <thead>
-                            <tr>
-                                <Element tag="th">
-                                    <button className="lenkeknapp" onClick={() => sorter('navn')}>
-                                        Utlegg
-                                    </button>
-                                </Element>
-                                <Element tag="th">
-                                    <button className="lenkeknapp" onClick={() => sorter('transportmiddel')}>
-                                        Transport
-                                    </button>
-                                </Element>
-                                <Element tag="th" className="belop">
-                                    <button className="lenkeknapp" onClick={() => sorter('belop')}>
-                                        Beløp
-                                    </button>
-                                </Element>
-                                <th />
-                            </tr>
-                        </thead>
-                    </Vis>
-                    <tbody>
-                        {valgtReisetilskudd!.kvitteringer.map((fil: Kvittering, idx) => (
-                            <tr key={idx}>
-                                <td className="dato">
-                                    <button tabIndex={0} className="lenkeknapp" onClick={() => visKvittering(idx)}>
-                                        {fil.fom ? dayjs(fil.fom).format('DD.MM.YYYY') : ''}
-                                    </button>
-                                </td>
-                                <td className="transport">
-                                    {fil.transportmiddel}
-                                </td>
-                                <td className="belop">
-                                    {nf_des.format(fil.belop!)} kr
-                                </td>
-                                <td>
-                                    <button className="lenkeknapp slett-knapp"
-                                        onClick={() => slettKvittering(fil)} tabIndex={0}
-                                    >
-                                        <img src={slettFilIkon} className="slett-img" alt="" />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Normaltekst>
-            </Vis>
-        </>
+        <Vis hvis={valgtReisetilskudd!.kvitteringer.length > 0}>
+            <Normaltekst tag="table" className="tabell tabell--stripet fil_liste">
+                <Vis hvis={fjernKnapp}>
+                    <thead>
+                        <tr>
+                            <Element tag="th">
+                                <button className="lenkeknapp" onClick={() => sorter('navn')}>
+                                Utlegg
+                                </button>
+                            </Element>
+                            <Element tag="th">
+                                <button className="lenkeknapp" onClick={() => sorter('transportmiddel')}>
+                                Transport
+                                </button>
+                            </Element>
+                            <Element tag="th" className="belop">
+                                <button className="lenkeknapp" onClick={() => sorter('belop')}>
+                                Beløp
+                                </button>
+                            </Element>
+                            <th />
+                        </tr>
+                    </thead>
+                </Vis>
+                <tbody>
+                    {valgtReisetilskudd!.kvitteringer.map((fil: Kvittering, idx) => (
+                        <tr key={idx}>
+                            <td className="dato">
+                                <button tabIndex={0} className="lenkeknapp" onClick={() => visKvittering(idx)}>
+                                    {fil.fom ? dayjs(fil.fom).format('DD.MM.YYYY') : ''}
+                                </button>
+                            </td>
+                            <td className="transport">
+                                {fil.transportmiddel}
+                            </td>
+                            <td className="belop">
+                                {nf_des.format(fil.belop!)} kr
+                            </td>
+                            <td>
+                                <button className="lenkeknapp slett-knapp"
+                                    onClick={() => slettKvittering(fil)} tabIndex={0}
+                                >
+                                    <img src={slettFilIkon} className="slett-img" alt="" />
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Normaltekst>
+        </Vis>
     )
 }
 

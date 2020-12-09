@@ -16,9 +16,9 @@ const TotalBelop = (): ReactElement => {
         : (0.0))
 
     return (
-        <Normaltekst>
+        <Normaltekst className="kvitteringer-total">
             {getLedetekst(tekst('total_belop.totalbelop'), {
-                '%TOTALBELOP%': nf_des.format(totaltBeløp())
+                '%TOTALBELOP%': nf_des.format(totaltBeløp())    // TODO: Tror ikke denne funker
             })}
         </Normaltekst>
     )

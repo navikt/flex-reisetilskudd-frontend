@@ -4,12 +4,8 @@ class Environment {
 
     private env = (window as any)._env_;
 
-    get apiUrl() {
+    get backendUrl() {
         return this.env.FLEX_REISETILSKUDD_BACKEND_PROXY_ROOT
-    }
-
-    get mockApiUrl() {
-        return this.env.MOCK_API_URL
     }
 
     get isMockBackend() {
