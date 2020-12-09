@@ -26,7 +26,7 @@ const maksFilstorrelse = formaterFilstørrelse(env.maksFilstørrelse)
 const KvitteringForm = () => {
     const {
         valgtReisetilskudd, setValgtReisetilskudd, kvitteringIndex,
-        setOpenModal, valgtFil
+        setOpenModal
     } = useAppStore()
     const { id } = useParams<RouteParams>()
     const [ laster, setLaster ] = useState<boolean>(false)
@@ -98,7 +98,6 @@ const KvitteringForm = () => {
 
     const valider = () => {
         validerDato()
-        validerFil()
     }
 
     const lagre = () => {
@@ -116,17 +115,6 @@ const KvitteringForm = () => {
             input!.classList.remove('skjemaelement__input--harFeil')
             valgtReisetilskudd!.kvitteringer[kvitteringIndex].fom = new Date(input!.value)
             setValgtReisetilskudd(valgtReisetilskudd)
-        }
-    }
-
-    const validerFil = () => {
-        const selektor = '.filopplasteren'
-        const div: HTMLDivElement | null = document.querySelector(selektor)
-        if (!valgtFil) {
-            div!.classList.add('skjemaelement__input--harFeil')
-        } else {
-            methods.clearErrors('fil_input') // eslint-disable-line
-            div!.classList.remove('skjemaelement__input--harFeil')
         }
     }
 
