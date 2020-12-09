@@ -178,22 +178,21 @@ const KvitteringForm = () => {
                                 <Element tag="strong">{tekst('kvittering_modal.tittel')}</Element>
                             </label>
                             <input
-                                ref={methods.register({ required: tekst('kvittering_modal.belop.feilmelding') })}
+                                ref={methods.register({
+                                    required: tekst('kvittering_modal.belop.feilmelding'),
+                                    min: 0,
+                                    max: 10000
+                                })}
                                 type="number"
                                 id="belop_input"
                                 name="belop_input"
                                 inputMode={'numeric'}
                                 pattern="[0-9]*"
-                                defaultValue={kvittering!.belop}
+                                defaultValue={kvittering?.belop}
                                 className={
                                     'skjemaelement__input input--m periode-element' +
                                     (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
                                 }
-                                onChange={() => {
-                                    methods.trigger('belop_input')
-                                    valgtReisetilskudd!.kvitteringer[kvitteringIndex].belop = methods.getValues('belop_input')
-                                    setValgtReisetilskudd(valgtReisetilskudd)
-                                }}
                             />
                             <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                                 <Vis hvis={methods.errors['belop_input']}>
