@@ -37,7 +37,7 @@ const brodsmuler: Brodsmule[] = [
 ]
 
 const TilskuddSide = () => {
-    const { reisetilskuddene, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
+    const { reisetilskuddene, valgtReisetilskudd, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
     const { steg, id } = useParams<RouteParams>()
     const idNum = Number(steg)
 
@@ -57,6 +57,8 @@ const TilskuddSide = () => {
         setValgtSykmelding(sykmelding)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ id ])
+
+    if(!valgtReisetilskudd) return null
 
     return (
         <>
