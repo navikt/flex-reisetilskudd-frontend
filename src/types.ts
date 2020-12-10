@@ -26,17 +26,17 @@ export interface OpplastetKvittering {
 }
 
 export enum Transport {
-    GÅR = 'GÅR',
-    SYKLER = 'SYKLER',
-    KOLLEKTIVTRANSPORT = 'KOLLEKTIVTRANSPORT',
-    EGEN_BIL = 'EGEN BIL',
+    GÅR = 'GÅR', // eslint-disable-line
+    SYKLER = 'SYKLER', // eslint-disable-line
+    KOLLEKTIVTRANSPORT = 'KOLLEKTIVTRANSPORT', // eslint-disable-line
+    EGEN_BIL = 'EGEN BIL', // eslint-disable-line
 }
 
 export enum Transportmiddel {
-    SPØRSMÅLS_KEY = 'kvittering-transportmiddel-spørsmål',
-    TAXI = 'Taxi',
-    KOLLEKTIVT = 'Kollektivtransport',
-    EGEN_BIL = 'Egen bil'
+    SPØRSMÅLS_KEY = 'kvittering-transportmiddel-spørsmål', // eslint-disable-line
+    TAXI = 'Taxi', // eslint-disable-line
+    KOLLEKTIVT = 'Kollektivtransport', // eslint-disable-line
+    EGEN_BIL = 'Egen bil' // eslint-disable-line
 }
 
 export type Transportmidler = Transportmiddel.EGEN_BIL | Transportmiddel.KOLLEKTIVT | Transportmiddel.TAXI | undefined;
@@ -88,7 +88,7 @@ export interface CheckboxProps {
     id: string;
     tittel: string;
     svaralternativer: Svaralternativ[];
-    validerSkjema?: (hvilkenCheckbox?: string | null, nyVerdi?: string | null) => void;
+    validerSkjema?: (hvilkenCheckbox?: string | null, nyVerdi?: string | null) => void; // eslint-disable-line
 }
 
 export interface InputProps {
@@ -97,22 +97,22 @@ export interface InputProps {
     inputMode: 'numeric';
     bredde: 'fullbredde' | 'XXL' | 'XL' | 'L' | 'M' | 'S' | 'XS' | 'XXS';
     value?: number | string | undefined;
-    onChange?: (s: string) => void;
+    onChange?: (s: string) => void; // eslint-disable-line
     feil?: string;
 }
 
 export enum SykmeldingOpplysningEnum {
-    ID = 'id',
-    FRA_DATO = 'fraDato',
-    TIL_DATO = 'tilDato',
-    DIAGNOSE = 'diagnose',
-    BI_DIAGNOSER = 'bidiagnoser',
-    DIAGNOSEKODE = 'diagnosekode',
-    REISETILSKUDD = 'reisetilskudd',
-    BESKRIV_HENSYN = 'beskrivHensyn',
-    ARBEIDSGIVER = 'arbeidsgiver',
-    SYKMELDER = 'sykmelder',
-    AKTIVITET_IKKE_MULIG_434 = 'aktivitetIkkeMulig434',
+    ID = 'id', // eslint-disable-line
+    FRA_DATO = 'fraDato', // eslint-disable-line
+    TIL_DATO = 'tilDato', // eslint-disable-line
+    DIAGNOSE = 'diagnose', // eslint-disable-line
+    BI_DIAGNOSER = 'bidiagnoser', // eslint-disable-line
+    DIAGNOSEKODE = 'diagnosekode', // eslint-disable-line
+    REISETILSKUDD = 'reisetilskudd', // eslint-disable-line
+    BESKRIV_HENSYN = 'beskrivHensyn', // eslint-disable-line
+    ARBEIDSGIVER = 'arbeidsgiver', // eslint-disable-line
+    SYKMELDER = 'sykmelder', // eslint-disable-line
+    AKTIVITET_IKKE_MULIG_434 = 'aktivitetIkkeMulig434', // eslint-disable-line
 }
 
 export interface SykmeldingOpplysning {

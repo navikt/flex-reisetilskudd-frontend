@@ -21,6 +21,8 @@ import { Brodsmule, Sykmelding } from '../../types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
+import plasterHover from './plaster-hover.svg'
+import plaster from './plaster.svg'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -69,7 +71,11 @@ const TilskuddSide = () => {
                 </Vis>
 
                 <Ekspanderbartpanel className="sykmelding-panel" tittel={
-                    <Undertittel>{tekst('tilskudd.side.sykmeldinginfo')}</Undertittel>
+                    <>
+                        <img src={plaster} className="plaster" alt="" />
+                        <img src={plasterHover} className="plaster--hover" alt="" />
+                        <Undertittel className="sykmelding-panel__tittel">{tekst('tilskudd.side.sykmeldinginfo')}</Undertittel>
+                    </>
                 }>
                     <SykmeldingInfo />
                 </Ekspanderbartpanel>

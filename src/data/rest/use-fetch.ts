@@ -3,6 +3,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { FetchState, FetchStatus } from './utils'
 
 export interface Fetch<D = any> extends FetchState<D> {
+    // eslint-disable-next-line no-unused-vars
     fetch: (url: string, request?: any, onFinished?: (fetchState: FetchState<D>) => void) => void;
     reset: () => void;
 }
@@ -31,6 +32,7 @@ const createFinishedFetchState = <D = {}>(data: D | null, error: any, httpCode: 
 const useFetch = <D = {}>(): Fetch<D> => {
     const [ fetchState, setFetchState ] = useState<FetchState<D>>(createInitialFetchState())
 
+    // eslint-disable-next-line no-unused-vars
     const apiFetch = (url: string, request?: any, onFinished?: (fetchState: FetchState<D>) => void) => {
         setFetchState(createPendingFetchState())
 

@@ -11,6 +11,7 @@ export interface FeiloppsummeringProps
     innerRef?: React.RefObject<HTMLDivElement>
     tittel: React.ReactNode
     feil: FeiloppsummeringFeil[]
+    // eslint-disable-next-line no-unused-vars
     customFeilRender?: (feil: FeiloppsummeringFeil) => React.ReactNode
 }
 

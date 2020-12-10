@@ -1,7 +1,7 @@
 export enum FetchStatus {
-    NOT_STARTED = 'NOT_STARTED',
-    PENDING = 'PENDING',
-    FINISHED = 'FINISHED'
+    NOT_STARTED = 'NOT_STARTED', // eslint-disable-line no-unused-vars
+    PENDING = 'PENDING', // eslint-disable-line no-unused-vars
+    FINISHED = 'FINISHED' // eslint-disable-line no-unused-vars
 }
 
 export interface FetchState<D = {}> {

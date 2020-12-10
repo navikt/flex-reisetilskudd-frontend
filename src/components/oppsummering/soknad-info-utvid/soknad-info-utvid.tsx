@@ -9,11 +9,17 @@ import FilListe from '../../filopplaster/fil-liste'
 import TotalBelop from '../../total-belop/total-belop'
 import DagensTransportmiddel from '../dagens-transportmiddel'
 import Utbetaling from '../utbetaling'
+import sjekkbokserHover from './sjekkbokser-hover.svg'
+import sjekkbokser from './sjekkbokser.svg'
 
 const SoknadInfoUtvid = () => {
     return (
         <Ekspanderbartpanel className="soknad-info-utvid" tittel={
-            <Undertittel>{tekst('soknad-info-utvid.tittel')}</Undertittel>
+            <>
+                <img src={sjekkbokser} className="sjekkbokser" alt="" />
+                <img src={sjekkbokserHover} className="sjekkbokser--hover" alt="" />
+                <Undertittel className="soknad-info__tittel">{tekst('soknad-info-utvid.tittel')}</Undertittel>
+            </>
         }>
             <Utbetaling />
             <DagensTransportmiddel />
