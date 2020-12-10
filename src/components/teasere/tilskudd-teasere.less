@@ -1,0 +1,150 @@
+@import 'node_modules/nav-frontend-core/less/_variabler';
+
+.tilskudd__teasere {
+    .tilskudd--usendt {
+        .dine-reisetilskudd {
+            background-color: #fffaf2;
+            border-color: @navOransje;
+        }
+    }
+
+    .tilskudd--sendt {
+        display: flex;
+        flex-direction: column;
+
+        .teasere__sortering {
+            display: inline-block;
+            position: absolute;
+            right: 1rem;
+        }
+
+        .tilskudd__tittel {
+            margin-top: 3rem;
+        }
+    }
+
+    .tilskudd__tittel {
+        padding: 1rem 0;
+    }
+
+    .dine-reisetilskudd {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 28px 0 28px 20px;
+        color: @navGra80;
+        text-decoration: none;
+        border: 1px solid @navGra40;
+        border-radius: 4px;
+
+        .teaser__ytre {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: calc(100% - 2rem);
+
+            .ytre__del1 {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding-right: 1rem;
+            }
+
+            .etikett {
+                white-space: nowrap;
+                margin-right: 1rem;
+            }
+        }
+
+        .tilskudd__ikon {
+            display: none;
+        }
+
+        .tilskudd-periode {
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .tilskudd__status {
+            white-space: nowrap;
+            margin-top: 12px;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 3px @fokusFarge;
+        }
+
+        &:hover {
+            box-shadow: @navLysGra 0 0 4px 2px;
+
+            .tilskudd__ikon {
+                .tilskudd__img {
+                    display: none;
+                }
+
+                .tilskudd__img--hover {
+                    display: inline;
+                }
+            }
+
+            .tilskudd-chevron {
+                color: @navBla;
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 2px @fokusFarge, @navGra20 0 0 3px 4px;
+            }
+        }
+    }
+}
+
+@media (min-width: @screen-sm) {
+    .tilskudd__teasere {
+        .dine-reisetilskudd {
+            .teaser__ytre {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .tilskudd__ikon {
+                display: block;
+                width: 66px;
+                margin: 6px 0 0 12px;
+                align-self: flex-start;
+
+                img {
+                    width: 40px;
+                }
+
+                .tilskudd__img {
+                    display: inline;
+                }
+
+                .tilskudd__img--hover {
+                    display: none;
+                }
+            }
+
+            .tilskudd__ikon--hover {
+                display: none;
+            }
+
+            .teaser__tittel {
+                margin-bottom: 0.5rem;
+            }
+
+            &:hover {
+                .ytre__del1 {
+                    .teaser__tittel {
+                        color: @navBla;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
+

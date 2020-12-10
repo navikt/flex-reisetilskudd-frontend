@@ -51,6 +51,7 @@ export interface Reisetilskudd {
     reisetilskuddId: string,
     sykmeldingId: string,
     fnr: string,
+    sendt?: string,
 
     fom?: string,
     tom?: string,

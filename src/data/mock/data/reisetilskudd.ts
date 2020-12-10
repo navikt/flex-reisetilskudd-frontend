@@ -6,10 +6,10 @@ const mockReisetilskudd : Reisetilskudd[] = [
         fnr: '01010112345',
         fom: '2020-08-03',
         tom: '2020-08-03',
+        sendt: '2020-11-03',
 
         orgNavn: 'Mock Arbeid AS',
         orgNummer: '123123123',
-
         utbetalingTilArbeidsgiver: false,
 
         går: false,
@@ -25,9 +25,10 @@ const mockReisetilskudd : Reisetilskudd[] = [
     {
         fnr: '01010112345',
         fom: '2020-05-13',
+        sendt: '2020-11-03',
+
         orgNavn: 'Mock Vaskeri Vaskerelven',
         orgNummer: '9237419',
-
         utbetalingTilArbeidsgiver: true,
 
         går: true,
@@ -43,9 +44,9 @@ const mockReisetilskudd : Reisetilskudd[] = [
     {
         fnr: '01010112345',
         fom: '2020-05-13',
+
         orgNavn: 'Mock Med undefined verdi på utbetalingTilArbeidsgiver',
         orgNummer: '9237419',
-
         utbetalingTilArbeidsgiver: undefined,
 
         går: true,
@@ -61,9 +62,9 @@ const mockReisetilskudd : Reisetilskudd[] = [
     {
         fnr: '01010112345',
         fom: '2020-05-13',
+
         orgNavn: 'Mock Med undefined verdi på utbetalingTilArbeidsgiver',
         orgNummer: '9237419',
-
         utbetalingTilArbeidsgiver: undefined,
 
         går: true,
