@@ -81,8 +81,7 @@ describe('Tester reisetilskuddsøknaden', () => {
         it('Sjekker at siden inneholder elementer', () => {
             cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/3`)
             cy.contains('Kvitteringer for reise')
-            cy.contains('Her kan du laste opp kvitteringer fra reisetilskuddsperioden.')
-            cy.get('.hjelpetekst').should('be.visible').click().click()
+            cy.contains('Last opp kvitteringer for reise til og fra arbeidsplassen mellom')
             cy.get('.fler-vedlegg').should('be.visible').click()
         })
 
