@@ -11,7 +11,6 @@ const Banner = ({ tittel }: BannerProps) => {
     const bannerRef = useRef<HTMLElement>(null)
 
     useEffect(() => {
-        console.log('smooth') // eslint-disable-line
         bannerRef.current!.scrollIntoView({ behavior: 'smooth' })
     }, [])
 

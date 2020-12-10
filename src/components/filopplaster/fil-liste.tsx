@@ -8,7 +8,7 @@ import useForceUpdate from 'use-force-update'
 
 import { del } from '../../data/fetcher/fetcher'
 import { useAppStore } from '../../data/stores/app-store'
-import { Kvittering } from '../../types'
+import { Kvittering, Transportmiddel } from '../../types'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
 import { nf_des } from '../../utils/utils'
@@ -25,21 +25,22 @@ const FilListe = ({ fjernKnapp }: Props) => {
     const forceUpdate = useForceUpdate()
 
     const slettKvittering = (kvitto: Kvittering) => {
-        kvitteringer = kvitteringer.filter(
-            (kvittering) => kvittering.kvitteringId !== kvitto.kvitteringId,
-        )
-        valgtReisetilskudd!.kvitteringer = kvitteringer
-        setValgtReisetilskudd(valgtReisetilskudd)
+        del(`${env.backendUrl}/api/v1/kvittering/${kvitto.kvitteringId}`)
+            .then(() => {
+                kvitteringer = kvitteringer.filter((kvittering) =>
+                    kvittering.kvitteringId !== kvitto.kvitteringId
+                )
+                valgtReisetilskudd!.kvitteringer = kvitteringer
+                setValgtReisetilskudd(valgtReisetilskudd)
 
-        del(`${env.backendUrl}/api/v1/kvittering/${kvitto.kvitteringId}`).catch((error) => {
-            logger.error('Feil under sletting av kvittering', error)
-        })
-
-        forceUpdate()
+                forceUpdate()
+            })
+            .catch((error) => {
+                logger.error('Feil under sletting av kvittering', error)
+            })
     }
 
     const visKvittering = (idx: number) => {
-        console.log('idx', idx) // eslint-disable-line
         setOpenModal(true)
         setKvitteringIndex(idx)
     }
@@ -93,7 +94,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
                                 </button>
                             </td>
                             <td className="transport">
-                                {fil.transportmiddel}
+                                {Transportmiddel[fil.transportmiddel!]}
                             </td>
                             <td className="belop">
                                 {nf_des.format(fil.belop!)} kr

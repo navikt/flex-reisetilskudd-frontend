@@ -4,15 +4,16 @@ import { Datepicker } from 'nav-datovelger'
 import { Knapp } from 'nav-frontend-knapper'
 import NavFrontendSpinner from 'nav-frontend-spinner'
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import useForceUpdate from 'use-force-update'
+import { v4 as uuidv4 } from 'uuid'
 
 import { RouteParams } from '../../../app'
 import { post } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
-import { Kvittering, OpplastetKvittering, Transportmiddel } from '../../../types'
+import { Kvittering, Transportmiddel } from '../../../types'
 import env from '../../../utils/environment'
 import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
@@ -25,23 +26,22 @@ const maksFilstorrelse = formaterFilstørrelse(env.maksFilstørrelse)
 
 const KvitteringForm = () => {
     const {
-        valgtReisetilskudd, kvitteringIndex, setOpenModal
+        valgtReisetilskudd, setValgtReisetilskudd, kvitteringIndex, setOpenModal, valgtFil
     } = useAppStore()
     const { id } = useParams<RouteParams>()
     const [ laster, setLaster ] = useState<boolean>(false)
     const [ kvittering, setKvittering ] = useState<Kvittering>()
     const [ dato, setDato ] = useState<string>('')
     const forceUpdate = useForceUpdate()
-    const datoRef = useRef<HTMLInputElement>(null)
 
     const methods = useForm({
         reValidateMode: 'onSubmit'
     })
 
     const options = [
-        { id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.TAXI}`, value: Transportmiddel.TAXI },
-        { id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.EGEN_BIL}`, value: Transportmiddel.EGEN_BIL },
-        { id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.KOLLEKTIVT}`, value: Transportmiddel.KOLLEKTIVT }
+        { id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.TAXI}`, value: 'TAXI', name: Transportmiddel.TAXI },
+        { id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.EGEN_BIL}`, value: 'EGEN_BIL', name: Transportmiddel.EGEN_BIL },
+        { id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.KOLLEKTIVT}`, value: 'KOLLEKTIVT', name: Transportmiddel.KOLLEKTIVT }
     ]
 
     useEffect(() => {
@@ -53,39 +53,34 @@ const KvitteringForm = () => {
             setDato(dayjs(kvitto!.fom).format('YYYY-MM-DD'))
             forceUpdate()
         }
-        // datoInputFokus()
         // eslint-disable-next-line
     }, [])
 
-    const lagreKvittering = (fil: File) => {
-        // TODO: Legg kvittering inn i valgtReisetilskudd
+    const onSubmit = async() => {
         setLaster(true)
-        methods.setValue('name', fil.name)
-        methods.setValue('storrelse', fil.size)
-        post<OpplastetKvittering>(`${env.mockBucketUrl}/kvittering`, methods.getValues())
-            .then((response) => {
-                if (response.parsedBody?.reisetilskuddId) {
-                    return kvittering
-                }
-                logger.warn('Responsen inneholder ikke noen id', response.parsedBody)
-                return null
-            })
-            .then((kvitt) => {
-                post<Kvittering>(`${env.backendUrl}/api/v1/kvittering`, kvitt)
-                    .then(() => {
-                        setLaster(false)
-                    })
-                    .catch((error) => {
-                        logger.error('Feil under opplasting av kvittering', error)
-                    })
+
+        const kvitt: Kvittering = {
+            reisetilskuddId: kvittering?.reisetilskuddId || valgtReisetilskudd!.reisetilskuddId,
+            kvitteringId: uuidv4().toString(),  // TODO: Post til bucket-uploader som sender tilbake en id (kvitteringId)
+            navn: valgtFil?.name,
+            storrelse: valgtFil?.size,
+            belop: methods.getValues('belop_input'),
+            fom: dayjs(dato).toDate(),
+            // tom?: Date; // TODO: Brukes tom, eller bare fom
+            transportmiddel: methods.getValues('transportmiddel')
+        }
+
+        post<Kvittering>(`${env.backendUrl}/api/v1/kvittering`, kvitt)
+            .then(() => {
+                setLaster(false)
+                setKvittering(kvitt)
+                valgtReisetilskudd?.kvitteringer.push(kvitt)
+                setValgtReisetilskudd(valgtReisetilskudd)
+                setOpenModal(false)
             })
             .catch((error) => {
                 logger.error('Feil under opplasting av kvittering', error)
             })
-    }
-
-    const onSubmit = async() => {
-        lagreKvittering({} as any)  // TODO: Trenger ikke sende med noe, hentes fra form
     }
 
     if (!kvittering) return null
@@ -94,7 +89,7 @@ const KvitteringForm = () => {
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
                 <Systemtittel className="kvittering-header">
-                    {tekst('kvittering_modal.nytt-utlegg.tittel')} {kvittering?.fom}
+                    {tekst('kvittering_modal.nytt-utlegg.tittel')}
                 </Systemtittel>
 
                 <div className="skjemaelement">
@@ -107,12 +102,14 @@ const KvitteringForm = () => {
                         defaultValue={kvittering?.fom || ''}
                         rules={{
                             validate: () => {
-                                // TODO: Bedre validering
-                                if (datoRef.current?.value === '') {
-                                    datoRef.current.classList.add('skjemaelement__input--harFeil')
+                                const div: HTMLDivElement | null = document.querySelector('.nav-datovelger__input')
+                                // 2020-01-20 //
+                                if (dato === '' || !dato.match(RegExp('\\d{4}-\\d{2}-\\d{2}'))) {
+                                    div?.classList.add('skjemaelement__input--harFeil')
                                     return tekst('kvittering_modal.dato.feilmelding')
                                 }
-                                datoRef.current?.classList.remove('skjemaelement__input--harFeil')
+
+                                div?.classList.remove('skjemaelement__input--harFeil')
                                 return true
                             }
                         }}
@@ -123,8 +120,7 @@ const KvitteringForm = () => {
                                 onChange={setDato}
                                 value={dato}
                                 inputProps={{
-                                    name: name,
-                                    inputRef: datoRef   // TODO: Se på 'React does not recognize the `inputRef` prop on a DOM element.'
+                                    name: name
                                 }}
                                 calendarSettings={{ showWeekNumbers: true }}
                                 showYearSelector={false}
@@ -148,7 +144,6 @@ const KvitteringForm = () => {
                     </label>
                     <select
                         ref={methods.register({ required: tekst('kvittering_modal.transportmiddel.feilmelding') })}
-                        key={Transportmiddel.SPØRSMÅLS_KEY}
                         className={
                             'skjemaelement__input kvittering-element' +
                             (methods.errors['transportmiddel'] ? ' skjemaelement__input--harFeil' : '')
@@ -156,12 +151,13 @@ const KvitteringForm = () => {
                         id="transportmiddel"
                         name="transportmiddel"
                         onChange={() => methods.trigger('transportmiddel')}
+                        defaultValue={kvittering.transportmiddel}
                     >
                         <option value="">Velg</option>
                         {options.map((option, idx) => {
                             return (
                                 <option value={option.value} id={option.id} key={idx}>
-                                    {option.value}
+                                    {option.name}
                                 </option>
                             )
                         })}
@@ -202,7 +198,7 @@ const KvitteringForm = () => {
                     </Normaltekst>
                 </div>
 
-                <DragAndDrop />
+                <DragAndDrop kvittering={kvittering} />
 
                 <Normaltekst className="restriksjoner">
                     <span className="filtype">

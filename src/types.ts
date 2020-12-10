@@ -18,7 +18,7 @@ export interface Kvittering {
     belop?: number;
     fom?: Date;
     tom?: Date;
-    transportmiddel?: string;
+    transportmiddel?: keyof typeof Transportmiddel;
 }
 
 export interface OpplastetKvittering {

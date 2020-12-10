@@ -1,11 +1,12 @@
 import './drag-and-drop.less'
 
 import { Element, Normaltekst } from 'nav-frontend-typografi'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useFormContext } from 'react-hook-form'
 
 import { useAppStore } from '../../../data/stores/app-store'
+import { Kvittering } from '../../../types'
 import env from '../../../utils/environment'
 import { customTruncet, formaterFilstørrelse } from '../../../utils/fil-utils'
 import { getLedetekst, tekst } from '../../../utils/tekster'
@@ -17,10 +18,26 @@ const tillatteFiltyper = env.tillatteFiltyper
 const maxFilstørrelse = env.maksFilstørrelse
 const maks = formaterFilstørrelse(maxFilstørrelse)
 
-const DragAndDrop = () => {
+interface Props {
+    kvittering: Kvittering
+}
+
+const DragAndDrop = ({ kvittering }: Props) => {
     const { valgtFil, setValgtFil } = useAppStore()
     const { setError, errors, register } = useFormContext()
     const filRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        if (kvittering.kvitteringId) {
+            // TODO: Hent bilde med id
+            // eslint-disable-next-line no-console
+            console.log('Her må bilde hentes ned')
+            setValgtFil(null)
+        } else {
+            setValgtFil(null)
+        }
+        // eslint-disable-next-line
+    }, [])
 
     const onDropCallback = useCallback(
         (filer) => {
@@ -58,7 +75,6 @@ const DragAndDrop = () => {
     })
 
     // TODO: Fix Vis
-    // TODO: Nå vises bilde brukeren har valgt, her burde kanskje ferdig prosessert bilde vises?
     return (
         <>
             <label htmlFor="ddfil" className="skjemaelement__label">
@@ -94,10 +110,8 @@ const DragAndDrop = () => {
             <div className="filopplasteren" {...getRootProps()}>
                 <input ref={filRef} {...getInputProps()} id="ddfil" />
                 <input type="hidden" name="fil_input" id="fil_input"
-                    defaultValue={filRef.current && filRef.current.name as any}
                     ref={register({
                         validate: () => {
-                            // TODO: Se om det finnes en bedre måte å sette .skjemaelement__input--harFeil
                             const div: HTMLDivElement | null = document.querySelector('.filopplasteren')
                             if (valgtFil === undefined || valgtFil === null) {
                                 div?.classList.add('skjemaelement__input--harFeil')
