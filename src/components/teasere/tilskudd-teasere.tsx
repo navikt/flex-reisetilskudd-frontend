@@ -16,10 +16,10 @@ import OmReisetilskudd from './om-reisetilskudd/om-reisetilskudd'
 import SoknadHoverIkon from './soknad-hover-ikon.svg'
 import SoknadIkon from './soknad-ikon.svg'
 
-enum Sortering {
-    Dato = 'Dato',
-    Status = 'Status',
-    Sendt = 'Sendt',
+enum Sortering { // eslint-disable-line no-unused-vars
+    Dato = 'Dato', // eslint-disable-line no-unused-vars
+    Status = 'Status', // eslint-disable-line no-unused-vars
+    Sendt = 'Sendt', // eslint-disable-line no-unused-vars
 }
 
 const TilskuddTeasere = () => {
@@ -27,11 +27,11 @@ const TilskuddTeasere = () => {
     const [ sortering, setSortering ] = useState<Sortering>(Sortering.Dato)
 
     const sorterteSoknader = () => {
-        if (sortering === 'Dato') {
+        if (sortering === Sortering.Dato) {
             return reisetilskuddene.sort()
-        } else if (sortering === 'Status') {
+        } else if (sortering === Sortering.Status) {
             return reisetilskuddene.sort()
-        } else if (sortering === 'Sendt') {
+        } else if (sortering === Sortering.Sendt) {
             return reisetilskuddene.sort()
         }
         return reisetilskuddene

@@ -2,6 +2,34 @@
 
 .soknad-info-utvid {
     margin-bottom: 1rem;
+    background-color: #f1f6f8;
+
+    .ekspanderbartPanel__tittel {
+        margin-left: 0.65rem;
+    }
+
+    img.sjekkbokser {
+        display: inline;
+    }
+
+    img.sjekkbokser--hover {
+        display: none;
+    }
+
+    .soknad-info__tittel {
+        display: inline;
+        margin-left: 1.1rem;
+    }
+
+    &:hover {
+        img.sjekkbokser {
+            display: none;
+        }
+
+        img.sjekkbokser--hover {
+            display: inline;
+        }
+    }
 
     .checkedblock {
         display: flex;

@@ -5,7 +5,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
     {
         fnr: '01010112345',
         fom: '2020-08-03',
-        tom: '2020-08-03',
+        tom: '2020-08-13',
         sendt: '2020-11-03',
 
         orgNavn: 'Mock Arbeid AS',
@@ -25,6 +25,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
     {
         fnr: '01010112345',
         fom: '2020-05-13',
+        tom: '2020-05-28',
         sendt: '2020-11-03',
 
         orgNavn: 'Mock Vaskeri Vaskerelven',
@@ -44,6 +45,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
     {
         fnr: '01010112345',
         fom: '2020-05-13',
+        tom: '2020-05-19',
 
         orgNavn: 'Mock Med undefined verdi på utbetalingTilArbeidsgiver',
         orgNummer: '9237419',
@@ -62,6 +64,7 @@ const mockReisetilskudd : Reisetilskudd[] = [
     {
         fnr: '01010112345',
         fom: '2020-05-13',
+        tom: '2020-05-31',
 
         orgNavn: 'Mock Med undefined verdi på utbetalingTilArbeidsgiver',
         orgNummer: '9237419',
