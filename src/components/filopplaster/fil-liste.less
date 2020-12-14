@@ -7,6 +7,34 @@
 
     th {
         text-align: left;
+
+        .sortering__heading {
+            display: flex;
+            align-items: center;
+
+            &.belop {
+                display: block;
+            }
+        }
+
+        .sortering__chevron {
+            display: inline-flex;
+            flex-direction: column;
+            padding-left: 0.3rem;
+
+            .lenkeknapp {
+                line-height: 0.6;
+            }
+
+            .chevronboks {
+                width: 15px;
+
+                &:before, &:after {
+                    height: 75%;
+                    width: 50%;
+                }
+            }
+        }
     }
 
     .belop {
@@ -19,12 +47,6 @@
     .tabell.fil_liste {
         .belop {
             padding-right: 3rem;
-        }
-
-        .dato, .transport, .belop {
-            strong {
-                display: none;
-            }
         }
 
         .slett-knapp {
