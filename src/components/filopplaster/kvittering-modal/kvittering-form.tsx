@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { RouteParams } from '../../../app'
 import { post } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
-import { Kvittering, Transportmiddel } from '../../../types'
+import { Kvittering, Transportmiddel } from '../../../types/types'
 import env from '../../../utils/environment'
 import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
@@ -46,7 +46,7 @@ const KvitteringForm = () => {
 
     useEffect(() => {
         if (kvitteringIndex === -1) {
-            setKvittering({ reisetilskuddId: id })
+            setKvittering(new Kvittering({ reisetilskuddId: id }))
         } else {
             const kvitto = valgtReisetilskudd!.kvitteringer[kvitteringIndex]
             setKvittering(kvitto)
@@ -59,16 +59,16 @@ const KvitteringForm = () => {
     const onSubmit = async() => {
         setLaster(true)
 
-        const kvitt: Kvittering = {
+        const kvitt = new Kvittering({
             reisetilskuddId: kvittering?.reisetilskuddId || valgtReisetilskudd!.reisetilskuddId,
             kvitteringId: uuidv4().toString(),  // TODO: Post til bucket-uploader som sender tilbake en id (kvitteringId)
             navn: valgtFil?.name,
             storrelse: valgtFil?.size,
             belop: methods.getValues('belop_input'),
-            fom: dayjs(dato).toDate(),
+            fom: dato,
             // tom?: Date; // TODO: Brukes tom, eller bare fom
             transportmiddel: methods.getValues('transportmiddel')
-        }
+        })
 
         post<Kvittering>(`${env.backendUrl}/api/v1/kvittering`, kvitt)
             .then(() => {
@@ -120,7 +120,7 @@ const KvitteringForm = () => {
                                 onChange={setDato}
                                 value={dato}
                                 inputProps={{
-                                    name: name
+                                    name: name,
                                 }}
                                 calendarSettings={{ showWeekNumbers: true }}
                                 showYearSelector={false}
@@ -185,7 +185,7 @@ const KvitteringForm = () => {
                         name="belop_input"
                         inputMode={'numeric'}
                         pattern="[0-9]*"
-                        defaultValue={kvittering?.belop}
+                        defaultValue={kvittering?.belop || ''}
                         className={
                             'skjemaelement__input input--m periode-element' +
                             (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')

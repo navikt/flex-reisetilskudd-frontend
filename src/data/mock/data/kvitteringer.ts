@@ -1,4 +1,4 @@
-import { Kvittering } from '../../../types'
+import { Kvittering } from '../../../types/types'
 
 const mockKvitteringer: Kvittering[] = [
     {

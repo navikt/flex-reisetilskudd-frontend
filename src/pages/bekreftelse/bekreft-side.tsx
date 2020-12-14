@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 
 import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
-import { Brodsmule } from '../../types'
+import { Brodsmule } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'

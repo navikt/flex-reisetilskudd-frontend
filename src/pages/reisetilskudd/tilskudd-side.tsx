@@ -17,7 +17,7 @@ import TransportMiddel from '../../components/sporsmal/transport/transport-midde
 import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import { useAppStore } from '../../data/stores/app-store'
-import { Brodsmule, Sykmelding } from '../../types'
+import { Brodsmule, Sykmelding } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'

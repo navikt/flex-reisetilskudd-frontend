@@ -6,7 +6,7 @@ import { useDropzone } from 'react-dropzone'
 import { useFormContext } from 'react-hook-form'
 
 import { useAppStore } from '../../../data/stores/app-store'
-import { Kvittering } from '../../../types'
+import { Kvittering } from '../../../types/types'
 import env from '../../../utils/environment'
 import { customTruncet, formaterFilstørrelse } from '../../../utils/fil-utils'
 import { getLedetekst, tekst } from '../../../utils/tekster'

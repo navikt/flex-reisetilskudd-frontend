@@ -1,4 +1,4 @@
-import { Periode } from '../types'
+import { Periode } from '../types/types'
 
 export const tidligsteFom = (perioder: Periode[]) => {
     if (perioder.length === 0) {

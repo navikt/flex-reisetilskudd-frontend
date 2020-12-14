@@ -8,7 +8,7 @@ import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { Reisetilskudd } from '../../types'
+import { Reisetilskudd } from '../../types/types'
 import { tilLesbarPeriodeMedArstall } from '../../utils/dato'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import Vis from '../diverse/vis'
