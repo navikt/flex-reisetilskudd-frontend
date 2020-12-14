@@ -12,6 +12,8 @@ import { useHistory } from 'react-router-dom'
 import { useAppStore } from '../../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
+import env from '../../../utils/environment'
+import { redirectTilLoginHvis401 } from '../../../utils/utils'
 
 const Hovedpunkter = () => {
     const { valgtReisetilskudd, erBekreftet, setErBekreftet } = useAppStore()
@@ -22,6 +24,27 @@ const Hovedpunkter = () => {
     const tom = dayjs(valgtReisetilskudd!.tom)
     const sameYear = fom.year() === tom.year()
     const bilag = valgtReisetilskudd!.kvitteringer
+
+    const sendSoknad = async() => {
+        if (!valgtReisetilskudd) {
+            return
+        }
+        const res = await fetch(env.backendUrl + `/api/v1/reisetilskudd/${valgtReisetilskudd.reisetilskuddId}/send`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        })
+
+
+        const httpCode = res.status
+        if (redirectTilLoginHvis401(res)) {
+            return
+        }
+        if ([ 200, 201, 203, 206 ].includes(httpCode)) {
+            history.push('/bekreftelse')
+        }
+
+    }
 
     return (
         <>
@@ -63,7 +86,7 @@ const Hovedpunkter = () => {
                 </BekreftCheckboksPanel>
 
                 <div className="knapperad">
-                    <Knapp type="hoved" onClick={() => history.push('/bekreftelse')} disabled={!erBekreftet}>
+                    <Knapp type="hoved" onClick={async() => await sendSoknad()} disabled={!erBekreftet}>
                         {tekst('hovedpunkter.send-knapp.tekst')}
                     </Knapp>
                 </div>
