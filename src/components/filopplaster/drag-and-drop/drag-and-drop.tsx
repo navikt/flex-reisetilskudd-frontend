@@ -1,26 +1,43 @@
 import './drag-and-drop.less'
 
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
-import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi'
+import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { useCallback, useEffect, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useFormContext } from 'react-hook-form'
 
 import { useAppStore } from '../../../data/stores/app-store'
+import { Kvittering } from '../../../types/types'
 import env from '../../../utils/environment'
 import { customTruncet, formaterFilstørrelse } from '../../../utils/fil-utils'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
+import Utvidbar from '../../utvidbar/utvidbar'
 import binders from './binders.svg'
 
 const tillatteFiltyper = env.tillatteFiltyper
 const maxFilstørrelse = env.maksFilstørrelse
 const maks = formaterFilstørrelse(maxFilstørrelse)
 
-const DragAndDrop = () => {
+interface Props {
+    kvittering: Kvittering
+}
+
+const DragAndDrop = ({ kvittering }: Props) => {
     const { valgtFil, setValgtFil } = useAppStore()
-    const { setError, errors, register, setValue } = useFormContext()
+    const { setError, errors, register } = useFormContext()
     const filRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        if (kvittering.kvitteringId) {
+            // TODO: Hent bilde med id
+            // eslint-disable-next-line no-console
+            console.log('Her må bilde hentes ned')
+            setValgtFil(null)
+        } else {
+            setValgtFil(null)
+        }
+        // eslint-disable-next-line
+    }, [])
 
     const onDropCallback = useCallback(
         (filer) => {
@@ -57,49 +74,24 @@ const DragAndDrop = () => {
         multiple: false,
     })
 
-    useEffect(() => {
-        setValue('fil_input', filRef.current && filRef.current.value)
-        // eslint-disable-next-line
-    }, [ filRef, valgtFil ])
-
+    // TODO: Fix Vis
     return (
         <>
-            <Vis hvis={!valgtFil}>
-                <label htmlFor="ddfil" className="skjemaelement__label">
-                    <Element tag="strong">{tekst('drag_and_drop.label')}</Element>
-                </label>
-                <div className="filopplasteren" {...getRootProps()}>
-                    <input ref={filRef} {...getInputProps()} id="ddfil" />
-                    <input type="hidden" name="fil_input" id="fil_input"
-                        defaultValue={filRef.current && filRef.current.name as any}
-                        ref={register({ required: tekst('kvittering_modal.filopplasting.feilmelding') })}
-                    />
-                    <img src={binders} className="opplastingsikon" alt="Opplastingsikon" />
-                    <Normaltekst tag="span" className="tekst">
-                        {isDragActive
-                            ? tekst('drag_and_drop.dragtekst.aktiv')
-                            : tekst('drag_and_drop.dragtekst')
-                        }
-                    </Normaltekst>
-                </div>
+            <label htmlFor="ddfil" className="skjemaelement__label">
+                <Element tag="strong">{tekst('drag_and_drop.label')}</Element>
+            </label>
 
-                <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
-                    <Vis hvis={errors.fil_input}>
-                        <p>{tekst('kvittering_modal.filopplasting.feilmelding')}</p>
-                    </Vis>
-                </Normaltekst>
-            </Vis>
-
-            <Vis hvis={valgtFil && valgtFil!.name}>
-                <Ekspanderbartpanel tittel={
-                    <Undertittel tag="span" className="filnavn">
-                        {customTruncet('valgtFil!.name', 40)}
-                    </Undertittel>
-                }>
+            {valgtFil ? <Vis hvis={valgtFil}>
+                <Utvidbar
+                    erApen={false}
+                    tittel={customTruncet(valgtFil?.name || '', 20)}
+                    type="intern"
+                    fixedHeight={true}
+                >
                     <div className="preview">
-                        Bilde inn her
+                        <img alt="" src={URL.createObjectURL(valgtFil)} />
                     </div>
-                </Ekspanderbartpanel>
+                </Utvidbar>
 
                 <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                     <Vis hvis={errors['maks_fil']}>
@@ -113,7 +105,39 @@ const DragAndDrop = () => {
                         )}</p>
                     </Vis>
                 </Normaltekst>
-            </Vis>
+            </Vis> : null}
+
+            <div className="filopplasteren" {...getRootProps()}>
+                <input ref={filRef} {...getInputProps()} id="ddfil" />
+                <input type="hidden" name="fil_input" id="fil_input"
+                    ref={register({
+                        validate: () => {
+                            const div: HTMLDivElement | null = document.querySelector('.filopplasteren')
+                            if (valgtFil === undefined || valgtFil === null) {
+                                div?.classList.add('skjemaelement__input--harFeil')
+                                return tekst('kvittering_modal.filopplasting.feilmelding')
+                            }
+                            div?.classList.remove('skjemaelement__input--harFeil')
+                            return true
+                        }
+                    })}
+                />
+                <img src={binders} className="opplastingsikon" alt="Opplastingsikon" />
+                <Normaltekst tag="span" className="tekst">
+                    {isDragActive
+                        ? tekst('drag_and_drop.dragtekst.aktiv')
+                        : valgtFil
+                            ? tekst('drag_and_drop.dragtekst.endre')
+                            : tekst('drag_and_drop.dragtekst')
+                    }
+                </Normaltekst>
+            </div>
+
+            <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
+                <Vis hvis={errors.fil_input}>
+                    <p>{tekst('kvittering_modal.filopplasting.feilmelding')}</p>
+                </Vis>
+            </Normaltekst>
         </>
     )
 }

@@ -1,4 +1,4 @@
-import { ArbeidsgiverInterface, RadioSporsmalProps } from '../../types'
+import { ArbeidsgiverInterface, RadioSporsmalProps } from '../../types/types'
 
 export const ArbeidsOgVelferdsetaten: ArbeidsgiverInterface = {
     navn: 'Arbeids- og velferdsetaten',

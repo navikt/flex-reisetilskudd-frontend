@@ -3,7 +3,7 @@ import React from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../utils/tekster'
-import { nf_des } from '../../utils/utils'
+import { formatterTall } from '../../utils/utils'
 import { CheckedIkon } from '../diverse/checked-ikon/checked-ikon'
 import Vis from '../diverse/vis'
 
@@ -31,7 +31,7 @@ const DagensTransportmiddel = () => {
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {getLedetekst(tekst('oppsummering.kollektivt'), {
-                        '%UTGIFTER%': nf_des.format(valgtReisetilskudd!.kollektivtransport!)
+                        '%UTGIFTER%': formatterTall(valgtReisetilskudd!.kollektivtransport)
                     })}
                 </Normaltekst>
             </Vis>
@@ -39,7 +39,7 @@ const DagensTransportmiddel = () => {
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {getLedetekst(tekst('oppsummering.egenbil'), {
-                        '%KILOMETER%': nf_des.format(valgtReisetilskudd!.egenBil!)
+                        '%KILOMETER%': formatterTall(valgtReisetilskudd!.egenBil)
                     })}
                 </Normaltekst>
             </Vis>

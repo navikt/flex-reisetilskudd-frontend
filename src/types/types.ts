@@ -1,3 +1,6 @@
+import { RSKvittering, RSReisetilskudd } from './rs-types/rsReisetilskudd'
+import { dayjsToDate } from '../utils/dato'
+
 export interface ArbeidsgiverInterface {
     navn: string,
     orgNr: string,
@@ -8,17 +11,6 @@ export interface Brodsmule {
     tittel: string;
     mobilTittel?: string;
     erKlikkbar?: boolean;
-}
-
-export interface Kvittering {
-    reisetilskuddId: string;
-    kvitteringId?: string;
-    navn?: string;
-    storrelse?: number;
-    belop?: number;
-    fom?: Date;
-    tom?: Date;
-    transportmiddel?: string;
 }
 
 export interface OpplastetKvittering {
@@ -39,33 +31,82 @@ export enum Transportmiddel {
     EGEN_BIL = 'Egen bil' // eslint-disable-line
 }
 
+export class Reisetilskudd {
+    reisetilskuddId: string;
+    sykmeldingId: string;
+    fnr: string;
+    sendt?: string;
+
+    fom?: string;
+    tom?: string;
+
+    orgNummer?: string;
+    orgNavn?: string;
+    utbetalingTilArbeidsgiver?: boolean;
+
+    går: boolean;
+    sykler: boolean;
+    kollektivtransport: number;
+    egenBil: number;
+
+    kvitteringer: Kvittering[];
+
+    constructor(
+        rsReisetilskudd: RSReisetilskudd
+    ) {
+        this.reisetilskuddId = rsReisetilskudd.reisetilskuddId
+        this.sykmeldingId = rsReisetilskudd.sykmeldingId
+        this.fnr = rsReisetilskudd.fnr
+        this.sendt = rsReisetilskudd.sendt
+
+        this.fom = rsReisetilskudd.fom
+        this.tom = rsReisetilskudd.tom
+
+        this.orgNummer = rsReisetilskudd.orgNummer
+        this.orgNavn = rsReisetilskudd.orgNavn
+        this.utbetalingTilArbeidsgiver = rsReisetilskudd.utbetalingTilArbeidsgiver
+
+        this.går = rsReisetilskudd.går
+        this.sykler = rsReisetilskudd.sykler
+        this.kollektivtransport = rsReisetilskudd.kollektivtransport
+        this.egenBil = rsReisetilskudd.egenBil
+
+        this.kvitteringer = rsReisetilskudd.kvitteringer.map((rsKvittering: any) => {
+            return new Kvittering(rsKvittering)
+        })
+    }
+}
+
+export class Kvittering {
+    reisetilskuddId: string;
+    kvitteringId?: string;
+    navn?: string;
+    storrelse?: number;
+    belop?: number;
+    fom?: Date;
+    tom?: Date;
+    transportmiddel?: keyof typeof Transportmiddel;
+
+    constructor(
+        rsKvittering: RSKvittering
+    ) {
+        this.reisetilskuddId = rsKvittering.reisetilskuddId
+        this.kvitteringId = rsKvittering.kvitteringId
+        this.navn = rsKvittering.navn
+        this.storrelse = Number(rsKvittering.storrelse)
+        this.belop = Number(rsKvittering.belop)
+        this.fom = dayjsToDate(rsKvittering.fom)
+        this.tom = dayjsToDate(rsKvittering.tom)
+        this.transportmiddel = rsKvittering.transportmiddel as keyof typeof Transportmiddel
+    }
+}
+
 export type Transportmidler = Transportmiddel.EGEN_BIL | Transportmiddel.KOLLEKTIVT | Transportmiddel.TAXI | undefined;
 
 export type AktivtStegProps = {
     aktivtSteg: number,
     skalGåTilNesteSideNå?: boolean,
     onClick?: () => void,
-}
-
-export interface Reisetilskudd {
-    reisetilskuddId: string,
-    sykmeldingId: string,
-    fnr: string,
-    sendt?: string,
-
-    fom?: string,
-    tom?: string,
-
-    orgNummer?: string,
-    orgNavn?: string,
-    utbetalingTilArbeidsgiver?: boolean,
-
-    går: boolean,
-    sykler: boolean,
-    kollektivtransport: number,
-    egenBil: number,
-
-    kvitteringer: Kvittering[]
 }
 
 export interface Svaralternativ {

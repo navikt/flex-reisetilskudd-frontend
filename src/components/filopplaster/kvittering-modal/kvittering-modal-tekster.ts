@@ -1,7 +1,7 @@
 const KvitteringModalTekster: any = {
     'nb': {
         'kvittering_modal.tittel': 'Totalbeløp',
-        'kvittering_modal.nytt-utlegg.tittel': 'Legg til utlegg',
+        'kvittering_modal.nytt-utlegg.tittel': 'Legg til reise',
         'kvittering_modal.belop.feilmelding': 'Du må skrive inn totalbeløp',
         'kvittering_modal.dato.feilmelding': 'Du må velge dato',
         'kvittering_modal.dagensdato.feilmelding': 'Du må velge dato før dagens dato',

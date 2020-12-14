@@ -12,7 +12,7 @@ import useForceUpdate from 'use-force-update'
 import { RouteParams } from '../../../app'
 import { put } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
-import { Reisetilskudd, Transport } from '../../../types'
+import { Reisetilskudd, Transport } from '../../../types/types'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
 import { getLedetekst, tekst } from '../../../utils/tekster'
@@ -107,7 +107,7 @@ const TransportMiddel = () => {
     }
 
     const onSubmit = () => {
-        put<TransportmiddelInterface>(`${env.apiUrl}/api/v1/reisetilskudd/${id}`, {
+        put<TransportmiddelInterface>(`${env.backendUrl}/api/v1/reisetilskudd/${id}`, {
             reisetilskuddId: id,
             går: valgtReisetilskudd!.går,
             sykler: valgtReisetilskudd!.sykler,

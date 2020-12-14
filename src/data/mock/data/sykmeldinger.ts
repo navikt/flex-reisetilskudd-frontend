@@ -1,4 +1,4 @@
-import { Sykmelding } from '../../../types'
+import { Sykmelding } from '../../../types/types'
 
 // TODO: Oppdater med "ekte" sykmelding
 export const mockSykmelding : Sykmelding = {

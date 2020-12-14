@@ -1,4 +1,4 @@
-import { Reisetilskudd } from '../../../types'
+import { Reisetilskudd } from '../../../types/types'
 import mockKvitteringer from './kvitteringer'
 
 const mockReisetilskudd : Reisetilskudd[] = [

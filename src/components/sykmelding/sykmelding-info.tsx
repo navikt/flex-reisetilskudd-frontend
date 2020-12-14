@@ -4,7 +4,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { Sykmelding, SykmeldingOpplysning, SykmeldingOpplysningEnum } from '../../types'
+import { Sykmelding, SykmeldingOpplysning, SykmeldingOpplysningEnum } from '../../types/types'
 import { tekst } from '../../utils/tekster'
 import { CheckedIkon } from '../diverse/checked-ikon/checked-ikon'
 import Vis from '../diverse/vis'

@@ -17,7 +17,7 @@ import TransportMiddel from '../../components/sporsmal/transport/transport-midde
 import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import { useAppStore } from '../../data/stores/app-store'
-import { Brodsmule, Sykmelding } from '../../types'
+import { Brodsmule, Sykmelding } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
@@ -37,7 +37,7 @@ const brodsmuler: Brodsmule[] = [
 ]
 
 const TilskuddSide = () => {
-    const { reisetilskuddene, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
+    const { reisetilskuddene, valgtReisetilskudd, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
     const { steg, id } = useParams<RouteParams>()
     const idNum = Number(steg)
 
@@ -57,6 +57,8 @@ const TilskuddSide = () => {
         setValgtSykmelding(sykmelding)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ id ])
+
+    if(!valgtReisetilskudd) return null
 
     return (
         <>

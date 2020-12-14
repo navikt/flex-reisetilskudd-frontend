@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../utils/tekster'
-import { nf_des } from '../../utils/utils'
+import { formatterTall } from '../../utils/utils'
 
 const TotalBelop = (): ReactElement => {
     const { valgtReisetilskudd } = useAppStore()
@@ -16,9 +16,9 @@ const TotalBelop = (): ReactElement => {
         : (0.0))
 
     return (
-        <Normaltekst>
+        <Normaltekst className="kvitteringer-total">
             {getLedetekst(tekst('total_belop.totalbelop'), {
-                '%TOTALBELOP%': nf_des.format(totaltBeløp())
+                '%TOTALBELOP%': formatterTall(totaltBeløp())
             })}
         </Normaltekst>
     )
