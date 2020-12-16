@@ -13,6 +13,8 @@ import { Brodsmule } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
+import Lenke from 'nav-frontend-lenker'
+import { VenstreChevron } from 'nav-frontend-chevron'
 
 const brodsmuler: Brodsmule[] = [ {
     tittel: tekst('tilskudd.liste.tittel'),
@@ -48,6 +50,11 @@ const TilskuddListe = () => {
                 <Vis hvis={reisetilskuddene === undefined}>
                     <Normaltekst>{tekst('tilskudd.liste.feilmelding')}</Normaltekst>
                 </Vis>
+
+                <Lenke href="#">
+                    <VenstreChevron />
+                    {tekst('tilbake.til.hovedsiden')}
+                </Lenke>
             </div>
         </>
     )

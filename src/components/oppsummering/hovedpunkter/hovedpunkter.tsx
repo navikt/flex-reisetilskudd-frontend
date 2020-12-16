@@ -13,7 +13,7 @@ import { useAppStore } from '../../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import env from '../../../utils/environment'
-import { redirectTilLoginHvis401 } from '../../../utils/utils'
+import { formatterTall, redirectTilLoginHvis401 } from '../../../utils/utils'
 
 const Hovedpunkter = () => {
     const { valgtReisetilskudd, erBekreftet, setErBekreftet } = useAppStore()
@@ -69,7 +69,7 @@ const Hovedpunkter = () => {
                         <li>
                             {getLedetekst(tekst('hovedpunkter.kvitteringer'), {
                                 '%ANTALL%': bilag.length,
-                                '%SUM%': bilag.reduce((acc, b) => acc + b.belop!, 0)
+                                '%SUM%': formatterTall(bilag.reduce((acc, b) => acc + b.belop!, 0))
                             })}
                         </li>
                     </Vis>

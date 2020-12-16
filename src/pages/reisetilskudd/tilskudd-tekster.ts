@@ -12,7 +12,8 @@ const ReisetilskuddTekster: any = {
         'tilskudd.side.sykmeldinginfo': 'Opplysninger fra sykmeldingen',
         'dine.tilskudd.tittel': 'Søknad om reisetilskudd',
         'dine.tilskudd.periode': 'Gjelder perioden fra %FOM% til %TOM%',
-        'dine.tilskudd.org': '%ORGNAVN% org.nr %ORGNUMMER%',
+        'dine.tilskudd.org': 'arbeidsgiveren din',
+        'tilbake.til.hovedsiden': 'Tilbake til hovedsiden Ditt sykefravær',
     }, 'en': {}
 }
 

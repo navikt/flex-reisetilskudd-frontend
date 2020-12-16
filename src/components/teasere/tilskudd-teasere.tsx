@@ -10,16 +10,16 @@ import { Link } from 'react-router-dom'
 import { useAppStore } from '../../data/stores/app-store'
 import { Reisetilskudd } from '../../types/types'
 import { tilLesbarPeriodeMedArstall } from '../../utils/dato'
-import { getLedetekst, tekst } from '../../utils/tekster'
+import { tekst } from '../../utils/tekster'
 import Vis from '../diverse/vis'
 import OmReisetilskudd from './om-reisetilskudd/om-reisetilskudd'
 import SoknadHoverIkon from './soknad-hover-ikon.svg'
 import SoknadIkon from './soknad-ikon.svg'
 
-enum Sortering { // eslint-disable-line no-unused-vars
-    Dato = 'Dato', // eslint-disable-line no-unused-vars
-    Status = 'Status', // eslint-disable-line no-unused-vars
-    Sendt = 'Sendt', // eslint-disable-line no-unused-vars
+enum Sortering {
+    Dato = 'Dato',
+    Status = 'Status',
+    Sendt = 'Sendt',
 }
 
 const TilskuddTeasere = () => {
@@ -106,14 +106,13 @@ const Teaser = ({ tilskudd, key }: TeaserProps) => {
                             {tekst('dine.tilskudd.tittel')}
                         </Undertittel>
                         <Normaltekst>
-                            {getLedetekst(tekst('dine.tilskudd.org'), {
-                                '%ORGNAVN%': tilskudd.orgNavn,
-                                '%ORGNUMMER%': tilskudd.orgNummer
-                            })}
+                            {tekst('dine.tilskudd.org')}
                         </Normaltekst>
                     </div>
                 </div>
-                <Etikett mini type="info">Klar til utfylling</Etikett>
+                <Etikett mini type={tilskudd.sendt ? 'suksess' : 'info'}>{
+                    tilskudd.sendt ? 'Sendt til NAV' : 'Klar til utfylling'
+                }</Etikett>
             </div>
             <HoyreChevron className="tilskudd-chevron" />
         </Link>

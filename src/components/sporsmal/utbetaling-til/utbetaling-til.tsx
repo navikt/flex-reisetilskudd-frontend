@@ -72,10 +72,7 @@ const UtbetalingTil = () => {
                 <RadioPanelGruppe
                     name={utbetalingSporsmal.name}
                     legend={<Systemtittel>{utbetalingSporsmal.tittel}</Systemtittel>}
-                    description={getLedetekst(tekst('sporsmal.utbetaling.tekst'), {
-                        '%ARBEIDSGIVER_NAVN%': ArbeidsOgVelferdsetaten.navn,
-                        '%ARBEIDSGIVER_ORGNR%': ArbeidsOgVelferdsetaten.orgNr
-                    })}
+                    description={tekst('sporsmal.utbetaling.tekst')}
                     radios={utbetalingSporsmal.svaralternativer}
                     checked={utbetalTil}
                     onChange={handleChange}

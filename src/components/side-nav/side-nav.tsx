@@ -5,17 +5,37 @@ import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
+import { useAppStore } from '../../data/stores/app-store'
 
 export const sider = [ 'Utbetaling', 'Transport', 'Kvitteringer', 'Bekreft og send' ]
 
 const SideNav = () => {
+    const { valgtReisetilskudd: valgt } = useAppStore()
+
     const history = useHistory()
     const { id, steg } = useParams<RouteParams>()
     const stegNum = Number(steg)
     const min = 1, max = 4
 
+    let steg2ok = false
+    let steg3ok = false
+    let steg4ok = false
+    let nesteStegOk = false
+
+    if (valgt !== undefined) {
+        steg2ok = true
+        steg3ok = valgt!.går || valgt!.sykler || valgt!.kollektivtransport > 0 || valgt!.egenBil > 0
+        steg4ok = true
+
+        if (stegNum === 1) nesteStegOk = steg2ok
+        else if (stegNum === 2) nesteStegOk = steg3ok
+        else if (stegNum === 3) nesteStegOk = steg4ok
+    }
+
     const handleChange = (e: any) => {
-        history.push('/soknaden/' + id + '/' + (e.target.value))
+        if (nesteStegOk) {
+            history.push('/soknaden/' + id + '/' + (e.target.value))
+        }
     }
 
     const venstreKlikk = () => {
@@ -41,12 +61,12 @@ const SideNav = () => {
                 {sider.map((side, index) => {
                     return (
                         <option value={index + 1} key={index}>
-                            {`${index + 1} av ${sider.length}: ${side}`}
+                            {`${index + 1} av ${sider.length} ${side}`}
                         </option>
                     )
                 })}
             </select>
-            <button onClick={hoyreKlikk} disabled={stegNum === max}>
+            <button onClick={hoyreKlikk} disabled={stegNum === max || !nesteStegOk}>
                 <HoyreChevron />
             </button>
         </section>

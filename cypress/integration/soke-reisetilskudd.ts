@@ -25,8 +25,8 @@ describe('Tester reisetilskuddsøknaden', () => {
 
     it('Laster tekst', () => {
         cy.get('.skjemagruppe__legend .typo-systemtittel').should('be.visible')
-        cy.contains('Utbetaling til arbeidsgiver')
-        cy.contains('Skal reisetilskuddet utbetales til deg eller til Arbeids- og velferdsetaten (org.nr. 392392482849)?')
+        cy.contains('Utbetaling')
+        cy.contains('Skal reisetilskuddet utbetales til arbeidsgiveren din?')
     })
 
     describe('Utfylling og validering av side 1', () => {

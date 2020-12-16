@@ -1,6 +1,6 @@
 @import '../../../node_modules/nav-frontend-core/less/_variabler';
 
-.tabell.fil_liste {
+.tabell--stripet.fil_liste {
     th, td {
         padding: 0.75rem 0.5rem;
     }
@@ -13,7 +13,7 @@
             align-items: center;
 
             &.belop {
-                display: block;
+                justify-content: flex-end;
             }
         }
 
@@ -31,22 +31,39 @@
 
                 &:before, &:after {
                     height: 75%;
-                    width: 50%;
+                    width: 44%;
                 }
             }
         }
+    }
+
+    td.belop {
+        padding-right: 0.6rem;
     }
 
     .belop {
         white-space: nowrap;
         text-align: right;
     }
+
+    tbody.sumlinje {
+        tr {
+            td {
+                background: none;
+                border-bottom: 0;
+            }
+        }
+    }
 }
 
 @media (min-width: @screen-sm) {
     .tabell.fil_liste {
-        .belop {
+        th .belop {
             padding-right: 3rem;
+        }
+
+        td.belop {
+            padding-right: 3.6rem;
         }
 
         .slett-knapp {
