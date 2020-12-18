@@ -5,10 +5,10 @@ const SporsmalTekster: any = {
         'transportmiddel.feiloppsummering': 'For å gå videre må du rette opp følgende:',
 
         'sporsmal.transport.tittel': 'Velg transportmiddel',
-        'sporsmal.transportmiddel.daglig': 'Transportmiddel til daglig',
+        'sporsmal.transportmiddel.daglig': 'Transport',
         'sporsmal.transportmiddel.hvilke': 'Hvilke transportmidler brukte du til og fra jobb før du ble sykmeldt?',
         'sporsmal.transportmiddel.hjelpetekst': 'Kollektivtransport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.',
-        'sporsmal.utbetaling.tekst': 'Skal reisetilskuddet utbetales til deg eller til %ARBEIDSGIVER_NAVN% (org.nr. %ARBEIDSGIVER_ORGNR%)?',
+        'sporsmal.utbetaling.tekst': 'Skal reisetilskuddet utbetales til arbeidsgiveren din?',
         'sporsmal.utbetaling.verdi.NAME': 'UTBETALINGARBEIDSGIVER',
         'sporsmal.utbetaling.verdi.MEG': 'MEG',
         'sporsmal.utbetaling.verdi.ARBEIDSGIVER': 'ARBEIDSGIVER',

@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi'
+import { Undertittel } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
@@ -16,11 +16,11 @@ const TotalBelop = (): ReactElement => {
         : (0.0))
 
     return (
-        <Normaltekst className="kvitteringer-total">
+        <Undertittel className="kvitteringer-total">
             {getLedetekst(tekst('total_belop.totalbelop'), {
                 '%TOTALBELOP%': formatterTall(totaltBeløp())
             })}
-        </Normaltekst>
+        </Undertittel>
     )
 }
 

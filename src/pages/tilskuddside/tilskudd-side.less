@@ -2,10 +2,6 @@
 @import '../../basic';
 
 .reisetilskudd-side {
-    .pagewrapper .maincontent {
-        background-color: @white;
-    }
-
     .sykmelding-panel {
         .ekspanderbartPanel__tittel {
             margin-left: 0.5rem;
@@ -32,6 +28,49 @@
             img.plaster--hover {
                 display: inline;
             }
+        }
+    }
+
+    .nav-veileder__frame svg {
+        height: 100%;
+    }
+
+    .veileder {
+        margin: 2rem 9rem 3rem;
+
+        .nav-veilederpanel {
+            border: 0;
+            padding-right: 0;
+        }
+    }
+
+    .hvem-kan-faa, .spar-tid, .alertstripe {
+        margin: 3rem 0;
+    }
+
+    .hvem-kan-faa {
+        ul {
+            padding-left: 1.4rem;
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+
+        p {
+            margin: 0.5rem 0 1rem;
+        }
+    }
+
+    .knapperad {
+        flex-direction: column;
+        align-items: center;
+
+        .knapp {
+            display: inline-block;
+        }
+
+        .lenkeknapp {
+            display: block;
+            margin: 3rem 0;
         }
     }
 }

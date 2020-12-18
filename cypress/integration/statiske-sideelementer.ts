@@ -1,7 +1,7 @@
 import mockReisetilskudd from '../../src/data/mock/data/reisetilskudd'
 
 describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
-    const url = `http://localhost:3000/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`
+    const url = `http://localhost:3000/syk/reisetilskudd/soknadstart/${mockReisetilskudd[0].reisetilskuddId}/1`
 
     before(() => {
         cy.visit(url)
@@ -10,6 +10,35 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
     it('Laster inn header og headerelementer', function() {
         cy.get('.sidebanner').should('be.visible')
         cy.get('.sidebanner__tittel').should('be.visible').and('have.text', 'Søknad om reisetilskudd')
+    })
+
+    it('Laster inn veilederpanel', function() {
+        cy.get('.veileder').should('be.visible')
+        cy.get('.veileder .nav-veilederpanel__content h2').should('be.visible').and('have.text', 'Søknad om reisetilskudd')
+    })
+
+    it('Laster inn Hvem kan få reisetilskudd', function() {
+        cy.get('.hvem-kan-faa').should('be.visible')
+        cy.get('.hvem-kan-faa .ekspanderbartPanel__tittel').should('be.visible').and('have.text', 'Hvem kan få reisetilskudd?')
+    })
+
+    it('Laster inn veilederpanel spar-tid', function() {
+        cy.get('.spar-tid').should('be.visible')
+        cy.get('.spar-tid .nav-veilederpanel__content h2').should('be.visible').and('have.text', 'Spar tid ved å bruke mobilen')
+    })
+
+    it('Laster inn sykmelding-panel', function() {
+        cy.get('.sykmelding-panel').should('be.visible')
+        cy.get('.sykmelding-panel .sykmelding-panel__tittel').should('be.visible').and('have.text', 'Opplysninger fra sykmeldingen')
+    })
+
+    it('Laster inn alertstripe med kan-sendes-dato', function() {
+        cy.get('.kan-sendes').should('be.visible')
+        cy.get('.kan-sendes .alertstripe__tekst h2').should('be.visible').and('contain.text', 'Søknaden kan sendes')
+    })
+
+    it('Laster inn knapperad, klikker og går til soknad-side', function() {
+        cy.get('.knapp--hoved').should('be.visible').click()
     })
 
     it('Laster inn sidenavigasjon', function() {

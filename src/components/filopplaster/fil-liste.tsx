@@ -2,7 +2,7 @@ import 'nav-frontend-tabell-style'
 import './fil-liste.less'
 
 import dayjs from 'dayjs'
-import { Normaltekst } from 'nav-frontend-typografi'
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import React, { useState } from 'react'
 import useForceUpdate from 'use-force-update'
 
@@ -14,20 +14,20 @@ import { logger } from '../../utils/logger'
 import { formatterTall } from '../../utils/utils'
 import Vis from '../diverse/vis'
 import slettFilIkon from './slett-fil-ikon.svg'
-import TotalBelop from '../total-belop/total-belop'
-import NavFrontendChevron  from 'nav-frontend-chevron'
+import NavFrontendChevron from 'nav-frontend-chevron'
+import { getLedetekst, tekst } from '../../utils/tekster'
 
 interface Props {
     fjernKnapp?: boolean
 }
 
-enum Sortering { // eslint-disable-line
-    DatoMax = 'DatoMax', // eslint-disable-line
-    DatoMin = 'DatoMin', // eslint-disable-line
-    TransportMax = 'TransportMax', // eslint-disable-line
-    TransportMin = 'TransportMin', // eslint-disable-line
-    BelopMax = 'BelopMax', // eslint-disable-line
-    BelopMin = 'BelopMin', // eslint-disable-line
+enum Sortering {
+    DatoMax = 'DatoMax',
+    DatoMin = 'DatoMin',
+    TransportMax = 'TransportMax',
+    TransportMin = 'TransportMin',
+    BelopMax = 'BelopMax',
+    BelopMin = 'BelopMin',
 }
 
 const FilListe = ({ fjernKnapp }: Props) => {
@@ -73,6 +73,12 @@ const FilListe = ({ fjernKnapp }: Props) => {
         }
         return kvitteringer
     }
+    const totaltBeløp = (): number => (valgtReisetilskudd!.kvitteringer
+        ? valgtReisetilskudd!.kvitteringer
+            .filter((kvittering) => kvittering.belop)
+            .map((kvittering) => kvittering.belop!)
+            .reduce((a, b) => a + b, 0.0)
+        : (0.0))
 
     return (
         <Vis hvis={valgtReisetilskudd!.kvitteringer.length > 0}>
@@ -82,14 +88,14 @@ const FilListe = ({ fjernKnapp }: Props) => {
                         <tr>
                             <th>
                                 <div className="sortering__heading">
-                                    <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp" >
+                                    <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp">
                                         Utlegg
                                     </button>
                                     <span className="sortering__chevron">
-                                        <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp" >
+                                        <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp">
                                             <NavFrontendChevron type="opp" />
                                         </button>
-                                        <button onClick={() => setSortering(Sortering.DatoMin)} className="lenkeknapp" >
+                                        <button onClick={() => setSortering(Sortering.DatoMin)} className="lenkeknapp">
                                             <NavFrontendChevron type="ned" />
                                         </button>
                                     </span>
@@ -97,14 +103,14 @@ const FilListe = ({ fjernKnapp }: Props) => {
                             </th>
                             <th>
                                 <div className="sortering__heading">
-                                    <button onClick={() => setSortering(Sortering.TransportMin)} className="lenkeknapp" >
+                                    <button onClick={() => setSortering(Sortering.TransportMin)} className="lenkeknapp">
                                         Transport
                                     </button>
                                     <span className="sortering__chevron">
-                                        <button onClick={() => setSortering(Sortering.TransportMax)} className="lenkeknapp" >
+                                        <button onClick={() => setSortering(Sortering.TransportMax)} className="lenkeknapp">
                                             <NavFrontendChevron type="opp" />
                                         </button>
-                                        <button onClick={() => setSortering(Sortering.TransportMin)} className="lenkeknapp" >
+                                        <button onClick={() => setSortering(Sortering.TransportMin)} className="lenkeknapp">
                                             <NavFrontendChevron type="ned" />
                                         </button>
                                     </span>
@@ -112,9 +118,17 @@ const FilListe = ({ fjernKnapp }: Props) => {
                             </th>
                             <th>
                                 <div className="sortering__heading belop">
-                                    <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp" >
+                                    <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp">
                                         Beløp
                                     </button>
+                                    <span className="sortering__chevron">
+                                        <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp">
+                                            <NavFrontendChevron type="opp" />
+                                        </button>
+                                        <button onClick={() => setSortering(Sortering.BelopMin)} className="lenkeknapp">
+                                            <NavFrontendChevron type="ned" />
+                                        </button>
+                                    </span>
                                 </div>
                             </th>
                             <th />
@@ -145,9 +159,24 @@ const FilListe = ({ fjernKnapp }: Props) => {
                         </tr>
                     ))}
                 </tbody>
+                <tbody className="sumlinje">
+                    <tr>
+                        <td colSpan={2}>
+                            <Undertittel tag="span">
+                                {getLedetekst(tekst('fil_liste.utlegg.sum'), {
+                                    '%ANTALL_BILAG%': valgtReisetilskudd!.kvitteringer.length
+                                })}
+                            </Undertittel>
+                        </td>
+                        <td className="belop">
+                            <Undertittel tag="span">
+                                {formatterTall(totaltBeløp())} kr
+                            </Undertittel>
+                        </td>
+                        <td />
+                    </tr>
+                </tbody>
             </Normaltekst>
-
-            <TotalBelop />
         </Vis>
     )
 }

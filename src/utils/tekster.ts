@@ -13,12 +13,16 @@ import SykmeldingTekster from '../components/sykmelding/sykmelding-tekster'
 import OmReisetilskuddTekster from '../components/teasere/om-reisetilskudd/om-reisetilskudd-tekster'
 import TotalBelopTekster from '../components/total-belop/total-belop-tekster'
 import BekreftTekster from '../pages/bekreftelse/bekreft-tekster'
-import ReisetilskuddTekster from '../pages/reisetilskudd/tilskudd-tekster'
+import TilskuddListeTekster from '../pages/tilskuddliste/tilskuddliste-tekster'
+import TilskuddSideTekster from '../pages/tilskuddside/tilskuddside-tekster'
+import TilskuddStartTekster from '../pages/tilskuddstart/tilskuddstart-tekster'
 import { logger } from './logger'
 
 const tekster = {
     ...BannerTekster.nb,
-    ...ReisetilskuddTekster.nb,
+    ...TilskuddListeTekster.nb,
+    ...TilskuddStartTekster.nb,
+    ...TilskuddSideTekster.nb,
     ...SideNavTekster.nb,
     ...KlikkbarTekster.nb,
     ...DragAndDropTekster.nb,

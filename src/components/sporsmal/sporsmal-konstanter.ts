@@ -7,7 +7,7 @@ export const ArbeidsOgVelferdsetaten: ArbeidsgiverInterface = {
 
 export const utbetalingSporsmal: RadioSporsmalProps = {
     id: 'utbetaling-sporsmal',
-    tittel: 'Utbetaling til arbeidsgiver',
+    tittel: 'Utbetaling',
     name: 'UTBETALINGARBEIDSGIVER',
     spørsmålstekst: '',
     svaralternativer: [

@@ -7,17 +7,17 @@ const SKILLETEGN_PERIODE = '–'
 const maaneder = [ 'januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember' ]
 
 export enum DatoFormat {
-    TALL = 'DD.MM.YYYY', // eslint-disable-line
-    NATURLIG_KORT = 'D. MMMM', // eslint-disable-line
-    NATURLIG_LANG = 'D. MMMM YYYY', // eslint-disable-line
-    NATURLIG_FULL = 'dddd D. MMMM YYYY', // eslint-disable-line
-    FLATPICKR = 'YYYY-MM-DD', // eslint-disable-line
+    TALL = 'DD.MM.YYYY',
+    NATURLIG_KORT = 'D. MMMM',
+    NATURLIG_LANG = 'D. MMMM YYYY',
+    NATURLIG_FULL = 'dddd D. MMMM YYYY',
+    FLATPICKR = 'YYYY-MM-DD',
 }
 
 export enum TidsFormat {
-    VANLIG = 'HH:mm', // eslint-disable-line
-    TIMER = 'HH', // eslint-disable-line
-    MINUTTER = 'mm' // eslint-disable-line
+    VANLIG = 'HH:mm',
+    TIMER = 'HH',
+    MINUTTER = 'mm'
 }
 
 export const getIDag = (format?: string): string => dayjs().format(format || DatoFormat.TALL)
@@ -46,7 +46,9 @@ export const tilLesbarDatoMedArstall = (datoArg: any) => {
 }
 
 export const tilLesbarPeriodeMedArstall = (fomArg: any, tomArg: any, skille?: string) => {
-    skille === undefined ? skille = SKILLETEGN_PERIODE : skille
+    if (skille === undefined) {
+        skille = SKILLETEGN_PERIODE
+    }
     const fom = dayjsToDate(fomArg)
     const tom = dayjsToDate(tomArg)
     const erSammeAar = fom?.getFullYear() === tom?.getFullYear()
