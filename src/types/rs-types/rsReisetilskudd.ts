@@ -3,6 +3,7 @@ export interface RSReisetilskudd {
     sykmeldingId: string;
     fnr: string;
     sendt?: string;
+    avbrutt: boolean;
 
     fom?: string;
     tom?: string;
