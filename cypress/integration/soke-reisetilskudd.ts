@@ -2,7 +2,7 @@ import mockReisetilskudd from '../../src/data/mock/data/reisetilskudd'
 
 describe('Tester reisetilskuddsøknaden', () => {
 
-    const url = `http://localhost:3000/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`
+    const url = `http://localhost:3000/syk/reisetilskudd/soknadstart/${mockReisetilskudd[0].reisetilskuddId}/1`
 
     before(() => {
         cy.server()
@@ -19,17 +19,23 @@ describe('Tester reisetilskuddsøknaden', () => {
         cy.visit(url)
     })
 
-    it('Inneholder content', () => {
-        cy.get('.horisontal-radio').should('be.visible')
-    })
-
-    it('Laster tekst', () => {
-        cy.get('.skjemagruppe__legend .typo-systemtittel').should('be.visible')
-        cy.contains('Utbetaling')
-        cy.contains('Skal reisetilskuddet utbetales til arbeidsgiveren din?')
+    describe('Utfylling og validering av startsiden', () => {
+        it('finner videreknappen', () => {
+            cy.get('.knapperad .knapp--hoved').should('be.visible').click()
+        })
     })
 
     describe('Utfylling og validering av side 1', () => {
+        it('Inneholder content', () => {
+            cy.get('.horisontal-radio').should('be.visible')
+        })
+
+        it('Laster tekst', () => {
+            cy.get('.skjemagruppe__legend .typo-systemtittel').should('be.visible')
+            cy.contains('Utbetaling')
+            cy.contains('Skal reisetilskuddet utbetales til arbeidsgiveren din?')
+        })
+
         it('Tar tak i meg-knapp og clicker', () => {
             cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/1`)
             cy.get('.inputPanel').children().eq(1).should('be.visible').click()
@@ -116,23 +122,23 @@ describe('Tester reisetilskuddsøknaden', () => {
         })
     */
 
-/*
-    describe('Bekreftelsesside', () => {
-        it('sjekker at bekreftelsessiden inneholder elementer', () => {
-            cy.url().should('include', 'bekreftelse')
+    /*
+        describe('Bekreftelsesside', () => {
+            it('sjekker at bekreftelsessiden inneholder elementer', () => {
+                cy.url().should('include', 'bekreftelse')
 
-            cy.get('.liste__bakgrunn').should('be.visible')
-            cy.get('.sirkel__tall').should('be.visible')
+                cy.get('.liste__bakgrunn').should('be.visible')
+                cy.get('.sirkel__tall').should('be.visible')
 
-            cy.contains('Du har sendt inn søknaden')
-            cy.contains('Søknaden blir behandlet')
+                cy.contains('Du har sendt inn søknaden')
+                cy.contains('Søknaden blir behandlet')
 
-            cy.contains('Les mer om reglene for reisetilskudd')
-            cy.get('a[href*="www.nav.no"]').should('be.visible')
+                cy.contains('Les mer om reglene for reisetilskudd')
+                cy.get('a[href*="www.nav.no"]').should('be.visible')
 
-            cy.contains('sykepenger til selvstendig næringsdrivende og frilansere')
-            cy.contains('Les om hva du må gjøre for å beholde sykepengene')
+                cy.contains('sykepenger til selvstendig næringsdrivende og frilansere')
+                cy.contains('Les om hva du må gjøre for å beholde sykepengene')
+            })
         })
-    })
-*/
+    */
 })

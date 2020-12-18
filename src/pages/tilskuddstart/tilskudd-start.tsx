@@ -83,7 +83,7 @@ const TilskuddStart = () => {
                     <SykmeldingInfo />
                 </Ekspanderbartpanel>
 
-                <AlertStripeAdvarsel>
+                <AlertStripeAdvarsel className="kan-sendes">
                     <Undertittel>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
                         '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMM YYYY')
                     })}</Undertittel>
