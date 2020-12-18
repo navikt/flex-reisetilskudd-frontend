@@ -40,7 +40,6 @@ const TilskuddSide = () => {
     const { valgtReisetilskudd } = useAppStore()
     const { steg } = useParams<RouteParams>()
     const idNum = Number(steg)
-    console.log('valgtReisetilskudd', valgtReisetilskudd) // eslint-disable-line
 
     useEffect(() => {
         setBodyClass('reisetilskudd-side')

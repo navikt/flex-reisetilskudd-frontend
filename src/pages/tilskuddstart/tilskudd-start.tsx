@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Brodsmule, Sykmelding } from '../../types/types'
-import { tekst } from '../../utils/tekster'
+import { getLedetekst, tekst } from '../../utils/tekster'
 import { SEPARATOR } from '../../utils/constants'
 import { useAppStore } from '../../data/stores/app-store'
 import { useParams, Link } from 'react-router-dom'
@@ -8,15 +8,16 @@ import { RouteParams } from '../../app'
 import { setBodyClass } from '../../utils/utils'
 import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
-import { Systemtittel, Undertittel, Element, Normaltekst } from 'nav-frontend-typografi'
+import { Undertittel, Normaltekst } from 'nav-frontend-typografi'
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 import plaster from '../tilskuddside/plaster.svg'
 import plasterHover from '../tilskuddside/plaster-hover.svg'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import Veileder from './veileder'
-import { tilLesbarPeriodeMedArstall } from '../../utils/dato'
 import Mobil from './mobil'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
+import HvemKanFaa from './hvem-kan-faa'
+import dayjs from 'dayjs'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -33,7 +34,6 @@ const brodsmuler: Brodsmule[] = [
 const TilskuddStart = () => {
     const { reisetilskuddene, valgtReisetilskudd, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
     const { steg, id } = useParams<RouteParams>()
-    const idNum = Number(steg)
 
     useEffect(() => {
         setBodyClass('reisetilskudd-side')
@@ -61,32 +61,12 @@ const TilskuddStart = () => {
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
-                <Veileder>
-                    <Systemtittel>{tekst('dine.tilskudd.tittel')}</Systemtittel>
-                    <Element>{tekst('dine.tilskudd.gjelder')}</Element>
-                    <Normaltekst>
-                        {tilLesbarPeriodeMedArstall(valgtReisetilskudd.fom, valgtReisetilskudd.tom)}
-                    </Normaltekst>
-                </Veileder>
+                <Veileder />
 
-                <Ekspanderbartpanel className="hvem-kan" tittel={
-                    <Undertittel>{tekst('tilskudd.start.hvem-kan')}</Undertittel>
+                <Ekspanderbartpanel className="hvem-kan-faa" tittel={
+                    <Undertittel>{tekst('tilskudd.start.hvem-kan-faa')}</Undertittel>
                 }>
-                    <>
-                        <Normaltekst tag="ul">
-                            <li>{tekst('tilskudd.start.du-er')}</li>
-                            <li>{tekst('tilskudd.start.du-trenger')}</li>
-                            <li>{tekst('tilskudd.start.du-har')}</li>
-                        </Normaltekst>
-
-                        <Element>{tekst('tilskudd.start.hvor-mye')}</Element>
-                        <Normaltekst>
-                            {tekst('tilskudd.start.du-kan')}
-                            <Link to="">{tekst('tilskudd.start.les-mer.lenke')}</Link>.
-                        </Normaltekst>
-                        <Element>{tekst('tilskudd.start.husk')}</Element>
-                        <Normaltekst>{tekst('tilskudd.start.fristen-for')}</Normaltekst>
-                    </>
+                    <HvemKanFaa />
                 </Ekspanderbartpanel>
 
                 <Mobil />
@@ -104,7 +84,9 @@ const TilskuddStart = () => {
                 </Ekspanderbartpanel>
 
                 <AlertStripeAdvarsel>
-                    <Undertittel>{tekst('tilskudd.start.alertstripe.tittel')}</Undertittel>
+                    <Undertittel>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
+                        '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMM YYYY')
+                    })}</Undertittel>
                     <Normaltekst>{tekst('tilskudd.start.alertstripe.tekst')}</Normaltekst>
                 </AlertStripeAdvarsel>
 
