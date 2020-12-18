@@ -46,9 +46,14 @@ const TilskuddTeasere = () => {
                 <Undertittel tag="h2" className="tilskudd__tittel">
                     {tekst('tilskudd.liste.usendte.soknader')}
                 </Undertittel>
-                {usendteTilskudd.map((tilskudd, idx) => {
-                    return <Teaser tilskudd={tilskudd} key={idx} />
-                })}
+                <Vis hvis={usendteTilskudd.length === 0}>
+                    <Normaltekst>{tekst('tilskudd.liste.ingen.nye')}</Normaltekst>
+                </Vis>
+                <Vis hvis={usendteTilskudd.length > 0}>
+                    {usendteTilskudd.map((tilskudd, idx) => {
+                        return <Teaser tilskudd={tilskudd} key={idx} />
+                    })}
+                </Vis>
             </div>
 
             <OmReisetilskudd />
@@ -110,11 +115,39 @@ const Teaser = ({ tilskudd, key }: TeaserProps) => {
                         </Normaltekst>
                     </div>
                 </div>
-                <Etikett mini type={tilskudd.sendt ? 'suksess' : 'info'}>{
-                    tilskudd.sendt ? 'Sendt til NAV' : 'Klar til utfylling'
-                }</Etikett>
+                <StatusEtikett tilskudd={tilskudd} />
             </div>
             <HoyreChevron className="tilskudd-chevron" />
         </Link>
+    )
+}
+
+const StatusEtikett = (props: any) => {
+    const { tilskudd } = props
+
+    const etikettType = () => {
+        console.log('tilskudd type', tilskudd); // eslint-disable-line
+        if (tilskudd.avbrutt) {
+            return 'info'
+        } else if (tilskudd.sendt) {
+            return 'suksess'
+        } else {
+            return 'info'
+        }
+    }
+
+    const etikettTekst = () => {
+        console.log('tilskudd tekst', tilskudd); // eslint-disable-line
+        if (tilskudd.avbrutt) {
+            return 'Avbrutt'
+        } else if (tilskudd.sendt) {
+            return 'Sendt til NAV'
+        } else {
+            return 'Klar til utfylling'
+        }
+    }
+
+    return (
+        <Etikett mini type={etikettType()}>{etikettTekst()}</Etikett>
     )
 }

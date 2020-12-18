@@ -36,6 +36,7 @@ export class Reisetilskudd {
     sykmeldingId: string;
     fnr: string;
     sendt?: string;
+    avbrutt: boolean;
 
     fom?: string;
     tom?: string;
@@ -58,6 +59,7 @@ export class Reisetilskudd {
         this.sykmeldingId = rsReisetilskudd.sykmeldingId
         this.fnr = rsReisetilskudd.fnr
         this.sendt = rsReisetilskudd.sendt
+        this.avbrutt = rsReisetilskudd.avbrutt
 
         this.fom = rsReisetilskudd.fom
         this.tom = rsReisetilskudd.tom
