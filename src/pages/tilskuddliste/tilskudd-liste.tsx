@@ -53,7 +53,7 @@ const TilskuddListe = () => {
 
                 <Lenke href="#">
                     <VenstreChevron />
-                    {tekst('tilbake.til.hovedsiden')}
+                    {tekst('tilskudd.liste.tilbake')}
                 </Lenke>
             </div>
         </>

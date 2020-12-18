@@ -87,7 +87,7 @@ const Teaser = ({ tilskudd, key }: TeaserProps) => {
     const linkRef = useRef<HTMLAnchorElement>(null)
 
     return (
-        <Link ref={linkRef} to={`/soknaden/${tilskudd.reisetilskuddId}/1`}
+        <Link ref={linkRef} to={`/soknadstart/${tilskudd.reisetilskuddId}/1`}
             className="dine-reisetilskudd" key={key}
         >
             <div className="teaser__ytre">
