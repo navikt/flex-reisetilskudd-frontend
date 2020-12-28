@@ -15,6 +15,7 @@ import Vis from '../diverse/vis'
 import OmReisetilskudd from './om-reisetilskudd/om-reisetilskudd'
 import SoknadHoverIkon from './soknad-hover-ikon.svg'
 import SoknadIkon from './soknad-ikon.svg'
+import { getUrlTilSoknad } from '../../utils/utils'
 
 enum Sortering {
     Dato = 'Dato',
@@ -93,7 +94,7 @@ const Teaser = ({ tilskudd, key }: TeaserProps) => {
     const linkRef = useRef<HTMLAnchorElement>(null)
 
     return (
-        <Link ref={linkRef} to={`/soknadstart/${tilskudd.reisetilskuddId}/1`}
+        <Link ref={linkRef} to={getUrlTilSoknad(tilskudd)}
             className="dine-reisetilskudd" key={key}
         >
             <div className="teaser__ytre">
