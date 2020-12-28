@@ -54,10 +54,10 @@ const mockReisetilskudd : RSReisetilskudd[] = [
         orgNummer: '9237419',
         utbetalingTilArbeidsgiver: undefined,
 
-        går: true,
-        sykler: true,
-        kollektivtransport: 2,
-        egenBil: 1,
+        går: false,
+        sykler: false,
+        kollektivtransport: 0,
+        egenBil: 0,
 
         reisetilskuddId: '1ajsdlkajlsdkjalksjdlkajd',
         sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
