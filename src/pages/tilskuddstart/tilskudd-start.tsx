@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Brodsmule, Sykmelding } from '../../types/types'
+import { Brodsmule, ReisetilskuddStatus, Sykmelding } from '../../types/types'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import { SEPARATOR } from '../../utils/constants'
 import { useAppStore } from '../../data/stores/app-store'
@@ -19,6 +19,7 @@ import AlertStripe  from 'nav-frontend-alertstriper'
 import HvemKanFaa from './hvem-kan-faa'
 import Vis from '../../components/diverse/vis'
 import dayjs from 'dayjs'
+import AvbrytKnapp from '../../components/avbryt/avbryt-knapp'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -100,9 +101,7 @@ const TilskuddStart = () => {
                     <Link to={`/soknaden/${id}/${steg}`} className="knapp knapp--hoved">
                         {tekst('klikkbar.videre-knapp.tekst')}
                     </Link>
-                    <Normaltekst tag="button" className="lenkeknapp">
-                        {tekst('tilskudd.start.ikke-bruk')}
-                    </Normaltekst>
+                    <AvbrytKnapp />
                 </div>
             </div>
         </>

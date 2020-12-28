@@ -16,6 +16,7 @@ import BekreftTekster from '../pages/bekreftelse/bekreft-tekster'
 import TilskuddListeTekster from '../pages/tilskuddliste/tilskuddliste-tekster'
 import TilskuddSideTekster from '../pages/tilskuddside/tilskuddside-tekster'
 import TilskuddStartTekster from '../pages/tilskuddstart/tilskuddstart-tekster'
+import AvbrytKnappTekster from '../components/avbryt/avbryt-knapp-tekster'
 import { logger } from './logger'
 
 const tekster = {
@@ -37,6 +38,7 @@ const tekster = {
     ...OppsummeringSideTekster.nb,
     ...SporsmalTekster.nb,
     ...HovedpunkterTekster.nb,
+    ...AvbrytKnappTekster.nb,
 }
 
 export const tekst = (tekst: string): string => {
