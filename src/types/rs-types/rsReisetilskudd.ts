@@ -2,8 +2,10 @@ export interface RSReisetilskudd {
     reisetilskuddId: string;
     sykmeldingId: string;
     fnr: string;
+    status: string;
     sendt?: string;
-    avbrutt: boolean;
+    avbrutt?: string;
+    // TODO: oppfølgende: boolean
 
     fom?: string;
     tom?: string;

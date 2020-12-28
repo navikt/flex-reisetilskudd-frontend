@@ -15,8 +15,9 @@ import plasterHover from '../tilskuddside/plaster-hover.svg'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import Veileder from './veileder'
 import Mobil from './mobil'
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
+import AlertStripe  from 'nav-frontend-alertstriper'
 import HvemKanFaa from './hvem-kan-faa'
+import Vis from '../../components/diverse/vis'
 import dayjs from 'dayjs'
 
 const brodsmuler: Brodsmule[] = [
@@ -41,19 +42,22 @@ const TilskuddStart = () => {
 
     useEffect(() => {
         const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.reisetilskuddId === id)
-        console.log('funnetTilskudd', funnetTilskudd); // eslint-disable-line
         setValgtReisetilskudd(funnetTilskudd)
+
+        const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === funnetTilskudd?.sykmeldingId)
+        setValgtSykmelding(sykmelding)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ reisetilskuddene, id ])
 
-    useEffect(() => {
-        const sykmeldingId = reisetilskuddene.find(r => r.reisetilskuddId === id)?.sykmeldingId
-        const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === sykmeldingId)
-        setValgtSykmelding(sykmelding)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ id ])
-
     if (!valgtReisetilskudd) return null
+
+    const alertstripeType = () => {
+        if (valgtReisetilskudd.status === ReisetilskuddStatus.ÅPEN) {
+            return 'suksess'
+        } else {
+            return 'info'
+        }
+    }
 
     return (
         <>
@@ -83,12 +87,14 @@ const TilskuddStart = () => {
                     <SykmeldingInfo />
                 </Ekspanderbartpanel>
 
-                <AlertStripeAdvarsel className="kan-sendes">
-                    <Undertittel>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
-                        '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMM YYYY')
-                    })}</Undertittel>
-                    <Normaltekst>{tekst('tilskudd.start.alertstripe.tekst')}</Normaltekst>
-                </AlertStripeAdvarsel>
+                <AlertStripe className="kan-sendes" type={alertstripeType()}>
+                    <Vis hvis={valgtReisetilskudd.status === ReisetilskuddStatus.FREMTIDIG}>
+                        <Undertittel>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
+                            '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMM YYYY')
+                        })}</Undertittel>
+                    </Vis>
+                    <Normaltekst>{tekst('tilskudd.start.alertstripe.tekst.' + valgtReisetilskudd.status)}</Normaltekst>
+                </AlertStripe>
 
                 <div className="knapperad">
                     <Link to={`/soknaden/${id}/${steg}`} className="knapp knapp--hoved">

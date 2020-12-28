@@ -1,13 +1,13 @@
-import { Kvittering } from '../../../types/types'
+import { RSKvittering } from '../../../types/rs-types/rsReisetilskudd'
 
-const mockKvitteringer: Kvittering[] = [
+const mockKvitteringer: RSKvittering[] = [
     {
         reisetilskuddId: '6969',
         kvitteringId: 'tetstsgddgsdsdsdsdsdgsdg',
         navn: 'foo.txt',
         storrelse: 1024 * 920,
         belop: 32.2,
-        fom: new Date('2020-05-01'),
+        fom: '2020-05-01',
         transportmiddel: 'EGEN_BIL',
     },
     {
@@ -16,7 +16,7 @@ const mockKvitteringer: Kvittering[] = [
         navn: 'bar.jpg',
         storrelse: 812 * 920,
         belop: 2.2,
-        fom: new Date('2034-09-29'),
+        fom: '2034-09-29',
         transportmiddel: 'TAXI',
     },
 ]

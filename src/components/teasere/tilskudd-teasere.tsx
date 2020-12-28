@@ -8,7 +8,7 @@ import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { Reisetilskudd } from '../../types/types'
+import { Reisetilskudd, ReisetilskuddStatus } from '../../types/types'
 import { tilLesbarPeriodeMedArstall } from '../../utils/dato'
 import { tekst } from '../../utils/tekster'
 import Vis from '../diverse/vis'
@@ -27,6 +27,7 @@ const TilskuddTeasere = () => {
     const [ sortering, setSortering ] = useState<Sortering>(Sortering.Dato)
 
     const sorterteSoknader = () => {
+        // TODO: Fix sortering
         if (sortering === Sortering.Dato) {
             return reisetilskuddene.sort()
         } else if (sortering === Sortering.Status) {
@@ -37,8 +38,8 @@ const TilskuddTeasere = () => {
         return reisetilskuddene
     }
 
-    const sendteTilskudd = reisetilskuddene.filter(t => t.sendt)
-    const usendteTilskudd = reisetilskuddene.filter(t => !t.sendt)
+    const usendteTilskudd = reisetilskuddene.filter(r => r.status === ReisetilskuddStatus.FREMTIDIG || r.status === ReisetilskuddStatus.ÅPEN)
+    const sendteTilskudd = reisetilskuddene.filter(r => r.status === ReisetilskuddStatus.SENDT || r.status === ReisetilskuddStatus.AVBRUTT)
 
     return (
         <div className="tilskudd__teasere">
@@ -126,25 +127,35 @@ const StatusEtikett = (props: any) => {
     const { tilskudd } = props
 
     const etikettType = () => {
-        console.log('tilskudd type', tilskudd); // eslint-disable-line
-        if (tilskudd.avbrutt) {
-            return 'info'
-        } else if (tilskudd.sendt) {
-            return 'suksess'
-        } else {
+        if (tilskudd.status === ReisetilskuddStatus.AVBRUTT) {
             return 'info'
         }
+        if (tilskudd.status === ReisetilskuddStatus.FREMTIDIG) {
+            return 'info'
+        }
+        if (tilskudd.status === ReisetilskuddStatus.SENDT) {
+            return 'suksess'
+        }
+        if (tilskudd.status === ReisetilskuddStatus.ÅPEN) {
+            return 'suksess'
+        }
+        return 'info'
     }
 
     const etikettTekst = () => {
-        console.log('tilskudd tekst', tilskudd); // eslint-disable-line
-        if (tilskudd.avbrutt) {
+        if (tilskudd.status === ReisetilskuddStatus.AVBRUTT) {
             return 'Avbrutt'
-        } else if (tilskudd.sendt) {
+        }
+        if (tilskudd.status === ReisetilskuddStatus.SENDT) {
             return 'Sendt til NAV'
-        } else {
+        }
+        if (tilskudd.status === ReisetilskuddStatus.ÅPEN) {
+            return 'Klar til innsending'
+        }
+        if (tilskudd.status === ReisetilskuddStatus.FREMTIDIG) {
             return 'Klar til utfylling'
         }
+        return 'Klar til utfylling'
     }
 
     return (
