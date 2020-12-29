@@ -28,13 +28,15 @@ const TilskuddTeasere = () => {
     const [ sortering, setSortering ] = useState<Sortering>(Sortering.Dato)
 
     const sorterteSoknader = () => {
-        // TODO: Fix sortering
         if (sortering === Sortering.Dato) {
-            return reisetilskuddene.sort()
+            return reisetilskuddene.sort((a,b) => b.tom?.localeCompare(a.tom || '0') || 1)
         } else if (sortering === Sortering.Status) {
-            return reisetilskuddene.sort()
+            return reisetilskuddene.sort((a,b) => a.status.localeCompare(b.status))
         } else if (sortering === Sortering.Sendt) {
-            return reisetilskuddene.sort()
+            return reisetilskuddene.sort((a,b) => {
+                return (b.sendt?.getTime() || b.avbrutt?.getTime() || 0)
+                    - (a.sendt?.getTime() || a.avbrutt?.getTime() || 0)
+            })
         }
         return reisetilskuddene
     }
