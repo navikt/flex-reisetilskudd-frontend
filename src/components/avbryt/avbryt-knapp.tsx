@@ -6,7 +6,7 @@ import { Fareknapp } from 'nav-frontend-knapper'
 import { tekst } from '../../utils/tekster'
 import { useEffect, useRef, useState } from 'react'
 import env from '../../utils/environment'
-import { redirectTilLoginHvis401 } from '../../utils/utils'
+import { getUrlTilSoknad, redirectTilLoginHvis401 } from '../../utils/utils'
 import { useAppStore } from '../../data/stores/app-store'
 import { Reisetilskudd, ReisetilskuddStatus } from '../../types/types'
 import { logger } from '../../utils/logger'
@@ -45,7 +45,7 @@ const AvbrytKnapp = () => {
                 const nyReisetilskudd = { ...valgtReisetilskudd, status: ReisetilskuddStatus.AVBRUTT, avbrutt: new Date() } as Reisetilskudd
                 setReisetilskuddene(reisetilskuddene.map(r => r.reisetilskuddId === valgtReisetilskudd!.reisetilskuddId ? nyReisetilskudd : r) as any)
                 setValgtReisetilskudd(nyReisetilskudd)
-                history.push(`/soknaden/${valgtReisetilskudd!.reisetilskuddId}/avbrutt`)
+                history.push(getUrlTilSoknad(nyReisetilskudd))
             } else {
                 logger.error('Feil ved AVBYTING av reisetilskudd', res)
                 // TODO: Sett opp feilmelding

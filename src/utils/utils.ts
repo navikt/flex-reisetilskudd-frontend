@@ -41,9 +41,7 @@ export const getUrlTilSoknad = (reisetilskudd: Reisetilskudd) => {
         return '/bekreftelse'
     }
     if (reisetilskudd.status === ReisetilskuddStatus.AVBRUTT) {
-        // eslint-disable-next-line no-console
-        console.log('Avbrutt side er ikke satt opp enda')
-        return ''
+        return `/soknaden/${reisetilskudd.reisetilskuddId}/avbrutt`
     }
     return `/soknadstart/${reisetilskudd.reisetilskuddId}/1`
 }

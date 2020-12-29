@@ -9,6 +9,7 @@ import BekreftSide from './pages/bekreftelse/bekreft-side'
 import TilskuddListe from './pages/tilskuddliste/tilskudd-liste'
 import TilskuddSide from './pages/tilskuddside/tilskudd-side'
 import TilskuddStart from './pages/tilskuddstart/tilskudd-start'
+import AvbruttSide from './pages/avbrutt/avbrutt-side'
 
 export interface RouteParams {
     id: string;
@@ -22,6 +23,7 @@ const App = () => {
                 <Switch>
                     <Route exact={true} path="/" component={TilskuddListe} />
                     <Route path={'/soknadstart/:id/:steg'} component={TilskuddStart} />
+                    <Route path={'/soknaden/:id/avbrutt'} component={AvbruttSide} />
                     <Route path={'/soknaden/:id/:steg'} component={TilskuddSide} />
                     <Route path={'/bekreftelse'} component={BekreftSide} />
                 </Switch>
