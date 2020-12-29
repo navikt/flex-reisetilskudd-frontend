@@ -31,5 +31,8 @@ mock.post(`${env.backendUrl}/api/v1/kvittering`, () => Promise.resolve({ status:
 
 mock.delete(`${env.backendUrl}/api/v1/kvittering/:id`, () => Promise.resolve({ status: 200 }))
 
-// Ser ikke ut som denne er satt opp enda
 mock.post(`${env.backendUrl}/api/v1/reisetilskudd/:id/send`, () => Promise.resolve({ status: 200 }))
+
+mock.post(`${env.backendUrl}/api/v1/reisetilskudd/:id/avbryt`, () => Promise.resolve({ status: 200 }))
+
+mock.post(`${env.backendUrl}/api/v1/reisetilskudd/:id/gjenapne`, () => Promise.resolve({ status: 200 }))
