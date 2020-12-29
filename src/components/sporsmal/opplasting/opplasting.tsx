@@ -13,6 +13,7 @@ import FilListe from '../../filopplaster/fil-liste'
 import KvitteringModal from '../../filopplaster/kvittering-modal/kvittering-modal'
 import PlussIkon from './pluss-ikon.svg'
 import { tilLesbarPeriodeMedArstall } from '../../../utils/dato'
+import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 
 const Opplasting = () => {
     const { valgtReisetilskudd, setOpenModal, setKvitteringIndex } = useAppStore()
@@ -58,6 +59,7 @@ const Opplasting = () => {
                 <Knapp type="hoved" onClick={handleVidereKlikk}>
                     {tekst('klikkbar.videre-knapp.tekst')}
                 </Knapp>
+                <AvbrytKnapp />
             </div>
         </div>
     )

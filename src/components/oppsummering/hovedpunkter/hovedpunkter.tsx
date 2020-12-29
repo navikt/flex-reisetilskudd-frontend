@@ -15,6 +15,7 @@ import Vis from '../../diverse/vis'
 import env from '../../../utils/environment'
 import { formatterTall, redirectTilLoginHvis401 } from '../../../utils/utils'
 import { ReisetilskuddStatus } from '../../../types/types'
+import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 
 const Hovedpunkter = () => {
     const { valgtReisetilskudd, reisetilskuddene, setReisetilskuddene, erBekreftet, setErBekreftet } = useAppStore()
@@ -94,6 +95,7 @@ const Hovedpunkter = () => {
                     <Knapp type="hoved" onClick={async() => await sendSoknad()} disabled={!erBekreftet}>
                         {tekst('hovedpunkter.send-knapp.tekst')}
                     </Knapp>
+                    <AvbrytKnapp />
                 </div>
             </section>
 
