@@ -1,10 +1,15 @@
-import mockReisetilskudd from '../../src/data/mock/data/reisetilskudd'
+import { apenReisetilskudd } from '../../src/data/mock/data/reisetilskudd'
 
 describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
-    const url = `http://localhost:3000/syk/reisetilskudd/soknadstart/${mockReisetilskudd[2].reisetilskuddId}/1`
+    const reisetilskudd = apenReisetilskudd
 
     before(() => {
-        cy.visit(url)
+        cy.visit('http://localhost:3000')
+    })
+
+    it('Laster startside', () => {
+        cy.get('.typo-sidetittel').should('be.visible').and('have.text', 'Søknader om reisetilskudd')
+        cy.get(`.tilskudd__teasere a[href*=${reisetilskudd.reisetilskuddId}]`).click()
     })
 
     it('Laster inn header og headerelementer', function() {
