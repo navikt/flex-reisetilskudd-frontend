@@ -14,9 +14,11 @@ import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import env from '../../../utils/environment'
 import { formatterTall, redirectTilLoginHvis401 } from '../../../utils/utils'
+import { ReisetilskuddStatus } from '../../../types/types'
+import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 
 const Hovedpunkter = () => {
-    const { valgtReisetilskudd, erBekreftet, setErBekreftet } = useAppStore()
+    const { valgtReisetilskudd, reisetilskuddene, setReisetilskuddene, erBekreftet, setErBekreftet } = useAppStore()
     const [ openPlikter, setOpenPlikter ] = useState<boolean>(false)
     const history = useHistory()
 
@@ -41,6 +43,10 @@ const Hovedpunkter = () => {
             return
         }
         if ([ 200, 201, 203, 206 ].includes(httpCode)) {
+            valgtReisetilskudd.sendt = new Date()
+            valgtReisetilskudd.status = ReisetilskuddStatus.SENDT
+            reisetilskuddene[reisetilskuddene.findIndex(reis => reis.reisetilskuddId === valgtReisetilskudd.reisetilskuddId)] = valgtReisetilskudd
+            setReisetilskuddene(reisetilskuddene)
             history.push('/bekreftelse')
         }
 
@@ -89,6 +95,7 @@ const Hovedpunkter = () => {
                     <Knapp type="hoved" onClick={async() => await sendSoknad()} disabled={!erBekreftet}>
                         {tekst('hovedpunkter.send-knapp.tekst')}
                     </Knapp>
+                    <AvbrytKnapp />
                 </div>
             </section>
 

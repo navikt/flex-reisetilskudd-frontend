@@ -1,89 +1,97 @@
-import { Reisetilskudd } from '../../../types/types'
 import mockKvitteringer from './kvitteringer'
+import { RSReisetilskudd } from '../../../types/rs-types/rsReisetilskudd'
 
-const mockReisetilskudd : Reisetilskudd[] = [
-    {
-        fnr: '01010112345',
-        fom: '2020-08-03',
-        tom: '2020-08-13',
-        sendt: '2020-11-03',
-        avbrutt: true,
+export const avbruttReisetilskudd: RSReisetilskudd = {
+    fnr: '01010112345',
+    fom: '2020-08-03',
+    tom: '2020-08-13',
+    status: 'AVBRUTT',
+    avbrutt: '2020-11-03',
 
-        orgNavn: 'Mock Arbeid AS',
-        orgNummer: '123123123',
-        utbetalingTilArbeidsgiver: false,
+    orgNavn: 'Mock Arbeid AS',
+    orgNummer: '123123123',
+    utbetalingTilArbeidsgiver: false,
 
-        går: false,
-        sykler: false,
-        kollektivtransport: 0,
-        egenBil: 0,
+    går: false,
+    sykler: false,
+    kollektivtransport: 0,
+    egenBil: 0,
 
-        reisetilskuddId: '28fa10b8-c9af-4a7a-a0b2-90caed65ab4c',
-        sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+    reisetilskuddId: '28fa10b8-c9af-4a7a-a0b2-90caed65ab4c',
+    sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
-        kvitteringer: [],
-    },
-    {
-        fnr: '01010112345',
-        fom: '2020-05-13',
-        tom: '2020-05-28',
-        sendt: '2020-11-03',
-        avbrutt: false,
+    kvitteringer: [],
+}
 
-        orgNavn: 'Mock Vaskeri Vaskerelven',
-        orgNummer: '9237419',
-        utbetalingTilArbeidsgiver: true,
+export const sendtReisetilskudd: RSReisetilskudd = {
+    fnr: '01010112345',
+    fom: '2020-05-13',
+    tom: '2020-05-28',
+    status: 'SENDT',
+    sendt: '2020-11-03',
 
-        går: true,
-        sykler: false,
-        kollektivtransport: 0,
-        egenBil: 13,
+    orgNavn: 'Mock Vaskeri Vaskerelven',
+    orgNummer: '9237419',
+    utbetalingTilArbeidsgiver: true,
 
-        reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
-        sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+    går: true,
+    sykler: false,
+    kollektivtransport: 0,
+    egenBil: 13,
 
-        kvitteringer: mockKvitteringer,
-    },
-    {
-        fnr: '01010112345',
-        fom: '2020-05-13',
-        tom: '2020-05-19',
-        avbrutt: false,
+    reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
+    sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
-        orgNavn: 'Mock Med undefined verdi på utbetalingTilArbeidsgiver',
-        orgNummer: '9237419',
-        utbetalingTilArbeidsgiver: undefined,
+    kvitteringer: mockKvitteringer,
+}
 
-        går: true,
-        sykler: true,
-        kollektivtransport: 2,
-        egenBil: 1,
+export const apenReisetilskudd: RSReisetilskudd = {
+    fnr: '01010112345',
+    fom: '2020-05-13',
+    tom: '2020-05-19',
+    status: 'ÅPEN',
 
-        reisetilskuddId: '1ajsdlkajlsdkjalksjdlkajd',
-        sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+    orgNavn: 'Mock Med undefined verdi på utbetalingTilArbeidsgiver',
+    orgNummer: '9237419',
+    utbetalingTilArbeidsgiver: undefined,
 
-        kvitteringer: [],
-    },
-    {
-        fnr: '01010112345',
-        fom: '2020-05-13',
-        tom: '2020-05-31',
-        avbrutt: false,
+    går: false,
+    sykler: false,
+    kollektivtransport: 0,
+    egenBil: 0,
 
-        orgNavn: 'Mock Med undefined verdi på utbetalingTilArbeidsgiver',
-        orgNummer: '9237419',
-        utbetalingTilArbeidsgiver: undefined,
+    reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-029j3fj20',
+    sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
-        går: true,
-        sykler: true,
-        kollektivtransport: 2,
-        egenBil: 1,
+    kvitteringer: [],
+}
 
-        reisetilskuddId: '1ajsdlkajlsdkjalksjdlkajd',
-        sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+export const fremtidigReisetilskudd: RSReisetilskudd = {
+    fnr: '01010112345',
+    fom: '2022-05-13',
+    tom: '2022-05-31',
+    status: 'FREMTIDIG',
 
-        kvitteringer: [],
-    },
+    orgNavn: 'Mock Med undefined verdi på utbetalingTilArbeidsgiver',
+    orgNummer: '9237419',
+    utbetalingTilArbeidsgiver: undefined,
+
+    går: true,
+    sykler: true,
+    kollektivtransport: 0,
+    egenBil: 0,
+
+    reisetilskuddId: 'ijfj2f-c9af-4a7a-a0b2-a381c13',
+    sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+
+    kvitteringer: [],
+}
+
+const mockReisetilskudd : RSReisetilskudd[] = [
+    avbruttReisetilskudd,
+    sendtReisetilskudd,
+    apenReisetilskudd,
+    fremtidigReisetilskudd,
 ]
 
 export default mockReisetilskudd

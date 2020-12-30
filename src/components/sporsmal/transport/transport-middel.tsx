@@ -17,6 +17,7 @@ import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import FeilOppsummering from '../feiloppsummering/feil-oppsummering'
+import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 
 interface TransportmiddelInterface {
     id: string
@@ -208,6 +209,7 @@ const TransportMiddel = () => {
                     <Knapp type="hoved">
                         {tekst('klikkbar.videre-knapp.tekst')}
                     </Knapp>
+                    <AvbrytKnapp />
                 </div>
             </form>
         </FormProvider>

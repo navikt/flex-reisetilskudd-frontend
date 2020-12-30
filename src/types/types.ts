@@ -31,12 +31,20 @@ export enum Transportmiddel {
     EGEN_BIL = 'Egen bil' // eslint-disable-line
 }
 
+export enum ReisetilskuddStatus {
+    FREMTIDIG = 'FREMTIDIG',
+    ÅPEN = 'ÅPEN',
+    SENDT = 'SENDT',
+    AVBRUTT = 'AVBRUTT'
+}
+
 export class Reisetilskudd {
     reisetilskuddId: string;
     sykmeldingId: string;
     fnr: string;
-    sendt?: string;
-    avbrutt: boolean;
+    status: keyof typeof ReisetilskuddStatus;
+    sendt?: Date;
+    avbrutt?: Date;
 
     fom?: string;
     tom?: string;
@@ -58,8 +66,9 @@ export class Reisetilskudd {
         this.reisetilskuddId = rsReisetilskudd.reisetilskuddId
         this.sykmeldingId = rsReisetilskudd.sykmeldingId
         this.fnr = rsReisetilskudd.fnr
-        this.sendt = rsReisetilskudd.sendt
-        this.avbrutt = rsReisetilskudd.avbrutt
+        this.status = rsReisetilskudd.status as keyof typeof ReisetilskuddStatus
+        this.sendt = dayjsToDate(rsReisetilskudd.sendt)
+        this.avbrutt = dayjsToDate(rsReisetilskudd.avbrutt)
 
         this.fom = rsReisetilskudd.fom
         this.tom = rsReisetilskudd.tom

@@ -1,5 +1,6 @@
 import env from './environment'
 import { logger } from './logger'
+import { Reisetilskudd, ReisetilskuddStatus } from '../types/types'
 
 export const hentLoginUrl = () => {
     return `${env.loginServiceUrl}?redirect=${env.loginServiceRedirectUrl}`
@@ -33,4 +34,14 @@ export const formatterTall = (tall?: number, desimaler = 0): string => {
     } else {
         return ''
     }
+}
+
+export const getUrlTilSoknad = (reisetilskudd: Reisetilskudd) => {
+    if (reisetilskudd.status === ReisetilskuddStatus.SENDT) {
+        return '/bekreftelse'
+    }
+    if (reisetilskudd.status === ReisetilskuddStatus.AVBRUTT) {
+        return `/soknaden/${reisetilskudd.reisetilskuddId}/avbrutt`
+    }
+    return `/soknadstart/${reisetilskudd.reisetilskuddId}/1`
 }

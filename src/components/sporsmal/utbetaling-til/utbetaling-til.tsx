@@ -10,9 +10,10 @@ import { put } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
-import { getLedetekst, tekst } from '../../../utils/tekster'
+import { tekst } from '../../../utils/tekster'
 import FeilOppsummering from '../../sporsmal/feiloppsummering/feil-oppsummering'
 import { ArbeidsOgVelferdsetaten, utbetalingSporsmal } from '../sporsmal-konstanter'
+import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 
 interface UtbetalingInterface {
     reisetilskuddId: string
@@ -83,6 +84,7 @@ const UtbetalingTil = () => {
                     <Knapp type="hoved">
                         {tekst('klikkbar.videre-knapp.tekst')}
                     </Knapp>
+                    <AvbrytKnapp />
                 </div>
             </form>
         </FormProvider>

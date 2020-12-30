@@ -1,10 +1,15 @@
-import mockReisetilskudd from '../../src/data/mock/data/reisetilskudd'
+import { apenReisetilskudd } from '../../src/data/mock/data/reisetilskudd'
 
 describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
-    const url = `http://localhost:3000/syk/reisetilskudd/soknadstart/${mockReisetilskudd[0].reisetilskuddId}/1`
+    const reisetilskudd = apenReisetilskudd
 
     before(() => {
-        cy.visit(url)
+        cy.visit('http://localhost:3000')
+    })
+
+    it('Laster startside', () => {
+        cy.get('.typo-sidetittel').should('be.visible').and('have.text', 'Søknader om reisetilskudd')
+        cy.get(`.tilskudd__teasere a[href*=${reisetilskudd.reisetilskuddId}]`).click()
     })
 
     it('Laster inn header og headerelementer', function() {
@@ -34,7 +39,9 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
 
     it('Laster inn alertstripe med kan-sendes-dato', function() {
         cy.get('.kan-sendes').should('be.visible')
-        cy.get('.kan-sendes .alertstripe__tekst h2').should('be.visible').and('contain.text', 'Søknaden kan sendes')
+        cy.get('.kan-sendes.alertstripe--suksess')
+            .should('be.visible')
+            .and('contain.text', 'Søknaden er klar til å sendes inn')
     })
 
     it('Laster inn knapperad, klikker og går til soknad-side', function() {

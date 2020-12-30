@@ -14,8 +14,8 @@ const TilskuddStartTekster: any = {
         'tilskudd.start.husk': 'Husk å søke før fristen',
         'tilskudd.start.fristen-for': 'Fristen for å søke om refusjon er 3 måneder etter at sykmeldingsperioden er over.',
         'tilskudd.start.alertstripe.tittel': 'Søknaden kan sendes %DATO%',
-        'tilskudd.start.alertstripe.tekst': 'Du kan begynne å fylle ut søknaden. Alle endringer lagres.',
-        'tilskudd.start.ikke-bruk': 'Jeg ønsker ikke å bruke denne søknaden',
+        'tilskudd.start.alertstripe.tekst.FREMTIDIG': 'Du kan begynne å fylle ut søknaden. Alle endringer lagres.',
+        'tilskudd.start.alertstripe.tekst.ÅPEN': 'Søknaden er klar til å sendes inn',
     }, 'en': {}
 }
 
