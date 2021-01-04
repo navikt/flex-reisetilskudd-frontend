@@ -70,7 +70,7 @@ const KvitteringForm = () => {
             transportmiddel: methods.getValues('transportmiddel')
         })
 
-        post<Kvittering>(`${env.backendUrl}/api/v1/kvittering`, kvitt)
+        post<Kvittering>(`${env.backendUrl}/api/v1/reisetilskudd/${valgtReisetilskudd!.reisetilskuddId}/kvittering`, kvitt)
             .then(() => {
                 setLaster(false)
                 setKvittering(kvitt)

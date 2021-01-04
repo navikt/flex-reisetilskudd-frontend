@@ -37,7 +37,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
     const forceUpdate = useForceUpdate()
 
     const slettKvittering = (kvitto: Kvittering) => {
-        del(`${env.backendUrl}/api/v1/kvittering/${kvitto.kvitteringId}`)
+        del(`${env.backendUrl}/api/v1/reisetilskudd/${kvitto.reisetilskuddId}/kvittering/${kvitto.kvitteringId}`)
             .then(() => {
                 kvitteringer = kvitteringer.filter((kvittering) =>
                     kvittering.kvitteringId !== kvitto.kvitteringId
