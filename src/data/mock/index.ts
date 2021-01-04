@@ -27,9 +27,9 @@ mock.post(`${env.mockBucketUrl}/kvittering`,
             melding: 'opprettet'
         })))
 
-mock.post(`${env.backendUrl}/api/v1/kvittering`, () => Promise.resolve({ status: 200 }))
+mock.post(`${env.backendUrl}/api/v1/reisetilskudd/:id/kvittering`, () => Promise.resolve({ status: 200 }))
 
-mock.delete(`${env.backendUrl}/api/v1/kvittering/:id`, () => Promise.resolve({ status: 200 }))
+mock.delete(`${env.backendUrl}/api/v1/reisetilskudd/:id/kvittering/:kvitteringId`, () => Promise.resolve({ status: 200 }))
 
 mock.post(`${env.backendUrl}/api/v1/reisetilskudd/:id/send`, () => Promise.resolve({ status: 200 }))
 
