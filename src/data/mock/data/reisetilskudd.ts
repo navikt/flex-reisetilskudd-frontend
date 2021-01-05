@@ -49,7 +49,7 @@ export const apenReisetilskudd: RSReisetilskudd = {
     fnr: '01010112345',
     fom: '2020-05-13',
     tom: '2020-05-19',
-    status: 'ÅPEN',
+    status: 'SENDBAR',
 
     orgNavn: 'Mock Med undefined verdi på utbetalingTilArbeidsgiver',
     orgNummer: '9237419',
@@ -66,11 +66,11 @@ export const apenReisetilskudd: RSReisetilskudd = {
     kvitteringer: [],
 }
 
-export const fremtidigReisetilskudd: RSReisetilskudd = {
+export const ÅPENReisetilskudd: RSReisetilskudd = {
     fnr: '01010112345',
     fom: '2022-05-13',
     tom: '2022-05-31',
-    status: 'FREMTIDIG',
+    status: 'ÅPEN',
 
     orgNavn: 'Mock Med undefined verdi på utbetalingTilArbeidsgiver',
     orgNummer: '9237419',
@@ -91,7 +91,7 @@ const mockReisetilskudd : RSReisetilskudd[] = [
     avbruttReisetilskudd,
     sendtReisetilskudd,
     apenReisetilskudd,
-    fremtidigReisetilskudd,
+    ÅPENReisetilskudd,
 ]
 
 export default mockReisetilskudd
