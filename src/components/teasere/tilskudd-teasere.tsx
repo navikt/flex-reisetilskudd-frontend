@@ -41,7 +41,7 @@ const TilskuddTeasere = () => {
         return reisetilskuddene
     }
 
-    const usendteTilskudd = reisetilskuddene.filter(r => r.status === ReisetilskuddStatus.FREMTIDIG || r.status === ReisetilskuddStatus.ÅPEN)
+    const usendteTilskudd = reisetilskuddene.filter(r => r.status === ReisetilskuddStatus.ÅPEN || r.status === ReisetilskuddStatus.SENDBAR || r.status === ReisetilskuddStatus.FREMTIDIG)
     const sendteTilskudd = reisetilskuddene.filter(r => r.status === ReisetilskuddStatus.SENDT || r.status === ReisetilskuddStatus.AVBRUTT)
 
     return (
@@ -133,13 +133,13 @@ const StatusEtikett = (props: any) => {
         if (tilskudd.status === ReisetilskuddStatus.AVBRUTT) {
             return 'info'
         }
-        if (tilskudd.status === ReisetilskuddStatus.FREMTIDIG) {
+        if (tilskudd.status === ReisetilskuddStatus.ÅPEN) {
             return 'info'
         }
         if (tilskudd.status === ReisetilskuddStatus.SENDT) {
             return 'suksess'
         }
-        if (tilskudd.status === ReisetilskuddStatus.ÅPEN) {
+        if (tilskudd.status === ReisetilskuddStatus.SENDBAR) {
             return 'suksess'
         }
         return 'info'
@@ -152,11 +152,14 @@ const StatusEtikett = (props: any) => {
         if (tilskudd.status === ReisetilskuddStatus.SENDT) {
             return 'Sendt til NAV'
         }
-        if (tilskudd.status === ReisetilskuddStatus.ÅPEN) {
+        if (tilskudd.status === ReisetilskuddStatus.SENDBAR) {
             return 'Klar til innsending'
         }
-        if (tilskudd.status === ReisetilskuddStatus.FREMTIDIG) {
+        if (tilskudd.status === ReisetilskuddStatus.ÅPEN) {
             return 'Klar til utfylling'
+        }
+        if (tilskudd.status === ReisetilskuddStatus.FREMTIDIG) {
+            return 'FREMTIDIG TODO'
         }
         return 'Klar til utfylling'
     }
