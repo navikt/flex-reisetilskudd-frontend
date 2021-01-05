@@ -92,110 +92,112 @@ const KvitteringForm = () => {
                     {tekst('kvittering_modal.nytt-utlegg.tittel')}
                 </Systemtittel>
 
-                <div className="skjemaelement">
-                    <label htmlFor="dato_input" className="skjemaelement__label">
-                        <Element tag="strong">Dato</Element>
-                    </label>
-                    <Controller
-                        control={methods.control}
-                        name="dato_input"
-                        defaultValue={kvittering?.fom || ''}
-                        rules={{
-                            validate: () => {
-                                const div: HTMLDivElement | null = document.querySelector('.nav-datovelger__input')
-                                // 2020-01-20 //
-                                if (dato === '' || !dato.match(RegExp('\\d{4}-\\d{2}-\\d{2}'))) {
-                                    div?.classList.add('skjemaelement__input--harFeil')
-                                    return tekst('kvittering_modal.dato.feilmelding')
+                <div className="skjemakolonner">
+                    <div className="skjemaelement">
+                        <label htmlFor="dato_input" className="skjemaelement__label">
+                            <Element tag="strong">Dato</Element>
+                        </label>
+                        <Controller
+                            control={methods.control}
+                            name="dato_input"
+                            defaultValue={kvittering?.fom || ''}
+                            rules={{
+                                validate: () => {
+                                    const div: HTMLDivElement | null = document.querySelector('.nav-datovelger__input')
+                                    // 2020-01-20 //
+                                    if (dato === '' || !dato.match(RegExp('\\d{4}-\\d{2}-\\d{2}'))) {
+                                        div?.classList.add('skjemaelement__input--harFeil')
+                                        return tekst('kvittering_modal.dato.feilmelding')
+                                    }
+
+                                    div?.classList.remove('skjemaelement__input--harFeil')
+                                    return true
                                 }
+                            }}
+                            render={({ name }) => (
+                                <Datepicker
+                                    locale={'nb'}
+                                    inputId="dato_input"
+                                    onChange={setDato}
+                                    value={dato}
+                                    inputProps={{
+                                        name: name,
+                                    }}
+                                    calendarSettings={{ showWeekNumbers: true }}
+                                    showYearSelector={false}
+                                    limitations={{
+                                        weekendsNotSelectable: false,
+                                    }}
+                                />
+                            )}
+                        />
 
-                                div?.classList.remove('skjemaelement__input--harFeil')
-                                return true
+                        <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
+                            <Vis hvis={methods.errors['dato_input']}>
+                                <p>{tekst('kvittering_modal.dato.feilmelding')}</p>
+                            </Vis>
+                        </Normaltekst>
+                    </div>
+
+                    <div className="skjemaelement">
+                        <label htmlFor="transportmiddel" className="skjemaelement__label">
+                            Transportmiddel
+                        </label>
+                        <select
+                            ref={methods.register({ required: tekst('kvittering_modal.transportmiddel.feilmelding') })}
+                            className={
+                                'skjemaelement__input kvittering-element' +
+                                (methods.errors['transportmiddel'] ? ' skjemaelement__input--harFeil' : '')
                             }
-                        }}
-                        render={({ name }) => (
-                            <Datepicker
-                                locale={'nb'}
-                                inputId="dato_input"
-                                onChange={setDato}
-                                value={dato}
-                                inputProps={{
-                                    name: name,
-                                }}
-                                calendarSettings={{ showWeekNumbers: true }}
-                                showYearSelector={false}
-                                limitations={{
-                                    weekendsNotSelectable: false,
-                                }}
-                            />
-                        )}
-                    />
+                            id="transportmiddel"
+                            name="transportmiddel"
+                            onChange={() => methods.trigger('transportmiddel')}
+                            defaultValue={kvittering.transportmiddel}
+                        >
+                            <option value="">Velg</option>
+                            {options.map((option, idx) => {
+                                return (
+                                    <option value={option.value} id={option.id} key={idx}>
+                                        {option.name}
+                                    </option>
+                                )
+                            })}
+                        </select>
 
-                    <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
-                        <Vis hvis={methods.errors['dato_input']}>
-                            <p>{tekst('kvittering_modal.dato.feilmelding')}</p>
-                        </Vis>
-                    </Normaltekst>
-                </div>
+                        <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
+                            <Vis hvis={methods.errors['transportmiddel']}>
+                                <p>{tekst('kvittering_modal.transportmiddel.feilmelding')}</p>
+                            </Vis>
+                        </Normaltekst>
+                    </div>
 
-                <div className="skjemaelement">
-                    <label htmlFor="transportmiddel" className="skjemaelement__label">
-                        Transportmiddel
-                    </label>
-                    <select
-                        ref={methods.register({ required: tekst('kvittering_modal.transportmiddel.feilmelding') })}
-                        className={
-                            'skjemaelement__input kvittering-element' +
-                            (methods.errors['transportmiddel'] ? ' skjemaelement__input--harFeil' : '')
-                        }
-                        id="transportmiddel"
-                        name="transportmiddel"
-                        onChange={() => methods.trigger('transportmiddel')}
-                        defaultValue={kvittering.transportmiddel}
-                    >
-                        <option value="">Velg</option>
-                        {options.map((option, idx) => {
-                            return (
-                                <option value={option.value} id={option.id} key={idx}>
-                                    {option.name}
-                                </option>
-                            )
-                        })}
-                    </select>
-
-                    <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
-                        <Vis hvis={methods.errors['transportmiddel']}>
-                            <p>{tekst('kvittering_modal.transportmiddel.feilmelding')}</p>
-                        </Vis>
-                    </Normaltekst>
-                </div>
-
-                <div className="skjemaelement">
-                    <label htmlFor="belop_input" className="skjemaelement__label">
-                        <Element tag="strong">{tekst('kvittering_modal.tittel')}</Element>
-                    </label>
-                    <input
-                        ref={methods.register({
-                            required: tekst('kvittering_modal.belop.feilmelding'),
-                            min: 0,
-                            max: 10000
-                        })}
-                        type="number"
-                        id="belop_input"
-                        name="belop_input"
-                        inputMode={'numeric'}
-                        pattern="[0-9]*"
-                        defaultValue={kvittering?.belop || ''}
-                        className={
-                            'skjemaelement__input input--m periode-element' +
-                            (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
-                        }
-                    />
-                    <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
-                        <Vis hvis={methods.errors['belop_input']}>
-                            <p>{tekst('kvittering_modal.belop.feilmelding')}</p>
-                        </Vis>
-                    </Normaltekst>
+                    <div className="skjemaelement">
+                        <label htmlFor="belop_input" className="skjemaelement__label">
+                            <Element tag="strong">{tekst('kvittering_modal.tittel')}</Element>
+                        </label>
+                        <input
+                            ref={methods.register({
+                                required: tekst('kvittering_modal.belop.feilmelding'),
+                                min: 0,
+                                max: 10000
+                            })}
+                            type="number"
+                            id="belop_input"
+                            name="belop_input"
+                            inputMode={'numeric'}
+                            pattern="[0-9]*"
+                            defaultValue={kvittering?.belop || ''}
+                            className={
+                                'skjemaelement__input input--m periode-element' +
+                                (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
+                            }
+                        />
+                        <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
+                            <Vis hvis={methods.errors['belop_input']}>
+                                <p>{tekst('kvittering_modal.belop.feilmelding')}</p>
+                            </Vis>
+                        </Normaltekst>
+                    </div>
                 </div>
 
                 <DragAndDrop kvittering={kvittering} />
