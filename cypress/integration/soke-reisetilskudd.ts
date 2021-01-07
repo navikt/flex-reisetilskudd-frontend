@@ -49,26 +49,16 @@ describe('Tester reisetilskuddsøknaden', () => {
         it('fyller ut går, egen bil, klikker på hjelpetekst, fyller inn km', () => {
             cy.url().should('include', `/soknaden/${reisetilskudd.reisetilskuddId}/2`)
 
-            cy.get('label[for=gaa]').click({ force: true })
-            cy.get('label[for=skl]').click({ force: true })
-            cy.get('label[for=bil]').click({ force: true })
-            cy.get('#kilometer-bil').should('be.visible')
-                .type('1337').should('have.value', '01337')
+            cy.get('label[for=transport-ja]').click({ force: true })
+            cy.get('label[for=OFFENTLIG]').click({ force: true })
 
-            cy.get('label[for=kol]').click({ force: true })
             cy.get('#utgifter-koll').should('be.visible')
-                .type('900', { force: true }).should('have.value', '0900')
+                .type('900').should('have.value', '0900')
 
-            cy.get('form.transportmiddel .checkboksPanel').should('be.visible')
-        })
-    })
+            cy.get('label[for=EGEN_BIL]').click({ force: true })
+            cy.get('#kilometer-bil').should('be.visible')
+                .type('1337', { force: true }).should('have.value', '01337')
 
-    describe('Checkboxvalidering side 2', () => {
-        it('Sjekker at Checkboxene er checked', () => {
-            cy.get('#gaa').should('be.checked')
-            cy.get('#skl').should('be.checked')
-            cy.get('#bil').should('be.checked')
-            cy.get('#kol').should('be.checked')
             cy.get('.knapperad .knapp--hoved').click({ force: true })
         })
     })
