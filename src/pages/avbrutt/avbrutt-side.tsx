@@ -45,7 +45,7 @@ const AvbruttSide = () => {
     }, [])
 
     useEffect(() => {
-        const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.reisetilskuddId === id)
+        const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.id === id)
         setValgtReisetilskudd(funnetTilskudd)
 
         const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === funnetTilskudd?.sykmeldingId)
@@ -57,7 +57,7 @@ const AvbruttSide = () => {
         if(gjenapner) return
         setGjenapner(true)
         try {
-            const res = await fetch(env.backendUrl + `/api/v1/reisetilskudd/${valgtReisetilskudd!.reisetilskuddId}/gjenapne`, {
+            const res = await fetch(env.backendUrl + `/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/gjenapne`, {
                 method: 'POST',
                 credentials: 'include'
             })
@@ -67,7 +67,7 @@ const AvbruttSide = () => {
             }
             else if (status === 200) {
                 const nyReisetilskudd = { ...valgtReisetilskudd, status: ReisetilskuddStatus.SENDBAR, avbrutt: undefined } as Reisetilskudd
-                setReisetilskuddene(reisetilskuddene.map(r => r.reisetilskuddId === valgtReisetilskudd!.reisetilskuddId ? nyReisetilskudd : r) as any)
+                setReisetilskuddene(reisetilskuddene.map(r => r.id === valgtReisetilskudd!.id ? nyReisetilskudd : r) as any)
                 setValgtReisetilskudd(nyReisetilskudd)
                 history.push(getUrlTilSoknad(nyReisetilskudd))
             } else {

@@ -12,7 +12,7 @@ import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
 import { tekst } from '../../../utils/tekster'
 import FeilOppsummering from '../../sporsmal/feiloppsummering/feil-oppsummering'
-import { ArbeidsOgVelferdsetaten, utbetalingSporsmal } from '../sporsmal-konstanter'
+import { ArbeidsOgVelferdsetaten } from '../sporsmal-konstanter'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 
 interface UtbetalingInterface {
@@ -52,7 +52,7 @@ const UtbetalingTil = () => {
     const onSubmit = () => {
         if (utbetalTil === '') {
             methods.setError(
-                utbetalingSporsmal.name,
+                'UTBETALINGARBEIDSGIVER',
                 { type: 'skjema-feil', message: tekst('utbetaling.feil-alternativ') }
             )
         } else {
@@ -71,10 +71,13 @@ const UtbetalingTil = () => {
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)} className="horisontal-radio">
                 <RadioPanelGruppe
-                    name={utbetalingSporsmal.name}
-                    legend={<Systemtittel>{utbetalingSporsmal.tittel}</Systemtittel>}
+                    name="utbetaling-sporsmal"
+                    legend={<Systemtittel>{tekst('sporsmal.utbetaling.tittel')}</Systemtittel>}
                     description={tekst('sporsmal.utbetaling.tekst')}
-                    radios={utbetalingSporsmal.svaralternativer}
+                    radios={[
+                        { id: 'utbetaling-arbeidsgiver', label: 'Ja', value: 'ARBEIDSGIVER' },
+                        { id: 'utbetaling-meg', label: 'Nei', value: 'MEG' },
+                    ]}
                     checked={utbetalTil}
                     onChange={handleChange}
                 />

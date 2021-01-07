@@ -76,7 +76,7 @@ const DragAndDrop = ({ kvittering }: Props) => {
 
     // TODO: Fix Vis
     return (
-        <>
+        <div className="ddfil__wrap">
             <label htmlFor="ddfil" className="skjemaelement__label">
                 <Element tag="strong">{tekst('drag_and_drop.label')}</Element>
             </label>
@@ -138,7 +138,7 @@ const DragAndDrop = ({ kvittering }: Props) => {
                     <p>{tekst('kvittering_modal.filopplasting.feilmelding')}</p>
                 </Vis>
             </Normaltekst>
-        </>
+        </div>
     )
 }
 

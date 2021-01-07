@@ -42,7 +42,7 @@ const TilskuddStart = () => {
     }, [])
 
     useEffect(() => {
-        const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.reisetilskuddId === id)
+        const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.id === id)
         setValgtReisetilskudd(funnetTilskudd)
 
         const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === funnetTilskudd?.sykmeldingId)

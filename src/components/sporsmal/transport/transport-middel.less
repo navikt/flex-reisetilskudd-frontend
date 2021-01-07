@@ -1,49 +1,62 @@
+@import 'node_modules/nav-frontend-core/less/_variabler';
+
 .transportmiddel {
     padding-top: 1rem;
 
-    .transportmiddel__tekst {
-        display: flex;
-        padding-top: 1rem;
+    .ekspanderbartPanel {
+        display: inline-block;
+        margin: 1rem 0;
 
-        .hjelpetekst {
-            margin-left: 0.35rem;
+        &:hover {
+            box-shadow: none;
+        }
+
+        .ekspanderbartPanel__flex-wrapper {
+            display: inline-flex;
+
+            .ekspanderbartPanel__indikator {
+                margin-left: 0.7rem;
+            }
+        }
+
+        .ekspanderbartPanel__hode {
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .ekspanderbartPanel__hode * {
+            color: @navBla;
+        }
+
+        .ekspanderbartPanel__innhold {
+            padding: 1rem 0;
         }
     }
 
-    .transportmiddel__sporsmal {
-        margin-bottom: 1rem;
+    .ekstrasporsmal, .egen_bil, .offentlig {
+        max-height: 0;
+        overflow: hidden;
+        transition: all 500ms ease;
+
+        &.aktiv {
+            max-height: 400px;
+        }
     }
 
     .ekstrasporsmal {
-        max-height: 0;
-        transition: max-height 0.3s ease-in-out;
-        overflow: hidden;
+        padding-left: 3px;
+        margin: 1rem 0;
 
-        &.aktiv {
-            max-height: 100px;
+        .ekstrasporsmal__tittel {
+            margin-bottom: 1rem;
         }
 
-        padding-top: 0;
+        .offentlig, .egen_bil {
+            margin-left: 1rem;
 
-        .transportmiddel__tekst {
-            padding-top: 0.5rem;
+            &.aktiv {
+                margin-bottom: 2rem;
+            }
         }
-
-        .transportmiddel__sporsmal {
-            margin-bottom: 0.5rem;
-        }
-
-        .input--s {
-            margin: 0 0 1rem 3px;
-        }
-    }
-
-    .transportmiddel__hjelpetekst {
-        margin-left: 1rem;
-        align-self: flex-start;
-    }
-
-    .skjemaelement__label + .input--s {
-        margin-top: -1rem;
     }
 }

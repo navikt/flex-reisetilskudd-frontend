@@ -2,53 +2,53 @@
 @import '../../basic';
 
 .avbrutt-side {
-  .sykmelding-panel {
-    .ekspanderbartPanel__tittel {
-      margin-left: 0.5rem;
+    .sykmelding-panel {
+        .ekspanderbartPanel__tittel {
+            margin-left: 0.5rem;
+        }
+
+        img.plaster {
+            display: inline;
+        }
+
+        img.plaster--hover {
+            display: none;
+        }
+
+        .sykmelding-panel__tittel {
+            display: inline;
+            margin-left: 1rem;
+        }
+
+        &:hover {
+            img.plaster {
+                display: none;
+            }
+
+            img.plaster--hover {
+                display: inline;
+            }
+        }
     }
 
-    img.plaster {
-      display: inline;
+    .alertstripe {
+        margin-bottom: 2rem;
     }
 
-    img.plaster--hover {
-      display: none;
+    .tekst {
+        margin-bottom: 1rem;
     }
 
-    .sykmelding-panel__tittel {
-      display: inline;
-      margin-left: 1rem;
+    .gjenapne {
+        margin-top: 1rem;
+        margin-bottom: 3rem;
     }
-
-    &:hover {
-      img.plaster {
-        display: none;
-      }
-
-      img.plaster--hover {
-        display: inline;
-      }
-    }
-  }
-
-  .alertstripe {
-    margin-bottom: 2rem;
-  }
-
-  .tekst {
-    margin-bottom: 1rem;
-  }
-
-  .gjenapne {
-    margin-top: 1rem;
-    margin-bottom: 3rem;
-  }
 }
 
 @media (min-width: @screen-sm) {
-  .avbrutt-side {
-    .limit {
-      width: @desktopLimitWidth;
+    .avbrutt-side {
+        .limit {
+            width: @desktopLimitWidth;
+        }
     }
-  }
 }

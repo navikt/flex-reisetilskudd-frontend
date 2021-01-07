@@ -31,7 +31,7 @@ const Hovedpunkter = () => {
         if (!valgtReisetilskudd) {
             return
         }
-        const res = await fetch(env.backendUrl + `/api/v1/reisetilskudd/${valgtReisetilskudd.reisetilskuddId}/send`, {
+        const res = await fetch(env.backendUrl + `/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' }
@@ -45,7 +45,7 @@ const Hovedpunkter = () => {
         if ([ 200, 201, 203, 206 ].includes(httpCode)) {
             valgtReisetilskudd.sendt = new Date()
             valgtReisetilskudd.status = ReisetilskuddStatus.SENDT
-            reisetilskuddene[reisetilskuddene.findIndex(reis => reis.reisetilskuddId === valgtReisetilskudd.reisetilskuddId)] = valgtReisetilskudd
+            reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
             setReisetilskuddene(reisetilskuddene)
             history.push('/bekreftelse')
         }

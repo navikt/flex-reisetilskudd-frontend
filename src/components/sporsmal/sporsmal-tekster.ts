@@ -4,18 +4,19 @@ const SporsmalTekster: any = {
         'transportmiddel.minst-et': 'Du må velge minst et av alternativene for fremkomstmiddel',
         'transportmiddel.feiloppsummering': 'For å gå videre må du rette opp følgende:',
 
-        'sporsmal.transport.tittel': 'Velg transportmiddel',
-        'sporsmal.transportmiddel.daglig': 'Transport',
-        'sporsmal.transportmiddel.hvilke': 'Hvilke transportmidler brukte du til og fra jobb før du ble sykmeldt?',
-        'sporsmal.transportmiddel.hjelpetekst': 'Kollektivtransport regnes som buss, trikk, t-bane, tog, ferje, taxi, bysykkel, elsparkesykkel.',
+        'sporsmal.utbetaling.tittel': 'Utbetaling',
         'sporsmal.utbetaling.tekst': 'Skal reisetilskuddet utbetales til arbeidsgiveren din?',
         'sporsmal.utbetaling.verdi.NAME': 'UTBETALINGARBEIDSGIVER',
         'sporsmal.utbetaling.verdi.MEG': 'MEG',
         'sporsmal.utbetaling.verdi.ARBEIDSGIVER': 'ARBEIDSGIVER',
 
-        'sporsmal.egen-bil.hjelpetekst.tittel': 'Antall kilometer fra bosted til arbeid',
+        'sporsmal.transport.tittel': 'Transport',
+        'sporsmal.transport.hvilke': 'Bruker du vanligvis egen bil eller offentlig transport til og fra arbeidsplassen?',
+        'sporsmal.transport.offentlig': 'Hva regnes som offentlig transport?',
+
+        'sporsmal.egen-bil.hjelpetekst.tittel': 'Hvor mange km er det fra hjemmet ditt til jobben?',
         'sporsmal.egen-bil.hjelpetekst': 'Dette er en hjelpetekst for antall kilometer fra bosted til arbeid.',
-        'sporsmal.kollektiv.hjelpetekst.tittel': 'Månedlige utgifter til offentlig transport',
+        'sporsmal.kollektiv.hjelpetekst.tittel': 'Hvor mye betaler du vanligvis i måneden for offentlig transport?',
         'sporsmal.kollektiv.hjelpetekst': 'Dette er en hjelpetekst for månedlige utgifter.',
     }, 'en': {}
 }
