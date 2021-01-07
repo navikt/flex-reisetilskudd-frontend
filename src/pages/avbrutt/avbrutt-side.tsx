@@ -67,7 +67,7 @@ const AvbruttSide = () => {
             }
             else if (status === 200) {
                 const nyReisetilskudd = { ...valgtReisetilskudd, status: ReisetilskuddStatus.SENDBAR, avbrutt: undefined } as Reisetilskudd
-                setReisetilskuddene(reisetilskuddene.map(r => r.reisetilskuddId === valgtReisetilskudd!.reisetilskuddId ? nyReisetilskudd : r) as any)
+                setReisetilskuddene(reisetilskuddene.map(r => r.id === valgtReisetilskudd!.id ? nyReisetilskudd : r) as any)
                 setValgtReisetilskudd(nyReisetilskudd)
                 history.push(getUrlTilSoknad(nyReisetilskudd))
             } else {
