@@ -33,7 +33,7 @@ const AvbrytKnapp = () => {
         if(avbryter) return
         setAvbryter(true)
         try {
-            const res = await fetch(env.backendUrl + `/api/v1/reisetilskudd/${valgtReisetilskudd!.reisetilskuddId}/avbryt`, {
+            const res = await fetch(env.backendUrl + `/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/avbryt`, {
                 method: 'POST',
                 credentials: 'include'
             })
@@ -43,7 +43,7 @@ const AvbrytKnapp = () => {
             }
             else if (status === 200) {
                 const nyReisetilskudd = { ...valgtReisetilskudd, status: ReisetilskuddStatus.AVBRUTT, avbrutt: new Date() } as Reisetilskudd
-                setReisetilskuddene(reisetilskuddene.map(r => r.reisetilskuddId === valgtReisetilskudd!.reisetilskuddId ? nyReisetilskudd : r) as any)
+                setReisetilskuddene(reisetilskuddene.map(r => r.id === valgtReisetilskudd!.id ? nyReisetilskudd : r) as any)
                 setValgtReisetilskudd(nyReisetilskudd)
                 history.push(getUrlTilSoknad(nyReisetilskudd))
             } else {
@@ -56,8 +56,8 @@ const AvbrytKnapp = () => {
     }
 
     return (
-        <div className="avbrytDialog blokk-l">
-            <button className="lenke avbrytlenke avbrytDialog__trigger" onClick={handleVilAvbryte}>
+        <>
+            <button className="lenke avbrytlenke" onClick={handleVilAvbryte}>
                 <Normaltekst tag="span">{tekst('avbryt.trigger')}</Normaltekst>
             </button>
             <Vis hvis={vilAvbryte}>
@@ -73,7 +73,7 @@ const AvbrytKnapp = () => {
                     </button>
                 </div>
             </Vis>
-        </div>
+        </>
     )
 }
 

@@ -1,23 +1,21 @@
 import './transport-middel.less'
 
-import Hjelpetekst from 'nav-frontend-hjelpetekst'
 import { Knapp } from 'nav-frontend-knapper'
-import { CheckboksPanel, Input, SkjemaGruppe } from 'nav-frontend-skjema'
-import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi'
+import { Checkbox, CheckboxGruppe, Input, RadioPanelGruppe } from 'nav-frontend-skjema'
+import { Normaltekst, Systemtittel, Element } from 'nav-frontend-typografi'
 import React, { useEffect, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useHistory, useParams } from 'react-router-dom'
-import useForceUpdate from 'use-force-update'
 
 import { RouteParams } from '../../../app'
 import { put } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
-import { Reisetilskudd, Transport } from '../../../types/types'
 import env from '../../../utils/environment'
 import { logger } from '../../../utils/logger'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import FeilOppsummering from '../feiloppsummering/feil-oppsummering'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 
 interface TransportmiddelInterface {
     id: string
@@ -27,65 +25,77 @@ interface TransportmiddelInterface {
     kollektivtransport?: number
 }
 
-const initTransport = (reiseTilskudd: Reisetilskudd) => {
-    const valgte = []
-    if (reiseTilskudd.går) valgte.push(Transport.GÅR)
-    if (reiseTilskudd.sykler) valgte.push(Transport.SYKLER)
-    if (reiseTilskudd.egenBil > 0) valgte.push(Transport.EGEN_BIL)
-    if (reiseTilskudd.kollektivtransport > 0) valgte.push(Transport.KOLLEKTIVTRANSPORT)
-    return new Set(valgte)
-}
-
 const TransportMiddel = () => {
     const { valgtReisetilskudd, setValgtReisetilskudd } = useAppStore()
-    const [ valgtTransport, setValgtTransport ] = useState<Set<string>>(new Set())
-    const kmRef = useRef<HTMLDivElement>(null)
-    const utgRef = useRef<HTMLDivElement>(null)
+    const [ jaNei, setJaNei ] = useState<string>('NEI')
+    const [ offentlig, setOffentlig ] = useState<boolean>(valgtReisetilskudd!.offentlig > 0)
+    const [ egenBil, setEgenBil ] = useState<boolean>(valgtReisetilskudd!.egenBil > 0)
+
+    const ekstraRef = useRef<HTMLDivElement>(null)
+    const bilRef = useRef<HTMLDivElement>(null)
+    const offRef = useRef<HTMLDivElement>(null)
 
     const { id, steg } = useParams<RouteParams>()
     const stegNum = Number(steg)
     const history = useHistory()
     const methods = useForm({ reValidateMode: 'onSubmit' })
-    const forceUpdate = useForceUpdate()
 
     useEffect(() => {
-        const sett = initTransport(valgtReisetilskudd!)
-        setValgtTransport(sett)
+        if (valgtReisetilskudd!.offentlig > 0) {
+            setJaNei('JA')
+            ekstraRef.current!.classList.add('aktiv')
+            offRef.current!.classList.add('aktiv')
+        }
+
         if (valgtReisetilskudd!.egenBil > 0) {
-            kmRef.current!.classList.add('aktiv')
+            setJaNei('JA')
+            ekstraRef.current!.classList.add('aktiv')
+            bilRef.current!.classList.add('aktiv')
         }
-        if (valgtReisetilskudd!.kollektivtransport > 0) {
-            utgRef.current!.classList.add('aktiv')
-        }
+
         // eslint-disable-next-line
     }, [])
 
-    const handleChange = (e: any) => {
-        const check: HTMLInputElement = e.target
+    const handleJaNei = (e: any) => {
+        const radio: HTMLInputElement = e.target
+        setJaNei(radio.value)
 
-        if (check.value === Transport.GÅR) {
-            valgtReisetilskudd!.går = !valgtReisetilskudd!.går
-        } else if (check.value === Transport.SYKLER) {
-            valgtReisetilskudd!.sykler = !valgtReisetilskudd!.sykler
-        } else if (check.value === Transport.EGEN_BIL) {
-            check.checked
-                ? kmRef.current!.classList.add('aktiv')
-                : kmRef.current!.classList.remove('aktiv')
-        } else if (check.value === Transport.KOLLEKTIVTRANSPORT) {
-            check.checked
-                ? utgRef.current!.classList.add('aktiv')
-                : utgRef.current!.classList.remove('aktiv')
-        }
-        setValgtReisetilskudd(valgtReisetilskudd)
-
-        if (valgtTransport.has(check.value)) {
-            valgtTransport.delete(check.value)
+        if (radio.value === 'JA') {
+            ekstraRef.current!.classList.add('aktiv')
         } else {
-            valgtTransport.add(check.value)
+            ekstraRef.current!.classList.remove('aktiv')
+            offRef.current!.classList.remove('aktiv')
+            bilRef.current!.classList.remove('aktiv')
+            setOffentlig(false)
+            setEgenBil(false)
+            valgtReisetilskudd!.offentlig = 0
+            valgtReisetilskudd!.egenBil = 0
+            setValgtReisetilskudd(valgtReisetilskudd)
         }
-        setValgtTransport(valgtTransport)
+    }
 
-        forceUpdate()
+    const handleOffentlig = (e: any) => {
+        const check: HTMLInputElement = e.target
+        if (check.checked) {
+            offRef.current!.classList.add('aktiv')
+        } else {
+            offRef.current!.classList.remove('aktiv')
+            valgtReisetilskudd!.offentlig = 0
+            valgtReisetilskudd!.egenBil = 0
+            setValgtReisetilskudd(valgtReisetilskudd)
+        }
+    }
+
+    const handleEgenBil = (e: any) => {
+        const check: HTMLInputElement = e.target
+        if (check.checked) {
+            bilRef.current!.classList.add('aktiv')
+        } else {
+            bilRef.current!.classList.remove('aktiv')
+            valgtReisetilskudd!.offentlig = 0
+            valgtReisetilskudd!.egenBil = 0
+            setValgtReisetilskudd(valgtReisetilskudd)
+        }
     }
 
     const handleAmount = (e: any) => {
@@ -98,22 +108,23 @@ const TransportMiddel = () => {
                     )
                 }
             )
+        } else {
+            methods.clearErrors(input.name)
         }
+
         if (input.name === 'kilometer-bil') {
             valgtReisetilskudd!.egenBil = Number(input.value)
         } else if (input.name === 'utgifter-koll') {
-            valgtReisetilskudd!.kollektivtransport = Number(input.value)
+            valgtReisetilskudd!.offentlig = Number(input.value)
         }
         setValgtReisetilskudd(valgtReisetilskudd)
     }
 
     const onSubmit = () => {
         put<TransportmiddelInterface>(`${env.backendUrl}/api/v1/reisetilskudd/${id}`, {
-            reisetilskuddId: id,
-            går: valgtReisetilskudd!.går,
-            sykler: valgtReisetilskudd!.sykler,
+            id: id,
             egenBil: valgtReisetilskudd!.egenBil,
-            kollektivtransport: valgtReisetilskudd!.kollektivtransport,
+            offentlig: valgtReisetilskudd!.offentlig,
         }).then(() => {
             history.push('/soknaden/' + id + '/' + (stegNum + 1))
         }).catch((error) => {
@@ -124,85 +135,63 @@ const TransportMiddel = () => {
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)} className="transportmiddel">
+            <form onSubmit={methods.handleSubmit(onSubmit)} className="transportmiddel horisontal-radio">
 
-                <SkjemaGruppe className="inputPanelGruppe" legend={
-                    <>
-                        <Systemtittel>{tekst('sporsmal.transportmiddel.daglig')}</Systemtittel>
-                        <div className="transportmiddel__tekst">
-                            <Normaltekst id="transportmiddel-spørsmål" className="transportmiddel__sporsmal"
-                                aria-describedby="min-hjelpetekst-kollektivtransport"
-                            >
-                                {tekst('sporsmal.transportmiddel.hvilke')}
-                            </Normaltekst>
-                            <Hjelpetekst className="transportmiddel__hjelpetekst"
-                                id="min-hjelpetekst-kollektivtransport"
-                                aria-describedby="transportmiddel-spørsmål"
-                            >
-                                {tekst('sporsmal.transportmiddel.hjelpetekst')}
-                            </Hjelpetekst>
-                        </div>
-                        <Element>{tekst('sporsmal.transport.tittel')}</Element>
-                    </>
-                }>
+                <RadioPanelGruppe
+                    name="transport-sporsmal"
+                    legend={<Systemtittel>{tekst('sporsmal.transport.tittel')}</Systemtittel>}
+                    description={
+                        <>
+                            <Normaltekst>{tekst('sporsmal.transport.hvilke')}</Normaltekst>
+                            <Ekspanderbartpanel apen={false} border={false} tittel={
+                                <Normaltekst>{tekst('sporsmal.transport.offentlig')}</Normaltekst>
+                            }>
+                                <Normaltekst>Offentlig transport regnes som buss, tog, bysykkel og el-sparkesykkel.</Normaltekst>
+                            </Ekspanderbartpanel>
+                        </>
+                    }
+                    radios={[
+                        { id: 'transport-ja', label: 'Ja', value: 'JA' },
+                        { id: 'transport-nei', label: 'Nei', value: 'NEI' },
+                    ]}
+                    checked={jaNei}
+                    onChange={handleJaNei}
+                />
 
-                    <CheckboksPanel name="transportalternativer" onClick={handleChange}
-                        label={Transport.GÅR} value={Transport.GÅR} id="gaa"
-                        checked={valgtTransport.has(Transport.GÅR)}
-                    />
+                <div ref={ekstraRef} className="ekstrasporsmal">
+                    <Element className="ekstrasporsmal__tittel">Hva slags type transport bruker du?</Element>
+                    <CheckboxGruppe>
+                        <Checkbox id="OFFENTLIG" label="Offentlig transport" defaultChecked={offentlig}
+                            onChange={handleOffentlig}
+                        />
+                    </CheckboxGruppe>
+                    <div ref={offRef} className="offentlig">
+                        <Input id="utgifter-koll" name="utgifter-koll" bredde="S" inputMode="numeric"
+                            label={
+                                <Normaltekst id="kollektiv-spørsmål">
+                                    {tekst('sporsmal.kollektiv.hjelpetekst.tittel')}
+                                </Normaltekst>
+                            } onBlur={handleAmount}
+                            defaultValue={valgtReisetilskudd!.offentlig}
+                        />
+                    </div>
 
-                    <CheckboksPanel name="transportalternativer" onClick={handleChange}
-                        label={Transport.SYKLER} value={Transport.SYKLER} id="skl"
-                        checked={valgtTransport.has(Transport.SYKLER)}
-                    />
-
-                    <CheckboksPanel name="transportalternativer" onClick={handleChange}
-                        label={Transport.EGEN_BIL} value={Transport.EGEN_BIL} id="bil"
-                        checked={valgtTransport.has(Transport.EGEN_BIL)}
-                    />
-
-                    <div ref={kmRef} className="ekstrasporsmal">
+                    <CheckboxGruppe>
+                        <Checkbox id="EGEN_BIL" label="Egen bil" defaultChecked={egenBil}
+                            onChange={handleEgenBil}
+                        />
+                    </CheckboxGruppe>
+                    <div ref={bilRef} className="egen_bil">
                         <Input id="kilometer-bil" name="kilometer-bil" bredde="S" inputMode="numeric"
                             label={
-                                <div className="transportmiddel__tekst">
-                                    <Normaltekst id="egen-bil-spørsmål" className="transportmiddel__sporsmal"
-                                        aria-describedby="min-hjelpetekst-kollektivtransport"
-                                    >
-                                        {tekst('sporsmal.egen-bil.hjelpetekst.tittel')}
-                                    </Normaltekst>
-                                    <Hjelpetekst className="transportmiddel__hjelpetekst-egen-bil">
-                                        Roper på Rolf!
-                                        {tekst('sporsmal.egen-bil.hjelpetekst')}
-                                    </Hjelpetekst>
-                                </div>
-                            } onChange={handleAmount}
+                                <Normaltekst id="egen-bil-spørsmål">
+                                    {tekst('sporsmal.egen-bil.hjelpetekst.tittel')}
+                                </Normaltekst>
+                            } onBlur={handleAmount}
                             defaultValue={valgtReisetilskudd!.egenBil}
                         />
                     </div>
-
-                    <CheckboksPanel name="transportalternativer" onClick={handleChange}
-                        label={Transport.KOLLEKTIVTRANSPORT} value={Transport.KOLLEKTIVTRANSPORT} id="kol"
-                        checked={valgtTransport.has(Transport.KOLLEKTIVTRANSPORT)}
-                    />
-
-                    <div ref={utgRef} className="ekstrasporsmal">
-                        <Input id="utgifter-koll" name="utgifter-koll" bredde="S" inputMode="numeric"
-                            label={
-                                <div className="transportmiddel__tekst">
-                                    <Normaltekst id="kollektiv-spørsmål" className="transportmiddel__sporsmal"
-                                        aria-describedby="min-hjelpetekst-kollektivtransport"
-                                    >
-                                        {tekst('sporsmal.kollektiv.hjelpetekst.tittel')}
-                                    </Normaltekst>
-                                    <Hjelpetekst className="transportmiddel__hjelpetekst-kollektiv">
-                                        {tekst('sporsmal.kollektiv.hjelpetekst')}
-                                    </Hjelpetekst>
-                                </div>
-                            } onChange={handleAmount}
-                            defaultValue={valgtReisetilskudd!.kollektivtransport}
-                        />
-                    </div>
-                </SkjemaGruppe>
+                </div>
 
                 <FeilOppsummering errors={methods.errors} />
                 <div className="knapperad">

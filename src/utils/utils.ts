@@ -41,7 +41,7 @@ export const getUrlTilSoknad = (reisetilskudd: Reisetilskudd) => {
         return '/bekreftelse'
     }
     if (reisetilskudd.status === ReisetilskuddStatus.AVBRUTT) {
-        return `/soknaden/${reisetilskudd.reisetilskuddId}/avbrutt`
+        return `/soknaden/${reisetilskudd.id}/avbrutt`
     }
-    return `/soknadstart/${reisetilskudd.reisetilskuddId}/1`
+    return `/soknadstart/${reisetilskudd.id}/1`
 }

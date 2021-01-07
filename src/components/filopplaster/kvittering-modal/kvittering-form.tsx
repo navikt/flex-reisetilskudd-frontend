@@ -39,9 +39,9 @@ const KvitteringForm = () => {
     })
 
     const options = [
-        { id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.TAXI}`, value: 'TAXI', name: Transportmiddel.TAXI },
-        { id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.EGEN_BIL}`, value: 'EGEN_BIL', name: Transportmiddel.EGEN_BIL },
-        { id: `${Transportmiddel.SPØRSMÅLS_KEY}-${Transportmiddel.KOLLEKTIVT}`, value: 'KOLLEKTIVT', name: Transportmiddel.KOLLEKTIVT }
+        { id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.TAXI}`, value: 'TAXI', name: Transportmiddel.TAXI },
+        { id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.EGEN_BIL}`, value: 'EGEN_BIL', name: Transportmiddel.EGEN_BIL },
+        { id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.KOLLEKTIVT}`, value: 'KOLLEKTIVT', name: Transportmiddel.KOLLEKTIVT }
     ]
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const KvitteringForm = () => {
         setLaster(true)
 
         const kvitt = new Kvittering({
-            reisetilskuddId: kvittering?.reisetilskuddId || valgtReisetilskudd!.reisetilskuddId,
+            reisetilskuddId: kvittering?.reisetilskuddId || valgtReisetilskudd!.id,
             kvitteringId: uuidv4().toString(),  // TODO: Post til bucket-uploader som sender tilbake en id (kvitteringId)
             navn: valgtFil?.name,
             storrelse: valgtFil?.size,
@@ -70,7 +70,7 @@ const KvitteringForm = () => {
             transportmiddel: methods.getValues('transportmiddel')
         })
 
-        post<Kvittering>(`${env.backendUrl}/api/v1/reisetilskudd/${valgtReisetilskudd!.reisetilskuddId}/kvittering`, kvitt)
+        post<Kvittering>(`${env.backendUrl}/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/kvittering`, kvitt)
             .then(() => {
                 setLaster(false)
                 setKvittering(kvitt)

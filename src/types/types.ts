@@ -13,22 +13,16 @@ export interface Brodsmule {
     erKlikkbar?: boolean;
 }
 
-export interface OpplastetKvittering {
-    reisetilskuddId: string;
-}
-
 export enum Transport {
-    GÅR = 'GÅR', // eslint-disable-line
-    SYKLER = 'SYKLER', // eslint-disable-line
-    KOLLEKTIVTRANSPORT = 'KOLLEKTIVTRANSPORT', // eslint-disable-line
-    EGEN_BIL = 'EGEN BIL', // eslint-disable-line
+    OFFENTLIG = 'OFFENTLIG',
+    EGEN_BIL = 'EGEN BIL',
 }
 
 export enum Transportmiddel {
-    SPØRSMÅLS_KEY = 'kvittering-transportmiddel-spørsmål', // eslint-disable-line
-    TAXI = 'Taxi', // eslint-disable-line
-    KOLLEKTIVT = 'Kollektivtransport', // eslint-disable-line
-    EGEN_BIL = 'Egen bil' // eslint-disable-line
+    SPORSMAL_KEY = 'kvittering-transportmiddel-spørsmål',
+    TAXI = 'Taxi',
+    KOLLEKTIVT = 'Kollektivtransport',
+    EGEN_BIL = 'Egen bil'
 }
 
 export enum ReisetilskuddStatus {
@@ -39,7 +33,7 @@ export enum ReisetilskuddStatus {
 }
 
 export class Reisetilskudd {
-    reisetilskuddId: string;
+    id: string;
     sykmeldingId: string;
     fnr: string;
     status: keyof typeof ReisetilskuddStatus;
@@ -53,9 +47,7 @@ export class Reisetilskudd {
     orgNavn?: string;
     utbetalingTilArbeidsgiver?: boolean;
 
-    går: boolean;
-    sykler: boolean;
-    kollektivtransport: number;
+    offentlig: number;
     egenBil: number;
 
     kvitteringer: Kvittering[];
@@ -63,7 +55,7 @@ export class Reisetilskudd {
     constructor(
         rsReisetilskudd: RSReisetilskudd
     ) {
-        this.reisetilskuddId = rsReisetilskudd.reisetilskuddId
+        this.id = rsReisetilskudd.reisetilskuddId
         this.sykmeldingId = rsReisetilskudd.sykmeldingId
         this.fnr = rsReisetilskudd.fnr
         this.status = rsReisetilskudd.status as keyof typeof ReisetilskuddStatus
@@ -77,9 +69,7 @@ export class Reisetilskudd {
         this.orgNavn = rsReisetilskudd.orgNavn
         this.utbetalingTilArbeidsgiver = rsReisetilskudd.utbetalingTilArbeidsgiver
 
-        this.går = rsReisetilskudd.går
-        this.sykler = rsReisetilskudd.sykler
-        this.kollektivtransport = rsReisetilskudd.kollektivtransport
+        this.offentlig = rsReisetilskudd.kollektivtransport
         this.egenBil = rsReisetilskudd.egenBil
 
         this.kvitteringer = rsReisetilskudd.kvitteringer.map((rsKvittering: any) => {
@@ -112,59 +102,28 @@ export class Kvittering {
     }
 }
 
-export type Transportmidler = Transportmiddel.EGEN_BIL | Transportmiddel.KOLLEKTIVT | Transportmiddel.TAXI | undefined;
-
-export type AktivtStegProps = {
-    aktivtSteg: number,
-    skalGåTilNesteSideNå?: boolean,
-    onClick?: () => void,
-}
-
-export interface Svaralternativ {
-    id: string,
-    label: string,
-    value: string,
-}
-
-export interface RadioSporsmalProps {
-    id: string,
-    tittel: string,
-    name: string,
-    spørsmålstekst: string,
-    hjelpetekst?: string,
-    svaralternativer: Svaralternativ[],
-    feil?: string;
-}
-
-export interface CheckboxProps {
-    id: string;
-    tittel: string;
-    svaralternativer: Svaralternativ[];
-    validerSkjema?: (hvilkenCheckbox?: string | null, nyVerdi?: string | null) => void; // eslint-disable-line
-}
-
 export interface InputProps {
     id: string;
     tittel: string;
     inputMode: 'numeric';
     bredde: 'fullbredde' | 'XXL' | 'XL' | 'L' | 'M' | 'S' | 'XS' | 'XXS';
     value?: number | string | undefined;
-    onChange?: (s: string) => void; // eslint-disable-line
+    onChange?: (s: string) => void;
     feil?: string;
 }
 
 export enum SykmeldingOpplysningEnum {
-    ID = 'id', // eslint-disable-line
-    FRA_DATO = 'fraDato', // eslint-disable-line
-    TIL_DATO = 'tilDato', // eslint-disable-line
-    DIAGNOSE = 'diagnose', // eslint-disable-line
-    BI_DIAGNOSER = 'bidiagnoser', // eslint-disable-line
-    DIAGNOSEKODE = 'diagnosekode', // eslint-disable-line
-    REISETILSKUDD = 'reisetilskudd', // eslint-disable-line
-    BESKRIV_HENSYN = 'beskrivHensyn', // eslint-disable-line
-    ARBEIDSGIVER = 'arbeidsgiver', // eslint-disable-line
-    SYKMELDER = 'sykmelder', // eslint-disable-line
-    AKTIVITET_IKKE_MULIG_434 = 'aktivitetIkkeMulig434', // eslint-disable-line
+    ID = 'id',
+    FRA_DATO = 'fraDato',
+    TIL_DATO = 'tilDato',
+    DIAGNOSE = 'diagnose',
+    BI_DIAGNOSER = 'bidiagnoser',
+    DIAGNOSEKODE = 'diagnosekode',
+    REISETILSKUDD = 'reisetilskudd',
+    BESKRIV_HENSYN = 'beskrivHensyn',
+    ARBEIDSGIVER = 'arbeidsgiver',
+    SYKMELDER = 'sykmelder',
+    AKTIVITET_IKKE_MULIG_434 = 'aktivitetIkkeMulig434',
 }
 
 export interface SykmeldingOpplysning {

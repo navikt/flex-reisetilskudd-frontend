@@ -15,23 +15,11 @@ const DagensTransportmiddel = () => {
             <Element className="element-tittel">
                 {tekst('oppsummering.dagens_transportmiddel.tittel')}
             </Element>
-            <Vis hvis={valgtReisetilskudd!.går}>
-                <Normaltekst className="checkedblock">
-                    <CheckedIkon />
-                    {tekst('oppsummering.går')}
-                </Normaltekst>
-            </Vis>
-            <Vis hvis={valgtReisetilskudd!.sykler}>
-                <Normaltekst className="checkedblock">
-                    <CheckedIkon />
-                    {tekst('oppsummering.sykler')}
-                </Normaltekst>
-            </Vis>
-            <Vis hvis={valgtReisetilskudd!.kollektivtransport && valgtReisetilskudd!.kollektivtransport > 0}>
+            <Vis hvis={valgtReisetilskudd!.offentlig && valgtReisetilskudd!.offentlig > 0}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {getLedetekst(tekst('oppsummering.kollektivt'), {
-                        '%UTGIFTER%': formatterTall(valgtReisetilskudd!.kollektivtransport)
+                        '%UTGIFTER%': formatterTall(valgtReisetilskudd!.offentlig)
                     })}
                 </Normaltekst>
             </Vis>

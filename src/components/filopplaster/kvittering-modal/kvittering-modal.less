@@ -7,10 +7,17 @@
     .modal-content {
         padding: 0 0.4rem;
 
-        .skjemakolonner {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+        .nav-datovelger {
+            display: block;
+        }
+
+        .skjemaelement, .nav-datovelger__inputContainer {
+            width: 100%;
+        }
+
+        .skjemaelement .skjemaelement__input {
+            width: 100%;
+            max-width: none;
         }
 
         .ddfil__wrap {
@@ -18,6 +25,7 @@
         }
 
         .knapperad {
+            flex-direction: column;
             padding-bottom: 0.5rem;
 
             .lagre-kvittering {
@@ -31,7 +39,7 @@
     }
 
     .skjemaelement {
-        margin: 0.5rem 0;
+        margin: 1rem 0;
     }
 
     .skjemaelement__feilmelding {
@@ -51,18 +59,10 @@
         margin-top: 1rem;
     }
 
-    .belop-label {
-        margin-bottom: 0.5rem;
-    }
-
     .restriksjoner {
         display: flex;
         flex-direction: column;
         margin-top: 2rem;
-    }
-
-    .skjemaelement .skjemaelement__input {
-        width: 13rem;
     }
 }
 
@@ -73,6 +73,17 @@
 
             span + span {
                 margin-left: 0.35rem;
+            }
+        }
+    }
+}
+
+
+@media (min-width: 470px) {
+    .kvittering_modal {
+        .modal-content {
+            .knapperad {
+                flex-direction: row;
             }
         }
     }

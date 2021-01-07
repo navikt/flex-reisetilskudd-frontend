@@ -51,10 +51,7 @@ describe('Tester reisetilskuddsøknaden', () => {
 
             cy.get('label[for=gaa]').click({ force: true })
             cy.get('label[for=skl]').click({ force: true })
-
             cy.get('label[for=bil]').click({ force: true })
-            cy.get('.transportmiddel__hjelpetekst-egen-bil').should('be.visible').click({ force: true })
-
             cy.get('#kilometer-bil').should('be.visible')
                 .type('1337').should('have.value', '01337')
 
