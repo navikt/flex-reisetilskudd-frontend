@@ -88,7 +88,7 @@
         "eslint-plugin-react-hooks": "^4.2.0",
         "husky": "^4.3.5",
         "source-map": "^0.7.3",
-        "start-server-and-test": "^1.11.6",
+        "start-server-and-test": "^1.11.7",
         "yet-another-fetch-mock": "^4.1.0"
     },
     "scripts": {

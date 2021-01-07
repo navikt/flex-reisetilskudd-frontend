@@ -53,7 +53,7 @@ const TilskuddStart = () => {
     if (!valgtReisetilskudd) return null
 
     const alertstripeType = () => {
-        if (valgtReisetilskudd.status === ReisetilskuddStatus.ÅPEN) {
+        if (valgtReisetilskudd.status === ReisetilskuddStatus.SENDBAR) {
             return 'suksess'
         } else {
             return 'info'
@@ -89,7 +89,7 @@ const TilskuddStart = () => {
                 </Ekspanderbartpanel>
 
                 <AlertStripe className="kan-sendes" type={alertstripeType()}>
-                    <Vis hvis={valgtReisetilskudd.status === ReisetilskuddStatus.FREMTIDIG}>
+                    <Vis hvis={valgtReisetilskudd.status === ReisetilskuddStatus.ÅPEN}>
                         <Undertittel>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
                             '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMM YYYY')
                         })}</Undertittel>

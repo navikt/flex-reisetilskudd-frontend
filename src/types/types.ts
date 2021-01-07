@@ -28,6 +28,7 @@ export enum Transportmiddel {
 export enum ReisetilskuddStatus {
     FREMTIDIG = 'FREMTIDIG',
     ÅPEN = 'ÅPEN',
+    SENDBAR = 'SENDBAR',
     SENDT = 'SENDT',
     AVBRUTT = 'AVBRUTT'
 }
