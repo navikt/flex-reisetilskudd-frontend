@@ -89,7 +89,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
                             <th>
                                 <div className="sortering__heading">
                                     <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp">
-                                        Utlegg
+                                    Utlegg
                                     </button>
                                     <span className="sortering__chevron">
                                         <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp">
@@ -104,13 +104,15 @@ const FilListe = ({ fjernKnapp }: Props) => {
                             <th>
                                 <div className="sortering__heading">
                                     <button onClick={() => setSortering(Sortering.TransportMin)} className="lenkeknapp">
-                                        Transport
+                                    Transport
                                     </button>
                                     <span className="sortering__chevron">
-                                        <button onClick={() => setSortering(Sortering.TransportMax)} className="lenkeknapp">
+                                        <button onClick={() => setSortering(Sortering.TransportMax)}
+                                            className="lenkeknapp">
                                             <NavFrontendChevron type="opp" />
                                         </button>
-                                        <button onClick={() => setSortering(Sortering.TransportMin)} className="lenkeknapp">
+                                        <button onClick={() => setSortering(Sortering.TransportMin)}
+                                            className="lenkeknapp">
                                             <NavFrontendChevron type="ned" />
                                         </button>
                                     </span>
@@ -119,7 +121,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
                             <th>
                                 <div className="sortering__heading belop">
                                     <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp">
-                                        Beløp
+                                    Beløp
                                     </button>
                                     <span className="sortering__chevron">
                                         <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp">
@@ -155,6 +157,10 @@ const FilListe = ({ fjernKnapp }: Props) => {
                                 >
                                     <img src={slettFilIkon} className="slett-img" alt="" />
                                 </button>
+                                <Vis hvis={env.isQ1 || env.isDev}>
+                                    <a style={{ marginLeft: '10px', color: 'green' }} href={`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering/${kvittering.kvitteringId}`}
+                                        target="blank">se bilde</a>
+                                </Vis>
                             </td>
                         </tr>
                     ))}
