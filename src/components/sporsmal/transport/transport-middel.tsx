@@ -121,7 +121,7 @@ const TransportMiddel = () => {
     }
 
     const onSubmit = () => {
-        put<TransportmiddelInterface>(`${env.backendUrl}/api/v1/reisetilskudd/${id}`, {
+        put<TransportmiddelInterface>(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${id}`, {
             id: id,
             egenBil: valgtReisetilskudd!.egenBil,
             offentlig: valgtReisetilskudd!.offentlig,

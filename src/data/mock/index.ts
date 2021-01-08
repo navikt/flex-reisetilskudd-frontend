@@ -15,24 +15,24 @@ const mock = FetchMock.configure({
 mock.get(`${env.sykmeldingerBackendProxyRoot}/api/v1/syforest/sykmeldinger`,
     (req, res, ctx) => res(ctx.json(sykmeldinger)))
 
-mock.get(`${env.backendUrl}/api/v1/reisetilskudd`,
+mock.get(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd`,
     (req, res, ctx) => res(ctx.json(reisetilskudd)))
 
-mock.put(`${env.backendUrl}/api/v1/reisetilskudd/:id`, () => Promise.resolve({ status: 200 }))
+mock.put(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id`, () => Promise.resolve({ status: 200 }))
 
-mock.post(`${env.mockBucketUrl}/kvittering`,
+mock.post(`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering`,
     (req, res, ctx) =>
         res(ctx.json({
             id: generateId(),
             melding: 'opprettet'
         })))
 
-mock.post(`${env.backendUrl}/api/v1/reisetilskudd/:id/kvittering`, () => Promise.resolve({ status: 200 }))
+mock.post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id/kvittering`, () => Promise.resolve({ status: 200 }))
 
-mock.delete(`${env.backendUrl}/api/v1/reisetilskudd/:id/kvittering/:kvitteringId`, () => Promise.resolve({ status: 200 }))
+mock.delete(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id/kvittering/:kvitteringId`, () => Promise.resolve({ status: 200 }))
 
-mock.post(`${env.backendUrl}/api/v1/reisetilskudd/:id/send`, () => Promise.resolve({ status: 200 }))
+mock.post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id/send`, () => Promise.resolve({ status: 200 }))
 
-mock.post(`${env.backendUrl}/api/v1/reisetilskudd/:id/avbryt`, () => Promise.resolve({ status: 200 }))
+mock.post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id/avbryt`, () => Promise.resolve({ status: 200 }))
 
-mock.post(`${env.backendUrl}/api/v1/reisetilskudd/:id/gjenapne`, () => Promise.resolve({ status: 200 }))
+mock.post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id/gjenapne`, () => Promise.resolve({ status: 200 }))

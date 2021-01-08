@@ -33,7 +33,7 @@ const AvbrytKnapp = () => {
         if(avbryter) return
         setAvbryter(true)
         try {
-            const res = await fetch(env.backendUrl + `/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/avbryt`, {
+            const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/avbryt`, {
                 method: 'POST',
                 credentials: 'include'
             })
