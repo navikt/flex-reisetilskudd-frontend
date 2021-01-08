@@ -13,6 +13,10 @@ class Environment {
         return this.env.ENVIRONMENT === 'q1'
     }
 
+    get isDev() {
+        return this.env.ENVIRONMENT === 'dev'
+    }
+
     get isProd() {
         return this.env.ENVIRONMENT === 'prod'
     }
