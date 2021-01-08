@@ -18,7 +18,7 @@ export function DataFetcher(props: { children: any }) {
 
     useEffect(() => {
         if (isNotStarted(reisetilskuddene)) {
-            reisetilskuddene.fetch(env.backendUrl + '/api/v1/reisetilskudd', {
+            reisetilskuddene.fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd`, {
                 credentials: 'include',
             }, (fetchState: FetchState<RSReisetilskudd[]>) => {
                 if (hasData(fetchState)) {
@@ -29,7 +29,7 @@ export function DataFetcher(props: { children: any }) {
             })
         }
         if (isNotStarted(sykmeldinger)) {
-            sykmeldinger.fetch(env.sykmeldingerBackendProxyRoot + '/api/v1/syforest/sykmeldinger', {
+            sykmeldinger.fetch(`${env.sykmeldingerBackendProxyRoot}/api/v1/syforest/sykmeldinger`, {
                 credentials: 'include',
             }, (fetchState: FetchState<Sykmelding[]>) => {
                 if (hasData(fetchState)) {

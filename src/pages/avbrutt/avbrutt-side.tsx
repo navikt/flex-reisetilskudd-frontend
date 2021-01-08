@@ -57,7 +57,7 @@ const AvbruttSide = () => {
         if(gjenapner) return
         setGjenapner(true)
         try {
-            const res = await fetch(env.backendUrl + `/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/gjenapne`, {
+            const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/gjenapne`, {
                 method: 'POST',
                 credentials: 'include'
             })

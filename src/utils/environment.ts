@@ -4,9 +4,6 @@ class Environment {
 
     private env = (window as any)._env_;
 
-    get backendUrl() {
-        return this.env.FLEX_REISETILSKUDD_BACKEND_PROXY_ROOT
-    }
 
     get isMockBackend() {
         return this.env.MOCK_BACKEND === 'true'
@@ -40,12 +37,8 @@ class Environment {
         return this.env.FORMATERTE_FILTYPER
     }
 
-    get bucketUrl() {
-        return this.env.BUCKET_URL
-    }
-
-    get mockBucketUrl() {
-        return this.env.MOCK_BUCKET_URL
+    get flexGatewayRoot() {
+        return this.env.FLEX_GATEWAY_ROOT
     }
 
     get baseName() {

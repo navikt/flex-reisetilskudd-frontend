@@ -56,7 +56,7 @@ const UtbetalingTil = () => {
                 { type: 'skjema-feil', message: tekst('utbetaling.feil-alternativ') }
             )
         } else {
-            put<UtbetalingInterface>(`${env.backendUrl}/api/v1/reisetilskudd/${id}`, {
+            put<UtbetalingInterface>(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${id}`, {
                 reisetilskuddId: id,
                 utbetalingTilArbeidsgiver: utbetalTil === tekst('sporsmal.utbetaling.verdi.ARBEIDSGIVER'),
             }).then(() => {

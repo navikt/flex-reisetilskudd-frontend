@@ -59,9 +59,23 @@ const KvitteringForm = () => {
     const onSubmit = async() => {
         setLaster(true)
 
+
+        const requestData = new FormData()
+        const blob = await valgtFil as Blob
+        requestData.append('file', blob)
+
+        const opplastingResponse = await fetch(`${env.flexGatewayRoot}/flex-bucket-uploader/opplasting`, {
+            method: 'POST',
+            body: requestData,
+            credentials: 'include'
+        })
+
+        const opplastingResponseJson = await opplastingResponse.json()
+
+
         const kvitt = new Kvittering({
             reisetilskuddId: kvittering?.reisetilskuddId || valgtReisetilskudd!.id,
-            kvitteringId: uuidv4().toString(),  // TODO: Post til bucket-uploader som sender tilbake en id (kvitteringId)
+            kvitteringId: opplastingResponseJson.id,
             navn: valgtFil?.name,
             storrelse: valgtFil?.size,
             belop: methods.getValues('belop_input'),
@@ -70,7 +84,7 @@ const KvitteringForm = () => {
             transportmiddel: methods.getValues('transportmiddel')
         })
 
-        post<Kvittering>(`${env.backendUrl}/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/kvittering`, kvitt)
+        post<Kvittering>(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/kvittering`, kvitt)
             .then(() => {
                 setLaster(false)
                 setKvittering(kvitt)

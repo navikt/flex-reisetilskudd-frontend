@@ -31,7 +31,7 @@ const Hovedpunkter = () => {
         if (!valgtReisetilskudd) {
             return
         }
-        const res = await fetch(env.backendUrl + `/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`, {
+        const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' }

@@ -26,8 +26,8 @@ spec:
   readiness:
     path: internal/isReady
   env:
-    - name: FLEX_REISETILSKUDD_BACKEND_PROXY_ROOT
-      value: "https://flex-reisetilskudd-backend-proxy.nav.no"
+    - name: FLEX_GATEWAY_ROOT
+      value: "https://flex-gateway.nav.no"
     - name: LOGINSERVICE_URL
       value: "https://loginservice.nav.no/login"
     - name: LOGINSERVICE_REDIRECT_URL
