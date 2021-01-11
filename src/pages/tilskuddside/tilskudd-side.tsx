@@ -1,7 +1,5 @@
 import './tilskudd-side.less'
 
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
-import { Undertittel } from 'nav-frontend-typografi'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -21,8 +19,6 @@ import { Brodsmule, Sykmelding } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
-import plasterHover from './plaster-hover.svg'
-import plaster from './plaster.svg'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -69,15 +65,7 @@ const TilskuddSide = () => {
                     <SoknadInfoUtvid />
                 </Vis>
 
-                <Ekspanderbartpanel className="sykmelding-panel" tittel={
-                    <>
-                        <img src={plaster} className="plaster" alt="" />
-                        <img src={plasterHover} className="plaster--hover" alt="" />
-                        <Undertittel className="sykmelding-panel__tittel">{tekst('tilskudd.side.sykmeldinginfo')}</Undertittel>
-                    </>
-                }>
-                    <SykmeldingInfo />
-                </Ekspanderbartpanel>
+                <SykmeldingInfo />
 
                 <Vis hvis={idNum === 1}>
                     <UtbetalingTil />

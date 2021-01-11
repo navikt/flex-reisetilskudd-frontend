@@ -2,34 +2,6 @@
 @import '../../basic';
 
 .reisetilskudd-side {
-    .sykmelding-panel {
-        .ekspanderbartPanel__tittel {
-            margin-left: 0.5rem;
-        }
-
-        img.plaster {
-            display: inline;
-        }
-
-        img.plaster--hover {
-            display: none;
-        }
-
-        .sykmelding-panel__tittel {
-            display: inline;
-            margin-left: 1rem;
-        }
-
-        &:hover {
-            img.plaster {
-                display: none;
-            }
-
-            img.plaster--hover {
-                display: inline;
-            }
-        }
-    }
 
     .nav-veileder__frame svg {
         height: 100%;
@@ -76,6 +48,8 @@
 }
 
 .horisontal-radio {
+    padding-top: 1rem;
+
     .utbetaling-tittel {
         padding-bottom: 1rem;
     }
@@ -90,6 +64,10 @@
             width: 100%;
         }
     }
+}
+
+.opplasting {
+    padding-top: 1rem;
 }
 
 @media (min-width: @screen-sm) {

@@ -10,8 +10,6 @@ import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import { Undertittel } from 'nav-frontend-typografi'
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
-import plaster from '../tilskuddside/plaster.svg'
-import plasterHover from '../tilskuddside/plaster-hover.svg'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import Veileder from './veileder'
 import Mobil from './mobil'
@@ -66,17 +64,7 @@ const TilskuddStart = () => {
 
                 <Mobil />
 
-                <Ekspanderbartpanel className="sykmelding-panel" tittel={
-                    <>
-                        <img src={plaster} className="plaster" alt="" />
-                        <img src={plasterHover} className="plaster--hover" alt="" />
-                        <Undertittel className="sykmelding-panel__tittel">
-                            {tekst('tilskudd.side.sykmeldinginfo')}
-                        </Undertittel>
-                    </>
-                }>
-                    <SykmeldingInfo />
-                </Ekspanderbartpanel>
+                <SykmeldingInfo />
 
                 <KanSendesAlertStripe />
 

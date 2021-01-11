@@ -1,54 +1,30 @@
 @import 'node_modules/nav-frontend-core/less/_variabler';
+@import '../../basic';
 
 .bekreftelses-side {
-    .sirkel {
-        display: flex;
-        margin: 1rem 0.5rem;
-
-        &:first-child {
-            margin-top: 0;
+    .limit {
+        .vellykket-sending {
+            margin-bottom: 0.3rem;
         }
 
-        .sirkel__tall {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            background-color: @navGronnLighten40;
-            border-radius: 50%;
-            width: 2.25rem;
-            height: 2.25rem;
+        .ekspanderbartPanel--border {
+            margin-bottom: 2rem;
         }
 
-        .sirkel__tekst {
-            max-width: calc(100% - 4rem);
-            margin-left: 1.2rem;
+        .brev-tittel {
+            margin-bottom: 0.5rem;
         }
-    }
 
-    .listetekst {
-        margin: 0.5rem 0 2rem 3.95rem;
-    }
-
-    .alertstripe--suksess {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    .alertstripe--info {
-        margin-top: -1px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
+        .sykmelding-panel {
+            margin-top: 2rem;
+        }
     }
 }
 
 @media (min-width: @screen-sm) {
     .bekreftelses-side {
-        .sirkel {
-            margin: 1rem 5rem;
-        }
-
-        .listetekst {
-            margin-right: 5rem;
+        .limit {
+            width: @desktopLimitWidth;
         }
     }
 }
