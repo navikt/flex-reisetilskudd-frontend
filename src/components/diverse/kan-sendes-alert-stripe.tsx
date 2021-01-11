@@ -18,7 +18,7 @@ const KanSendesAlertStripe = () => {
         if (valgtReisetilskudd?.status === ReisetilskuddStatus.SENDBAR) {
             return 'suksess'
         } else {
-            return 'info'
+            return 'advarsel'
         }
     }
 
