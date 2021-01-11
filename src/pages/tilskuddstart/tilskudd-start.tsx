@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { Brodsmule, ReisetilskuddStatus, Sykmelding } from '../../types/types'
-import { getLedetekst, tekst } from '../../utils/tekster'
+import { Brodsmule, Sykmelding } from '../../types/types'
+import { tekst } from '../../utils/tekster'
 import { SEPARATOR } from '../../utils/constants'
 import { useAppStore } from '../../data/stores/app-store'
 import { useParams, Link } from 'react-router-dom'
@@ -8,18 +8,16 @@ import { RouteParams } from '../../app'
 import { setBodyClass } from '../../utils/utils'
 import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi'
+import { Undertittel } from 'nav-frontend-typografi'
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 import plaster from '../tilskuddside/plaster.svg'
 import plasterHover from '../tilskuddside/plaster-hover.svg'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import Veileder from './veileder'
 import Mobil from './mobil'
-import AlertStripe  from 'nav-frontend-alertstriper'
 import HvemKanFaa from './hvem-kan-faa'
-import Vis from '../../components/diverse/vis'
-import dayjs from 'dayjs'
 import AvbrytKnapp from '../../components/avbryt/avbryt-knapp'
+import KanSendesAlertStripe from '../../components/diverse/kan-sendes-alert-stripe'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -52,14 +50,6 @@ const TilskuddStart = () => {
 
     if (!valgtReisetilskudd) return null
 
-    const alertstripeType = () => {
-        if (valgtReisetilskudd.status === ReisetilskuddStatus.SENDBAR) {
-            return 'suksess'
-        } else {
-            return 'info'
-        }
-    }
-
     return (
         <>
             <Banner tittel={tekst('banner.sidetittel')} />
@@ -88,14 +78,7 @@ const TilskuddStart = () => {
                     <SykmeldingInfo />
                 </Ekspanderbartpanel>
 
-                <AlertStripe className="kan-sendes" type={alertstripeType()}>
-                    <Vis hvis={valgtReisetilskudd.status === ReisetilskuddStatus.ÅPEN}>
-                        <Undertittel>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
-                            '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMM YYYY')
-                        })}</Undertittel>
-                    </Vis>
-                    <Normaltekst>{tekst('tilskudd.start.alertstripe.tekst.' + valgtReisetilskudd.status)}</Normaltekst>
-                </AlertStripe>
+                <KanSendesAlertStripe />
 
                 <div className="knapperad">
                     <Link to={`/soknaden/${id}/${steg}`} className="knapp knapp--hoved">
