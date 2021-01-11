@@ -16,6 +16,7 @@ import Mobil from './mobil'
 import HvemKanFaa from './hvem-kan-faa'
 import AvbrytKnapp from '../../components/avbryt/avbryt-knapp'
 import KanSendesAlertStripe from '../../components/diverse/kan-sendes-alert-stripe'
+import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -74,6 +75,8 @@ const TilskuddStart = () => {
                     </Link>
                     <AvbrytKnapp />
                 </div>
+
+                <TilbakeTilSykefravaer />
             </div>
         </>
     )

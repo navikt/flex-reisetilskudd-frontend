@@ -16,6 +16,7 @@ import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper'
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import dayjs from 'dayjs'
+import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -72,6 +73,8 @@ const BekreftSide = () => {
                 </Normaltekst>
 
                 <SykmeldingInfo />
+
+                <TilbakeTilSykefravaer />
             </div>
         </>
     )

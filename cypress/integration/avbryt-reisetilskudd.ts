@@ -42,7 +42,7 @@ describe('Tester avbruttReisetilskudd', () => {
             cy.contains('Jeg ønsker ikke å bruke denne søknaden')
                 .click()
             cy.contains('JA, JEG ER SIKKER')
-                .click()
+                .click({ force: true })
             cy.url().should('include', `/soknaden/${reisetilskudd.reisetilskuddId}/avbrutt`)
         })
     })

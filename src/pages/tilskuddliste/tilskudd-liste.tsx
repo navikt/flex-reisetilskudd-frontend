@@ -12,8 +12,7 @@ import { Brodsmule } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
-import Lenke from 'nav-frontend-lenker'
-import { VenstreChevron } from 'nav-frontend-chevron'
+import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [ {
     tittel: tekst('tilskudd.liste.tittel'),
@@ -40,10 +39,7 @@ const TilskuddListe = () => {
 
                 <TilskuddTeasere />
 
-                <Lenke href="#">
-                    <VenstreChevron />
-                    {tekst('tilskudd.liste.tilbake')}
-                </Lenke>
+                <TilbakeTilSykefravaer />
             </div>
         </>
     )
