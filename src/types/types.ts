@@ -80,27 +80,27 @@ export class Reisetilskudd {
 }
 
 export class Kvittering {
-    reisetilskuddId: string;
     kvitteringId?: string;
+    blobId?: string;
     navn?: string;
     storrelse?: number;
     belop?: number;
-    fom?: Date;
-    tom?: Date;
+    datoForReise?: Date;
     transportmiddel?: keyof typeof Transportmiddel;
 
     constructor(
-        rsKvittering: RSKvittering
+        rsKvittering?: RSKvittering
     ) {
-        this.reisetilskuddId = rsKvittering.reisetilskuddId
-        this.kvitteringId = rsKvittering.kvitteringId
-        this.navn = rsKvittering.navn
-        this.storrelse = Number(rsKvittering.storrelse)
-        this.belop = Number(rsKvittering.belop)
-        this.fom = dayjsToDate(rsKvittering.fom)
-        this.tom = dayjsToDate(rsKvittering.tom)
-        this.transportmiddel = rsKvittering.transportmiddel as keyof typeof Transportmiddel
+        this.kvitteringId = rsKvittering?.kvitteringId
+        this.blobId = rsKvittering?.blobId
+        this.navn = rsKvittering?.navn
+        this.storrelse = rsKvittering?.storrelse
+        this.belop = rsKvittering?.belop
+        this.datoForReise = dayjsToDate(rsKvittering?.datoForReise)
+        this.transportmiddel = rsKvittering?.transportmiddel as keyof typeof Transportmiddel
     }
+
+
 }
 
 export interface InputProps {
