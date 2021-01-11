@@ -24,8 +24,8 @@ const App = () => {
                     <Route exact={true} path="/" component={TilskuddListe} />
                     <Route path={'/soknadstart/:id/:steg'} component={TilskuddStart} />
                     <Route path={'/soknaden/:id/avbrutt'} component={AvbruttSide} />
+                    <Route path={'/soknaden/:id/bekreftelse'} component={BekreftSide} />
                     <Route path={'/soknaden/:id/:steg'} component={TilskuddSide} />
-                    <Route path={'/bekreftelse'} component={BekreftSide} />
                 </Switch>
             </DataFetcher>
         </StoreProvider>

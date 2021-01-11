@@ -13,7 +13,7 @@ import { useAppStore } from '../../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import env from '../../../utils/environment'
-import { formatterTall, redirectTilLoginHvis401 } from '../../../utils/utils'
+import { formatterTall, getUrlTilSoknad, redirectTilLoginHvis401 } from '../../../utils/utils'
 import { ReisetilskuddStatus } from '../../../types/types'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 import KanSendesAlertStripe from '../../diverse/kan-sendes-alert-stripe'
@@ -53,7 +53,7 @@ const Hovedpunkter = () => {
             valgtReisetilskudd.status = ReisetilskuddStatus.SENDT
             reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
             setReisetilskuddene(reisetilskuddene)
-            history.push('/bekreftelse')
+            history.push(getUrlTilSoknad(valgtReisetilskudd))
         }
 
     }
