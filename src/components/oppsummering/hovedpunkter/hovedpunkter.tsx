@@ -16,10 +16,12 @@ import env from '../../../utils/environment'
 import { formatterTall, redirectTilLoginHvis401 } from '../../../utils/utils'
 import { ReisetilskuddStatus } from '../../../types/types'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
+import KanSendesAlertStripe from '../../diverse/kan-sendes-alert-stripe'
 
 const Hovedpunkter = () => {
-    const { valgtReisetilskudd, reisetilskuddene, setReisetilskuddene, erBekreftet, setErBekreftet } = useAppStore()
+    const { valgtReisetilskudd, reisetilskuddene, setReisetilskuddene } = useAppStore()
     const [ openPlikter, setOpenPlikter ] = useState<boolean>(false)
+    const [ erBekreftet, setErBekreftet ] = useState<boolean>(false)
     const history = useHistory()
 
     const fom = dayjs(valgtReisetilskudd!.fom)
@@ -31,6 +33,10 @@ const Hovedpunkter = () => {
         if (!valgtReisetilskudd) {
             return
         }
+        if (valgtReisetilskudd.status !== ReisetilskuddStatus.SENDBAR) {
+            return
+        }
+
         const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`, {
             method: 'POST',
             credentials: 'include',
@@ -81,15 +87,21 @@ const Hovedpunkter = () => {
                     </Vis>
                 </Normaltekst>
 
-                <BekreftCheckboksPanel label="" checked={erBekreftet}
-                    onChange={(e: any) => setErBekreftet(e.target.checked)}
-                >
-                    {tekst('hovedpunkter.bekreft.tekst')}
-                    <button className="lenkeknapp" onClick={() => setOpenPlikter(true)}>
-                        {tekst('hovedpunkter.bekreft.lenke')}
-                    </button>
-                    .
-                </BekreftCheckboksPanel>
+                <Vis hvis={valgtReisetilskudd?.status === ReisetilskuddStatus.SENDBAR}>
+                    <BekreftCheckboksPanel label="" checked={erBekreftet}
+                        onChange={(e: any) => setErBekreftet(e.target.checked)}
+                    >
+                        {tekst('hovedpunkter.bekreft.tekst')}
+                        <button className="lenkeknapp" onClick={() => setOpenPlikter(true)}>
+                            {tekst('hovedpunkter.bekreft.lenke')}
+                        </button>
+                        .
+                    </BekreftCheckboksPanel>
+                </Vis>
+
+                <Vis hvis={valgtReisetilskudd?.status === ReisetilskuddStatus.ÅPEN}>
+                    <KanSendesAlertStripe />
+                </Vis>
 
                 <div className="knapperad">
                     <Knapp type="hoved" onClick={async() => await sendSoknad()} disabled={!erBekreftet}>
