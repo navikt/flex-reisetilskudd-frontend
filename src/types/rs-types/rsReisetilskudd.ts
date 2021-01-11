@@ -23,12 +23,11 @@ export interface RSReisetilskudd {
 }
 
 export interface RSKvittering {
-    reisetilskuddId: string,
     kvitteringId?: string,
+    blobId?: string,
     navn?: string,
     storrelse?: number,
     belop?: number,
-    fom?: string,
-    tom?: string,
+    datoForReise?: string,
     transportmiddel?: string,
 }
