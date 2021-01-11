@@ -81,7 +81,7 @@ const Hovedpunkter = () => {
                         <li>
                             {getLedetekst(tekst('hovedpunkter.kvitteringer'), {
                                 '%ANTALL%': bilag.length,
-                                '%SUM%': formatterTall(bilag.reduce((acc, b) => acc + b.belop!, 0))
+                                '%SUM%': formatterTall(bilag.reduce((acc, b) => acc + b.belop!, 0)/100)
                             })}
                         </li>
                     </Vis>

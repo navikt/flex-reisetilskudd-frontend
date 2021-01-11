@@ -11,7 +11,6 @@ import OpplastingTekster from '../components/sporsmal/opplasting/opplasting-teks
 import SporsmalTekster from '../components/sporsmal/sporsmal-tekster'
 import SykmeldingTekster from '../components/sykmelding/sykmelding-tekster'
 import OmReisetilskuddTekster from '../components/teasere/om-reisetilskudd/om-reisetilskudd-tekster'
-import TotalBelopTekster from '../components/total-belop/total-belop-tekster'
 import BekreftTekster from '../pages/bekreftelse/bekreft-tekster'
 import TilskuddListeTekster from '../pages/tilskuddliste/tilskuddliste-tekster'
 import TilskuddSideTekster from '../pages/tilskuddside/tilskuddside-tekster'
@@ -31,7 +30,6 @@ const tekster = {
     ...DragAndDropTekster.nb,
     ...FilListeTekster.nb,
     ...KvitteringModalTekster.nb,
-    ...TotalBelopTekster.nb,
     ...OmReisetilskuddTekster.nb,
     ...OppsummeringTekster.nb,
     ...SykmeldingTekster.nb,
