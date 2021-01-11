@@ -38,7 +38,7 @@ export const formatterTall = (tall?: number, desimaler = 0): string => {
 
 export const getUrlTilSoknad = (reisetilskudd: Reisetilskudd) => {
     if (reisetilskudd.status === ReisetilskuddStatus.SENDT) {
-        return '/bekreftelse'
+        return `/soknaden/${reisetilskudd.id}/bekreftelse`
     }
     if (reisetilskudd.status === ReisetilskuddStatus.AVBRUTT) {
         return `/soknaden/${reisetilskudd.id}/avbrutt`

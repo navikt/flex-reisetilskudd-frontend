@@ -17,7 +17,7 @@ import TransportMiddel from '../../components/sporsmal/transport/transport-midde
 import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import { useAppStore } from '../../data/stores/app-store'
-import { Brodsmule } from '../../types/types'
+import { Brodsmule, Sykmelding } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
@@ -37,14 +37,23 @@ const brodsmuler: Brodsmule[] = [
 ]
 
 const TilskuddSide = () => {
-    const { valgtReisetilskudd } = useAppStore()
-    const { steg } = useParams<RouteParams>()
+    const { valgtReisetilskudd, setValgtReisetilskudd, reisetilskuddene, sykmeldinger, setValgtSykmelding } = useAppStore()
+    const { steg, id } = useParams<RouteParams>()
     const idNum = Number(steg)
 
     useEffect(() => {
         setBodyClass('reisetilskudd-side')
         // eslint-disable-next-line
     }, [])
+
+    useEffect(() => {
+        const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.id === id)
+        setValgtReisetilskudd(funnetTilskudd)
+
+        const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === funnetTilskudd?.sykmeldingId)
+        setValgtSykmelding(sykmelding)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ reisetilskuddene, id ])
 
     if (!valgtReisetilskudd) return null
 
