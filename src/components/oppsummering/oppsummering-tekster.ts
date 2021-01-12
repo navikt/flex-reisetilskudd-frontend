@@ -6,8 +6,8 @@ const OppsummeringTekster: any = {
         'oppsummering.sykler': 'Sykler',
         'oppsummering.kollektivt': 'Reiser kollektivt med %UTGIFTER% kroner i månedlige utgifter',
         'oppsummering.utbetaling.tittel': 'Hvem skal pengene utbetales til?',
-        'oppsummering.utbetaling.undertittel': 'oppsummering.utbetaling.overskrift',
-        'oppsummering.utbetales.til': 'Pengene skal utbetales til arbeidsgiver.'
+        'oppsummering.utbetaling.undertittel': 'TODO',
+        'oppsummering.utbetaling.til': 'Pengene skal utbetales til %ARBEIDSGIVER_NAVN% (Org.nr. %ARBEIDSGIVER_ORGNR%)'
     }, 'en': {}
 }
 

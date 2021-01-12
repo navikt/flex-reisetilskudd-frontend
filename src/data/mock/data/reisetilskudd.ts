@@ -66,7 +66,7 @@ export const sendtReisetilskudd: RSReisetilskudd = {
     kvitteringer: mockKvitteringer,
 }
 
-export const apenReisetilskudd: RSReisetilskudd = {
+export const sendbarReisetilskudd: RSReisetilskudd = {
     fnr: '01010112345',
     fom: '2020-05-13',
     tom: '2020-05-19',
@@ -87,7 +87,7 @@ export const apenReisetilskudd: RSReisetilskudd = {
     kvitteringer: [],
 }
 
-export const ÅPENReisetilskudd: RSReisetilskudd = {
+export const åpenReisetilskudd: RSReisetilskudd = {
     fnr: '01010112345',
     fom: '2022-05-13',
     tom: '2022-05-31',
@@ -111,8 +111,8 @@ export const ÅPENReisetilskudd: RSReisetilskudd = {
 const mockReisetilskudd : RSReisetilskudd[] = [
     avbruttReisetilskudd,
     sendtReisetilskudd,
-    apenReisetilskudd,
-    ÅPENReisetilskudd,
+    sendbarReisetilskudd,
+    åpenReisetilskudd,
     fremtidigReisetilskudd,
 ]
 

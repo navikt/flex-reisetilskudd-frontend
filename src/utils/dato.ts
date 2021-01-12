@@ -52,3 +52,11 @@ export const dayjsToDate = (dato?: string) => {
         ? dayjs(dato).toDate()
         : undefined
 }
+
+export const fraBackendTilDate = (datoArg: string) => {
+    const datoer = datoArg.split('-').map((verdi => {
+        if (verdi[0] === '0') return parseInt(verdi[1])
+        return parseInt(verdi)
+    }))
+    return new Date(datoer[0], datoer[1] - 1, datoer[2])
+}

@@ -42,7 +42,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
         del(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${reisetilskuddId}/kvittering/${kvitto.kvitteringId}`)
             .then(() => {
                 kvitteringer = kvitteringer.filter((kvittering) =>
-                    kvittering.kvitteringId !== kvitto.kvitteringId
+                    kvittering.blobId !== kvitto.blobId
                 )
                 valgtReisetilskudd!.kvitteringer = kvitteringer
                 setValgtReisetilskudd(valgtReisetilskudd)
