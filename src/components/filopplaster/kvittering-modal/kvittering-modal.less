@@ -2,7 +2,7 @@
 @import '../../../../src/basic';
 
 .kvittering_modal {
-    width: 475px;
+    width: 400px;
 
     .modal-content {
         padding: 0 0.4rem;
@@ -29,6 +29,8 @@
             padding-bottom: 0.5rem;
 
             .lagre-kvittering {
+                display: block;
+                width: 100%;
                 margin: 0 0.5rem 1rem;
             }
         }
@@ -66,24 +68,16 @@
     }
 }
 
-@media (min-width: @screen-sm) {
-    .kvittering_modal {
-        .restriksjoner {
-            flex-direction: row;
-
-            span + span {
-                margin-left: 0.35rem;
-            }
-        }
-    }
-}
-
-
 @media (min-width: 470px) {
     .kvittering_modal {
         .modal-content {
             .knapperad {
                 flex-direction: row;
+
+                .lagre-kvittering {
+                    display: inline-block;
+                    width: auto;
+                }
             }
         }
     }

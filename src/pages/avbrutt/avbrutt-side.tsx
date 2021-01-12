@@ -15,9 +15,9 @@ import { useHistory, useParams } from 'react-router-dom'
 import { RouteParams } from '../../app'
 import dayjs from 'dayjs'
 import { Knapp } from 'nav-frontend-knapper'
-import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
+import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
@@ -105,7 +105,7 @@ const AvbruttSide = () => {
                     {tekst('avbrutt.gjenapne')}
                 </Knapp>
 
-                <SykmeldingInfo />
+                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
 
                 <TilbakeTilSykefravaer />
             </div>

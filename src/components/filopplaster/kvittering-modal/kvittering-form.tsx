@@ -16,7 +16,7 @@ import { Kvittering, Transportmiddel } from '../../../types/types'
 import env from '../../../utils/environment'
 import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { logger } from '../../../utils/logger'
-import { tekst } from '../../../utils/tekster'
+import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
 
@@ -114,7 +114,7 @@ const KvitteringForm = () => {
                 <div className="skjemakolonner">
                     <div className="skjemaelement">
                         <label htmlFor="dato_input" className="skjemaelement__label">
-                            <Element tag="strong">Dato</Element>
+                            <Element tag="strong">{tekst('kvittering_modal.dato')}</Element>
                         </label>
                         <Controller
                             control={methods.control}
@@ -225,12 +225,16 @@ const KvitteringForm = () => {
                 <DragAndDrop kvittering={kvittering} />
 
                 <Normaltekst className="restriksjoner">
-                    <span className="filtype">
-                        {parser(`Tillatte filtyper er <strong>${formaterteFiltyper}</strong>.`)}
-                    </span>
-                    <span className="filstr">
-                        {parser(`Maks bildestørrelse er <strong>${maksFilstorrelse}</strong>.`)}
-                    </span>
+                    <span className="filtype">{
+                        getLedetekst(tekst('kvittering_modal.filtyper'), {
+                            '%FILTYPER%': formaterteFiltyper
+                        })
+                    }</span>
+                    <span className="filstr">{
+                        getLedetekst(tekst('kvittering_modal.maksfilstr'), {
+                            '%MAKSFILSTR%': maksFilstorrelse
+                        })
+                    }</span>
                 </Normaltekst>
 
                 {laster
@@ -241,7 +245,7 @@ const KvitteringForm = () => {
                         <Knapp htmlType="button" className="lagre-kvittering" onClick={() => setOpenModal(false)}>
                             {tekst('kvittering_modal.tilbake')}
                         </Knapp>
-                        <Knapp htmlType="submit" className="lagre-kvittering">
+                        <Knapp type="hoved" htmlType="submit" className="lagre-kvittering">
                             {tekst('kvittering_modal.bekreft')}
                         </Knapp>
                     </div>

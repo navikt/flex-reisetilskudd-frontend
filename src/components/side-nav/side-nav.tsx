@@ -24,7 +24,7 @@ const SideNav = () => {
 
     if (valgt !== undefined) {
         steg2ok = true
-        steg3ok = valgt!.offentlig > 0 || valgt!.egenBil > 0
+        steg3ok = true // valgt!.offentlig > 0 || valgt!.egenBil > 0
         steg4ok = true
 
         if (stegNum === 1) nesteStegOk = steg2ok

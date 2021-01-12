@@ -1,6 +1,6 @@
 import './sykmelding-info.less'
 
-import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi'
+import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { ReactElement } from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
@@ -9,10 +9,8 @@ import { tekst } from '../../utils/tekster'
 import { CheckedIkon } from '../diverse/checked-ikon/checked-ikon'
 import Vis from '../diverse/vis'
 import PeriodeTekst from './periode-tekst'
-import plaster from '../../pages/tilskuddside/plaster.svg'
-import plasterHover from '../../pages/tilskuddside/plaster-hover.svg'
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 
+// TODO: Se litt mer på denne
 const fåSykmeldingOpplysningSomInterface = (syk?: Sykmelding): SykmeldingOpplysning | undefined => {
     if (!syk) return undefined
     return {
@@ -30,7 +28,6 @@ const fåSykmeldingOpplysningSomInterface = (syk?: Sykmelding): SykmeldingOpplys
     }
 }
 
-// TODO: Sett opp utifra skisser
 const SykmeldingInfo = (): ReactElement => {
     const { valgtSykmelding } = useAppStore()
     const vårSykmelding = fåSykmeldingOpplysningSomInterface(valgtSykmelding)
@@ -45,13 +42,7 @@ const SykmeldingInfo = (): ReactElement => {
     )
 
     return (
-        <Ekspanderbartpanel className="sykmelding-panel" tittel={
-            <>
-                <img src={plaster} className="plaster" alt="" />
-                <img src={plasterHover} className="plaster--hover" alt="" />
-                <Undertittel className="sykmelding-panel__tittel">{tekst('tilskudd.side.sykmeldinginfo')}</Undertittel>
-            </>
-        }>
+        <>
             <Vis hvis={vårSykmelding !== undefined}>
                 <Element className="element-tittel">
                     {tekst('sykmelding.periode')}
@@ -98,7 +89,7 @@ const SykmeldingInfo = (): ReactElement => {
                     {tekst('sykmelding.dessverre')}
                 </Normaltekst>
             </Vis>
-        </Ekspanderbartpanel>
+        </>
     )
 }
 

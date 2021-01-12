@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Brodsmule, Sykmelding } from '../../types/types'
+import { Brodsmule, ReisetilskuddStatus, Sykmelding } from '../../types/types'
 import { tekst } from '../../utils/tekster'
 import { SEPARATOR } from '../../utils/constants'
 import { useAppStore } from '../../data/stores/app-store'
@@ -10,11 +10,11 @@ import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import { Undertittel } from 'nav-frontend-typografi'
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
-import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import Veileder from './veileder'
 import Mobil from './mobil'
 import HvemKanFaa from './hvem-kan-faa'
 import AvbrytKnapp from '../../components/avbryt/avbryt-knapp'
+import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 import KanSendesAlertStripe from '../../components/diverse/kan-sendes-alert-stripe'
 import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
@@ -49,6 +49,14 @@ const TilskuddStart = () => {
 
     if (!valgtReisetilskudd) return null
 
+    const alertstripeType = () => {
+        if (valgtReisetilskudd.status === ReisetilskuddStatus.SENDBAR) {
+            return 'suksess'
+        } else {
+            return 'info'
+        }
+    }
+
     return (
         <>
             <Banner tittel={tekst('banner.sidetittel')} />
@@ -56,6 +64,8 @@ const TilskuddStart = () => {
 
             <div className="limit">
                 <Veileder />
+
+                <KanSendesAlertStripe />
 
                 <Ekspanderbartpanel className="hvem-kan-faa" tittel={
                     <Undertittel>{tekst('tilskudd.start.hvem-kan-faa')}</Undertittel>
@@ -65,9 +75,7 @@ const TilskuddStart = () => {
 
                 <Mobil />
 
-                <SykmeldingInfo />
-
-                <KanSendesAlertStripe />
+                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
 
                 <div className="knapperad">
                     <Link to={`/soknaden/${id}/${steg}`} className="knapp knapp--hoved">

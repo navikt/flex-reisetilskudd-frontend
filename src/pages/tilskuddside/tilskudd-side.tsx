@@ -13,12 +13,12 @@ import SideNav from '../../components/side-nav/side-nav'
 import Opplasting from '../../components/sporsmal/opplasting/opplasting'
 import TransportMiddel from '../../components/sporsmal/transport/transport-middel'
 import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
-import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import { useAppStore } from '../../data/stores/app-store'
 import { Brodsmule, Sykmelding } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
+import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
@@ -66,7 +66,7 @@ const TilskuddSide = () => {
                     <SoknadInfoUtvid />
                 </Vis>
 
-                <SykmeldingInfo />
+                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
 
                 <Vis hvis={idNum === 1}>
                     <UtbetalingTil />

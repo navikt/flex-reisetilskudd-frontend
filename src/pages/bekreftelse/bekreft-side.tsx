@@ -6,17 +6,16 @@ import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import { Brodsmule, Sykmelding } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
-import { tekst } from '../../utils/tekster'
+import { getLedetekst, tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
+import AlertStripe from 'nav-frontend-alertstriper'
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
+import dayjs from 'dayjs'
+import SoknadInfoUtvid from '../../components/oppsummering/soknad-info-utvid/soknad-info-utvid'
 import { useAppStore } from '../../data/stores/app-store'
 import { useParams } from 'react-router-dom'
 import { RouteParams } from '../../app'
-import SoknadInfoUtvid from '../../components/oppsummering/soknad-info-utvid/soknad-info-utvid'
-import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
-import { AlertStripeSuksess } from 'nav-frontend-alertstriper'
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
-import dayjs from 'dayjs'
-import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
+import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -51,30 +50,34 @@ const BekreftSide = () => {
 
     return (
         <>
-            <Banner tittel={tekst('banner.sidetittel')} />
+            <Banner tittel={tekst('bekreft.sidetittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
-                <AlertStripeSuksess className="vellykket-sending">
+                <AlertStripe type="suksess">
                     <Undertittel>
-                        {tekst('bekreft.sendt')}
+                        {tekst('bekreft.sendt-til')}
                     </Undertittel>
-                    <Normaltekst>
-                        {dayjs(valgtReisetilskudd.sendt).format('D. MMMM YYYY, kl HH:mm')}
-                    </Normaltekst>
-                </AlertStripeSuksess>
+                    {getLedetekst(tekst('bekreft.sendt-kl'), {
+                        '%TID%': dayjs(valgtReisetilskudd!.sendt).format('DD. MMMM YYYY kl HH:mm')
+                    })}
+                </AlertStripe>
+
                 <SoknadInfoUtvid />
 
-                <Undertittel className="brev-tittel">
-                    {tekst('bekreft.brev')}
-                </Undertittel>
-                <Normaltekst>
-                    {tekst('bekreft.brev.info')}
-                </Normaltekst>
+                <section className="brevinfo">
+                    <Undertittel>{tekst('bekreft.brevinfo.tittel')}</Undertittel>
+                    <Normaltekst>{tekst('bekreft.brevinfo.tekst')}</Normaltekst>
+                </section>
 
-                <SykmeldingInfo />
+                <SoknadInfoUtvid />
 
-                <TilbakeTilSykefravaer />
+                <section className="brevinfo">
+                    <Undertittel>{tekst('bekreft.brevinfo.tittel')}</Undertittel>
+                    <Normaltekst>{tekst('bekreft.brevinfo.tekst')}</Normaltekst>
+                </section>
+
+                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
             </div>
         </>
     )
