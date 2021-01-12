@@ -1,6 +1,7 @@
 import React from 'react'
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import Veilederpanel from 'nav-frontend-veilederpanel'
+import { tekst } from '../../utils/tekster'
 
 const Mobil = () => {
     return (
@@ -15,8 +16,8 @@ const Mobil = () => {
                 <path fillRule="evenodd" clipRule="evenodd" d="M17 46C17 47.1045 16.1051 48 14.9995 48C13.8959 48 13 47.1045 13 46C13 44.8955 13.8959 44 14.9995 44C16.1051 44 17 44.8955 17 46Z" fill="#78706A" />
             </svg>
             }>
-                <Undertittel>Spar tid ved å bruke mobilen</Undertittel>
-                <Normaltekst>Om du gjennomfører søknaden på mobilen, kan du ta bilde av kvitteringen direkte når du laster opp kvitteringer for reiser.</Normaltekst>
+                <Undertittel>{tekst('tilskudd.start.mobil.tittel')}</Undertittel>
+                <Normaltekst>{tekst('tilskudd.start.mobil.tekst')}</Normaltekst>
             </Veilederpanel>
         </div>
     )

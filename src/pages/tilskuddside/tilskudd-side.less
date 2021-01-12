@@ -2,50 +2,48 @@
 @import '../../basic';
 
 .reisetilskudd-side {
-    .sykmelding-panel {
-        .ekspanderbartPanel__tittel {
-            margin-left: 0.5rem;
-        }
-
-        img.plaster {
-            display: inline;
-        }
-
-        img.plaster--hover {
-            display: none;
-        }
-
-        .sykmelding-panel__tittel {
-            display: inline;
-            margin-left: 1rem;
-        }
-
-        &:hover {
-            img.plaster {
-                display: none;
-            }
-
-            img.plaster--hover {
-                display: inline;
-            }
-        }
-    }
-
     .nav-veileder__frame svg {
         height: 100%;
     }
 
     .veileder {
-        margin: 2rem 9rem 3rem;
-
         .nav-veilederpanel {
             border: 0;
             padding-right: 0;
         }
     }
 
-    .hvem-kan-faa, .spar-tid, .alertstripe {
-        margin: 3rem 0;
+    .hvem-kan-faa {
+        margin: 2rem 0;
+    }
+
+    .alertstripe {
+        margin: 1rem 0 2rem;
+    }
+
+    .spar-tid {
+        margin: 1rem 0;
+
+        .nav-veilederpanel {
+            border: 0;
+
+            .nav-veileder__frame {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: @navLysBlaLighten60;
+
+                svg {
+                    width: 65%;
+                    height: 65%;
+                }
+
+                img {
+                    width: 90%;
+                    height: 90%;
+                }
+            }
+        }
     }
 
     .hvem-kan-faa {
@@ -76,6 +74,9 @@
 }
 
 .horisontal-radio {
+    padding-top: 1rem;
+    margin-top: 1rem;
+
     .utbetaling-tittel {
         padding-bottom: 1rem;
     }
@@ -96,6 +97,10 @@
     .reisetilskudd-side {
         .limit {
             width: @desktopLimitWidth;
+        }
+
+        .veileder {
+            margin: 2rem 9rem 3rem;
         }
     }
 

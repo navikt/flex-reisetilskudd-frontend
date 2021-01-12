@@ -15,14 +15,12 @@ import SideNav from '../../components/side-nav/side-nav'
 import Opplasting from '../../components/sporsmal/opplasting/opplasting'
 import TransportMiddel from '../../components/sporsmal/transport/transport-middel'
 import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
-import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import { useAppStore } from '../../data/stores/app-store'
 import { Brodsmule } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
-import plasterHover from './plaster-hover.svg'
-import plaster from './plaster.svg'
+import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -60,15 +58,7 @@ const TilskuddSide = () => {
                     <SoknadInfoUtvid />
                 </Vis>
 
-                <Ekspanderbartpanel className="sykmelding-panel" tittel={
-                    <>
-                        <img src={plaster} className="plaster" alt="" />
-                        <img src={plasterHover} className="plaster--hover" alt="" />
-                        <Undertittel className="sykmelding-panel__tittel">{tekst('tilskudd.side.sykmeldinginfo')}</Undertittel>
-                    </>
-                }>
-                    <SykmeldingInfo />
-                </Ekspanderbartpanel>
+                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
 
                 <Vis hvis={idNum === 1}>
                     <UtbetalingTil />

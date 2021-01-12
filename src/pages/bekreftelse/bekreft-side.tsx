@@ -6,10 +6,14 @@ import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import { Brodsmule } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
-import { tekst } from '../../utils/tekster'
+import { getLedetekst, tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
-import ListeTekster from './liste-tekster'
-import VeienVidere from './veien-videre'
+import AlertStripe from 'nav-frontend-alertstriper'
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
+import dayjs from 'dayjs'
+import SoknadInfoUtvid from '../../components/oppsummering/soknad-info-utvid/soknad-info-utvid'
+import { useAppStore } from '../../data/stores/app-store'
+import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -24,6 +28,7 @@ const brodsmuler: Brodsmule[] = [
 ]
 
 const BekreftSide = () => {
+    const { valgtReisetilskudd } = useAppStore()
 
     useEffect(() => {
         setBodyClass('bekreftelses-side')
@@ -31,12 +36,27 @@ const BekreftSide = () => {
 
     return (
         <>
-            <Banner tittel={tekst('bekreftelses.sidetittel')} />
+            <Banner tittel={tekst('bekreft.sidetittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
-                <ListeTekster />
-                <VeienVidere />
+                <AlertStripe type="suksess">
+                    <Undertittel>
+                        {tekst('bekreft.sendt-til')}
+                    </Undertittel>
+                    {getLedetekst(tekst('bekreft.sendt-kl'), {
+                        '%TID%': dayjs(valgtReisetilskudd!.sendt).format('DD. MMMM YYYY kl HH:mm')
+                    })}
+                </AlertStripe>
+
+                <SoknadInfoUtvid />
+
+                <section className="brevinfo">
+                    <Undertittel>{tekst('bekreft.brevinfo.tittel')}</Undertittel>
+                    <Normaltekst>{tekst('bekreft.brevinfo.tekst')}</Normaltekst>
+                </section>
+
+                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
             </div>
         </>
     )

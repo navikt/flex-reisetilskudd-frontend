@@ -10,9 +10,6 @@ import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi'
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
-import plaster from '../tilskuddside/plaster.svg'
-import plasterHover from '../tilskuddside/plaster-hover.svg'
-import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
 import Veileder from './veileder'
 import Mobil from './mobil'
 import AlertStripe  from 'nav-frontend-alertstriper'
@@ -20,6 +17,7 @@ import HvemKanFaa from './hvem-kan-faa'
 import Vis from '../../components/diverse/vis'
 import dayjs from 'dayjs'
 import AvbrytKnapp from '../../components/avbryt/avbryt-knapp'
+import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -68,26 +66,6 @@ const TilskuddStart = () => {
             <div className="limit">
                 <Veileder />
 
-                <Ekspanderbartpanel className="hvem-kan-faa" tittel={
-                    <Undertittel>{tekst('tilskudd.start.hvem-kan-faa')}</Undertittel>
-                }>
-                    <HvemKanFaa />
-                </Ekspanderbartpanel>
-
-                <Mobil />
-
-                <Ekspanderbartpanel className="sykmelding-panel" tittel={
-                    <>
-                        <img src={plaster} className="plaster" alt="" />
-                        <img src={plasterHover} className="plaster--hover" alt="" />
-                        <Undertittel className="sykmelding-panel__tittel">
-                            {tekst('tilskudd.side.sykmeldinginfo')}
-                        </Undertittel>
-                    </>
-                }>
-                    <SykmeldingInfo />
-                </Ekspanderbartpanel>
-
                 <AlertStripe className="kan-sendes" type={alertstripeType()}>
                     <Vis hvis={valgtReisetilskudd.status === ReisetilskuddStatus.ÅPEN}>
                         <Undertittel>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
@@ -96,6 +74,16 @@ const TilskuddStart = () => {
                     </Vis>
                     <Normaltekst>{tekst('tilskudd.start.alertstripe.tekst.' + valgtReisetilskudd.status)}</Normaltekst>
                 </AlertStripe>
+
+                <Ekspanderbartpanel className="hvem-kan-faa" tittel={
+                    <Undertittel>{tekst('tilskudd.start.hvem-kan-faa')}</Undertittel>
+                }>
+                    <HvemKanFaa />
+                </Ekspanderbartpanel>
+
+                <Mobil />
+
+                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
 
                 <div className="knapperad">
                     <Link to={`/soknaden/${id}/${steg}`} className="knapp knapp--hoved">
