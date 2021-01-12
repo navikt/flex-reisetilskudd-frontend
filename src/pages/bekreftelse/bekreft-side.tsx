@@ -70,13 +70,6 @@ const BekreftSide = () => {
                     <Normaltekst>{tekst('bekreft.brevinfo.tekst')}</Normaltekst>
                 </section>
 
-                <SoknadInfoUtvid />
-
-                <section className="brevinfo">
-                    <Undertittel>{tekst('bekreft.brevinfo.tittel')}</Undertittel>
-                    <Normaltekst>{tekst('bekreft.brevinfo.tekst')}</Normaltekst>
-                </section>
-
                 <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
             </div>
         </>
