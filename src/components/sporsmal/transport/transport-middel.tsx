@@ -166,7 +166,7 @@ const TransportMiddel = () => {
                         />
                     </CheckboxGruppe>
                     <div ref={offRef} className="offentlig">
-                        <Input id="utgifter-koll" name="utgifter-koll" bredde="S" inputMode="numeric"
+                        <Input id="utgifter-koll" name="utgifter-koll" bredde="XS" inputMode="numeric"
                             label={
                                 <Normaltekst id="kollektiv-spørsmål">
                                     {tekst('sporsmal.kollektiv.hjelpetekst.tittel')}

@@ -1,6 +1,6 @@
 import Vis from './vis'
 import { ReisetilskuddStatus } from '../../types/types'
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
+import { Normaltekst, Element } from 'nav-frontend-typografi'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import dayjs from 'dayjs'
 import AlertStripe from 'nav-frontend-alertstriper'
@@ -25,9 +25,9 @@ const KanSendesAlertStripe = () => {
     return (
         <AlertStripe className="kan-sendes" type={alertstripeType()}>
             <Vis hvis={valgtReisetilskudd.status === ReisetilskuddStatus.ÅPEN}>
-                <Undertittel>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
+                <Element>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
                     '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMM YYYY')
-                })}</Undertittel>
+                })}</Element>
             </Vis>
             <Normaltekst>{tekst('tilskudd.start.alertstripe.tekst.' + valgtReisetilskudd.status)}</Normaltekst>
         </AlertStripe>
