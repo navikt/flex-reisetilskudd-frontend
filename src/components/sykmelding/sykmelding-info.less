@@ -1,15 +1,30 @@
 @import '../../../node_modules/nav-frontend-core/less/_variabler';
 
 .sykmelding-panel {
-    margin-bottom: 2rem;
-    background-color: #f1f6f8;
+    .ekspanderbartPanel__tittel {
+        margin-left: 0.5rem;
+    }
 
-    .checkedblock {
-        display: flex;
-        align-items: center;
+    img.plaster {
+        display: inline;
+    }
 
-        .checkedikon {
-            margin: -2px 0.5rem 0 0.2rem;
+    img.plaster--hover {
+        display: none;
+    }
+
+    .sykmelding-panel__tittel {
+        display: inline;
+        margin-left: 1rem;
+    }
+
+    &:hover {
+        img.plaster {
+            display: none;
+        }
+
+        img.plaster--hover {
+            display: inline;
         }
     }
 }

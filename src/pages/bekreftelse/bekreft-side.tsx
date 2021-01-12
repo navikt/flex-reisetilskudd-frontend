@@ -8,11 +8,15 @@ import { Brodsmule, Sykmelding } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
-import ListeTekster from './liste-tekster'
-import VeienVidere from './veien-videre'
 import { useAppStore } from '../../data/stores/app-store'
 import { useParams } from 'react-router-dom'
 import { RouteParams } from '../../app'
+import SoknadInfoUtvid from '../../components/oppsummering/soknad-info-utvid/soknad-info-utvid'
+import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
+import { AlertStripeSuksess } from 'nav-frontend-alertstriper'
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
+import dayjs from 'dayjs'
+import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -27,7 +31,7 @@ const brodsmuler: Brodsmule[] = [
 ]
 
 const BekreftSide = () => {
-    const { reisetilskuddene, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
+    const { reisetilskuddene, valgtReisetilskudd, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
     const { id } = useParams<RouteParams>()
 
     useEffect(() => {
@@ -43,14 +47,34 @@ const BekreftSide = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ reisetilskuddene, id ])
 
+    if (!valgtReisetilskudd) return null
+
     return (
         <>
-            <Banner tittel={tekst('bekreftelses.sidetittel')} />
+            <Banner tittel={tekst('banner.sidetittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
-                <ListeTekster />
-                <VeienVidere />
+                <AlertStripeSuksess className="vellykket-sending">
+                    <Undertittel>
+                        {tekst('bekreft.sendt')}
+                    </Undertittel>
+                    <Normaltekst>
+                        {dayjs(valgtReisetilskudd.sendt).format('D. MMMM YYYY, kl HH:mm')}
+                    </Normaltekst>
+                </AlertStripeSuksess>
+                <SoknadInfoUtvid />
+
+                <Undertittel className="brev-tittel">
+                    {tekst('bekreft.brev')}
+                </Undertittel>
+                <Normaltekst>
+                    {tekst('bekreft.brev.info')}
+                </Normaltekst>
+
+                <SykmeldingInfo />
+
+                <TilbakeTilSykefravaer />
             </div>
         </>
     )

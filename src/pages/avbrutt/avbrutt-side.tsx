@@ -16,11 +16,9 @@ import { RouteParams } from '../../app'
 import dayjs from 'dayjs'
 import { Knapp } from 'nav-frontend-knapper'
 import SykmeldingInfo from '../../components/sykmelding/sykmelding-info'
-import plaster from '../tilskuddside/plaster.svg'
-import plasterHover from '../tilskuddside/plaster-hover.svg'
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
+import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -83,7 +81,7 @@ const AvbruttSide = () => {
 
     return (
         <>
-            <Banner tittel={tekst('bekreftelses.sidetittel')} />
+            <Banner tittel={tekst('banner.sidetittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
@@ -107,15 +105,9 @@ const AvbruttSide = () => {
                     {tekst('avbrutt.gjenapne')}
                 </Knapp>
 
-                <Ekspanderbartpanel className="sykmelding-panel" tittel={
-                    <>
-                        <img src={plaster} className="plaster" alt="" />
-                        <img src={plasterHover} className="plaster--hover" alt="" />
-                        <Undertittel className="sykmelding-panel__tittel">{tekst('tilskudd.side.sykmeldinginfo')}</Undertittel>
-                    </>
-                }>
-                    <SykmeldingInfo />
-                </Ekspanderbartpanel>
+                <SykmeldingInfo />
+
+                <TilbakeTilSykefravaer />
             </div>
         </>
     )
