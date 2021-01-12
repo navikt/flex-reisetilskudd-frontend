@@ -14,7 +14,7 @@ const SykmeldingPanel = ({ tittel }: SykmeldingProps) => {
     return (
         <>
             <Ekspanderbartpanel className="sykmelding-panel" tittel={
-                <div>
+                <div className="orientering">
                     <img src={plaster} className="plaster" alt="" />
                     <img src={plasterHover} className="plaster--hover" alt="" />
                     <Undertittel className="sykmelding-panel__tittel">{tittel}</Undertittel>

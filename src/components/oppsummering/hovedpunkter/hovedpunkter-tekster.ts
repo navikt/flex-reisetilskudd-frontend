@@ -19,7 +19,7 @@ const HovedpunkterTekster: any = {
         'hovedpunkter.plikter.punkter.punkt3': 'Du kan miste retten til penger hvis opplysningene dine ikke er riktige.',
         'hovedpunkter.plikter.punkter.punkt4': 'NAV kan holde igjen eller kreve tilbake penger.',
         'hovedpunkter.plikter.punkter.punkt5': 'Å gi feil opplysninger kan være straffbart.',
-        'hovedpunkter.send-knapp.tekst': 'Send inn søknad',
+        'hovedpunkter.send-knapp.tekst': 'Send inn søknaden',
     }, 'en': {}
 }
 
