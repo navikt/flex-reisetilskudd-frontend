@@ -20,7 +20,7 @@ mock.get(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd
 
 mock.put(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id`, () => Promise.resolve({ status: 200 }))
 
-mock.post(`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering`,
+mock.post(`${env.flexGatewayRoot}/flex-bucket-uploader/opplasting`,
     (req, res, ctx) =>
         res(ctx.json({
             id: generateId(),

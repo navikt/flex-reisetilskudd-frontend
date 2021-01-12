@@ -5,7 +5,6 @@ const TilskuddListeTekster: any = {
         'tilskudd.liste.usendte.soknader': 'Nye søknader',
         'tilskudd.liste.sendte.soknader': 'Tidligere søknader',
         'tilskudd.liste.feilmelding': 'Teknisk feil, kunne ikke finne noen reisetilskudd',
-        'tilskudd.liste.tilbake': 'Tilbake til hovedsiden Ditt sykefravær',
     }, 'en': {}
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Brodsmule, ReisetilskuddStatus, Sykmelding } from '../../types/types'
-import { getLedetekst, tekst } from '../../utils/tekster'
+import { tekst } from '../../utils/tekster'
 import { SEPARATOR } from '../../utils/constants'
 import { useAppStore } from '../../data/stores/app-store'
 import { useParams, Link } from 'react-router-dom'
@@ -8,16 +8,15 @@ import { RouteParams } from '../../app'
 import { setBodyClass } from '../../utils/utils'
 import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi'
+import { Undertittel } from 'nav-frontend-typografi'
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 import Veileder from './veileder'
 import Mobil from './mobil'
-import AlertStripe  from 'nav-frontend-alertstriper'
 import HvemKanFaa from './hvem-kan-faa'
-import Vis from '../../components/diverse/vis'
-import dayjs from 'dayjs'
 import AvbrytKnapp from '../../components/avbryt/avbryt-knapp'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
+import KanSendesAlertStripe from '../../components/diverse/kan-sendes-alert-stripe'
+import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -66,14 +65,7 @@ const TilskuddStart = () => {
             <div className="limit">
                 <Veileder />
 
-                <AlertStripe className="kan-sendes" type={alertstripeType()}>
-                    <Vis hvis={valgtReisetilskudd.status === ReisetilskuddStatus.ÅPEN}>
-                        <Undertittel>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
-                            '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMM YYYY')
-                        })}</Undertittel>
-                    </Vis>
-                    <Normaltekst>{tekst('tilskudd.start.alertstripe.tekst.' + valgtReisetilskudd.status)}</Normaltekst>
-                </AlertStripe>
+                <KanSendesAlertStripe />
 
                 <Ekspanderbartpanel className="hvem-kan-faa" tittel={
                     <Undertittel>{tekst('tilskudd.start.hvem-kan-faa')}</Undertittel>
@@ -91,6 +83,8 @@ const TilskuddStart = () => {
                     </Link>
                     <AvbrytKnapp />
                 </div>
+
+                <TilbakeTilSykefravaer />
             </div>
         </>
     )

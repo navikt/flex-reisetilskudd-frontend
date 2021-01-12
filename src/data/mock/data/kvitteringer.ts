@@ -1,22 +1,22 @@
 import { RSKvittering } from '../../../types/rs-types/rsReisetilskudd'
 
 export const kvitteringBil: RSKvittering = {
-    reisetilskuddId: '6969',
     kvitteringId: 'tetstsgddgsdsdsdsdsdgsdg',
+    blobId: '2134afw4f4q6',
     navn: 'foo.txt',
     storrelse: 1024 * 920,
-    belop: 32.2,
-    fom: '2020-05-01',
+    belop: 3220,
+    datoForReise: '2020-05-01',
     transportmiddel: 'EGEN_BIL',
 }
 
 export const kvitteringTaxi: RSKvittering = {
-    reisetilskuddId: '12352',
     kvitteringId: 'dhdywdjdjsjdsjdscehshdsd',
+    blobId: '213456',
     navn: 'bar.jpg',
     storrelse: 812 * 920,
-    belop: 2.2,
-    fom: '2034-09-29',
+    belop: 220,
+    datoForReise: '2034-09-29',
     transportmiddel: 'TAXI',
 }
 

@@ -1,19 +1,42 @@
 @import 'node_modules/nav-frontend-core/less/_variabler';
+@import '../../basic';
 
 .bekreftelses-side {
-    .alertstripe {
-        margin: 0 0 0.3rem;
-    }
+    .limit {
+        .alertstripe {
+            margin: 0 0 0.3rem;
+        }
 
-    .brevinfo {
-        margin: 2rem 0;
+        .brevinfo {
+            margin: 2rem 0;
+        }
+
+        .vellykket-sending {
+            margin-bottom: 0.3rem;
+        }
+
+        .ekspanderbartPanel--border {
+            margin-bottom: 2rem;
+        }
+
+        .brev-tittel {
+            margin-bottom: 0.5rem;
+        }
+
+        .sykmelding-panel {
+            margin-top: 2rem;
+        }
     }
 }
 
 @media (min-width: @screen-sm) {
     .bekreftelses-side {
-        .listetekst {
-            margin-right: 5rem;
+        .limit {
+            width: @desktopLimitWidth;
+
+            .listetekst {
+                margin-right: 5rem;
+            }
         }
     }
 }

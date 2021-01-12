@@ -18,6 +18,7 @@ import { Knapp } from 'nav-frontend-knapper'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
+import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -80,7 +81,7 @@ const AvbruttSide = () => {
 
     return (
         <>
-            <Banner tittel={tekst('bekreftelses.sidetittel')} />
+            <Banner tittel={tekst('banner.sidetittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
@@ -105,6 +106,8 @@ const AvbruttSide = () => {
                 </Knapp>
 
                 <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
+
+                <TilbakeTilSykefravaer />
             </div>
         </>
     )

@@ -12,7 +12,7 @@ interface SykmeldingProps {
 
 const SykmeldingPanel = ({ tittel }: SykmeldingProps) => {
     return (
-        <div>
+        <>
             <Ekspanderbartpanel className="sykmelding-panel" tittel={
                 <div>
                     <img src={plaster} className="plaster" alt="" />
@@ -22,7 +22,7 @@ const SykmeldingPanel = ({ tittel }: SykmeldingProps) => {
             }>
                 <SykmeldingInfo />
             </Ekspanderbartpanel>
-        </div>
+        </>
     )
 }
 

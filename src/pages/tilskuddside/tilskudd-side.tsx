@@ -1,7 +1,5 @@
 import './tilskudd-side.less'
 
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
-import { Undertittel } from 'nav-frontend-typografi'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -16,11 +14,12 @@ import Opplasting from '../../components/sporsmal/opplasting/opplasting'
 import TransportMiddel from '../../components/sporsmal/transport/transport-middel'
 import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
 import { useAppStore } from '../../data/stores/app-store'
-import { Brodsmule } from '../../types/types'
+import { Brodsmule, Sykmelding } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
+import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -35,14 +34,23 @@ const brodsmuler: Brodsmule[] = [
 ]
 
 const TilskuddSide = () => {
-    const { valgtReisetilskudd } = useAppStore()
-    const { steg } = useParams<RouteParams>()
+    const { valgtReisetilskudd, setValgtReisetilskudd, reisetilskuddene, sykmeldinger, setValgtSykmelding } = useAppStore()
+    const { steg, id } = useParams<RouteParams>()
     const idNum = Number(steg)
 
     useEffect(() => {
         setBodyClass('reisetilskudd-side')
         // eslint-disable-next-line
     }, [])
+
+    useEffect(() => {
+        const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.id === id)
+        setValgtReisetilskudd(funnetTilskudd)
+
+        const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === funnetTilskudd?.sykmeldingId)
+        setValgtSykmelding(sykmelding)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ reisetilskuddene, id ])
 
     if (!valgtReisetilskudd) return null
 
@@ -75,6 +83,8 @@ const TilskuddSide = () => {
                 <Vis hvis={idNum === 4}>
                     <Hovedpunkter />
                 </Vis>
+
+                <TilbakeTilSykefravaer />
             </div>
         </>
     )

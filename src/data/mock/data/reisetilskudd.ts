@@ -23,6 +23,27 @@ export const avbruttReisetilskudd: RSReisetilskudd = {
     kvitteringer: [],
 }
 
+export const fremtidigReisetilskudd: RSReisetilskudd = {
+    fnr: '01010112345',
+    fom: '2029-05-13',
+    tom: '2029-05-28',
+    status: 'FREMTIDIG',
+
+    orgNavn: 'Mock Vaskeri Vaskerelven',
+    orgNummer: '9237419',
+    utbetalingTilArbeidsgiver: true,
+
+    går: true,
+    sykler: false,
+    kollektivtransport: 0,
+    egenBil: 13,
+
+    reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
+    sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+
+    kvitteringer: [],
+}
+
 export const sendtReisetilskudd: RSReisetilskudd = {
     fnr: '01010112345',
     fom: '2020-05-13',
@@ -60,7 +81,7 @@ export const apenReisetilskudd: RSReisetilskudd = {
     kollektivtransport: 0,
     egenBil: 0,
 
-    reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-029j3fj20',
+    reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-029j3fj26',
     sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
 
     kvitteringer: [],
@@ -92,6 +113,7 @@ const mockReisetilskudd : RSReisetilskudd[] = [
     sendtReisetilskudd,
     apenReisetilskudd,
     ÅPENReisetilskudd,
+    fremtidigReisetilskudd,
 ]
 
 export default mockReisetilskudd

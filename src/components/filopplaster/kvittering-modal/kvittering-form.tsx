@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import useForceUpdate from 'use-force-update'
-import { v4 as uuidv4 } from 'uuid'
 
 import { RouteParams } from '../../../app'
 import { post } from '../../../data/fetcher/fetcher'
@@ -40,17 +39,25 @@ const KvitteringForm = () => {
 
     const options = [
         { id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.TAXI}`, value: 'TAXI', name: Transportmiddel.TAXI },
-        { id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.EGEN_BIL}`, value: 'EGEN_BIL', name: Transportmiddel.EGEN_BIL },
-        { id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.KOLLEKTIVT}`, value: 'KOLLEKTIVT', name: Transportmiddel.KOLLEKTIVT }
+        {
+            id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.EGEN_BIL}`,
+            value: 'EGEN_BIL',
+            name: Transportmiddel.EGEN_BIL
+        },
+        {
+            id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.KOLLEKTIVT}`,
+            value: 'KOLLEKTIVT',
+            name: Transportmiddel.KOLLEKTIVT
+        }
     ]
 
     useEffect(() => {
         if (kvitteringIndex === -1) {
-            setKvittering(new Kvittering({ reisetilskuddId: id }))
+            setKvittering(new Kvittering({}))
         } else {
             const kvitto = valgtReisetilskudd!.kvitteringer[kvitteringIndex]
             setKvittering(kvitto)
-            setDato(dayjs(kvitto!.fom).format('YYYY-MM-DD'))
+            setDato(dayjs(kvitto!.datoForReise).format('YYYY-MM-DD'))
             forceUpdate()
         }
         // eslint-disable-next-line
@@ -74,13 +81,11 @@ const KvitteringForm = () => {
 
 
         const kvitt = new Kvittering({
-            reisetilskuddId: kvittering?.reisetilskuddId || valgtReisetilskudd!.id,
-            kvitteringId: opplastingResponseJson.id,
+            blobId: opplastingResponseJson.id,
             navn: valgtFil?.name,
             storrelse: valgtFil?.size,
-            belop: methods.getValues('belop_input'),
-            fom: dato,
-            // tom?: Date; // TODO: Brukes tom, eller bare fom
+            belop: methods.getValues('belop_input') * 100,
+            datoForReise: dato,
             transportmiddel: methods.getValues('transportmiddel')
         })
 
@@ -114,7 +119,7 @@ const KvitteringForm = () => {
                         <Controller
                             control={methods.control}
                             name="dato_input"
-                            defaultValue={kvittering?.fom || ''}
+                            defaultValue={kvittering?.datoForReise || ''}
                             rules={{
                                 validate: () => {
                                     const div: HTMLDivElement | null = document.querySelector('.nav-datovelger__input')
@@ -146,7 +151,8 @@ const KvitteringForm = () => {
                             )}
                         />
 
-                        <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
+                        <Normaltekst tag="div" role="alert" aria-live="assertive"
+                            className="skjemaelement__feilmelding">
                             <Vis hvis={methods.errors['dato_input']}>
                                 <p>{tekst('kvittering_modal.dato.feilmelding')}</p>
                             </Vis>
@@ -178,7 +184,8 @@ const KvitteringForm = () => {
                             })}
                         </select>
 
-                        <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
+                        <Normaltekst tag="div" role="alert" aria-live="assertive"
+                            className="skjemaelement__feilmelding">
                             <Vis hvis={methods.errors['transportmiddel']}>
                                 <p>{tekst('kvittering_modal.transportmiddel.feilmelding')}</p>
                             </Vis>
@@ -206,7 +213,8 @@ const KvitteringForm = () => {
                                 (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
                             }
                         />
-                        <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
+                        <Normaltekst tag="div" role="alert" aria-live="assertive"
+                            className="skjemaelement__feilmelding">
                             <Vis hvis={methods.errors['belop_input']}>
                                 <p>{tekst('kvittering_modal.belop.feilmelding')}</p>
                             </Vis>

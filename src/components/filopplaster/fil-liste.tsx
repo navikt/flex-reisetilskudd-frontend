@@ -37,7 +37,8 @@ const FilListe = ({ fjernKnapp }: Props) => {
     const forceUpdate = useForceUpdate()
 
     const slettKvittering = (kvitto: Kvittering) => {
-        del(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${kvitto.reisetilskuddId}/kvittering/${kvitto.kvitteringId}`)
+        const reisetilskuddId = valgtReisetilskudd?.id
+        del(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${reisetilskuddId}/kvittering/${kvitto.kvitteringId}`)
             .then(() => {
                 kvitteringer = kvitteringer.filter((kvittering) =>
                     kvittering.kvitteringId !== kvitto.kvitteringId
@@ -59,9 +60,9 @@ const FilListe = ({ fjernKnapp }: Props) => {
 
     const sorterteKvitteringer = () => {
         if (sortering === Sortering.DatoMax) {
-            kvitteringer.sort((a, b) => (a.fom! > b.fom!) ? -1 : 1)
+            kvitteringer.sort((a, b) => (a.datoForReise! > b.datoForReise!) ? -1 : 1)
         } else if (sortering === Sortering.DatoMin) {
-            kvitteringer.sort((a, b) => (a.fom! > b.fom!) ? 1 : -1)
+            kvitteringer.sort((a, b) => (a.datoForReise! > b.datoForReise!) ? 1 : -1)
         } else if (sortering === Sortering.TransportMax) {
             kvitteringer.sort((a, b) => (a.transportmiddel! > b.transportmiddel!) ? -1 : 1)
         } else if (sortering === Sortering.TransportMin) {
@@ -78,7 +79,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
             .filter((kvittering) => kvittering.belop)
             .map((kvittering) => kvittering.belop!)
             .reduce((a, b) => a + b, 0.0)
-        : (0.0))
+        : (0.0))/100
 
     return (
         <Vis hvis={valgtReisetilskudd!.kvitteringer.length > 0}>
@@ -142,14 +143,14 @@ const FilListe = ({ fjernKnapp }: Props) => {
                         <tr key={idx}>
                             <td className="dato">
                                 <button tabIndex={0} className="lenkeknapp" onClick={() => visKvittering(idx)}>
-                                    {kvittering.fom ? dayjs(kvittering.fom).format('DD.MM.YYYY') : ''}
+                                    {kvittering.datoForReise ? dayjs(kvittering.datoForReise).format('DD.MM.YYYY') : ''}
                                 </button>
                             </td>
                             <td className="transport">
                                 {Transportmiddel[kvittering.transportmiddel!]}
                             </td>
                             <td className="belop">
-                                {formatterTall(kvittering.belop)} kr
+                                {formatterTall(kvittering.belop!/100)} kr
                             </td>
                             <td>
                                 <button className="lenkeknapp slett-knapp"
@@ -158,7 +159,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
                                     <img src={slettFilIkon} className="slett-img" alt="" />
                                 </button>
                                 <Vis hvis={env.isQ1 || env.isDev}>
-                                    <a style={{ marginLeft: '10px', color: 'green' }} href={`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering/${kvittering.kvitteringId}`}
+                                    <a style={{ marginLeft: '10px', color: 'green' }} href={`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering/${kvittering.blobId}`}
                                         target="blank">se bilde</a>
                                 </Vis>
                             </td>
