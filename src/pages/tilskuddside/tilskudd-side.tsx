@@ -19,7 +19,6 @@ import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
-import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -83,8 +82,6 @@ const TilskuddSide = () => {
                 <Vis hvis={idNum === 4}>
                     <Hovedpunkter />
                 </Vis>
-
-                <TilbakeTilSykefravaer />
             </div>
         </>
     )

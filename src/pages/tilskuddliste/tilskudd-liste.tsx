@@ -12,7 +12,6 @@ import { Brodsmule } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
-import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [ {
     tittel: tekst('tilskudd.liste.tittel'),
@@ -36,10 +35,7 @@ const TilskuddListe = () => {
                 <Vis hvis={reisetilskuddene === undefined}>
                     <Normaltekst>{tekst('tilskudd.liste.feilmelding')}</Normaltekst>
                 </Vis>
-
                 <TilskuddTeasere />
-
-                <TilbakeTilSykefravaer />
             </div>
         </>
     )

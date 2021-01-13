@@ -18,7 +18,6 @@ import { Knapp } from 'nav-frontend-knapper'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
-import TilbakeTilSykefravaer from '../../components/side-nav/tilbake-til-sykefravaer'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -106,8 +105,6 @@ const AvbruttSide = () => {
                 </Knapp>
 
                 <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
-
-                <TilbakeTilSykefravaer />
             </div>
         </>
     )
