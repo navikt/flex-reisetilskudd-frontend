@@ -1,8 +1,18 @@
 @import '../../../node_modules/nav-frontend-core/less/_variabler';
 
 .tabell--stripet.fil_liste {
+    margin-top: 1.5rem;
+
     th, td {
         padding: 0.75rem 0.5rem;
+
+        &:first-child {
+            padding-left: 1rem;
+        }
+
+        &:last-child {
+            padding-right: 1rem;
+        }
     }
 
     th {
@@ -37,8 +47,24 @@
         }
     }
 
+    td.dato {
+        .lenkeknapp {
+            text-transform: capitalize;
+        }
+    }
+
     td.belop {
         padding-right: 0.6rem;
+        text-align: right;
+    }
+
+    td .juster {
+        display: flex;
+        align-items: center;
+
+        .lenke {
+            margin-left: 0.5rem;
+        }
     }
 
     .belop {
@@ -49,7 +75,7 @@
     tbody.sumlinje {
         tr {
             td {
-                background: none;
+                background: 0;
                 border-bottom: 0;
             }
         }
