@@ -16,6 +16,7 @@ import Vis from '../diverse/vis'
 import slettFilIkon from './slett-fil-ikon.svg'
 import NavFrontendChevron from 'nav-frontend-chevron'
 import { getLedetekst, tekst } from '../../utils/tekster'
+import Lenke from 'nav-frontend-lenker'
 
 interface Props {
     fjernKnapp?: boolean
@@ -79,7 +80,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
             .filter((kvittering) => kvittering.belop)
             .map((kvittering) => kvittering.belop!)
             .reduce((a, b) => a + b, 0.0)
-        : (0.0))/100
+        : (0.0)) / 100
 
     return (
         <Vis hvis={valgtReisetilskudd!.kvitteringer.length > 0}>
@@ -90,7 +91,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
                             <th>
                                 <div className="sortering__heading">
                                     <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp">
-                                    Utlegg
+                                        Utlegg
                                     </button>
                                     <span className="sortering__chevron">
                                         <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp">
@@ -105,7 +106,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
                             <th>
                                 <div className="sortering__heading">
                                     <button onClick={() => setSortering(Sortering.TransportMin)} className="lenkeknapp">
-                                    Transport
+                                        Transport
                                     </button>
                                     <span className="sortering__chevron">
                                         <button onClick={() => setSortering(Sortering.TransportMax)}
@@ -122,7 +123,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
                             <th>
                                 <div className="sortering__heading belop">
                                     <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp">
-                                    Beløp
+                                        Beløp
                                     </button>
                                     <span className="sortering__chevron">
                                         <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp">
@@ -143,25 +144,33 @@ const FilListe = ({ fjernKnapp }: Props) => {
                         <tr key={idx}>
                             <td className="dato">
                                 <button tabIndex={0} className="lenkeknapp" onClick={() => visKvittering(idx)}>
-                                    {kvittering.datoForReise ? dayjs(kvittering.datoForReise).format('DD.MM.YYYY') : ''}
+                                    {kvittering.datoForReise
+                                        ? dayjs(kvittering.datoForReise).format('dddd DD.MM.YYYY')
+                                        : ''
+                                    }
                                 </button>
                             </td>
                             <td className="transport">
                                 {Transportmiddel[kvittering.transportmiddel!]}
                             </td>
                             <td className="belop">
-                                {formatterTall(kvittering.belop!/100)} kr
+                                {formatterTall(kvittering.belop! / 100)} kr
                             </td>
                             <td>
-                                <button className="lenkeknapp slett-knapp"
-                                    onClick={() => slettKvittering(kvittering)} tabIndex={0}
-                                >
-                                    <img src={slettFilIkon} className="slett-img" alt="" />
-                                </button>
-                                <Vis hvis={env.isQ1 || env.isDev}>
-                                    <a style={{ marginLeft: '10px', color: 'green' }} href={`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering/${kvittering.blobId}`}
-                                        target="blank">se bilde</a>
-                                </Vis>
+                                <div className="juster">
+                                    <button className="lenkeknapp slett-knapp"
+                                        onClick={() => slettKvittering(kvittering)} tabIndex={0}
+                                    >
+                                        <img src={slettFilIkon} className="slett-img" alt="" />
+                                    </button>
+                                    <Vis hvis={env.isQ1 || env.isDev}>
+                                        <Lenke target="_blank"
+                                            href={`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering/${kvittering.blobId}`}
+                                        >
+                                            se bilde
+                                        </Lenke>
+                                    </Vis>
+                                </div>
                             </td>
                         </tr>
                     ))}
