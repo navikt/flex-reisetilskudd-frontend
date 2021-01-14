@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Brodsmule, ReisetilskuddStatus, Sykmelding } from '../../types/types'
+import { Brodsmule, Sykmelding } from '../../types/types'
 import { tekst } from '../../utils/tekster'
 import { SEPARATOR } from '../../utils/constants'
 import { useAppStore } from '../../data/stores/app-store'
@@ -48,14 +48,6 @@ const TilskuddStart = () => {
 
     if (!valgtReisetilskudd) return null
 
-    const alertstripeType = () => {
-        if (valgtReisetilskudd.status === ReisetilskuddStatus.SENDBAR) {
-            return 'suksess'
-        } else {
-            return 'info'
-        }
-    }
-
     return (
         <>
             <Banner tittel={tekst('banner.sidetittel')} />
@@ -63,8 +55,6 @@ const TilskuddStart = () => {
 
             <div className="limit">
                 <Veileder />
-
-                <KanSendesAlertStripe />
 
                 <Ekspanderbartpanel className="hvem-kan-faa" tittel={
                     <Undertittel>{tekst('tilskudd.start.hvem-kan-faa')}</Undertittel>
@@ -75,6 +65,8 @@ const TilskuddStart = () => {
                 <Mobil />
 
                 <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
+
+                <KanSendesAlertStripe />
 
                 <div className="knapperad">
                     <Link to={`/soknaden/${id}/${steg}`} className="knapp knapp--hoved">

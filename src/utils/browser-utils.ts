@@ -1,5 +1,7 @@
 // Get the top position of an element in the document
 
+import { CalendarPlacement } from 'nav-datovelger/lib/types'
+
 export function erSynligIViewport(element: HTMLElement) {
     if (!element) {
         return false
@@ -11,4 +13,12 @@ export function erSynligIViewport(element: HTMLElement) {
         rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     )
+}
+
+export function skalBrukeFullskjermKalender(): CalendarPlacement {
+    if (window.innerWidth < 768) {
+        return 'fullscreen'
+    } else {
+        return 'responsive'
+    }
 }

@@ -1,15 +1,12 @@
 import dayjs from 'dayjs'
-import parser from 'html-react-parser'
 import { Datepicker } from 'nav-datovelger'
 import { Knapp } from 'nav-frontend-knapper'
 import NavFrontendSpinner from 'nav-frontend-spinner'
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi'
 import React, { useEffect, useState } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
 import useForceUpdate from 'use-force-update'
 
-import { RouteParams } from '../../../app'
 import { post } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
 import { Kvittering, Transportmiddel } from '../../../types/types'
@@ -19,6 +16,9 @@ import { logger } from '../../../utils/logger'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
+import validerDato from '../../../utils/validering'
+import { skalBrukeFullskjermKalender } from '../../../utils/browser-utils'
+import { dayjsToDate } from '../../../utils/dato'
 
 const formaterteFiltyper = env.formaterteFiltyper
 const maksFilstorrelse = formaterFilstørrelse(env.maksFilstørrelse)
@@ -27,7 +27,6 @@ const KvitteringForm = () => {
     const {
         valgtReisetilskudd, setValgtReisetilskudd, kvitteringIndex, setOpenModal, valgtFil
     } = useAppStore()
-    const { id } = useParams<RouteParams>()
     const [ laster, setLaster ] = useState<boolean>(false)
     const [ kvittering, setKvittering ] = useState<Kvittering>()
     const [ dato, setDato ] = useState<string>('')
@@ -123,29 +122,44 @@ const KvitteringForm = () => {
                             rules={{
                                 validate: () => {
                                     const div: HTMLDivElement | null = document.querySelector('.nav-datovelger__input')
-                                    // 2020-01-20 //
-                                    if (dato === '' || !dato.match(RegExp('\\d{4}-\\d{2}-\\d{2}'))) {
+                                    const validert = validerDato(
+                                        methods.getValues(),
+                                        valgtReisetilskudd?.fom,
+                                        valgtReisetilskudd?.tom
+                                    )
+                                    if (validert !== true) {
                                         div?.classList.add('skjemaelement__input--harFeil')
-                                        return tekst('kvittering_modal.dato.feilmelding')
+                                        return validert
                                     }
 
                                     div?.classList.remove('skjemaelement__input--harFeil')
-                                    return true
+                                    return validert
                                 }
                             }}
                             render={({ name }) => (
                                 <Datepicker
                                     locale={'nb'}
                                     inputId="dato_input"
-                                    onChange={setDato}
+                                    onChange={(value) => {
+                                        methods.setValue(name, value)
+                                        setDato(value)
+                                    }}
                                     value={dato}
                                     inputProps={{
                                         name: name,
                                     }}
-                                    calendarSettings={{ showWeekNumbers: true }}
+                                    calendarSettings={{
+                                        showWeekNumbers: true,
+                                        position: skalBrukeFullskjermKalender()
+                                    }}
                                     showYearSelector={false}
                                     limitations={{
                                         weekendsNotSelectable: false,
+                                        minDate: valgtReisetilskudd?.fom || undefined,
+                                        maxDate: valgtReisetilskudd?.tom || undefined
+                                    }}
+                                    dayPickerProps={{
+                                        initialMonth: dayjsToDate(valgtReisetilskudd?.fom)
                                     }}
                                 />
                             )}
@@ -154,7 +168,7 @@ const KvitteringForm = () => {
                         <Normaltekst tag="div" role="alert" aria-live="assertive"
                             className="skjemaelement__feilmelding">
                             <Vis hvis={methods.errors['dato_input']}>
-                                <p>{tekst('kvittering_modal.dato.feilmelding')}</p>
+                                <p>{methods.errors['dato_input']?.message}</p>
                             </Vis>
                         </Normaltekst>
                     </div>
@@ -199,24 +213,24 @@ const KvitteringForm = () => {
                         <input
                             ref={methods.register({
                                 required: tekst('kvittering_modal.belop.feilmelding'),
-                                min: 0,
-                                max: 10000
+                                min: { value: 0, message: 'Beløp kan ikke være negativt' },
+                                max: { value: 10000, message: 'Beløp kan ikke være større enn 10 000' }
                             })}
                             type="number"
                             id="belop_input"
                             name="belop_input"
-                            inputMode={'numeric'}
-                            pattern="[0-9]*"
+                            inputMode={'decimal'}
                             defaultValue={kvittering?.belop || ''}
                             className={
                                 'skjemaelement__input input--m periode-element' +
                                 (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
                             }
+                            step={0.01}     // Setter minste lovlige endring i desimaler
                         />
                         <Normaltekst tag="div" role="alert" aria-live="assertive"
                             className="skjemaelement__feilmelding">
                             <Vis hvis={methods.errors['belop_input']}>
-                                <p>{tekst('kvittering_modal.belop.feilmelding')}</p>
+                                <p>{methods.errors['belop_input']?.message}</p>
                             </Vis>
                         </Normaltekst>
                     </div>

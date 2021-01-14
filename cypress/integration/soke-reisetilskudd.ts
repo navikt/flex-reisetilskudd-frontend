@@ -1,8 +1,8 @@
-import { apenReisetilskudd } from '../../src/data/mock/data/reisetilskudd'
+import { sendbarReisetilskudd } from '../../src/data/mock/data/reisetilskudd'
 
 describe('Tester reisetilskuddsøknaden', () => {
 
-    const reisetilskudd = apenReisetilskudd
+    const reisetilskudd = sendbarReisetilskudd
 
     before(() => {
         cy.visit('http://localhost:3000')
@@ -13,13 +13,14 @@ describe('Tester reisetilskuddsøknaden', () => {
         cy.get(`.tilskudd__teasere a[href*=${reisetilskudd.reisetilskuddId}]`).click()
     })
 
-    describe('Utfylling og validering av startsiden', () => {
-        it('finner videreknappen', () => {
+    describe('Soknadstart', () => {
+        it('Finner videreknappen', () => {
             cy.get('.knapperad .knapp--hoved').should('be.visible').click()
         })
+        // TODO: Sjekk innhold i sykmelding
     })
 
-    describe('Utfylling og validering av side 1', () => {
+    describe('Reisetilskudd side 1', () => {
         it('Inneholder content', () => {
             cy.get('.horisontal-radio').should('be.visible')
         })
@@ -40,13 +41,13 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.get('#utbetaling-meg').click({ force: true }).should('be.checked')
         })
 
-        it('finner videreknappen', () => {
+        it('Finner videreknappen', () => {
             cy.get('.knapperad .knapp--hoved').should('be.visible').click()
         })
     })
 
-    describe('Utfylling av side 2', () => {
-        it('fyller ut går, egen bil, klikker på hjelpetekst, fyller inn km', () => {
+    describe('Reisetilskudd side 2', () => {
+        it('Fyller ut går, egen bil, klikker på hjelpetekst, fyller inn km', () => {
             cy.url().should('include', `/soknaden/${reisetilskudd.reisetilskuddId}/2`)
 
             cy.get('label[for=transport-ja]').click({ force: true })
@@ -63,7 +64,7 @@ describe('Tester reisetilskuddsøknaden', () => {
         })
     })
 
-    describe('Innholdsvalidering side 3', () => {
+    describe('Reisetilskudd side 3', () => {
 
         it('Sjekker at siden inneholder elementer', () => {
             cy.url().should('include', `/soknaden/${reisetilskudd.reisetilskuddId}/3`)
@@ -73,53 +74,81 @@ describe('Tester reisetilskuddsøknaden', () => {
         })
 
         it('Sjekker at utlegg-modalen inneholder opplastingform', () => {
-            cy.contains('Kvitteringer for reise')
+            cy.contains('Legg til reise')
 
             cy.get('.nav-datovelger__kalenderknapp').click()
-            cy.get('.DayPicker-Body').contains('10').click({ force: true })
+            cy.get('.DayPicker-Body').contains('13').click()
 
-            /*
-                        cy.get('input[name=belop_input]').type('1000')
-                        cy.get('select[name=transportmiddel]').select('Taxi')
+            cy.get('input[name=belop_input]').type('1000')
 
-                        cy.get('.filopplasteren input[type=file]').attachFile('icon.png')
-                        cy.get('.knapperad .knapp--hoved').click({ force: true })
-            */
+            cy.get('select[name=transportmiddel]').select('TAXI')
+
+            cy.get('.filopplasteren input[type=file]').attachFile('icon.png')
+
+            cy.get('.lagre-kvittering')
+                .contains('Bekreft')
+                .click()
+        })
+
+        it('Fil list oppdateres med kvittering', () => {
+            cy.get('.fil_liste')
+
+            cy.get('.sortering__heading').contains('Utlegg')
+            cy.get('.sortering__heading').contains('Transport')
+            cy.get('.sortering__heading').contains('Beløp')
+
+            cy.get('.dato').contains('onsdag 13.05.2020')
+            cy.get('.transport').contains('Taxi')
+            cy.get('.belop').contains('1 000 kr')
+
+            cy.get('.sumlinje').contains('1 utlegg på til sammen')
+            cy.get('.sumlinje .belop').contains('1 000 kr')
+
+            cy.get('.knapperad').contains('Gå videre').click()
         })
     })
 
-    /*
-        describe('Innholdsvalidering side 4', () => {
-            it('sjekker at oppsummeringssiden inneholder elementer', () => {
-                cy.url().should('include', `/soknaden/${mockReisetilskudd[0].reisetilskuddId}/4`)
-                cy.get('.soknad-info-utvid').click()
-                cy.contains('Oppsummering av søknaden')
-                cy.contains('Hvem skal pengene utbetales til?')
-                cy.contains('Hvordan reiste du før sykmeldingen?')
-                cy.contains('Opplastede kvitteringer')
-                cy.contains('Totalt beløp:')
-
-            })
+    describe('Reisetilskudd side 4', () => {
+        // TODO: Er dette siste versjon av oppsummering?
+        it('Oppsummering av søknaden', () => {
+            cy.url().should('include', `/soknaden/${reisetilskudd.reisetilskuddId}/4`)
+            cy.get('.soknad-info-utvid').click()
+            cy.contains('Oppsummering av søknaden')
+            cy.contains('Hvem skal pengene utbetales til?')
+            cy.contains('Hvordan reiste du før sykmeldingen?')
+            cy.contains('Opplastede kvitteringer')
         })
-    */
 
-    /*
-        describe('Bekreftelsesside', () => {
-            it('sjekker at bekreftelsessiden inneholder elementer', () => {
-                cy.url().should('include', 'bekreftelse')
+        it('Reisetilskudd tekster', () => {
+            cy.get('.typo-undertittel').contains('Bekreft og send søknaden')
+            cy.get('.typo-normal').contains('Sjekk at du har fått med alle nødvendige opplysninger og kvitteringer. Når du sender søknaden, går den til NAV. POSTEN NORGE får samtidig en kopi.')
 
-                cy.get('.liste__bakgrunn').should('be.visible')
-                cy.get('.sirkel__tall').should('be.visible')
+            cy.get('.typo-element').contains('Hovedpunkter fra søknaden')
+            cy.contains('Du søker om reisetilskudd mellom 13. og 19. mai 2020')
+            cy.contains('Du har krysset av for at arbeidsgiveren din betaler utgiftene. Reisetilskuddet fra NAV går derfor til arbeidsgiveren din.')
 
-                cy.contains('Du har sendt inn søknaden')
-                cy.contains('Søknaden blir behandlet')
+            cy.get('.bekreftCheckboksPanel').contains('Jeg har lest informasjonen jeg har fått underveis i søknaden og bekrefter at opplysningene jeg har gitt er korrekte. Jeg bekrefter også at jeg har lest og forstått')
+            cy.get('.bekreftCheckboksPanel input').click()
 
-                cy.contains('Les mer om reglene for reisetilskudd')
-                cy.get('a[href*="www.nav.no"]').should('be.visible')
-
-                cy.contains('sykepenger til selvstendig næringsdrivende og frilansere')
-                cy.contains('Les om hva du må gjøre for å beholde sykepengene')
-            })
+            cy.get('.knapperad').contains('Send inn søknaden').click()
         })
-    */
+    })
+
+    describe('Bekreftelsesside', () => {
+        it('Sjekker at bekreftelsessiden inneholder elementer', () => {
+            cy.url().should('include', `/soknaden/${reisetilskudd.reisetilskuddId}/bekreftelse`)
+
+            cy.get('.alertstripe--suksess').contains('Søknaden ble sendt til NAV')
+            cy.get('.alertstripe--suksess').contains('Sendt: ')
+
+            cy.get('.soknad-info-utvid')
+
+            cy.get('.typo-undertittel').contains('Du får brev fra oss')
+            cy.get('.typo-normal').contains('Når vi har behandlet søknaden din, får du svaret i Digipost. Har du reservert deg mot digital post, får du et brev på papir.')
+
+            cy.get('.sykmelding-panel')
+                .should('be.visible')
+                .and('have.text', 'Opplysninger fra sykmeldingen')
+        })
+    })
 })
