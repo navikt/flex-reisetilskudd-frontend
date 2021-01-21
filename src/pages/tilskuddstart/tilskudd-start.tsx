@@ -65,7 +65,7 @@ const TilskuddStart = () => {
 
                 <Mobil />
 
-                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
+                <SykmeldingPanel apen={true} />
 
                 <KanSendesAlertStripe />
 

@@ -1,16 +1,16 @@
 const SykmeldingTekster: any = {
     'nb': {
-        'sykmelding.periode': 'Periode',
-        'sykmelding.diagnose': 'Diagnose',
-        'sykmelding.diagnosekode': 'Diagnosekode',
-        'sykmelding.bidiagnose': 'Bidiagnose',
-        'sykmelding.reisetilskudd': 'Reisetilskudd',
-        'sykmelding.beskriv': 'Beskriv eventelle hesyn som må tas på arbeidsplassen',
-        'sykmelding.arbeidsgiver': 'Arbeidsgiver som legen har skrevet inn',
-        'sykmelding.lege-sykmelder': 'Lege/sykmelder',
+        'sykmelding.tittel': 'Opplysninger fra sykmeldingen',
         'sykmelding.dessverre': 'Vi kunne dessverre ikke hente opplysninger fra sykmeldingen din, prøv igjen senere',
-        'sykmelding.periodetekst': '%FRA% til %TIL%',
-        'sykmelding.fant-ikke': 'Kunne dessverre ikke finne perioden',
+        'sykmelding.periode': 'Periode',
+        'sykmelding.arbeidsgiver': 'Arbeidsgiver',
+        'sykmelding.dato': 'Dato sykmeldingen ble skrevet',
+        'sykmelding.arbeidssituasjon': 'Hva passer best for deg?',
+        'sykmelding.arbeidssituasjon.alternativ.frilanser': 'Jeg er frilanser',
+        'sykmelding.arbeidssituasjon.alternativ.naeringsdrivende': 'Jeg er selvstendig næringsdrivende',
+        'sykmelding.arbeidssituasjon.alternativ.annet': 'Uavklart arbeidssituasjon',
+        'sykmelding.arbeidssituasjon.alternativ.arbeidsledig': 'Jeg er arbeidsledig',
+        'sykmelding.arbeidssituasjon.alternativ.arbeidstaker': 'Jeg er ansatt',
     }, 'en': {}
 }
 

@@ -60,3 +60,7 @@ export const fraBackendTilDate = (datoArg: string) => {
     }))
     return new Date(datoer[0], datoer[1] - 1, datoer[2])
 }
+
+export function getDuration(from: Date, to: Date) {
+    return Math.round(Math.floor(to.getTime() - from.getTime()) / (1000 * 60 * 60 * 24)) + 1
+}

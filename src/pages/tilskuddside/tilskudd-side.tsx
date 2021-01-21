@@ -66,7 +66,7 @@ const TilskuddSide = () => {
                     <SoknadInfoUtvid />
                 </Vis>
 
-                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
+                <SykmeldingPanel />
 
                 <Vis hvis={idNum === 1}>
                     <UtbetalingTil />

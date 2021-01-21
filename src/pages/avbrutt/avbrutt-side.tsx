@@ -105,7 +105,7 @@ const AvbruttSide = () => {
                     {tekst('avbrutt.gjenapne')}
                 </Knapp>
 
-                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
+                <SykmeldingPanel />
             </div>
         </>
     )
