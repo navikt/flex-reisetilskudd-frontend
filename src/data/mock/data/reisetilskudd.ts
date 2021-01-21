@@ -1,5 +1,6 @@
 import mockKvitteringer from './kvitteringer'
 import { RSReisetilskudd } from '../../../types/rs-types/rsReisetilskudd'
+import { mockSykmelding } from './sykmeldinger'
 
 export const avbruttReisetilskudd: RSReisetilskudd = {
     fnr: '01010112345',
@@ -18,7 +19,7 @@ export const avbruttReisetilskudd: RSReisetilskudd = {
     egenBil: 0,
 
     reisetilskuddId: '28fa10b8-c9af-4a7a-a0b2-90caed65ab4c',
-    sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+    sykmeldingId: mockSykmelding.id,
 
     kvitteringer: [],
 }
@@ -39,7 +40,7 @@ export const fremtidigReisetilskudd: RSReisetilskudd = {
     egenBil: 13,
 
     reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
-    sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+    sykmeldingId: mockSykmelding.id,
 
     kvitteringer: [],
 }
@@ -61,7 +62,7 @@ export const sendtReisetilskudd: RSReisetilskudd = {
     egenBil: 13,
 
     reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-90caed65ab4c',
-    sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+    sykmeldingId: mockSykmelding.id,
 
     kvitteringer: mockKvitteringer,
 }
@@ -82,7 +83,7 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
     egenBil: 0,
 
     reisetilskuddId: '28fas0b8-c9af-4a7a-a0b2-029j3fj26',
-    sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+    sykmeldingId: mockSykmelding.id,
 
     kvitteringer: [],
 }
@@ -103,7 +104,7 @@ export const åpenReisetilskudd: RSReisetilskudd = {
     egenBil: 0,
 
     reisetilskuddId: 'ijfj2f-c9af-4a7a-a0b2-a381c13',
-    sykmeldingId: '7e90121c-b64b-4a1c-b7a5-93c9d95aba47',
+    sykmeldingId: mockSykmelding.id,
 
     kvitteringer: [],
 }

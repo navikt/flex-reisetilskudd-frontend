@@ -14,11 +14,12 @@ import Opplasting from '../../components/sporsmal/opplasting/opplasting'
 import TransportMiddel from '../../components/sporsmal/transport/transport-middel'
 import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
 import { useAppStore } from '../../data/stores/app-store'
-import { Brodsmule, Sykmelding } from '../../types/types'
+import { Brodsmule } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
+import { Sykmelding } from '../../types/sykmelding'
 
 const brodsmuler: Brodsmule[] = [
     {

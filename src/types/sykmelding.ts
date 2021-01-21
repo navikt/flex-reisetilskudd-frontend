@@ -296,7 +296,7 @@ export interface Behandler {
     tlf?: string;
 }
 
-export class SykmeldingNY {
+export class Sykmelding {
     id: string;
     mottattTidspunkt: Date;
     behandlingsutfall: Behandlingsutfall;
