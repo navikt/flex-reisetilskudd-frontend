@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Brodsmule, Sykmelding } from '../../types/types'
+import { Brodsmule } from '../../types/types'
 import { tekst } from '../../utils/tekster'
 import { SEPARATOR } from '../../utils/constants'
 import { useAppStore } from '../../data/stores/app-store'
@@ -16,6 +16,7 @@ import HvemKanFaa from './hvem-kan-faa'
 import AvbrytKnapp from '../../components/avbryt/avbryt-knapp'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 import KanSendesAlertStripe from '../../components/diverse/kan-sendes-alert-stripe'
+import { Sykmelding } from '../../types/sykmelding'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -64,7 +65,7 @@ const TilskuddStart = () => {
 
                 <Mobil />
 
-                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
+                <SykmeldingPanel apen={true} />
 
                 <KanSendesAlertStripe />
 

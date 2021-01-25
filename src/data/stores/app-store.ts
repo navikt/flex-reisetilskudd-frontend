@@ -1,7 +1,8 @@
 import constate from 'constate'
 import { useState } from 'react'
 
-import { Reisetilskudd, Sykmelding } from '../../types/types'
+import { Reisetilskudd } from '../../types/types'
+import { Sykmelding } from '../../types/sykmelding'
 
 export const [ AppStoreProvider, useAppStore ] = constate(() => {
     const [ reisetilskuddene, setReisetilskuddene ] = useState<Reisetilskudd[]>([])

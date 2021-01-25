@@ -12,7 +12,7 @@ const mock = FetchMock.configure({
     )
 })
 
-mock.get(`${env.sykmeldingerBackendProxyRoot}/api/v1/syforest/sykmeldinger`,
+mock.get(`${env.sykmeldingerBackendProxyRoot}/api/v1/sykmeldinger`,
     (req, res, ctx) => res(ctx.json(sykmeldinger)))
 
 mock.get(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd`,

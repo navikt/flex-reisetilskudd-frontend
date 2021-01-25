@@ -2,7 +2,7 @@ import Spinner from 'nav-frontend-spinner'
 import React, { useEffect } from 'react'
 
 import IngenData from '../pages/feilsider/ingen-data'
-import { Reisetilskudd, Sykmelding } from '../types/types'
+import { Reisetilskudd } from '../types/types'
 import env from '../utils/environment'
 import { logger } from '../utils/logger'
 import { hentLoginUrl } from '../utils/utils'
@@ -10,6 +10,7 @@ import useFetch from './rest/use-fetch'
 import { FetchState, hasAny401, hasAnyFailed, hasData, isAnyNotStartedOrPending, isNotStarted } from './rest/utils'
 import { useAppStore } from './stores/app-store'
 import { RSReisetilskudd } from '../types/rs-types/rsReisetilskudd'
+import { Sykmelding } from '../types/sykmelding'
 
 export function DataFetcher(props: { children: any }) {
     const { setReisetilskuddene, setSykmeldinger } = useAppStore()
@@ -29,7 +30,7 @@ export function DataFetcher(props: { children: any }) {
             })
         }
         if (isNotStarted(sykmeldinger)) {
-            sykmeldinger.fetch(`${env.sykmeldingerBackendProxyRoot}/api/v1/syforest/sykmeldinger`, {
+            sykmeldinger.fetch(`${env.sykmeldingerBackendProxyRoot}/api/v1/sykmeldinger`, {
                 credentials: 'include',
             }, (fetchState: FetchState<Sykmelding[]>) => {
                 if (hasData(fetchState)) {

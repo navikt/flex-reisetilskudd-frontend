@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 
 import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
-import { Brodsmule, Sykmelding } from '../../types/types'
+import { Brodsmule } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
@@ -16,6 +16,7 @@ import { useAppStore } from '../../data/stores/app-store'
 import { useParams } from 'react-router-dom'
 import { RouteParams } from '../../app'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
+import { Sykmelding } from '../../types/sykmelding'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -70,7 +71,7 @@ const BekreftSide = () => {
                     <Normaltekst>{tekst('bekreft.brevinfo.tekst')}</Normaltekst>
                 </section>
 
-                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
+                <SykmeldingPanel />
             </div>
         </>
     )

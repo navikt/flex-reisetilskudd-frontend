@@ -7,7 +7,7 @@ import { tekst } from '../../utils/tekster'
 import { getUrlTilSoknad, redirectTilLoginHvis401, setBodyClass } from '../../utils/utils'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
-import { Brodsmule, Reisetilskudd, ReisetilskuddStatus, Sykmelding } from '../../types/types'
+import { Brodsmule, Reisetilskudd, ReisetilskuddStatus } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import { useAppStore } from '../../data/stores/app-store'
@@ -18,6 +18,7 @@ import { Knapp } from 'nav-frontend-knapper'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
+import { Sykmelding } from '../../types/sykmelding'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -104,7 +105,7 @@ const AvbruttSide = () => {
                     {tekst('avbrutt.gjenapne')}
                 </Knapp>
 
-                <SykmeldingPanel tittel={tekst('tilskudd.side.sykmeldinginfo')} />
+                <SykmeldingPanel />
             </div>
         </>
     )
