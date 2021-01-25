@@ -101,8 +101,11 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         })
 
         it('Laster inn sykmelding-panel', () => {
-            cy.get('.sykmelding-panel').should('be.visible')
-            cy.get('.sykmelding-panel .sykmelding-panel__tittel').should('be.visible').and('have.text', 'Opplysninger fra sykmeldingen')
+            cy.get('.sykmelding-panel .ekspanderbartPanel__hode')
+                .should('have.attr', 'aria-expanded', 'true')
+            cy.get('.sykmelding-panel .sykmelding-panel__tittel')
+                .should('be.visible')
+                .and('have.text', 'Opplysninger fra sykmeldingen')
         })
 
         it('Laster inn alertstripe med kan-sendes-dato', () => {

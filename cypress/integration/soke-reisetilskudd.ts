@@ -14,10 +14,43 @@ describe('Tester reisetilskuddsøknaden', () => {
     })
 
     describe('Soknadstart', () => {
+        it('Opplysninger fra sykmeldingen', () => {
+            cy.get('.sykmelding-panel')
+                .should('be.visible')
+                .and('contain', 'Opplysninger fra sykmeldingen')
+
+            cy.get('.sykmelding-perioder')
+                .should('contain', 'Periode')
+                .and('contain', '1. – 7. januar 2021 • 7 dager')
+                .and('contain', 'Reisetilskudd')
+
+            cy.get('.sykmelding-panel')
+                .should('contain', 'Arbeidsgiver')
+                .and('contain', 'LOMMEN BARNEHAVE')
+                .and('contain', 'Dato sykmeldingen ble skrevet')
+                .and('contain', '1. januar 2021')
+                .and('contain', 'Hva passer best for deg?')
+                .and('contain', 'Jeg er ansatt')
+        })
+
+        it('Sykmeldingen kan minimeres', () => {
+            cy.get('.sykmelding-panel .lenkerad')
+                .contains('Lukk')
+                .click()
+
+            cy.get('.sykmelding-panel')
+                .should('not.contain', 'Dato sykmeldingen ble skrevet')
+
+            cy.get('.sykmelding-panel')
+                .click()
+
+            cy.get('.sykmelding-panel')
+                .should('contain', 'Dato sykmeldingen ble skrevet')
+        })
+
         it('Finner videreknappen', () => {
             cy.get('.knapperad .knapp--hoved').should('be.visible').click()
         })
-        // TODO: Sjekk innhold i sykmelding
     })
 
     describe('Reisetilskudd side 1', () => {

@@ -2,7 +2,7 @@ import { Sykmelding } from '../../../types/sykmelding'
 
 export const mockSykmelding = new Sykmelding({
     'id': '3e3352a1-2b99-4cd6-8268-415842955d83',
-    'mottattTidspunkt': '2020-12-31T22:00:00Z',
+    'mottattTidspunkt': '2021-01-01T00:00:00Z',
     'behandlingsutfall': {
         'status': 'MANUAL_PROCESSING',
         'ruleHits': []
@@ -114,7 +114,7 @@ export const mockSykmelding = new Sykmelding({
         'kontaktDato': null,
         'begrunnelseIkkeKontakt': null
     },
-    'behandletTidspunkt': '2020-12-31T23:00:00Z',
+    'behandletTidspunkt': '2021-01-01T00:00:00Z',
     'behandler': {
         'fornavn': 'Frida',
         'mellomnavn': 'Perma',
