@@ -10,7 +10,7 @@
         }
     }
 
-    .tilskudd--sendt {
+    .tilskudd--tidligere {
         display: flex;
         flex-direction: column;
 
@@ -147,6 +147,31 @@
                     .teaser__tittel {
                         color: @navBla;
                         text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        .tilskudd--nye {
+            .dine-reisetilskudd {
+                &:hover {
+                    box-shadow: none;
+
+                    .tilskudd__ikon {
+                        .tilskudd__img {
+                            display: inline;
+                        }
+
+                        .tilskudd__img--hover {
+                            display: none;
+                        }
+                    }
+
+                    .ytre__del1 {
+                        .teaser__tittel {
+                            color: @navMorkGra;
+                            text-decoration: none;
+                        }
                     }
                 }
             }
