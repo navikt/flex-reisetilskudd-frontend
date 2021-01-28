@@ -14,6 +14,7 @@ import Vis from '../../diverse/vis'
 import Utvidbar from '../../utvidbar/utvidbar'
 import binders from './binders.svg'
 
+const formattertFiltyper = env.formaterteFiltyper
 const tillatteFiltyper = env.tillatteFiltyper
 const maxFilstørrelse = env.maksFilstørrelse
 const maks = formaterFilstørrelse(maxFilstørrelse)
@@ -55,7 +56,7 @@ const DragAndDrop = ({ kvittering }: Props) => {
                     setError('fil_input', {
                         type: 'skjema-feil',
                         message: getLedetekst(tekst('drag_and_drop.filtype'),
-                            { '%FILNAVN%': fil.name, '%TILLATTEFILTYPER%': tillatteFiltyper }
+                            { '%FILNAVN%': fil.name, '%TILLATTEFILTYPER%': formattertFiltyper }
                         )
                     })
                 }
@@ -135,7 +136,7 @@ const DragAndDrop = ({ kvittering }: Props) => {
 
             <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                 <Vis hvis={errors.fil_input}>
-                    <p>{tekst('kvittering_modal.filopplasting.feilmelding')}</p>
+                    <p>{errors.fil_input?.message}</p>
                 </Vis>
             </Normaltekst>
         </div>
