@@ -136,15 +136,32 @@ describe('Tester reisetilskuddsøknaden', () => {
 
             cy.get('.sumlinje').contains('1 utlegg på til sammen')
             cy.get('.sumlinje .belop').contains('1 000 kr')
+        })
 
+        it('Åpner opp en opplastet kvittering', () => {
+            cy.get('.dato')
+                .contains('onsdag 13.05.2020')
+                .click()
+
+            cy.get('#dato_input')
+                .should('have.value', '13.05.2020')
+            cy.get('#transportmiddel option[value=TAXI]')
+                .should('have.attr', 'selected')
+            cy.get('#belop_input')
+                .should('have.value', '1000')
+
+            cy.get('.lukknapp').click()
+        })
+
+        it('Går videre', () => {
             cy.get('.knapperad').contains('Gå videre').click()
+            cy.url().should('include', `/soknaden/${reisetilskudd.reisetilskuddId}/4`)
         })
     })
 
     describe('Reisetilskudd side 4', () => {
         // TODO: Er dette siste versjon av oppsummering?
         it('Oppsummering av søknaden', () => {
-            cy.url().should('include', `/soknaden/${reisetilskudd.reisetilskuddId}/4`)
             cy.get('.soknad-info-utvid').click()
             cy.contains('Oppsummering av søknaden')
             cy.contains('Hvem skal pengene utbetales til?')

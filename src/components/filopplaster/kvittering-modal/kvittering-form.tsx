@@ -223,7 +223,7 @@ const KvitteringForm = () => {
                             id="belop_input"
                             name="belop_input"
                             inputMode={'decimal'}
-                            defaultValue={kvittering?.belop || ''}
+                            defaultValue={kvittering.belop ? (kvittering.belop / 100) : ''}
                             className={
                                 'skjemaelement__input input--m periode-element' +
                                 (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
