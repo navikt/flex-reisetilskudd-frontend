@@ -34,8 +34,13 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         })
 
         it('Nye søknader', () => {
-            cy.get('.tilskudd__teasere .tilskudd--usendt')
+            cy.get('.tilskudd__teasere .tilskudd--nye')
                 .contains('Nye søknader')
+        })
+
+        it('Påbegynte søknader', () => {
+            cy.get('.tilskudd__teasere .tilskudd--usendt')
+                .contains('Påbegynte søknader')
         })
 
         it('Om reisetilskudd', () => {
