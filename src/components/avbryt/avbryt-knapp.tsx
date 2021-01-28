@@ -6,17 +6,19 @@ import { Fareknapp } from 'nav-frontend-knapper'
 import { tekst } from '../../utils/tekster'
 import { useEffect, useRef, useState } from 'react'
 import env from '../../utils/environment'
-import { getUrlTilSoknad, redirectTilLoginHvis401 } from '../../utils/utils'
+import { getUrlTilSoknad } from '../../utils/utils'
 import { useAppStore } from '../../data/stores/app-store'
 import { Reisetilskudd, ReisetilskuddStatus } from '../../types/types'
-import { logger } from '../../utils/logger'
 import { useHistory } from 'react-router-dom'
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
+import { post } from '../../data/fetcher/fetcher'
 
 const AvbrytKnapp = () => {
     const { valgtReisetilskudd, setValgtReisetilskudd, reisetilskuddene, setReisetilskuddene } = useAppStore()
     const [ avbryter, setAvbryter ] = useState<boolean>(false)
     const avbrytDialog = useRef<HTMLDivElement>(null)
     const [ vilAvbryte, setVilAvbryte ] = useState<boolean>(false)
+    const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
     const history = useHistory()
 
     useEffect(() => {
@@ -25,34 +27,26 @@ const AvbrytKnapp = () => {
         }
     }, [ vilAvbryte ])
 
-    const handleVilAvbryte = () => {
+    const handleVilAvbryte = (e: any) => {
+        e.preventDefault()
         setVilAvbryte(!vilAvbryte)
     }
 
     const handleAvbryt = async() => {
         if(avbryter) return
         setAvbryter(true)
-        try {
-            const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/avbryt`, {
-                method: 'POST',
-                credentials: 'include'
-            })
-            const status = res.status
-            if (redirectTilLoginHvis401(res)) {
-                return
-            }
-            else if (status === 200) {
-                const nyReisetilskudd = { ...valgtReisetilskudd, status: ReisetilskuddStatus.AVBRUTT, avbrutt: new Date() } as Reisetilskudd
-                setReisetilskuddene(reisetilskuddene.map(r => r.id === valgtReisetilskudd!.id ? nyReisetilskudd : r) as any)
-                setValgtReisetilskudd(nyReisetilskudd)
-                history.push(getUrlTilSoknad(nyReisetilskudd))
-            } else {
-                logger.error('Feil ved AVBYTING av reisetilskudd', res)
-                // TODO: Sett opp feilmelding
-            }
-        } finally {
+        post(
+            `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/avbryt`
+        ).then(() => {
+            const nyReisetilskudd = { ...valgtReisetilskudd, status: ReisetilskuddStatus.AVBRUTT, avbrutt: new Date() } as Reisetilskudd
+            setReisetilskuddene(reisetilskuddene.map(r => r.id === valgtReisetilskudd!.id ? nyReisetilskudd : r) as any)
+            setValgtReisetilskudd(nyReisetilskudd)
+            history.push(getUrlTilSoknad(nyReisetilskudd))
+        }).catch(() => {
+            setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+        }).finally(() => {
             setAvbryter(false)
-        }
+        })
     }
 
     return (
@@ -68,6 +62,13 @@ const AvbrytKnapp = () => {
                             {tekst('avbryt.ja')}
                         </Fareknapp>
                     </div>
+
+                    <Vis hvis={fetchFeilmelding}>
+                        <AlertStripeAdvarsel>
+                            <Normaltekst>{fetchFeilmelding}</Normaltekst>
+                        </AlertStripeAdvarsel>
+                    </Vis>
+
                     <button className="avbrytlenke lenke" onClick={handleVilAvbryte}>
                         {tekst('avbryt.angre')}
                     </button>

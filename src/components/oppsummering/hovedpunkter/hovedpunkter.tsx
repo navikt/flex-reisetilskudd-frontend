@@ -13,15 +13,21 @@ import { useAppStore } from '../../../data/stores/app-store'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import env from '../../../utils/environment'
-import { formatterTall, getUrlTilSoknad, redirectTilLoginHvis401 } from '../../../utils/utils'
+import {
+    formatterTall,
+    getUrlTilSoknad,
+} from '../../../utils/utils'
 import { ReisetilskuddStatus } from '../../../types/types'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 import KanSendesAlertStripe from '../../diverse/kan-sendes-alert-stripe'
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
+import { post } from '../../../data/fetcher/fetcher'
 
 const Hovedpunkter = () => {
     const { valgtReisetilskudd, reisetilskuddene, setReisetilskuddene } = useAppStore()
     const [ openPlikter, setOpenPlikter ] = useState<boolean>(false)
     const [ erBekreftet, setErBekreftet ] = useState<boolean>(false)
+    const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
     const history = useHistory()
 
     const fom = dayjs(valgtReisetilskudd!.fom)
@@ -37,25 +43,17 @@ const Hovedpunkter = () => {
             return
         }
 
-        const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' }
-        })
-
-
-        const httpCode = res.status
-        if (redirectTilLoginHvis401(res)) {
-            return
-        }
-        if ([ 200, 201, 203, 206 ].includes(httpCode)) {
+        post(
+            `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`
+        ).then(() => {
             valgtReisetilskudd.sendt = new Date()
             valgtReisetilskudd.status = ReisetilskuddStatus.SENDT
             reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
             setReisetilskuddene(reisetilskuddene)
             history.push(getUrlTilSoknad(valgtReisetilskudd))
-        }
-
+        }).catch(() => {
+            setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+        })
     }
 
     return (
@@ -101,6 +99,12 @@ const Hovedpunkter = () => {
 
                 <Vis hvis={valgtReisetilskudd?.status === ReisetilskuddStatus.ÅPEN}>
                     <KanSendesAlertStripe />
+                </Vis>
+
+                <Vis hvis={fetchFeilmelding}>
+                    <AlertStripeAdvarsel>
+                        <Normaltekst>{fetchFeilmelding}</Normaltekst>
+                    </AlertStripeAdvarsel>
                 </Vis>
 
                 <div className="knapperad">

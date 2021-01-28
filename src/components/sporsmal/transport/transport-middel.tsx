@@ -11,11 +11,12 @@ import { RouteParams } from '../../../app'
 import { put } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
 import env from '../../../utils/environment'
-import { logger } from '../../../utils/logger'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import FeilOppsummering from '../feiloppsummering/feil-oppsummering'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
+import Vis from '../../diverse/vis'
 
 interface TransportmiddelInterface {
     id: string
@@ -30,6 +31,7 @@ const TransportMiddel = () => {
     const [ jaNei, setJaNei ] = useState<string>('NEI')
     const [ offentlig, setOffentlig ] = useState<boolean>(valgtReisetilskudd!.offentlig > 0)
     const [ egenBil, setEgenBil ] = useState<boolean>(valgtReisetilskudd!.egenBil > 0)
+    const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
 
     const ekstraRef = useRef<HTMLDivElement>(null)
     const bilRef = useRef<HTMLDivElement>(null)
@@ -126,11 +128,11 @@ const TransportMiddel = () => {
             egenBil: valgtReisetilskudd!.egenBil,
             offentlig: valgtReisetilskudd!.offentlig,
         }).then(() => {
+            document.querySelector('.sidebanner')!.scrollIntoView({ behavior: 'smooth', block: 'start' })
             history.push('/soknaden/' + id + '/' + (stegNum + 1))
-        }).catch((error) => {
-            logger.error('Feil ved oppdatering av skjema', error)
+        }).catch(() => {
+            setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
         })
-        document.querySelector('.sidebanner')!.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
 
     return (
@@ -194,6 +196,11 @@ const TransportMiddel = () => {
                 </div>
 
                 <FeilOppsummering errors={methods.errors} />
+                <Vis hvis={fetchFeilmelding}>
+                    <AlertStripeAdvarsel>
+                        <Normaltekst>{fetchFeilmelding}</Normaltekst>
+                    </AlertStripeAdvarsel>
+                </Vis>
                 <div className="knapperad">
                     <Knapp type="hoved">
                         {tekst('klikkbar.videre-knapp.tekst')}

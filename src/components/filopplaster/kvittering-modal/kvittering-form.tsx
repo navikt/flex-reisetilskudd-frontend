@@ -12,16 +12,20 @@ import { useAppStore } from '../../../data/stores/app-store'
 import { Kvittering, Transportmiddel } from '../../../types/types'
 import env from '../../../utils/environment'
 import { formaterFilstørrelse } from '../../../utils/fil-utils'
-import { logger } from '../../../utils/logger'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
 import validerDato from '../../../utils/validering'
 import { skalBrukeFullskjermKalender } from '../../../utils/browser-utils'
 import { dayjsToDate } from '../../../utils/dato'
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 
 const formaterteFiltyper = env.formaterteFiltyper
 const maksFilstorrelse = formaterFilstørrelse(env.maksFilstørrelse)
+
+interface OpplastetKvittering {
+    id: string;
+}
 
 const KvitteringForm = () => {
     const {
@@ -30,6 +34,7 @@ const KvitteringForm = () => {
     const [ laster, setLaster ] = useState<boolean>(false)
     const [ kvittering, setKvittering ] = useState<Kvittering>()
     const [ dato, setDato ] = useState<string>('')
+    const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
     const forceUpdate = useForceUpdate()
 
     const methods = useForm({
@@ -65,40 +70,38 @@ const KvitteringForm = () => {
     const onSubmit = async() => {
         setLaster(true)
 
-
         const requestData = new FormData()
         const blob = await valgtFil as Blob
         requestData.append('file', blob)
 
-        const opplastingResponse = await fetch(`${env.flexGatewayRoot}/flex-bucket-uploader/opplasting`, {
+        post<OpplastetKvittering>(`${env.flexGatewayRoot}/flex-bucket-uploader/opplasting`, undefined, {
             method: 'POST',
             body: requestData,
             credentials: 'include'
-        })
-
-        const opplastingResponseJson = await opplastingResponse.json()
-
-
-        const kvitt = new Kvittering({
-            blobId: opplastingResponseJson.id,
-            navn: valgtFil?.name,
-            storrelse: valgtFil?.size,
-            belop: methods.getValues('belop_input') * 100,
-            datoForReise: dato,
-            transportmiddel: methods.getValues('transportmiddel')
-        })
-
-        post<Kvittering>(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/kvittering`, kvitt)
-            .then(() => {
-                setLaster(false)
+        }).then((opplastingResponse) => {
+            const kvitt = new Kvittering({
+                blobId: opplastingResponse.parsedBody!.id,
+                navn: valgtFil?.name,
+                storrelse: valgtFil?.size,
+                belop: methods.getValues('belop_input') * 100,
+                datoForReise: dato,
+                transportmiddel: methods.getValues('transportmiddel')
+            })
+            post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/kvittering`,
+                kvitt
+            ).then(() => {
                 setKvittering(kvitt)
                 valgtReisetilskudd?.kvitteringer.push(kvitt)
                 setValgtReisetilskudd(valgtReisetilskudd)
                 setOpenModal(false)
+            }).catch(() => {
+                setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
             })
-            .catch((error) => {
-                logger.error('Feil under opplasting av kvittering', error)
-            })
+        }).catch(() => {
+            setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+        }).finally(() => {
+            setLaster(false)
+        })
     }
 
     if (!kvittering) return null
@@ -237,6 +240,13 @@ const KvitteringForm = () => {
                 </div>
 
                 <DragAndDrop kvittering={kvittering} />
+
+                <Vis hvis={fetchFeilmelding}>
+                    <AlertStripeAdvarsel>
+                        <Normaltekst>{'TODO: Dette skal være en litt mer spesifikk liste'}</Normaltekst>
+                        <Normaltekst>{fetchFeilmelding}</Normaltekst>
+                    </AlertStripeAdvarsel>
+                </Vis>
 
                 <Normaltekst className="restriksjoner">
                     <span className="filtype">{
