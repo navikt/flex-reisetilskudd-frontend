@@ -3,7 +3,7 @@ import './tilskudd-teasere.less'
 import { HoyreChevron } from 'nav-frontend-chevron'
 import Etikett from 'nav-frontend-etiketter'
 import { Select } from 'nav-frontend-skjema'
-import { Normaltekst, Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi'
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi'
 import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -16,9 +16,6 @@ import OmReisetilskudd from './om-reisetilskudd/om-reisetilskudd'
 import SoknadHoverIkon from './soknad-hover-ikon.svg'
 import SoknadIkon from './soknad-ikon.svg'
 import { getUrlTilSoknad } from '../../utils/utils'
-import dayjs from 'dayjs'
-import ModalWrapper from 'nav-frontend-modal'
-import AlertStripe from 'nav-frontend-alertstriper'
 
 enum Sortering {
     Dato = 'Dato',
@@ -44,17 +41,42 @@ const TilskuddTeasere = () => {
         return reisetilskuddene
     }
 
-    const usendteTilskudd = reisetilskuddene.filter(r => r.status === ReisetilskuddStatus.ÅPEN || r.status === ReisetilskuddStatus.SENDBAR || r.status === ReisetilskuddStatus.FREMTIDIG)
-    const sendteTilskudd = reisetilskuddene.filter(r => r.status === ReisetilskuddStatus.SENDT || r.status === ReisetilskuddStatus.AVBRUTT)
+    const nyeTilskudd = reisetilskuddene.filter(r => {
+        return r.status === ReisetilskuddStatus.FREMTIDIG
+    })
+
+    const usendteTilskudd = reisetilskuddene.filter(r => {
+        return r.status === ReisetilskuddStatus.ÅPEN
+            || r.status === ReisetilskuddStatus.SENDBAR
+    })
+
+    const sendteTilskudd = reisetilskuddene.filter(r => {
+        return r.status === ReisetilskuddStatus.SENDT
+            || r.status === ReisetilskuddStatus.AVBRUTT
+    })
 
     return (
         <div className="tilskudd__teasere">
+            <div className="tilskudd--nye">
+                <Undertittel tag="h2" className="tilskudd__tittel">
+                    {tekst('tilskudd.liste.nye.soknader')}
+                </Undertittel>
+                <Vis hvis={nyeTilskudd.length === 0}>
+                    <Normaltekst>{tekst('tilskudd.liste.ingen.nye')}</Normaltekst>
+                </Vis>
+                <Vis hvis={nyeTilskudd.length > 0}>
+                    {nyeTilskudd.map((tilskudd, idx) => {
+                        return <Teaser tilskudd={tilskudd} key={idx} />
+                    })}
+                </Vis>
+            </div>
+
             <div className="tilskudd--usendt">
                 <Undertittel tag="h2" className="tilskudd__tittel">
                     {tekst('tilskudd.liste.usendte.soknader')}
                 </Undertittel>
                 <Vis hvis={usendteTilskudd.length === 0}>
-                    <Normaltekst>{tekst('tilskudd.liste.ingen.nye')}</Normaltekst>
+                    <Normaltekst>{tekst('tilskudd.liste.ingen.usendte')}</Normaltekst>
                 </Vis>
                 <Vis hvis={usendteTilskudd.length > 0}>
                     {usendteTilskudd.map((tilskudd, idx) => {
@@ -65,7 +87,7 @@ const TilskuddTeasere = () => {
 
             <OmReisetilskudd />
 
-            <div className="tilskudd--sendt">
+            <div className="tilskudd--tidligere">
                 <Vis hvis={sorterteSoknader().length > 0}>
                     <Select label="Sorter etter" className="teasere__sortering"
                         onChange={(event) => setSortering(event.target.value as Sortering)}
@@ -97,9 +119,6 @@ interface TeaserProps {
 
 const Teaser = ({ tilskudd, key }: TeaserProps) => {
     const linkRef = useRef<HTMLAnchorElement>(null)
-
-    const [ fremtidigAapen, setFremtidigAapen ] = useState<boolean>(false)
-
 
     const teaserInnhold = <div className="teaser__ytre">
         <div className="ytre__del1">
@@ -147,41 +166,36 @@ const StatusEtikett = (props: StatusEtikettProps) => {
     const { tilskudd } = props
 
     const etikettType = () => {
-        if (tilskudd.status === ReisetilskuddStatus.AVBRUTT) {
-            return 'info'
+        switch(tilskudd.status) {
+            case 'AVBRUTT':
+                return 'info'
+            case 'ÅPEN':
+                return 'info'
+            case 'SENDT':
+                return 'suksess'
+            case 'SENDBAR':
+                return 'info'
+            default:
+                return 'info'
         }
-        if (tilskudd.status === ReisetilskuddStatus.ÅPEN) {
-            return 'info'
-        }
-        if (tilskudd.status === ReisetilskuddStatus.SENDT) {
-            return 'suksess'
-        }
-        if (tilskudd.status === ReisetilskuddStatus.SENDBAR) {
-            return 'suksess'
-        }
-        return 'info'
     }
 
     const etikettTekst = () => {
-        if (tilskudd.status === ReisetilskuddStatus.AVBRUTT) {
-            return 'Avbrutt'
+        switch(tilskudd.status) {
+            case 'AVBRUTT':
+                return 'Avbrutt'
+            case 'SENDT':
+                return 'Sendt til NAV'
+            case 'SENDBAR':
+                return 'Klar til utfylling'
+            case 'ÅPEN':
+                return 'Klar til utfylling'
+            case 'FREMTIDIG':
+                return getLedetekst(
+                    tekst('Aktiveres %DATO%'),
+                    { '%DATO%': tilLesbarDatoMedArstall(tilskudd.fom) }
+                )
         }
-        if (tilskudd.status === ReisetilskuddStatus.SENDT) {
-            return 'Sendt til NAV'
-        }
-        if (tilskudd.status === ReisetilskuddStatus.SENDBAR) {
-            return 'Klar til innsending'
-        }
-        if (tilskudd.status === ReisetilskuddStatus.ÅPEN) {
-            return 'Klar til utfylling'
-        }
-        if (tilskudd.status === ReisetilskuddStatus.FREMTIDIG) {
-            return getLedetekst(
-                tekst('Aktiveres %DATO%'),
-                { '%DATO%': tilLesbarDatoMedArstall(tilskudd.fom) }
-            )
-        }
-        return 'Klar til utfylling'
     }
 
     return (
