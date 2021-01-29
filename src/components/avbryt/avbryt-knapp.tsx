@@ -32,7 +32,8 @@ const AvbrytKnapp = () => {
         setVilAvbryte(!vilAvbryte)
     }
 
-    const handleAvbryt = async() => {
+    const handleAvbryt = async(e: any) => {
+        e.preventDefault()
         if(avbryter) return
         setAvbryter(true)
         post(

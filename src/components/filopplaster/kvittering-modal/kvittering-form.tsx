@@ -97,8 +97,16 @@ const KvitteringForm = () => {
             }).catch(() => {
                 setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
             })
-        }).catch(() => {
-            setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+        }).catch((ex) => {
+            if (ex.name === 'FetchError') {
+                if (ex.status === 413) {
+                    setFetchFeilmelding('Filen du prøvde å laste opp er for stor')
+                } else {
+                    setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+                }
+            } else {
+                setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+            }
         }).finally(() => {
             setLaster(false)
         })
@@ -243,7 +251,6 @@ const KvitteringForm = () => {
 
                 <Vis hvis={fetchFeilmelding}>
                     <AlertStripeAdvarsel>
-                        <Normaltekst>{'TODO: Dette skal være en litt mer spesifikk liste'}</Normaltekst>
                         <Normaltekst>{fetchFeilmelding}</Normaltekst>
                     </AlertStripeAdvarsel>
                 </Vis>

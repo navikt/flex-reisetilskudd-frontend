@@ -60,6 +60,10 @@ class Environment {
     get dittNavUrl() {
         return this.env.DITTNAV_URL
     }
+
+    get frontendloggerRoot() {
+        return this.env.FRONTENDLOGGER_ROOT
+    }
 }
 
 const env = new Environment()
