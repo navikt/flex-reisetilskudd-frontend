@@ -1,6 +1,7 @@
 import env from './environment'
 import { logger } from './logger'
 import { Reisetilskudd, ReisetilskuddStatus } from '../types/types'
+import dayjs from 'dayjs'
 
 export const hentLoginUrl = () => {
     return `${env.loginServiceUrl}?redirect=${env.loginServiceRedirectUrl}`
@@ -44,4 +45,18 @@ export const getUrlTilSoknad = (reisetilskudd: Reisetilskudd) => {
         return `/soknaden/${reisetilskudd.id}/avbrutt`
     }
     return `/soknadstart/${reisetilskudd.id}/1`
+}
+
+export const reisetilskuddStatus = (fom: string, tom: string) : ReisetilskuddStatus => {
+    const now = dayjs()
+    const fomDate = dayjs(fom)
+    const tomDate = dayjs(tom)
+
+    if (fomDate.isAfter(now)) {
+        return ReisetilskuddStatus.FREMTIDIG
+    }
+    if (now.isAfter(tomDate)) {
+        return ReisetilskuddStatus.SENDBAR
+    }
+    return ReisetilskuddStatus.ÅPEN
 }

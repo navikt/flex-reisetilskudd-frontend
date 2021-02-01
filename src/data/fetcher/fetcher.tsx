@@ -1,9 +1,28 @@
 import { logger } from '../../utils/logger'
 import { redirectTilLoginHvis401 } from '../../utils/utils'
+import safeStringify from 'fast-safe-stringify'
 
 interface HttpResponse<T>
     extends Response {
     parsedBody?: T;
+}
+
+export class FetchError extends Error {
+    status: number
+    url: string
+    json: any
+
+    constructor(status: number, url: string, json: any, message?: string) {
+        super(message)
+        this.name = 'FetchError'
+        this.status = status
+        this.url = url
+        this.json = json
+    }
+
+    toString(): string {
+        return `{ status: ${this.status}, json: ${safeStringify(this.json)}, url: ${this.url} }`
+    }
 }
 
 async function fetcher<T>(
@@ -19,7 +38,9 @@ async function fetcher<T>(
         if (redirectTilLoginHvis401(response)) {
             return Promise.reject()
         } else {
-            throw new Error(response.statusText)
+            const ex = new FetchError(response.status, response.url, response.parsedBody)
+            logger.warn('Backend svarte med noe annet enn 2xx:', ex.toString())
+            throw ex
         }
     }
     return response
@@ -37,7 +58,7 @@ export const get = async function <T>(
 export const post = async function <T>(
     path: string,
     // eslint-disable-next-line
-    body: any,
+    body?: any,
     args: any = {
         method: 'post', body: JSON.stringify(body), credentials: 'include', headers: { 'Content-Type': 'application/json' },
     },

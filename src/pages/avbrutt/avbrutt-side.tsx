@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react'
 
 import Banner from '../../components/diverse/banner/banner'
 import { tekst } from '../../utils/tekster'
-import { getUrlTilSoknad, redirectTilLoginHvis401, setBodyClass } from '../../utils/utils'
+import { getUrlTilSoknad, reisetilskuddStatus, setBodyClass } from '../../utils/utils'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
-import { Brodsmule, Reisetilskudd, ReisetilskuddStatus } from '../../types/types'
+import { Brodsmule, Reisetilskudd } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import { useAppStore } from '../../data/stores/app-store'
@@ -16,9 +16,10 @@ import { RouteParams } from '../../app'
 import dayjs from 'dayjs'
 import { Knapp } from 'nav-frontend-knapper'
 import env from '../../utils/environment'
-import { logger } from '../../utils/logger'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 import { Sykmelding } from '../../types/sykmelding'
+import Vis from '../../components/diverse/vis'
+import { post } from '../../data/fetcher/fetcher'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -36,6 +37,7 @@ const AvbruttSide = () => {
     const { reisetilskuddene, setReisetilskuddene, valgtReisetilskudd, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
     const { id } = useParams<RouteParams>()
     const [ gjenapner, setGjenapner ] = useState<boolean>(false)
+    const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
     const history = useHistory()
 
     useEffect(() => {
@@ -48,33 +50,34 @@ const AvbruttSide = () => {
 
         const sykmelding = sykmeldinger.find((syk: Sykmelding) => syk.id === funnetTilskudd?.sykmeldingId)
         setValgtSykmelding(sykmelding)
+
+        setFetchFeilmelding(null)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ reisetilskuddene, id ])
 
     const handleGjenapne = async() => {
         if(gjenapner) return
         setGjenapner(true)
-        try {
-            const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/gjenapne`, {
-                method: 'POST',
-                credentials: 'include'
-            })
-            const status = res.status
-            if (redirectTilLoginHvis401(res)) {
-                return
-            }
-            else if (status === 200) {
-                const nyReisetilskudd = { ...valgtReisetilskudd, status: ReisetilskuddStatus.SENDBAR, avbrutt: undefined } as Reisetilskudd
-                setReisetilskuddene(reisetilskuddene.map(r => r.id === valgtReisetilskudd!.id ? nyReisetilskudd : r) as any)
-                setValgtReisetilskudd(nyReisetilskudd)
-                history.push(getUrlTilSoknad(nyReisetilskudd))
-            } else {
-                logger.error('Feil ved AVBYTING av reisetilskudd', res)
-                // TODO: Sett opp feilmelding
-            }
-        } finally {
+
+        post(
+            `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/gjenapne`
+        ).then(() => {
+            const nyReisetilskudd = {
+                ...valgtReisetilskudd,
+                avbrutt: undefined,
+                status: reisetilskuddStatus(
+                    valgtReisetilskudd!.fom!,
+                    valgtReisetilskudd!.tom!
+                )
+            } as Reisetilskudd
+            setReisetilskuddene(reisetilskuddene.map(r => r.id === valgtReisetilskudd!.id ? nyReisetilskudd : r) as any)
+            setValgtReisetilskudd(nyReisetilskudd)
+            history.push(getUrlTilSoknad(nyReisetilskudd))
+        }).catch(() => {
+            setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+        }).finally(() => {
             setGjenapner(false)
-        }
+        })
     }
 
     if (!valgtReisetilskudd) return null
@@ -104,6 +107,12 @@ const AvbruttSide = () => {
                 <Knapp className="gjenapne" onClick={handleGjenapne}>
                     {tekst('avbrutt.gjenapne')}
                 </Knapp>
+
+                <Vis hvis={fetchFeilmelding}>
+                    <AlertStripeAdvarsel>
+                        <Normaltekst>{fetchFeilmelding}</Normaltekst>
+                    </AlertStripeAdvarsel>
+                </Vis>
 
                 <SykmeldingPanel />
             </div>

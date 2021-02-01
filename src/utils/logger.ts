@@ -1,7 +1,9 @@
 import safeStringify from 'fast-safe-stringify'
+import env from './environment'
 
-// eslint-disable-next-line
-const { frontendlogger } = window as any;
+const frontendlogger = (env.isProd || env.isQ1)
+    ? (window as any).frontendlogger
+    : console
 
 // Grafana - Metrikk
 export const event = (arg: Record<string, unknown>): void => {
