@@ -44,7 +44,7 @@ export const getUrlTilSoknad = (reisetilskudd: Reisetilskudd) => {
     if (reisetilskudd.status === ReisetilskuddStatus.AVBRUTT) {
         return `/soknaden/${reisetilskudd.id}/avbrutt`
     }
-    return `/soknadstart/${reisetilskudd.id}/1`
+    return `/soknaden/${reisetilskudd.id}/1`
 }
 
 export const reisetilskuddStatus = (fom: string, tom: string) : ReisetilskuddStatus => {

@@ -1,23 +1,22 @@
-import { RSKvittering } from '../../../types/rs-types/rsReisetilskudd'
+import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
+import { UtgiftTyper } from '../../../types/enums'
 
 export const kvitteringBil: RSKvittering = {
-    kvitteringId: 'tetstsgddgsdsdsdsdsdgsdg',
+    id: 'tetstsgddgsdsdsdsdsdgsdg',
     blobId: '2134afw4f4q6',
-    navn: 'foo.txt',
     storrelse: 1024 * 920,
     belop: 3220,
-    datoForReise: '2020-05-01',
-    transportmiddel: 'EGEN_BIL',
+    datoForUtgift: '2020-05-01',
+    typeUtgift: UtgiftTyper.BOMPENGER,
 }
 
 export const kvitteringTaxi: RSKvittering = {
-    kvitteringId: 'dhdywdjdjsjdsjdscehshdsd',
+    id: 'dhdywdjdjsjdsjdscehshdsd',
     blobId: '213456',
-    navn: 'bar.jpg',
     storrelse: 812 * 920,
     belop: 220,
-    datoForReise: '2034-09-29',
-    transportmiddel: 'TAXI',
+    datoForUtgift: '2034-09-29',
+    typeUtgift: UtgiftTyper.TAXI,
 }
 
 const mockKvitteringer: RSKvittering[] = [

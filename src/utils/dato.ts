@@ -64,3 +64,13 @@ export const fraBackendTilDate = (datoArg: string) => {
 export function getDuration(from: Date, to: Date) {
     return Math.round(Math.floor(to.getTime() - from.getTime()) / (1000 * 60 * 60 * 24)) + 1
 }
+
+export const ukeDatoListe = (min: string, max: string) => {
+    const ukeListe = []
+    let dato = dayjs(min)
+    while (dato.toDate() <= dayjs(max).toDate()) {
+        ukeListe.push(dato)
+        dato = dato.add(1, 'day')
+    }
+    return ukeListe
+}

@@ -3,12 +3,11 @@ import './fil-liste.less'
 
 import dayjs from 'dayjs'
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useForceUpdate from 'use-force-update'
 
 import { del } from '../../data/fetcher/fetcher'
 import { useAppStore } from '../../data/stores/app-store'
-import { Kvittering, Transportmiddel } from '../../types/types'
 import env from '../../utils/environment'
 import { logger } from '../../utils/logger'
 import { formatterTall } from '../../utils/utils'
@@ -17,6 +16,8 @@ import slettFilIkon from './slett-fil-ikon.svg'
 import NavFrontendChevron from 'nav-frontend-chevron'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import Lenke from 'nav-frontend-lenker'
+import { RSKvittering } from '../../types/rs-types/rs-kvittering'
+import { TagTyper } from '../../types/enums'
 
 interface Props {
     fjernKnapp?: boolean
@@ -34,17 +35,26 @@ enum Sortering {
 const FilListe = ({ fjernKnapp }: Props) => {
     const { valgtReisetilskudd, setValgtReisetilskudd, setOpenModal, setKvitteringIndex } = useAppStore()
     const [ sortering, setSortering ] = useState<Sortering>(Sortering.DatoMax)
-    let kvitteringer = valgtReisetilskudd?.kvitteringer || []
     const forceUpdate = useForceUpdate()
 
-    const slettKvittering = (kvitto: Kvittering) => {
-        const reisetilskuddId = valgtReisetilskudd?.id
-        del(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${reisetilskuddId}/kvittering/${kvitto.kvitteringId}`)
+    let kvitteringer: RSKvittering[] = []
+    valgtReisetilskudd?.sporsmal.forEach(spm => {
+        const svar = spm.svarliste.svar
+        if (spm.tag === TagTyper.KVITTERINGER && svar.length > 0) {
+            kvitteringer = kvitteringer.concat(svar as RSKvittering[])
+        }
+    })
+
+    const slettKvittering = (kvitto: RSKvittering) => {
+        const id = valgtReisetilskudd?.id
+        const path = '/flex-reisetilskudd-backend/api/v1/reisetilskudd/'
+        del(`${env.flexGatewayRoot}${path}${id}/kvittering/${kvitto.id}`)
             .then(() => {
-                kvitteringer = kvitteringer.filter((kvittering) =>
+                kvitteringer = kvitteringer!.filter((kvittering) =>
                     kvittering.blobId !== kvitto.blobId
                 )
-                valgtReisetilskudd!.kvitteringer = kvitteringer
+                const spm = valgtReisetilskudd!.sporsmal.filter(spm => spm.tag === TagTyper.KVITTERINGER)[0]
+                spm.svarliste.svar = kvitteringer
                 setValgtReisetilskudd(valgtReisetilskudd)
 
                 forceUpdate()
@@ -61,13 +71,9 @@ const FilListe = ({ fjernKnapp }: Props) => {
 
     const sorterteKvitteringer = () => {
         if (sortering === Sortering.DatoMax) {
-            kvitteringer.sort((a, b) => (a.datoForReise! > b.datoForReise!) ? -1 : 1)
+            kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? -1 : 1)
         } else if (sortering === Sortering.DatoMin) {
-            kvitteringer.sort((a, b) => (a.datoForReise! > b.datoForReise!) ? 1 : -1)
-        } else if (sortering === Sortering.TransportMax) {
-            kvitteringer.sort((a, b) => (a.transportmiddel! > b.transportmiddel!) ? -1 : 1)
-        } else if (sortering === Sortering.TransportMin) {
-            kvitteringer.sort((a, b) => (a.transportmiddel! > b.transportmiddel!) ? 1 : -1)
+            kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? 1 : -1)
         } else if (sortering === Sortering.BelopMax) {
             kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? -1 : 1)
         } else if (sortering === Sortering.BelopMin) {
@@ -75,15 +81,16 @@ const FilListe = ({ fjernKnapp }: Props) => {
         }
         return kvitteringer
     }
-    const totaltBeløp = (): number => (valgtReisetilskudd!.kvitteringer
-        ? valgtReisetilskudd!.kvitteringer
+
+    const totaltBeløp = (): number => (kvitteringer
+        ? kvitteringer
             .filter((kvittering) => kvittering.belop)
             .map((kvittering) => kvittering.belop!)
             .reduce((a, b) => a + b, 0.0)
         : (0.0)) / 100
 
     return (
-        <Vis hvis={valgtReisetilskudd!.kvitteringer.length > 0}>
+        <Vis hvis={kvitteringer.length > 0}>
             <Normaltekst tag="table" className="tabell tabell--stripet fil_liste">
                 <Vis hvis={fjernKnapp}>
                     <thead>
@@ -140,18 +147,18 @@ const FilListe = ({ fjernKnapp }: Props) => {
                     </thead>
                 </Vis>
                 <tbody>
-                    {sorterteKvitteringer().map((kvittering: Kvittering, idx) => (
+                    {sorterteKvitteringer().map((kvittering: RSKvittering, idx) => (
                         <tr key={idx}>
                             <td className="dato">
                                 <button tabIndex={0} className="lenkeknapp" onClick={() => visKvittering(idx)}>
-                                    {kvittering.datoForReise
-                                        ? dayjs(kvittering.datoForReise).format('dddd DD.MM.YYYY')
+                                    {kvittering.datoForUtgift
+                                        ? dayjs(kvittering.datoForUtgift).format('dddd DD.MM.YYYY')
                                         : ''
                                     }
                                 </button>
                             </td>
                             <td className="transport">
-                                {Transportmiddel[kvittering.transportmiddel!]}
+                                {kvittering.typeUtgift}
                             </td>
                             <td className="belop">
                                 {formatterTall(kvittering.belop! / 100)} kr
@@ -180,7 +187,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
                         <td colSpan={2}>
                             <Undertittel tag="span">
                                 {getLedetekst(tekst('fil_liste.utlegg.sum'), {
-                                    '%ANTALL_BILAG%': valgtReisetilskudd!.kvitteringer.length
+                                    '%ANTALL_BILAG%': kvitteringer.length
                                 })}
                             </Undertittel>
                         </td>

@@ -1,38 +1,20 @@
 import React, { useEffect } from 'react'
-import { Brodsmule } from '../../types/types'
 import { tekst } from '../../utils/tekster'
-import { SEPARATOR } from '../../utils/constants'
 import { useAppStore } from '../../data/stores/app-store'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { RouteParams } from '../../app'
 import { setBodyClass } from '../../utils/utils'
-import Banner from '../../components/diverse/banner/banner'
-import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import { Undertittel } from 'nav-frontend-typografi'
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 import Veileder from './veileder'
 import Mobil from './mobil'
 import HvemKanFaa from './hvem-kan-faa'
-import AvbrytKnapp from '../../components/avbryt/avbryt-knapp'
-import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
-import KanSendesAlertStripe from '../../components/diverse/kan-sendes-alert-stripe'
+import KanSendesAlertstripe from '../../components/diverse/kan-sendes-alertstripe'
 import { Sykmelding } from '../../types/sykmelding'
-
-const brodsmuler: Brodsmule[] = [
-    {
-        tittel: tekst('tilskudd.liste.tittel'),
-        sti: SEPARATOR,
-        erKlikkbar: true
-    }, {
-        tittel: tekst('tilskudd.side.tittel'),
-        sti: '/reisetilskudd',
-        erKlikkbar: false
-    }
-]
 
 const TilskuddStart = () => {
     const { reisetilskuddene, valgtReisetilskudd, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
-    const { steg, id } = useParams<RouteParams>()
+    const { id } = useParams<RouteParams>()
 
     useEffect(() => {
         setBodyClass('reisetilskudd-side')
@@ -51,31 +33,16 @@ const TilskuddStart = () => {
 
     return (
         <>
-            <Banner tittel={tekst('banner.sidetittel')} />
-            <Brodsmuler brodsmuler={brodsmuler} />
+            <Veileder />
+            <KanSendesAlertstripe />
 
-            <div className="limit">
-                <Veileder />
+            <Ekspanderbartpanel className="hvem-kan-faa" tittel={
+                <Undertittel>{tekst('tilskudd.start.hvem-kan-faa')}</Undertittel>
+            }>
+                <HvemKanFaa />
+            </Ekspanderbartpanel>
 
-                <Ekspanderbartpanel className="hvem-kan-faa" tittel={
-                    <Undertittel>{tekst('tilskudd.start.hvem-kan-faa')}</Undertittel>
-                }>
-                    <HvemKanFaa />
-                </Ekspanderbartpanel>
-
-                <Mobil />
-
-                <SykmeldingPanel apen={true} />
-
-                <KanSendesAlertStripe />
-
-                <div className="knapperad">
-                    <Link to={`/soknaden/${id}/${steg}`} className="knapp knapp--hoved">
-                        {tekst('klikkbar.videre-knapp.tekst')}
-                    </Link>
-                    <AvbrytKnapp />
-                </div>
-            </div>
+            <Mobil />
         </>
     )
 }

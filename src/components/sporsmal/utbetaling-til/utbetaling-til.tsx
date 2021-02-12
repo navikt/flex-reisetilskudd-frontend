@@ -31,7 +31,7 @@ const UtbetalingTil = () => {
     const methods = useForm({ reValidateMode: 'onSubmit' })
 
     useEffect(() => {
-        const til = valgtReisetilskudd && valgtReisetilskudd!.orgNavn !== ''
+        const til = valgtReisetilskudd && valgtReisetilskudd!.arbeidsgiverNavn !== ''
             ? tekst('sporsmal.utbetaling.verdi.ARBEIDSGIVER')
             : tekst('sporsmal.utbetaling.verdi.MEG')
         setUtbetalTil(til)
@@ -42,11 +42,11 @@ const UtbetalingTil = () => {
         const valg = e.target.value
         setUtbetalTil(valg)
         if (valg !== 'MEG') {
-            valgtReisetilskudd!.orgNummer = ArbeidsOgVelferdsetaten.orgNr
-            valgtReisetilskudd!.orgNavn = ArbeidsOgVelferdsetaten.navn
+            valgtReisetilskudd!.arbeidsgiverOrgnummer = ArbeidsOgVelferdsetaten.orgNr
+            valgtReisetilskudd!.arbeidsgiverNavn = ArbeidsOgVelferdsetaten.navn
         } else {
-            valgtReisetilskudd!.orgNummer = ''
-            valgtReisetilskudd!.orgNavn = ''
+            valgtReisetilskudd!.arbeidsgiverOrgnummer = ''
+            valgtReisetilskudd!.arbeidsgiverNavn = ''
         }
         setValgtReisetilskudd(valgtReisetilskudd)
     }
@@ -85,11 +85,13 @@ const UtbetalingTil = () => {
                 />
 
                 <FeilOppsummering errors={methods.errors} />
+
                 <Vis hvis={fetchFeilmelding}>
                     <AlertStripeAdvarsel>
                         <Normaltekst>{fetchFeilmelding}</Normaltekst>
                     </AlertStripeAdvarsel>
                 </Vis>
+
                 <div className="knapperad">
                     <Knapp type="hoved">
                         {tekst('klikkbar.videre-knapp.tekst')}

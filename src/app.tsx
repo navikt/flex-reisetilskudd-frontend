@@ -22,10 +22,9 @@ const App = () => {
             <DataFetcher>
                 <Switch>
                     <Route exact={true} path="/" component={TilskuddListe} />
-                    <Route path={'/soknadstart/:id/:steg'} component={TilskuddStart} />
+                    <Route path={'/soknaden/:id/:steg'} component={TilskuddSide} />
                     <Route path={'/soknaden/:id/avbrutt'} component={AvbruttSide} />
                     <Route path={'/soknaden/:id/bekreftelse'} component={BekreftSide} />
-                    <Route path={'/soknaden/:id/:steg'} component={TilskuddSide} />
                 </Switch>
             </DataFetcher>
         </StoreProvider>

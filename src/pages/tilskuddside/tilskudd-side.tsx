@@ -7,12 +7,8 @@ import { RouteParams } from '../../app'
 import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import Vis from '../../components/diverse/vis'
-import Hovedpunkter from '../../components/oppsummering/hovedpunkter/hovedpunkter'
 import SoknadInfoUtvid from '../../components/oppsummering/soknad-info-utvid/soknad-info-utvid'
 import SideNav from '../../components/side-nav/side-nav'
-import Opplasting from '../../components/sporsmal/opplasting/opplasting'
-import TransportMiddel from '../../components/sporsmal/transport/transport-middel'
-import UtbetalingTil from '../../components/sporsmal/utbetaling-til/utbetaling-til'
 import { useAppStore } from '../../data/stores/app-store'
 import { Brodsmule } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
@@ -20,6 +16,8 @@ import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 import { Sykmelding } from '../../types/sykmelding'
+import SporsmalForm from '../../components/sporsmal/sporsmal-form/sporsmal-form'
+import TilskuddStart from '../tilskuddstart/tilskudd-start'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -36,7 +34,7 @@ const brodsmuler: Brodsmule[] = [
 const TilskuddSide = () => {
     const { valgtReisetilskudd, setValgtReisetilskudd, reisetilskuddene, sykmeldinger, setValgtSykmelding } = useAppStore()
     const { steg, id } = useParams<RouteParams>()
-    const idNum = Number(steg)
+    const stegNo = Number(steg)
 
     useEffect(() => {
         setBodyClass('reisetilskudd-side')
@@ -60,29 +58,21 @@ const TilskuddSide = () => {
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
-                <SideNav />
+                <Vis hvis={stegNo > 1}>
+                    <SideNav />
+                </Vis>
 
-                <Vis hvis={idNum === 4}>
+                <Vis hvis={stegNo === 4}>
                     <SoknadInfoUtvid />
                 </Vis>
 
-                <SykmeldingPanel />
-
-                <Vis hvis={idNum === 1}>
-                    <UtbetalingTil />
+                <Vis hvis={stegNo === 1}>
+                    <TilskuddStart />
                 </Vis>
 
-                <Vis hvis={idNum === 2}>
-                    <TransportMiddel />
-                </Vis>
+                <SykmeldingPanel apen={false} />
 
-                <Vis hvis={idNum === 3}>
-                    <Opplasting />
-                </Vis>
-
-                <Vis hvis={idNum === 4}>
-                    <Hovedpunkter />
-                </Vis>
+                <SporsmalForm />
             </div>
         </>
     )

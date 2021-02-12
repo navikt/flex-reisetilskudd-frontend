@@ -9,7 +9,7 @@ import useForceUpdate from 'use-force-update'
 
 import { post } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
-import { Kvittering, Transportmiddel } from '../../../types/types'
+import { Transportmiddel } from '../../../types/types'
 import env from '../../../utils/environment'
 import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { getLedetekst, tekst } from '../../../utils/tekster'
@@ -19,6 +19,8 @@ import validerDato from '../../../utils/validering'
 import { skalBrukeFullskjermKalender } from '../../../utils/browser-utils'
 import { dayjsToDate } from '../../../utils/dato'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
+import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
+import { TagTyper, UtgiftTyper } from '../../../types/enums'
 
 const formaterteFiltyper = env.formaterteFiltyper
 const maksFilstorrelse = formaterFilstørrelse(env.maksFilstørrelse)
@@ -32,7 +34,7 @@ const KvitteringForm = () => {
         valgtReisetilskudd, setValgtReisetilskudd, kvitteringIndex, setOpenModal, valgtFil
     } = useAppStore()
     const [ laster, setLaster ] = useState<boolean>(false)
-    const [ kvittering, setKvittering ] = useState<Kvittering>()
+    const [ kvittering, setKvittering ] = useState<RSKvittering>()
     const [ dato, setDato ] = useState<string>('')
     const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
     const forceUpdate = useForceUpdate()
@@ -55,13 +57,25 @@ const KvitteringForm = () => {
         }
     ]
 
+    const kvitteringer: RSKvittering[] = []
+
+    useEffect(() => {
+        valgtReisetilskudd?.sporsmal.forEach(spm => {
+            const svar = spm.svarliste.svar
+            if (spm.tag === TagTyper.KVITTERINGER && svar.length > 0) {
+                kvitteringer.concat(svar as RSKvittering[])
+            }
+        })
+        // eslint-disable-next-line
+    }, [ valgtReisetilskudd ])
+
     useEffect(() => {
         if (kvitteringIndex === -1) {
-            setKvittering(new Kvittering({}))
+            setKvittering({} as RSKvittering)
         } else {
-            const kvitto = valgtReisetilskudd!.kvitteringer[kvitteringIndex]
+            const kvitto = kvitteringer[kvitteringIndex]
             setKvittering(kvitto)
-            setDato(dayjs(kvitto!.datoForReise).format('YYYY-MM-DD'))
+            setDato(dayjs(kvitto!.datoForUtgift).format('YYYY-MM-DD'))
             forceUpdate()
         }
         // eslint-disable-next-line
@@ -79,19 +93,18 @@ const KvitteringForm = () => {
             body: requestData,
             credentials: 'include'
         }).then((opplastingResponse) => {
-            const kvitt = new Kvittering({
+            const kvitt: RSKvittering = {
                 blobId: opplastingResponse.parsedBody!.id,
-                navn: valgtFil?.name,
                 storrelse: valgtFil?.size,
                 belop: methods.getValues('belop_input') * 100,
-                datoForReise: dato,
-                transportmiddel: methods.getValues('transportmiddel')
-            })
+                datoForUtgift: dato,
+                typeUtgift: UtgiftTyper.ANNET
+            }
             post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/kvittering`,
                 kvitt
             ).then(() => {
                 setKvittering(kvitt)
-                valgtReisetilskudd?.kvitteringer.push(kvitt)
+                kvitteringer.push(kvitt)
                 setValgtReisetilskudd(valgtReisetilskudd)
                 setOpenModal(false)
             }).catch(() => {
@@ -129,7 +142,7 @@ const KvitteringForm = () => {
                         <Controller
                             control={methods.control}
                             name="dato_input"
-                            defaultValue={kvittering?.datoForReise || ''}
+                            defaultValue={kvittering?.datoForUtgift || ''}
                             rules={{
                                 validate: () => {
                                     const div: HTMLDivElement | null = document.querySelector('.nav-datovelger__input')
@@ -197,7 +210,7 @@ const KvitteringForm = () => {
                             id="transportmiddel"
                             name="transportmiddel"
                             onChange={() => methods.trigger('transportmiddel')}
-                            defaultValue={kvittering.transportmiddel}
+                            defaultValue={kvittering.typeUtgift}
                         >
                             <option value="">Velg</option>
                             {options.map((option, idx) => {

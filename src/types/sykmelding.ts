@@ -5,7 +5,9 @@
 
 // ------ BEHANDLIGGSUTFALL
 
-export type RegelStatus = 'OK' | 'MANUAL_PROCESSING' | 'INVALID';
+import { Arbeidsgiver } from './types'
+
+export type RegelStatus = 'OK' | 'MANUAL_PROCESSING' | 'INVALID'
 
 interface RegelInfo {
     messageForSender: string;
@@ -17,13 +19,6 @@ interface RegelInfo {
 interface Behandlingsutfall {
     status: RegelStatus;
     ruleHits: RegelInfo[];
-}
-
-// ------
-
-export interface Arbeidsgiver {
-    navn: string;
-    stillingsprosent: number;
 }
 
 // ------ PERIODER
