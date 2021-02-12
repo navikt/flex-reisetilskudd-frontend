@@ -174,7 +174,7 @@ const StatusEtikett = (props: StatusEtikettProps) => {
             case 'SENDT':
                 return 'suksess'
             case 'SENDBAR':
-                return 'info'
+                return 'suksess'
             default:
                 return 'info'
         }
@@ -187,7 +187,7 @@ const StatusEtikett = (props: StatusEtikettProps) => {
             case 'SENDT':
                 return 'Sendt til NAV'
             case 'SENDBAR':
-                return 'Klar til utfylling'
+                return 'Klar til innsending'
             case 'ÅPEN':
                 return 'Klar til utfylling'
             case 'FREMTIDIG':
