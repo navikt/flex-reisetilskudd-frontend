@@ -1,34 +1,28 @@
 import { Datepicker } from 'nav-datovelger'
 import { Element, Normaltekst } from 'nav-frontend-typografi'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { skalBrukeFullskjermKalender } from '../../../utils/browser-utils'
 import { fraBackendTilDate } from '../../../utils/dato'
-import validerDato from '../../../utils/sporsmal/valider-dato'
+import validerDato from '../../../utils/valider-dato'
 import { SpmProps } from '../sporsmal-form/sporsmal-form'
 import UndersporsmalListe from '../undersporsmal/undersporsmal-liste'
-import useMutationObserver from '@rooks/use-mutation-observer'
 import { hentFeilmelding } from '../sporsmal-utils'
 import { hentSvar } from '../hent-svar'
 import Vis from '../../diverse/vis'
+import { useAppStore } from '../../../data/stores/app-store'
 
 const DatoInput = ({ sporsmal }: SpmProps) => {
+    const { setErBekreftet } = useAppStore()
     const { setValue, errors, watch, getValues } = useFormContext()
     const feilmelding = hentFeilmelding(sporsmal)
     const [ dato, setDato ] = useState<string>('')
-    const mutationRef = useRef<HTMLDivElement>(null)
 
-    useMutationObserver(mutationRef, (e) => {
-        const node: Node = e[1].addedNodes[0]
-        const knapperad: any = document.querySelectorAll('.knapperad')[0]
-        if (node !== undefined) {
-            knapperad.style.zIndex = '-1'
-            knapperad.style.position = 'relative'
-        } else {
-            knapperad.removeAttribute('style')
-        }
-    })
+    useEffect(() => {
+        setDato(hentSvar(sporsmal))
+        // eslint-disable-next-line
+    }, [ sporsmal ])
 
     useEffect(() => {
         const svar = hentSvar(sporsmal)
@@ -38,7 +32,7 @@ const DatoInput = ({ sporsmal }: SpmProps) => {
     }, [ sporsmal ])
 
     return (
-        <div ref={mutationRef} className="dato-komp">
+        <div className="dato-komp">
             <label className="skjema__sporsmal" htmlFor={sporsmal.id}>
                 <Element>{sporsmal.sporsmalstekst}</Element>
             </label>
@@ -65,6 +59,7 @@ const DatoInput = ({ sporsmal }: SpmProps) => {
                         onChange={(value) => {
                             setValue(sporsmal.id, value)
                             setDato(value)
+                            setErBekreftet(value !== '')
                         }}
                         value={dato}
                         inputProps={{

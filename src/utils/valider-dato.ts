@@ -1,5 +1,5 @@
-import { Sporsmal } from '../../types/types'
-import { fraBackendTilDate } from '../dato'
+import { Sporsmal } from '../types/types'
+import { fraBackendTilDate } from './dato'
 
 const validerDato = (sporsmal: Sporsmal, values: Record<string, any>) => {
 

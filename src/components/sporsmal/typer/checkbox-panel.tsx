@@ -1,13 +1,14 @@
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import React, { useEffect, useRef, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-
+import { useAppStore } from '../../../data/stores/app-store'
 import { SpmProps } from '../sporsmal-form/sporsmal-form'
 import { hentFeilmelding } from '../sporsmal-utils'
 import { hentSvar } from '../hent-svar'
 import Vis from '../../diverse/vis'
 
 const CheckboxInput = ({ sporsmal }: SpmProps) => {
+    const { setErBekreftet } = useAppStore()
     const { register, setValue, errors } = useFormContext()
     const bekreft = useRef<HTMLDivElement>(null)
     const [ classname, setClassname ] = useState<string>('bekreftCheckboksPanel')
@@ -20,14 +21,14 @@ const CheckboxInput = ({ sporsmal }: SpmProps) => {
         setValue(sporsmal.id, svar)
         setClassname(getClassName(svar === 'CHECKED'))
         // eslint-disable-next-line
-    }, [sporsmal]);
+    }, [sporsmal])
 
     const handleChange = (evt: any) => {
         bekreft.current!.classList.toggle('bekreftCheckboksPanel--checked')
         setValue(sporsmal.id, evt.target.checked)
         setLokal(evt.target.checked)
         setClassname(getClassName(evt.target.checked))
-
+        setErBekreftet(evt.target.checked)
     }
 
     const getClassName = (checked: boolean) => {

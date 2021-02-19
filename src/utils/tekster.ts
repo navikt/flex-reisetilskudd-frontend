@@ -1,5 +1,4 @@
 import BannerTekster from '../components/diverse/banner/banner-tekster'
-import KlikkbarTekster from '../components/diverse/klikkbar-tekster'
 import DragAndDropTekster from '../components/filopplaster/drag-and-drop/drag-and-drop-tekster'
 import FilListeTekster from '../components/filopplaster/fil-liste-tekster'
 import KvitteringModalTekster from '../components/filopplaster/kvittering-modal/kvittering-modal-tekster'
@@ -14,7 +13,7 @@ import OmReisetilskuddTekster from '../components/teasere/om-reisetilskudd/om-re
 import BekreftTekster from '../pages/bekreftelse/bekreft-tekster'
 import TilskuddListeTekster from '../pages/tilskuddliste/tilskuddliste-tekster'
 import TilskuddSideTekster from '../pages/tilskuddside/tilskuddside-tekster'
-import TilskuddStartTekster from '../pages/tilskuddstart/tilskuddstart-tekster'
+import TilskuddStartTekster from '../components/tilskuddstart/tilskuddstart-tekster'
 import AvbrytKnappTekster from '../components/avbryt/avbryt-knapp-tekster'
 import AvbruttSideTekster from '../pages/avbrutt/avbrutt-side-tekster'
 
@@ -26,7 +25,6 @@ const tekster = {
     ...TilskuddStartTekster.nb,
     ...TilskuddSideTekster.nb,
     ...SideNavTekster.nb,
-    ...KlikkbarTekster.nb,
     ...DragAndDropTekster.nb,
     ...FilListeTekster.nb,
     ...KvitteringModalTekster.nb,

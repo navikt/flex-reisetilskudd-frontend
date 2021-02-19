@@ -9,21 +9,28 @@ import UndersporsmalListe from '../undersporsmal/undersporsmal-liste'
 import { hentFeilmelding } from '../sporsmal-utils'
 import { hentSvar } from '../hent-svar'
 import Vis from '../../diverse/vis'
+import { useAppStore } from '../../../data/stores/app-store'
 
 const TallInput = ({ sporsmal }: SpmProps) => {
+    const { setErBekreftet } = useAppStore()
     const feilmelding = hentFeilmelding(sporsmal)
     const [ lokal, setLokal ] = useState<string>(hentSvar(sporsmal))
-    const { register, setValue, errors, getValues } = useFormContext()
+    const { register, setValue, errors } = useFormContext()
     const undersporsmal = useRef<HTMLDivElement>(null)
 
     const onChange = (e: any) => {
         const value = e.target.value
         setValue(sporsmal.id, value)
         setLokal(value)
+        setErBekreftet(value > 0)
     }
 
     useEffect(() => {
-        setValue(sporsmal.id, hentSvar(sporsmal))
+        const value = hentSvar(sporsmal)
+        setValue(sporsmal.id, value)
+        return () => {
+            setErBekreftet(value > 0)
+        }
         // eslint-disable-next-line
     }, [])
 

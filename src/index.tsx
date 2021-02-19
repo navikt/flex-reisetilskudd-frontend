@@ -10,11 +10,9 @@ if (env.isMockBackend) {
 }
 
 ReactDOM.render(
-    <React.StrictMode>
-        <BrowserRouter basename="/syk/reisetilskudd">
-            <App />
-        </BrowserRouter>
-    </React.StrictMode>,
+    <BrowserRouter basename="/syk/reisetilskudd">
+        <App />
+    </BrowserRouter>,
     document.getElementById('maincontent') as HTMLElement
 )
 

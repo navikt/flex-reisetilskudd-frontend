@@ -9,7 +9,7 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel'
 import Veileder from './veileder'
 import Mobil from './mobil'
 import HvemKanFaa from './hvem-kan-faa'
-import KanSendesAlertstripe from '../../components/diverse/kan-sendes-alertstripe'
+import KanSendesAlertstripe from '../diverse/kan-sendes-alertstripe'
 import { Sykmelding } from '../../types/sykmelding'
 
 const TilskuddStart = () => {

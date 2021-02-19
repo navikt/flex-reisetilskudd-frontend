@@ -1,4 +1,4 @@
-import { Element, Normaltekst } from 'nav-frontend-typografi'
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import React, { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -8,6 +8,7 @@ import UndersporsmalListe from '../undersporsmal/undersporsmal-liste'
 import Vis from '../../diverse/vis'
 import { hentFeilmelding, sporsmalIdListe } from '../sporsmal-utils'
 import { hentFormState, hentSvar } from '../hent-svar'
+import { useAppStore } from '../../../data/stores/app-store'
 
 const jaNeiValg = [ {
     value: 'JA',
@@ -18,9 +19,15 @@ const jaNeiValg = [ {
 } ]
 
 const JaNeiInput = ({ sporsmal }: SpmProps) => {
+    const { setErBekreftet } = useAppStore()
     const { register, setValue, errors, reset, getValues, clearErrors } = useFormContext()
     const feilmelding = hentFeilmelding(sporsmal)
     const [ lokal, setLokal ] = useState<string>(hentSvar(sporsmal))
+
+    useEffect(() => {
+        setErBekreftet(false)
+        // eslint-disable-next-line
+    }, [])
 
     useEffect(() => {
         if (sporsmal.erHovedsporsmal) {
@@ -33,11 +40,13 @@ const JaNeiInput = ({ sporsmal }: SpmProps) => {
 
     useEffect(() => {
         setLokal(hentSvar(sporsmal))
+        // eslint-disable-next-line
     }, [ sporsmal ])
 
     const changeValue = (value: string) => {
         setValue(sporsmal.id, value)
         setLokal(value)
+        setErBekreftet(value !== sporsmal.kriterieForVisningAvUndersporsmal)
     }
 
     const valider = (value: any) => {
@@ -57,11 +66,10 @@ const JaNeiInput = ({ sporsmal }: SpmProps) => {
             <div className="inputPanelGruppe inputPanelGruppe--horisontal">
                 <fieldset className={'skjema__fieldset' + (errors[sporsmal.id] ? ' skjemagruppe--feil' : '')}>
                     <legend className="skjema__legend">
-                        <div className="medHjelpetekst">
-                            <Element tag="h3" className="skjema__sporsmal">
-                                {sporsmal.sporsmalstekst}
-                            </Element>
-                        </div>
+                        <Undertittel tag="h3" className="skjema__sporsmal">
+                            {sporsmal.overskrift}
+                        </Undertittel>
+                        <Element>{sporsmal.sporsmalstekst}</Element>
                     </legend>
                     <div className="inputPanelGruppe__inner">
                         {jaNeiValg.map((valg, idx) => {
@@ -74,7 +82,7 @@ const JaNeiInput = ({ sporsmal }: SpmProps) => {
                                         id={sporsmal.id + '_' + idx}
                                         className="inputPanel__field"
                                         aria-checked={OK}
-                                        checked={OK}
+                                        defaultChecked={OK}
                                         value={valg.value}
                                         onClick={() => changeValue(valg.value)}
                                         ref={register({

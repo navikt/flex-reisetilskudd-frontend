@@ -9,6 +9,7 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
     const [ valgtReisetilskudd, setValgtReisetilskudd ] = useState<Reisetilskudd>()
     const [ sykmeldinger, setSykmeldinger ] = useState<Sykmelding[]>([])
     const [ valgtSykmelding, setValgtSykmelding ] = useState<Sykmelding>()
+    const [ erBekreftet, setErBekreftet ] = useState<boolean>(false)
     const [ kvitteringIndex, setKvitteringIndex ] = useState<number>(0)
     const [ openModal, setOpenModal ] = useState<boolean>(false)
     const [ valgtFil, setValgtFil ] = useState<File | null>(null)
@@ -21,6 +22,7 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
         valgtReisetilskudd, setValgtReisetilskudd,
         sykmeldinger, setSykmeldinger,
         valgtSykmelding, setValgtSykmelding,
+        erBekreftet, setErBekreftet,
         kvitteringIndex, setKvitteringIndex,
         openModal, setOpenModal,
         valgtFil, setValgtFil,

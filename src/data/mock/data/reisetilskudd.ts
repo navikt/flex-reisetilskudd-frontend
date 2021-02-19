@@ -28,7 +28,7 @@ const reisetilskudd = [
                 id: 'a14b1a2e-aa78-47fc-9e3d-c74ea6913cc8',
                 tag: 'TRANSPORT_TIL_DAGLIG',
                 overskrift: 'Transport til daglig',
-                sporsmalstekst: 'bruker du vanligvis bil eller offentlig transport til og fra arbeidsplassen?',
+                sporsmalstekst: 'Bruker du vanligvis bil eller offentlig transport til og fra arbeidsplassen?',
                 undertekst: null,
                 svartype: 'JA_NEI',
                 min: null,

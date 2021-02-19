@@ -17,7 +17,7 @@ import { setBodyClass } from '../../utils/utils'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 import { Sykmelding } from '../../types/sykmelding'
 import SporsmalForm from '../../components/sporsmal/sporsmal-form/sporsmal-form'
-import TilskuddStart from '../tilskuddstart/tilskudd-start'
+import TilskuddStart from '../../components/tilskuddstart/tilskudd-start'
 
 const brodsmuler: Brodsmule[] = [
     {

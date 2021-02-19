@@ -20,7 +20,7 @@ const AnimateOnMount = (props: AnimateOnMountProps) => {
 
     useEffect(() => {
         if (animRef!.current!.offsetTop > top) {
-            setTop(animRef!.current!.offsetTop)
+            setTop(animRef!.current!.offsetTop - 100)
         }
         if (mounted) {
             setShow(true)
@@ -32,7 +32,7 @@ const AnimateOnMount = (props: AnimateOnMountProps) => {
     }, [ mounted ]);
 
     const onTransitionEnd = () => {
-        window.scrollTo({ top: top, behavior: 'auto' })
+        window.scrollTo({ top: top, behavior: 'smooth' })
         if (styles === leave) {
             setShow(false)
         }

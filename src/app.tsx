@@ -8,7 +8,7 @@ import StoreProvider from './data/stores/store-provider'
 import BekreftSide from './pages/bekreftelse/bekreft-side'
 import TilskuddListe from './pages/tilskuddliste/tilskudd-liste'
 import TilskuddSide from './pages/tilskuddside/tilskudd-side'
-import TilskuddStart from './pages/tilskuddstart/tilskudd-start'
+import TilskuddStart from './components/tilskuddstart/tilskudd-start'
 import AvbruttSide from './pages/avbrutt/avbrutt-side'
 
 export interface RouteParams {
