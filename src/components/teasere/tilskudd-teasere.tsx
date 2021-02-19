@@ -16,6 +16,7 @@ import OmReisetilskudd from './om-reisetilskudd/om-reisetilskudd'
 import SoknadHoverIkon from './soknad-hover-ikon.svg'
 import SoknadIkon from './soknad-ikon.svg'
 import { getUrlTilSoknad } from '../../utils/utils'
+import dayjs from 'dayjs'
 
 enum Sortering {
     Dato = 'Dato',
@@ -34,8 +35,8 @@ const TilskuddTeasere = () => {
             return reisetilskuddene.sort((a, b) => a.status.localeCompare(b.status))
         } else if (sortering === Sortering.Sendt) {
             return reisetilskuddene.sort((a, b) => {
-                return (b.sendt?.getTime() || b.avbrutt?.getTime() || 0)
-                    - (a.sendt?.getTime() || a.avbrutt?.getTime() || 0)
+                return (dayjs(b.sendt).toDate().getTime() || dayjs(b.avbrutt).toDate().getTime() || 0)
+                    - (dayjs(a.sendt).toDate().getTime() || dayjs(a.avbrutt).toDate().getTime() || 0)
             })
         }
         return reisetilskuddene
@@ -144,9 +145,11 @@ const Teaser = ({ tilskudd, key }: TeaserProps) => {
     </div>
 
     if (tilskudd.status === 'FREMTIDIG') {
-        return <div id={tilskudd.id} className="dine-reisetilskudd" key={key}>
-            {teaserInnhold}
-        </div>
+        return (
+            <div id={tilskudd.id} className="dine-reisetilskudd" key={key}>
+                {teaserInnhold}
+            </div>
+        )
     }
 
     return (
@@ -166,7 +169,7 @@ const StatusEtikett = (props: StatusEtikettProps) => {
     const { tilskudd } = props
 
     const etikettType = () => {
-        switch(tilskudd.status) {
+        switch (tilskudd.status) {
             case 'AVBRUTT':
                 return 'info'
             case 'ÅPEN':
@@ -181,7 +184,7 @@ const StatusEtikett = (props: StatusEtikettProps) => {
     }
 
     const etikettTekst = () => {
-        switch(tilskudd.status) {
+        switch (tilskudd.status) {
             case 'AVBRUTT':
                 return 'Avbrutt'
             case 'SENDT':

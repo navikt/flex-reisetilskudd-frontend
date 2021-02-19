@@ -9,8 +9,8 @@ import { hentLoginUrl } from '../utils/utils'
 import useFetch from './rest/use-fetch'
 import { FetchState, hasAny401, hasAnyFailed, hasData, isAnyNotStartedOrPending, isNotStarted } from './rest/utils'
 import { useAppStore } from './stores/app-store'
-import { RSReisetilskudd } from '../types/rs-types/rsReisetilskudd'
 import { Sykmelding } from '../types/sykmelding'
+import { RSReisetilskudd } from '../types/rs-types/rs-reisetilskudd'
 
 export function DataFetcher(props: { children: any }) {
     const { setReisetilskuddene, setSykmeldinger } = useAppStore()

@@ -6,7 +6,6 @@ import React from 'react'
 
 import { tekst } from '../../../utils/tekster'
 import FilListe from '../../filopplaster/fil-liste'
-import DagensTransportmiddel from '../dagens-transportmiddel'
 import Utbetaling from '../utbetaling'
 import sjekkbokserHover from './sjekkbokser-hover.svg'
 import sjekkbokser from './sjekkbokser.svg'
@@ -21,7 +20,6 @@ const SoknadInfoUtvid = () => {
             </>
         }>
             <Utbetaling />
-            <DagensTransportmiddel />
             <Element className="element-tittel">
                 {tekst('soknad-info-utvid.undertittel')}
             </Element>

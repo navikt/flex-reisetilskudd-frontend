@@ -19,9 +19,11 @@ import {
 } from '../../../utils/utils'
 import { ReisetilskuddStatus } from '../../../types/types'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
-import KanSendesAlertStripe from '../../diverse/kan-sendes-alert-stripe'
+import KanSendesAlertstripe from '../../diverse/kan-sendes-alertstripe'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 import { post } from '../../../data/fetcher/fetcher'
+import { TagTyper } from '../../../types/enums'
+import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
 
 const Hovedpunkter = () => {
     const { valgtReisetilskudd, reisetilskuddene, setReisetilskuddene } = useAppStore()
@@ -33,7 +35,16 @@ const Hovedpunkter = () => {
     const fom = dayjs(valgtReisetilskudd!.fom)
     const tom = dayjs(valgtReisetilskudd!.tom)
     const sameYear = fom.year() === tom.year()
-    const bilag = valgtReisetilskudd!.kvitteringer
+
+    let bilag: RSKvittering[] = []
+
+    valgtReisetilskudd?.sporsmal.forEach(spm => {
+        const svar = spm.svarliste.svar
+        if (spm.tag === TagTyper.KVITTERINGER && svar.length > 0) {
+            bilag = bilag.concat(svar as RSKvittering[])
+        }
+    })
+
 
     const sendSoknad = async() => {
         if (!valgtReisetilskudd) {
@@ -46,7 +57,7 @@ const Hovedpunkter = () => {
         post(
             `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`
         ).then(() => {
-            valgtReisetilskudd.sendt = new Date()
+            valgtReisetilskudd.sendt = dayjs(new Date()).format('YYYY-MM-DD')
             valgtReisetilskudd.status = ReisetilskuddStatus.SENDT
             reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
             setReisetilskuddene(reisetilskuddene)
@@ -71,11 +82,11 @@ const Hovedpunkter = () => {
                         })}
                     </li>
 
-                    <Vis hvis={valgtReisetilskudd!.orgNavn !== undefined}>
+                    <Vis hvis={valgtReisetilskudd!.arbeidsgiverNavn !== undefined}>
                         <li>{tekst('hovedpunkter.arbeidsgiver_betaler')}</li>
                     </Vis>
 
-                    <Vis hvis={valgtReisetilskudd!.kvitteringer.length > 0}>
+                    <Vis hvis={bilag.length > 0}>
                         <li>
                             {getLedetekst(tekst('hovedpunkter.kvitteringer'), {
                                 '%ANTALL%': bilag.length,
@@ -98,7 +109,7 @@ const Hovedpunkter = () => {
                 </Vis>
 
                 <Vis hvis={valgtReisetilskudd?.status === ReisetilskuddStatus.ÅPEN}>
-                    <KanSendesAlertStripe />
+                    <KanSendesAlertstripe />
                 </Vis>
 
                 <Vis hvis={fetchFeilmelding}>

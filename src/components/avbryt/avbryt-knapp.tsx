@@ -12,6 +12,7 @@ import { Reisetilskudd, ReisetilskuddStatus } from '../../types/types'
 import { useHistory } from 'react-router-dom'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 import { post } from '../../data/fetcher/fetcher'
+import dayjs from 'dayjs'
 
 const AvbrytKnapp = () => {
     const { valgtReisetilskudd, setValgtReisetilskudd, reisetilskuddene, setReisetilskuddene } = useAppStore()
@@ -34,12 +35,16 @@ const AvbrytKnapp = () => {
 
     const handleAvbryt = async(e: any) => {
         e.preventDefault()
-        if(avbryter) return
+        if (avbryter) return
         setAvbryter(true)
         post(
             `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/avbryt`
         ).then(() => {
-            const nyReisetilskudd = { ...valgtReisetilskudd, status: ReisetilskuddStatus.AVBRUTT, avbrutt: new Date() } as Reisetilskudd
+            const nyReisetilskudd = {
+                ...valgtReisetilskudd,
+                status: ReisetilskuddStatus.AVBRUTT,
+                avbrutt: dayjs(new Date()).format('YYYY.MM.DD')
+            } as Reisetilskudd
             setReisetilskuddene(reisetilskuddene.map(r => r.id === valgtReisetilskudd!.id ? nyReisetilskudd : r) as any)
             setValgtReisetilskudd(nyReisetilskudd)
             history.push(getUrlTilSoknad(nyReisetilskudd))

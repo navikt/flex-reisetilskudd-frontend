@@ -1,0 +1,106 @@
+@import '../../../../node_modules/nav-frontend-core/less/_variabler';
+
+.skjemaelement__feilmelding + .undersporsmal {
+    margin-top: 2rem;
+}
+
+.skjemaelement__label + .undersporsmal {
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+
+    .skjema__sporsmal {
+        margin-bottom: 0.5rem;
+    }
+}
+
+.skjemaelement__label + .undersporsmal--skjul {
+    margin-top: 0;
+}
+
+.undersporsmal {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+
+    .skjema__sporsmal {
+        display: block;
+        margin: 0 0 1rem;
+    }
+
+    .kriterie--checked {
+        position: relative;
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: @navLysGra;
+
+        &:after {
+            content: '';
+            width: 1rem;
+            height: 1rem;
+            position: absolute;
+            display: block;
+            left: 1.3rem;
+            top: 0;
+            transform: translateY(-50%) rotate(45deg) skew(5deg, 5deg);
+            transform-origin: 50% 50%;
+            background-color: @navLysGra;
+        }
+
+        .skjema__sporsmal {
+            margin-top: 0;
+        }
+
+        .presisering {
+            position: relative;
+            background-color: @white;
+            padding: 1rem;
+            margin: 0.7rem 0 1.4rem;
+
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 1.25rem;
+                top: -0.5rem;
+                width: 1rem;
+                height: 1rem;
+                transform: rotate(45deg);
+                background-color: @white;
+            }
+        }
+    }
+
+    .ekstrasporsmal {
+        position: relative;
+        margin: .7rem -1.2rem;
+        padding: 1rem 1.2rem;
+        background-color: @navLysGra;
+
+        &:after {
+            content: '';
+            width: 1rem;
+            height: 1rem;
+            position: absolute;
+            display: block;
+            left: 1rem;
+            top: 0;
+            transform: translateY(-50%) rotate(45deg) skew(5deg, 5deg);
+            transform-origin: 50% 50%;
+            background-color: @navLysGra;
+        }
+    }
+}
+
+.undersporsmal--vis {
+    height: auto;
+    max-height: 2600px;
+    overflow: visible;
+    transition: max-height 0.8s ease-in,
+    opacity 0.3s 0.5s ease-in;
+    opacity: 1;
+}
+
+.undersporsmal--skjul {
+    transition: max-height 0.1s ease-out,
+    opacity 0.3s ease-out;
+}

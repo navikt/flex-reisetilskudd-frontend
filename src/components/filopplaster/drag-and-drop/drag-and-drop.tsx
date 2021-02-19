@@ -6,13 +6,13 @@ import { useDropzone } from 'react-dropzone'
 import { useFormContext } from 'react-hook-form'
 
 import { useAppStore } from '../../../data/stores/app-store'
-import { Kvittering } from '../../../types/types'
 import env from '../../../utils/environment'
 import { customTruncet, formaterFilstørrelse } from '../../../utils/fil-utils'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import Utvidbar from '../../utvidbar/utvidbar'
 import binders from './binders.svg'
+import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
 
 const formattertFiltyper = env.formaterteFiltyper
 const tillatteFiltyper = env.tillatteFiltyper
@@ -20,7 +20,7 @@ const maxFilstørrelse = env.maksFilstørrelse
 const maks = formaterFilstørrelse(maxFilstørrelse)
 
 interface Props {
-    kvittering: Kvittering
+    kvittering: RSKvittering
 }
 
 const DragAndDrop = ({ kvittering }: Props) => {
@@ -29,7 +29,7 @@ const DragAndDrop = ({ kvittering }: Props) => {
     const filRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        if (kvittering.kvitteringId) {
+        if (kvittering.id) {
             // TODO: Hent bilde med id
             // eslint-disable-next-line no-console
             console.log('Her må bilde hentes ned')

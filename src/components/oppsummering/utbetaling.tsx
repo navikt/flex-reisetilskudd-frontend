@@ -15,13 +15,13 @@ const Utbetaling = () => {
             <Element className="element-tittel">
                 {tekst('oppsummering.utbetaling.tittel')}
             </Element>
-            <Vis hvis={valgtReisetilskudd!.orgNavn === ''}>
+            <Vis hvis={valgtReisetilskudd!.arbeidsgiverOrgnummer === ''}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {tekst('oppsummering.utbetaling.undertittel')}
                 </Normaltekst>
             </Vis>
-            <Vis hvis={valgtReisetilskudd!.orgNavn !== ''}>
+            <Vis hvis={valgtReisetilskudd!.arbeidsgiverNavn !== ''}>
                 <Normaltekst className="checkedblock">
                     <CheckedIkon />
                     {getLedetekst(tekst('oppsummering.utbetaling.til'), {

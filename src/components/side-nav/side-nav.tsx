@@ -61,7 +61,7 @@ const SideNav = () => {
                 {sider.map((side, index) => {
                     return (
                         <option value={index + 1} key={index}>
-                            {`${index + 1} av ${sider.length} ${side}`}
+                            {`${index} av ${sider.length} ${side}`}
                         </option>
                     )
                 })}
