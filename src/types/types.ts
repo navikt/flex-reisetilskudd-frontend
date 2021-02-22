@@ -53,6 +53,7 @@ export enum Transportmiddel {
 export enum ReisetilskuddStatus {
     FREMTIDIG = 'FREMTIDIG',
     ÅPEN = 'ÅPEN',
+    PÅBEGYNT = 'PÅBEGYNT',
     SENDBAR = 'SENDBAR',
     SENDT = 'SENDT',
     AVBRUTT = 'AVBRUTT'
@@ -63,27 +64,31 @@ export class Reisetilskudd {
     status: string;
     sykmeldingId: string;
     fnr: string;
-    fom?: string;
-    tom?: string;
-    sendt?: string;
-    avbrutt?: string;
-    arbeidsgiverOrgnummer: string;
-    arbeidsgiverNavn: string;
+    fom: Date;
+    tom: Date;
+    opprettet: Date;
+    endret: Date;
+    sendt?: Date;
+    avbrutt?: Date;
+    arbeidsgiverOrgnummer?: string;
+    arbeidsgiverNavn?: string;
     sporsmal: Sporsmal[]
 
     constructor(
         rsReisetilskudd: RSReisetilskudd
     ) {
         this.id = rsReisetilskudd.id
+        this.status = rsReisetilskudd.status as keyof typeof ReisetilskuddStatus
         this.sykmeldingId = rsReisetilskudd.sykmeldingId
         this.fnr = rsReisetilskudd.fnr
-        this.status = rsReisetilskudd.status as keyof typeof ReisetilskuddStatus
-        this.sendt = rsReisetilskudd.sendt
-        this.avbrutt = rsReisetilskudd.avbrutt
-        this.fom = rsReisetilskudd.fom
-        this.tom = rsReisetilskudd.tom
-        this.arbeidsgiverOrgnummer = rsReisetilskudd.arbeidsgiverOrgnummer
-        this.arbeidsgiverNavn = rsReisetilskudd.arbeidsgiverNavn
+        this.fom = dayjsToDate(rsReisetilskudd.fom)!
+        this.tom = dayjsToDate(rsReisetilskudd.tom)!
+        this.opprettet = dayjsToDate(rsReisetilskudd.opprettet)!
+        this.endret = dayjsToDate(rsReisetilskudd.endret)!
+        this.sendt = dayjsToDate(rsReisetilskudd.sendt)
+        this.avbrutt = dayjsToDate(rsReisetilskudd.avbrutt)
+        this.arbeidsgiverOrgnummer = rsReisetilskudd.arbeidsgiverOrgnummer || undefined
+        this.arbeidsgiverNavn = rsReisetilskudd.arbeidsgiverNavn || undefined
         this.sporsmal = rsToSporsmal(rsReisetilskudd.sporsmal, undefined as any, true)
     }
 }

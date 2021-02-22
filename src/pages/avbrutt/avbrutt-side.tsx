@@ -66,8 +66,8 @@ const AvbruttSide = () => {
                 ...valgtReisetilskudd,
                 avbrutt: undefined,
                 status: reisetilskuddStatus(
-                    valgtReisetilskudd!.fom!,
-                    valgtReisetilskudd!.tom!
+                    valgtReisetilskudd!.fom,
+                    valgtReisetilskudd!.tom
                 )
             } as Reisetilskudd
             setReisetilskuddene(reisetilskuddene.map(r => r.id === valgtReisetilskudd!.id ? nyReisetilskudd : r) as any)

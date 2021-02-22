@@ -17,7 +17,6 @@ import Vis from '../../diverse/vis'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
 import validerDato from '../../../utils/validering'
 import { skalBrukeFullskjermKalender } from '../../../utils/browser-utils'
-import { dayjsToDate } from '../../../utils/dato'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
 import { TagTyper, UtgiftTyper } from '../../../types/enums'
@@ -179,11 +178,11 @@ const KvitteringForm = () => {
                                     showYearSelector={false}
                                     limitations={{
                                         weekendsNotSelectable: false,
-                                        minDate: valgtReisetilskudd?.fom || undefined,
-                                        maxDate: valgtReisetilskudd?.tom || undefined
+                                        minDate: valgtReisetilskudd?.fom.toDateString() || undefined,
+                                        maxDate: valgtReisetilskudd?.tom.toDateString() || undefined
                                     }}
                                     dayPickerProps={{
-                                        initialMonth: dayjsToDate(valgtReisetilskudd?.fom)
+                                        initialMonth: valgtReisetilskudd?.fom
                                     }}
                                 />
                             )}

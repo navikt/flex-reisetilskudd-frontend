@@ -1,6 +1,6 @@
-import { dayjsToDate, fraBackendTilDate } from './dato'
+import { dayjsToDate } from './dato'
 
-const validerDato = (values: any, min?: string, max?: string) => {
+const validerDato = (values: any, min?: Date, max?: Date) => {
     const formDato = values['dato_input']
     // Enkel null sjekk
     if (formDato === undefined || formDato === '') return 'Du må velge dato'
@@ -9,8 +9,8 @@ const validerDato = (values: any, min?: string, max?: string) => {
     // Formattering er riktig når dato er skrevet inn manuelt
     if (isNaN(valgtDato?.getTime() || NaN)) return 'Datoen følger ikke formatet dd.mm.åååå'
     // Grenseverdier
-    if (min && valgtDato! < fraBackendTilDate(min)) return 'Datoen kan ikke være før ' + min
-    if (max && valgtDato! > fraBackendTilDate(max)) return 'Datoen kan ikke være etter ' + max
+    if (min && valgtDato! < min) return 'Datoen kan ikke være før ' + min
+    if (max && valgtDato! > max) return 'Datoen kan ikke være etter ' + max
 
     return true
 }

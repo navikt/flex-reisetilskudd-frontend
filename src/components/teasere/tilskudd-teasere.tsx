@@ -30,7 +30,7 @@ const TilskuddTeasere = () => {
 
     const sorterteSoknader = () => {
         if (sortering === Sortering.Dato) {
-            return reisetilskuddene.sort((a, b) => b.tom?.localeCompare(a.tom || '0') || 1)
+            return reisetilskuddene.sort((a, b) => dayjs(b.tom).diff(a.tom))    // TODO: test at denne funker
         } else if (sortering === Sortering.Status) {
             return reisetilskuddene.sort((a, b) => a.status.localeCompare(b.status))
         } else if (sortering === Sortering.Sendt) {

@@ -57,7 +57,7 @@ const Hovedpunkter = () => {
         post(
             `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`
         ).then(() => {
-            valgtReisetilskudd.sendt = dayjs(new Date()).format('YYYY-MM-DD')
+            valgtReisetilskudd.sendt = new Date()
             valgtReisetilskudd.status = ReisetilskuddStatus.SENDT
             reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
             setReisetilskuddene(reisetilskuddene)
