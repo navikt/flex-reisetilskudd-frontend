@@ -94,10 +94,10 @@ const KvitteringForm = () => {
         }).then((opplastingResponse) => {
             const kvitt: RSKvittering = {
                 blobId: opplastingResponse.parsedBody!.id,
-                storrelse: valgtFil?.size,
-                belop: methods.getValues('belop_input') * 100,
                 datoForUtgift: dato,
-                typeUtgift: UtgiftTyper.ANNET
+                belop: methods.getValues('belop_input') * 100,
+                typeUtgift: UtgiftTyper.ANNET,
+                opprettet: null //TODO: Sett denne
             }
             post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/kvittering`,
                 kvitt

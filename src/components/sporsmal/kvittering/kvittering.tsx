@@ -4,15 +4,14 @@ import { Normaltekst, Systemtittel, } from 'nav-frontend-typografi'
 import React, { useEffect } from 'react'
 
 import { useAppStore } from '../../../data/stores/app-store'
-import { getLedetekst, tekst } from '../../../utils/tekster'
+import { tekst } from '../../../utils/tekster'
 import FilListe from '../../filopplaster/fil-liste'
 import KvitteringModal from '../../filopplaster/kvittering-modal/kvittering-modal'
 import PlussIkon from './pluss-ikon.svg'
-import { tilLesbarPeriodeMedArstall } from '../../../utils/dato'
 import { SpmProps } from '../sporsmal-form/sporsmal-form'
 
 const Kvittering = ({ sporsmal }: SpmProps) => {
-    const { valgtReisetilskudd, setOpenModal, setKvitteringIndex, setErBekreftet } = useAppStore()
+    const { setOpenModal, setKvitteringIndex, setErBekreftet } = useAppStore()
 
     useEffect(() => {
         setErBekreftet(true)
@@ -32,9 +31,7 @@ const Kvittering = ({ sporsmal }: SpmProps) => {
 
             <div className="opplasting__tekst">
                 <Normaltekst id="opplasting-overskrift" aria-describedby="opplasting-hjelpetekst">
-                    {getLedetekst(tekst('opplasting.her-kan'), {
-                        '%DATOER%': tilLesbarPeriodeMedArstall(valgtReisetilskudd!.fom, valgtReisetilskudd!.tom, 'og'),
-                    })}
+                    {sporsmal.sporsmalstekst}
                 </Normaltekst>
             </div>
 

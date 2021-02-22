@@ -1,6 +1,7 @@
 import { RSKvittering } from './rs-kvittering'
 
 export interface RSSvar {
-    verdi?: string;
-    kvittering?: RSKvittering;
+    id: string | null;
+    verdi: string | null;
+    kvittering: RSKvittering | null;
 }
