@@ -1,31 +1,23 @@
-import './opplasting.less'
+import './kvittering.less'
 
-import { Knapp } from 'nav-frontend-knapper'
 import { Normaltekst, Systemtittel, } from 'nav-frontend-typografi'
-import React from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
 
-import { RouteParams } from '../../../app'
 import { useAppStore } from '../../../data/stores/app-store'
-import { pathTilSide } from '../../../utils/navigasjon'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import FilListe from '../../filopplaster/fil-liste'
 import KvitteringModal from '../../filopplaster/kvittering-modal/kvittering-modal'
 import PlussIkon from './pluss-ikon.svg'
 import { tilLesbarPeriodeMedArstall } from '../../../utils/dato'
-import AvbrytKnapp from '../../avbryt/avbryt-knapp'
+import { SpmProps } from '../sporsmal-form/sporsmal-form'
 
-const Opplasting = () => {
-    const { valgtReisetilskudd, setOpenModal, setKvitteringIndex } = useAppStore()
-    const { steg } = useParams<RouteParams>()
-    const stegNr = Number(steg)
-    const history = useHistory()
+const Kvittering = ({ sporsmal }: SpmProps) => {
+    const { valgtReisetilskudd, setOpenModal, setKvitteringIndex, setErBekreftet } = useAppStore()
 
-    const handleVidereKlikk = () => {
-        if (stegNr + 1 <= 4 && stegNr + 1 > 1) {
-            history.push(pathTilSide(stegNr + 1, history))
-        }
-    }
+    useEffect(() => {
+        setErBekreftet(true)
+        // eslint-disable-next-line
+    }, [])
 
     const aktiverModal = () => {
         setOpenModal(true)
@@ -54,15 +46,8 @@ const Opplasting = () => {
             <KvitteringModal />
 
             <FilListe fjernKnapp />
-
-            <div className="knapperad">
-                <Knapp type="hoved" onClick={handleVidereKlikk}>
-                    {tekst('klikkbar.videre-knapp.tekst')}
-                </Knapp>
-                <AvbrytKnapp />
-            </div>
         </div>
     )
 }
 
-export default Opplasting
+export default Kvittering

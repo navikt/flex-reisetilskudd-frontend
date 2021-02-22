@@ -11,7 +11,7 @@ import JaNeiRadio from './typer/ja-nei-radio'
 import UkjentSporsmal from './typer/ukjent-sporsmal'
 import DatoInput from './typer/dato-komp'
 import TallInput from './typer/tall-komp'
-import Kvitteringer from './typer/kvitteringer'
+import Kvittering from './kvittering/kvittering'
 
 interface UndersporsmalProps {
     sporsmal: Sporsmal;
@@ -44,7 +44,7 @@ const SporsmalSwitch = ({ sporsmal }: UndersporsmalProps) => {
             return <TallInput sporsmal={sporsmal} />
 
         case RSSvartype.KVITTERING:
-            return <Kvitteringer sporsmal={sporsmal} />
+            return <Kvittering sporsmal={sporsmal} />
 
         default:
             return <UkjentSporsmal sporsmal={sporsmal} />

@@ -6,7 +6,7 @@ import HovedpunkterTekster from '../components/oppsummering/hovedpunkter/hovedpu
 import OppsummeringTekster from '../components/oppsummering/oppsummering-tekster'
 import OppsummeringSideTekster from '../components/oppsummering/soknad-info-utvid/soknad-info-utvid-tekster'
 import SideNavTekster from '../components/side-nav/side-nav-tekster'
-import OpplastingTekster from '../components/sporsmal/opplasting/opplasting-tekster'
+import KvitteringTekster from '../components/sporsmal/kvittering/kvittering-tekster'
 import SporsmalTekster from '../components/sporsmal/sporsmal-tekster'
 import SykmeldingTekster from '../components/sykmelding/sykmelding-tekster'
 import OmReisetilskuddTekster from '../components/teasere/om-reisetilskudd/om-reisetilskudd-tekster'
@@ -32,7 +32,7 @@ const tekster = {
     ...OppsummeringTekster.nb,
     ...SykmeldingTekster.nb,
     ...BekreftTekster.nb,
-    ...OpplastingTekster.nb,
+    ...KvitteringTekster.nb,
     ...OppsummeringSideTekster.nb,
     ...SporsmalTekster.nb,
     ...HovedpunkterTekster.nb,
