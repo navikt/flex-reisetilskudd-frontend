@@ -1,15 +1,10 @@
 import { RSReisetilskudd } from './rs-types/rs-reisetilskudd'
 import { dayjsToDate } from '../utils/dato'
 import { TagTyper } from './enums'
-import { RSSvartype } from './rs-types/rs-svartype'
-import { RSSvarliste } from './rs-types/rs-svarliste'
-import { RSVisningskriterieType } from './rs-types/rs-visningskriterie'
 import { RSSporsmal } from './rs-types/rs-sporsmal'
-import { RSSoknadstype } from './rs-types/rs-soknadstype'
-import { RSSoknadstatus } from './rs-types/rs-soknadstatus'
-import { RSArbeidssituasjon } from './rs-types/rs-arbeidssituasjon'
-import { RSSoknadsperiode } from './rs-types/rs-soknadsperiode'
-import { RSSoknad } from './rs-types/rs-soknad'
+import { RSSvar } from './rs-types/rs-svar'
+import { RSKvittering } from './rs-types/rs-kvittering'
+import { splittTagOgIndex } from '../components/sporsmal/sporsmal-utils'
 
 export interface NaermesteLeder {
     navn: string;
@@ -59,6 +54,42 @@ export enum ReisetilskuddStatus {
     AVBRUTT = 'AVBRUTT'
 }
 
+export enum Visningskriterie {
+    NEI = 'NEI',
+    JA = 'JA',
+    CHECKED = 'CHECKED'
+}
+
+export enum Svartype {
+    JA_NEI = 'JA_NEI',
+    CHECKBOX = 'CHECKBOX',
+    CHECKBOX_GRUPPE = 'CHECKBOX_GRUPPE',
+    CHECKBOX_PANEL = 'CHECKBOX_PANEL',
+    DATOER = 'DATOER',
+    BELOP = 'BELOP',
+    KILOMETER = 'KILOMETER',
+    KVITTERING = 'KVITTERING',
+}
+
+export interface Svarliste {
+    sporsmalId: string;
+    svar: Svar[];
+}
+
+export interface Svar {
+    id?: string;
+    verdi?: string;
+    kvittering?: Kvittering;
+}
+
+export interface Kvittering {
+    blobId: string;
+    datoForUtgift: string;
+    belop: number; // Beløp i heltall øre
+    typeUtgift: string;
+    opprettet?: string;
+}
+
 export class Reisetilskudd {
     id: string;
     status: string;
@@ -93,94 +124,42 @@ export class Reisetilskudd {
     }
 }
 
-export class Soknad {
-    id: string;
-    sykmeldingId: string;
-    soknadstype: RSSoknadstype;
-    status: RSSoknadstatus;
-    arbeidssituasjon: RSArbeidssituasjon | null;
-    fom?: Date;
-    tom?: Date;
-    avbruttDato?: Date;
-    opprettetDato: Date;
-    sendtTilNAVDato?: Date;
-    sendtTilArbeidsgiverDato?: Date;
-    arbeidsgiver?: Arbeidsgiver;
-    sporsmal: Sporsmal[];
-    soknadPerioder: RSSoknadsperiode[];
-    korrigerer: string | null;
-
-    constructor(
-        soknad: RSSoknad
-    ) {
-        this.id = soknad.id
-        this.sykmeldingId = soknad.sykmeldingId!
-        const type = soknad.soknadstype as keyof typeof RSSoknadstype
-        this.soknadstype = RSSoknadstype[type]
-        const stat = soknad.status as keyof typeof RSSoknadstatus
-        this.status = RSSoknadstatus[stat]
-        this.fom = dayjsToDate(soknad.fom!)!
-        this.tom = dayjsToDate(soknad.tom!)!
-        this.korrigerer = soknad.korrigerer
-        this.avbruttDato = dayjsToDate(soknad.avbruttDato!)!
-        this.opprettetDato = dayjsToDate(soknad.opprettetDato!)!
-        this.sendtTilNAVDato = dayjsToDate(soknad.sendtTilNAVDato!)!
-        this.sendtTilArbeidsgiverDato = dayjsToDate(soknad.sendtTilArbeidsgiverDato!)!
-        if (soknad.arbeidsgiver) {
-            this.arbeidsgiver = {
-                naermesteLeder: soknad.arbeidsgiver.naermesteLeder,
-                navn: soknad.arbeidsgiver.navn,
-                orgnummer: soknad.arbeidsgiver.orgnummer
-            }
-        }
-        this.arbeidssituasjon = soknad.arbeidssituasjon as any
-        this.sporsmal = rsToSporsmal(soknad.sporsmal, undefined as any, true)
-        this.soknadPerioder = soknad.soknadPerioder
-    }
-}
-
 export class Sporsmal {
     id: string;
     tag: TagTyper;
     tagIndex?: number;
     overskrift: string;
     sporsmalstekst: string;
-    undertekst: string | null;
-    svartype: RSSvartype;
-    min: string | null;
-    max: string | null;
-    kriterieForVisningAvUndersporsmal: string;
-    svarliste: RSSvarliste;
+    undertekst?: string;
+    svartype: Svartype;
+    min?: string;
+    max?: string;
+    kriterieForVisningAvUndersporsmal?: Visningskriterie;
+    svarliste: Svarliste;
     undersporsmal: Sporsmal[];
-    parentKriterie: RSVisningskriterieType | null;
+    parentKriterie?: Visningskriterie;
     erHovedsporsmal: boolean;
 
-    constructor(rsspm: RSSporsmal, kriterie: RSVisningskriterieType | null, erHovedsporsmal: boolean) {
+    constructor(rsspm: RSSporsmal, kriterie: string | null, erHovedsporsmal: boolean) {
         this.id = rsspm.id
-        const orgarr: string[] = rsspm.tag.split('_')
-        const numtag: number = parseInt(orgarr.pop() as any)
-        let tag = rsspm.tag
-        if (!isNaN(numtag)) {
-            this.tagIndex = numtag
-            tag = orgarr.join('_')
-        }
-        const idtag = tag as keyof typeof TagTyper
-        this.tag = TagTyper[idtag]
+        const pair = splittTagOgIndex(rsspm.tag)
+        this.tag = pair.key
+        this.tagIndex = pair.value
         this.overskrift = rsspm.overskrift === null ? '' : rsspm.overskrift
         this.sporsmalstekst = rsspm.sporsmalstekst === null ? '' : rsspm.sporsmalstekst
-        this.undertekst = rsspm.undertekst
-        this.svartype = rsspm.svartype as any as RSSvartype
-        this.min = rsspm.min
-        this.max = rsspm.max
-        this.kriterieForVisningAvUndersporsmal = rsspm.kriterieForVisningAvUndersporsmal as any
-        this.svarliste = { sporsmalId: rsspm.id, svar: rsspm.svar }
+        this.undertekst = rsspm.undertekst || undefined
+        this.svartype = rsspm.svartype as any as Svartype
+        this.min = rsspm.min || undefined
+        this.max = rsspm.max || undefined
+        this.kriterieForVisningAvUndersporsmal = rsspm.overskrift === null ? rsspm.kriterieForVisningAvUndersporsmal as Visningskriterie : undefined
+        this.svarliste = { sporsmalId: rsspm.id, svar: rsToSvar(rsspm.svar) }
         this.undersporsmal = rsToSporsmal(rsspm.undersporsmal, rsspm.kriterieForVisningAvUndersporsmal, false)
-        this.parentKriterie = kriterie
+        this.parentKriterie = kriterie as any
         this.erHovedsporsmal = erHovedsporsmal
     }
 }
 
-const rsToSporsmal = (spms: RSSporsmal[], kriterie: RSVisningskriterieType | null, erHovedsporsmal: boolean) => {
+const rsToSporsmal = (spms: RSSporsmal[], kriterie: string | null, erHovedsporsmal: boolean) => {
     const sporsmals: Sporsmal[] = []
     if (spms === undefined) {
         return sporsmals
@@ -200,4 +179,24 @@ const rsToSporsmal = (spms: RSSporsmal[], kriterie: RSVisningskriterieType | nul
         sporsmals[sporsmals.length - 2] = tmp
     }
     return sporsmals
+}
+
+const rsToSvar = (svar: RSSvar[]): Svar[] => {
+    return svar.map(rsSvar => {
+        return {
+            id: rsSvar.id || undefined,
+            verdi: rsSvar.verdi || undefined,
+            kvittering: rsToKvittering(rsSvar.kvittering)
+        }
+    })
+}
+
+const rsToKvittering = (rsKvittering: RSKvittering | null) => {
+    return (rsKvittering == null) ? undefined : {
+        blobId: rsKvittering.blobId,
+        datoForUtgift: rsKvittering.datoForUtgift,
+        belop: rsKvittering.belop,
+        typeUtgift: rsKvittering.typeUtgift,
+        opprettet: rsKvittering.opprettet || undefined
+    } as Kvittering
 }

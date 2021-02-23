@@ -1,7 +1,5 @@
-import { Sporsmal } from '../types'
+import { Sporsmal, Svar } from '../types'
 import { RSSvar } from './rs-svar'
-import { RSSvartypeType } from './rs-svartype'
-import { RSVisningskriterie, RSVisningskriterieType } from './rs-visningskriterie'
 import { RSKvittering } from './rs-kvittering'
 
 export interface RSSporsmal {
@@ -10,30 +8,26 @@ export interface RSSporsmal {
     overskrift: string | null;
     sporsmalstekst: string | null;
     undertekst: string | null;
-    svartype: RSSvartypeType;
+    svartype: string;
     min: string | null;
     max: string | null;
-    kriterieForVisningAvUndersporsmal: RSVisningskriterieType | null;
-    svar: RSSvar[] | RSKvittering[];
+    kriterieForVisningAvUndersporsmal: string | null;
+    svar: RSSvar[];
     undersporsmal: RSSporsmal[];
-}
-
-export function sporsmalToRS(sporsmal: Sporsmal): RSSporsmal {
-    return rsSporsmalMapping(sporsmal)
 }
 
 const rsSporsmalMapping = (sporsmal: Sporsmal): RSSporsmal => {
     const rsSporsmal = {} as RSSporsmal
     rsSporsmal.id = sporsmal.id
     rsSporsmal.tag = sporsmal.tag.toString() + tagIndexEllerBlank(sporsmal.tagIndex as any)
-    rsSporsmal.overskrift = sporsmal.overskrift
-    rsSporsmal.sporsmalstekst = (sporsmal.sporsmalstekst === '' ? null : sporsmal.sporsmalstekst) as any
-    rsSporsmal.undertekst = sporsmal.undertekst
+    rsSporsmal.overskrift = sporsmal.overskrift || null
+    rsSporsmal.sporsmalstekst = sporsmal.sporsmalstekst === '' ? null : sporsmal.sporsmalstekst
+    rsSporsmal.undertekst =  sporsmal.undertekst || null
     rsSporsmal.svartype = sporsmal.svartype
-    rsSporsmal.min = sporsmal.min
-    rsSporsmal.max = sporsmal.max
-    rsSporsmal.kriterieForVisningAvUndersporsmal = rsVisningskriterie(sporsmal.kriterieForVisningAvUndersporsmal) as any
-    rsSporsmal.svar = sporsmal.svarliste.svar
+    rsSporsmal.min = sporsmal.min || null
+    rsSporsmal.max = sporsmal.max || null
+    rsSporsmal.kriterieForVisningAvUndersporsmal = sporsmal.kriterieForVisningAvUndersporsmal || null
+    rsSporsmal.svar = svarToRS(sporsmal.svarliste.svar)
     if (sporsmal.undersporsmal) {
         rsSporsmal.undersporsmal = sporsmal.undersporsmal.map((uspm: Sporsmal) => {
             return rsSporsmalMapping(uspm)
@@ -45,13 +39,22 @@ const rsSporsmalMapping = (sporsmal: Sporsmal): RSSporsmal => {
 }
 
 const tagIndexEllerBlank = (tagIndex: number) => {
-    if (tagIndex === undefined) return ''
-    return `_${tagIndex}`
+    if (tagIndex) return `_${tagIndex}`
+    return ''
 }
 
-const rsVisningskriterie = (kriterieForVisningAvUndersporsmal: string) => {
-    if (kriterieForVisningAvUndersporsmal as keyof typeof RSVisningskriterie) {
-        return RSVisningskriterie[kriterieForVisningAvUndersporsmal as keyof typeof RSVisningskriterie]
-    }
-    return null
+const svarToRS = (svar: Svar[]) => {
+    return  svar.map((svar) => {
+        return {
+            id: svar.id,
+            verdi: svar.verdi,
+            kvittering: (svar.kvittering) ? {
+                blobId: svar.kvittering.blobId,
+                datoForUtgift: svar.kvittering.datoForUtgift,
+                belop: svar.kvittering.belop,
+                typeUtgift: svar.kvittering.typeUtgift,
+                opprettet: svar.kvittering.opprettet || null
+            } as RSKvittering : null
+        } as RSSvar
+    })
 }

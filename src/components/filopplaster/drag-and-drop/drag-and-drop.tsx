@@ -29,7 +29,7 @@ const DragAndDrop = ({ kvittering }: Props) => {
     const filRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        if (kvittering.id) {
+        if (kvittering.blobId) {
             // TODO: Hent bilde med id
             // eslint-disable-next-line no-console
             console.log('Her må bilde hentes ned')
