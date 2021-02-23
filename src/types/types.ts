@@ -84,10 +84,18 @@ export interface Svar {
 
 export interface Kvittering {
     blobId: string;
-    datoForUtgift: string;
+    datoForUtgift: Date;
     belop: number; // Beløp i heltall øre
-    typeUtgift: string;
-    opprettet?: string;
+    typeUtgift: Utgiftstype;
+    opprettet?: Date;
+}
+
+export enum Utgiftstype {
+    OFFENTLIG_TRANSPORT = 'OFFENTLIG_TRANSPORT',
+    TAXI = 'TAXI',
+    PARKERING = 'PARKERING',
+    BOMPENGER = 'BOMPENGER',
+    ANNET = 'ANNET'
 }
 
 export class Reisetilskudd {
@@ -148,13 +156,13 @@ export class Sporsmal {
         this.overskrift = rsspm.overskrift === null ? '' : rsspm.overskrift
         this.sporsmalstekst = rsspm.sporsmalstekst === null ? '' : rsspm.sporsmalstekst
         this.undertekst = rsspm.undertekst || undefined
-        this.svartype = rsspm.svartype as any as Svartype
+        this.svartype = rsspm.svartype as Svartype
         this.min = rsspm.min || undefined
         this.max = rsspm.max || undefined
-        this.kriterieForVisningAvUndersporsmal = rsspm.overskrift === null ? rsspm.kriterieForVisningAvUndersporsmal as Visningskriterie : undefined
+        this.kriterieForVisningAvUndersporsmal = rsspm.kriterieForVisningAvUndersporsmal as Visningskriterie || undefined
         this.svarliste = { sporsmalId: rsspm.id, svar: rsToSvar(rsspm.svar) }
         this.undersporsmal = rsToSporsmal(rsspm.undersporsmal, rsspm.kriterieForVisningAvUndersporsmal, false)
-        this.parentKriterie = kriterie as any
+        this.parentKriterie = kriterie as Visningskriterie
         this.erHovedsporsmal = erHovedsporsmal
     }
 }
@@ -169,15 +177,6 @@ const rsToSporsmal = (spms: RSSporsmal[], kriterie: string | null, erHovedsporsm
         sporsmals.push(spm)
     })
 
-    if (sporsmals.length >= 2
-        && sporsmals[sporsmals.length - 1].tag === TagTyper.VAER_KLAR_OVER_AT
-        && sporsmals[sporsmals.length - 2].tag === TagTyper.BEKREFT_OPPLYSNINGER) {
-        // Det finnes tilfeller opprettet i db før 15 Mai 2020 hvor disse er i "feil rekkefølge" Dette fikser sorteringa
-        // Se også https://github.com/navikt/syfosoknad/commit/1983d32f3a7fb28bbf17126ea227d91589ad5f35
-        const tmp = sporsmals[sporsmals.length - 1]
-        sporsmals[sporsmals.length - 1] = sporsmals[sporsmals.length - 2]
-        sporsmals[sporsmals.length - 2] = tmp
-    }
     return sporsmals
 }
 
@@ -191,12 +190,12 @@ const rsToSvar = (svar: RSSvar[]): Svar[] => {
     })
 }
 
-const rsToKvittering = (rsKvittering: RSKvittering | null) => {
+export const rsToKvittering = (rsKvittering: RSKvittering | null) => {
     return (rsKvittering == null) ? undefined : {
         blobId: rsKvittering.blobId,
-        datoForUtgift: rsKvittering.datoForUtgift,
+        datoForUtgift: dayjsToDate(rsKvittering.datoForUtgift),
         belop: rsKvittering.belop,
-        typeUtgift: rsKvittering.typeUtgift,
-        opprettet: rsKvittering.opprettet || undefined
+        typeUtgift: rsKvittering.typeUtgift as Utgiftstype,
+        opprettet: dayjsToDate(rsKvittering.opprettet) || undefined
     } as Kvittering
 }
