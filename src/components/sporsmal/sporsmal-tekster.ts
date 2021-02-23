@@ -16,6 +16,8 @@ const SporsmalTekster: any = {
 
         'sporsmal.egen-bil.hjelpetekst.tittel': 'Hvor mange km er det fra hjemmet ditt til jobben?',
         'sporsmal.egen-bil.hjelpetekst': 'Dette er en hjelpetekst for antall kilometer fra bosted til arbeid.',
+        'sporsmal.egen-bil.kalender.hjelp': 'Velg dager fra %FRA% - %TIL%',
+
         'sporsmal.kollektiv.hjelpetekst.tittel': 'Hvor mye betaler du vanligvis i måneden for offentlig transport?',
         'sporsmal.kollektiv.hjelpetekst': 'Dette er en hjelpetekst for månedlige utgifter.',
     }, 'en': {}

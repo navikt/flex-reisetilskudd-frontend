@@ -9,9 +9,9 @@ import CheckboxPanel from './typer/checkbox-panel'
 import JaNeiInput from './typer/ja-nei-input'
 import JaNeiRadio from './typer/ja-nei-radio'
 import UkjentSporsmal from './typer/ukjent-sporsmal'
-import DatoInput from './typer/dato-komp'
 import TallInput from './typer/tall-komp'
 import Kvitteringer from './typer/kvitteringer'
+import DagerKomp from './typer/dager-komp'
 
 interface UndersporsmalProps {
     sporsmal: Sporsmal;
@@ -37,7 +37,7 @@ const SporsmalSwitch = ({ sporsmal }: UndersporsmalProps) => {
             return <JaNeiInput sporsmal={sporsmal} />
 
         case RSSvartype.DATOER:
-            return <DatoInput sporsmal={sporsmal} />
+            return <DagerKomp sporsmal={sporsmal} />
 
         case RSSvartype.BELOP:
         case RSSvartype.KILOMETER:

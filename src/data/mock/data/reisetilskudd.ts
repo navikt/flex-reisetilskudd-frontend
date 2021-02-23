@@ -125,7 +125,7 @@ const reisetilskudd = [
                         sporsmalstekst: 'Hvilke dager reiste du med bil',
                         undertekst: null,
                         svartype: 'DATOER',
-                        min: '2021-02-05',
+                        min: '2021-01-15',
                         max: '2021-02-09',
                         kriterieForVisningAvUndersporsmal: null,
                         svar: [],

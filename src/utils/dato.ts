@@ -1,14 +1,17 @@
 import 'dayjs/locale/nb'
 
 import dayjs from 'dayjs'
+import { Sporsmal } from '../types/types'
+
 dayjs.locale('nb')
 
 const SKILLETEGN_PERIODE = '–'
-const maaneder = [ 'januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember' ]
+export const maaneder = [ 'januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember' ]
+export const mnd_stor_forbokstav = [ 'Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember' ]
 
 export const tilLesbarDatoUtenAarstall = (datoArg: any): string => {
     if (datoArg) {
-        const dato =  dayjsToDate(datoArg)!
+        const dato = dayjsToDate(datoArg)!
         const dag = dato.getDate()
         const manedIndex = dato.getMonth()
         const maned = maaneder[manedIndex]
@@ -73,4 +76,16 @@ export const ukeDatoListe = (min: string, max: string) => {
         dato = dato.add(1, 'day')
     }
     return ukeListe
+}
+
+export const sammeMnd = (sporsmal: Sporsmal): boolean => {
+    const firstMonth = dayjs(sporsmal.min!).month()
+    const lastMonth = dayjs(sporsmal.max!).month()
+    return firstMonth === lastMonth
+}
+
+export const sammeAar = (sporsmal: Sporsmal): boolean => {
+    const firstYear = dayjs(sporsmal.min!).year().toString()
+    const lastYear = dayjs(sporsmal.max!).year().toString()
+    return firstYear === lastYear
 }
