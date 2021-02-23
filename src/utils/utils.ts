@@ -47,7 +47,7 @@ export const getUrlTilSoknad = (reisetilskudd: Reisetilskudd) => {
     return `/soknaden/${reisetilskudd.id}/1`
 }
 
-export const reisetilskuddStatus = (fom: string, tom: string) : ReisetilskuddStatus => {
+export const reisetilskuddStatus = (fom: Date, tom: Date) : ReisetilskuddStatus => {
     const now = dayjs()
     const fomDate = dayjs(fom)
     const tomDate = dayjs(tom)

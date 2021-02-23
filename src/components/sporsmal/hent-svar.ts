@@ -1,17 +1,21 @@
 import { SvarEnums } from '../../types/enums'
-import { Sporsmal } from '../../types/types'
-import { RSSvar } from '../../types/rs-types/rs-svar'
+import { Sporsmal, Svartype } from '../../types/types'
 
 export const hentSvar = (sporsmal: Sporsmal): any => {
     const svarliste = sporsmal.svarliste
-    const svar = svarliste.svar[0] as RSSvar
+    const svar = svarliste.svar[0]
 
     if (sporsmal.svartype.toString().startsWith('RADIO_GRUPPE')) {
         const besvartSporsmal = sporsmal.undersporsmal.find((spm: Sporsmal) => {
-            const svr = spm.svarliste.svar[0] as RSSvar
+            const svr = spm.svarliste.svar[0]
             return svr && svr.verdi === SvarEnums.CHECKED
         })
         return besvartSporsmal ? besvartSporsmal.sporsmalstekst : undefined
+    }
+
+    // TODO: Fix
+    if (sporsmal.svartype === Svartype.KVITTERING) {
+        return []
     }
 
     if (svar === undefined) {
@@ -37,7 +41,7 @@ const hentSvarliste = (sporsmal: Sporsmal) => {
     let svar: any = {}
 
     if (sporsmal.svarliste.svar[0] !== undefined) {
-        const svr = sporsmal.svarliste.svar[0] as RSSvar
+        const svr = sporsmal.svarliste.svar[0]
         svar[sporsmal.id] = svr.verdi
     }
     sporsmal.undersporsmal.forEach((spm) => {

@@ -1,10 +1,10 @@
 import { Sykmelding } from '../../../types/sykmelding'
 
 export const mockSykmelding = new Sykmelding({
-    'id': '3e3352a1-2b99-4cd6-8268-415842955d83',
-    'mottattTidspunkt': '2021-01-01T00:00:00Z',
+    'id': 'ad924311-a1aa-4a6d-b91f-8cfc6f1c9060',
+    'mottattTidspunkt': '2021-01-31T23:00:00Z',
     'behandlingsutfall': {
-        'status': 'MANUAL_PROCESSING',
+        'status': 'OK',
         'ruleHits': []
     },
     'legekontorOrgnummer': '223456789',
@@ -14,8 +14,8 @@ export const mockSykmelding = new Sykmelding({
     },
     'sykmeldingsperioder': [
         {
-            'fom': '2021-01-01',
-            'tom': '2021-01-07',
+            'fom': '2021-02-01',
+            'tom': '2021-02-18',
             'gradert': null,
             'behandlingsdager': null,
             'innspillTilArbeidsgiver': null,
@@ -26,9 +26,9 @@ export const mockSykmelding = new Sykmelding({
     ],
     'sykmeldingStatus': {
         'statusEvent': 'SENDT',
-        'timestamp': '2021-01-08T10:58:12.001722Z',
+        'timestamp': '2021-02-19T10:25:59.057Z',
         'arbeidsgiver': {
-            'orgnummer': '974654458',
+            'orgnummer': '995816598',
             'juridiskOrgnummer': '984661185',
             'orgNavn': 'POSTEN NORGE AS, BÆRUM'
         },
@@ -59,7 +59,7 @@ export const mockSykmelding = new Sykmelding({
         'annenFraversArsak': null,
         'svangerskap': false,
         'yrkesskade': false,
-        'yrkesskadeDato': '2021-01-01'
+        'yrkesskadeDato': '2021-02-01'
     },
     'skjermesForPasient': false,
     'prognose': {
@@ -114,7 +114,7 @@ export const mockSykmelding = new Sykmelding({
         'kontaktDato': null,
         'begrunnelseIkkeKontakt': null
     },
-    'behandletTidspunkt': '2021-01-01T00:00:00Z',
+    'behandletTidspunkt': '2021-02-01T00:00:00Z',
     'behandler': {
         'fornavn': 'Frida',
         'mellomnavn': 'Perma',
@@ -132,7 +132,7 @@ export const mockSykmelding = new Sykmelding({
         },
         'tlf': 'tel:94431152'
     },
-    'syketilfelleStartDato': '2021-01-01',
+    'syketilfelleStartDato': '2021-02-01',
     'navnFastlege': 'Victor Frankenstein',
     'egenmeldt': false,
     'papirsykmelding': false,

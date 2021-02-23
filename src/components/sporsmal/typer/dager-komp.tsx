@@ -6,10 +6,9 @@ import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
-import { RSSvarliste } from '../../../types/rs-types/rs-svarliste'
 import Vis from '../../diverse/vis'
 import { SpmProps } from '../sporsmal-form/sporsmal-form'
-import { Sporsmal } from '../../../types/types'
+import { Sporsmal, Svarliste } from '../../../types/types'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import isoWeek from 'dayjs/plugin/isoWeek'
 import { mnd_stor_forbokstav, sammeAar, sammeMnd } from '../../../utils/dato'
@@ -98,7 +97,7 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
     }, [])
 
     useEffect(() => {
-        const lagret: RSSvarliste[] = [] // hentSvar(sporsmal)
+        const lagret: Svarliste[] = [] // hentSvar(sporsmal)
         lagret.forEach((liste, idx) => {
             const svar: any = liste.svar[0]
             if (svar !== undefined && svar.verdi !== 'Ikke til behandling') {

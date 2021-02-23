@@ -1,6 +1,5 @@
 import { SvarEnums } from '../../types/enums'
-import { RSSvartype } from '../../types/rs-types/rs-svartype'
-import { Sporsmal } from '../../types/types'
+import { Sporsmal, Svartype } from '../../types/types'
 import { empty } from '../../utils/constants'
 
 const hentVerdier = (sporsmal: Sporsmal, verdier: Record<string, any>) => {
@@ -20,12 +19,13 @@ export const settSvar = (sporsmal: Sporsmal, verdier: Record<string, any>): void
         return
     }
     switch (sporsmal.svartype) {
-        case RSSvartype.CHECKBOX:
+        case Svartype.CHECKBOX:
             checkboxSvar(sporsmal, verdi)
             break
-        case RSSvartype.CHECKBOX_GRUPPE:
+        case Svartype.CHECKBOX_GRUPPE:
             // Skal ikke ha svarverdi
             break
+        // TODO: Kvittering
         default:
             sporsmal.svarliste = {
                 sporsmalId: sporsmal.id,

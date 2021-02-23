@@ -5,11 +5,13 @@ export interface RSReisetilskudd {
     status: string;
     sykmeldingId: string;
     fnr: string;
-    fom?: string;
-    tom?: string;
-    sendt?: string;
-    avbrutt?: string;
-    arbeidsgiverOrgnummer: string;
-    arbeidsgiverNavn: string;
+    fom: string;
+    tom: string;
+    opprettet: string;
+    endret: string;
+    sendt: string | null;
+    avbrutt: string | null;
+    arbeidsgiverOrgnummer: string | null;
+    arbeidsgiverNavn: string | null;
     sporsmal: RSSporsmal[]
 }

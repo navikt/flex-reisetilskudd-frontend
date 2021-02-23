@@ -50,7 +50,7 @@ export const tilLesbarPeriodeUtenArstall = (fomArg: any, tomArg: any) => {
         : `${tilLesbarDatoUtenAarstall(fom)} ${SKILLETEGN_PERIODE} ${tilLesbarDatoUtenAarstall(tom)}`
 }
 
-export const dayjsToDate = (dato?: string) => {
+export const dayjsToDate = (dato?: string | null) => {
     return (dato !== undefined && dato !== null)
         ? dayjs(dato).toDate()
         : undefined

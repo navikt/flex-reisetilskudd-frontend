@@ -14,7 +14,6 @@ import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 import { post } from '../../../data/fetcher/fetcher'
 import env from '../../../utils/environment'
 import { useAppStore } from '../../../data/stores/app-store'
-import dayjs from 'dayjs'
 import Vis from '../../diverse/vis'
 
 export interface SpmProps {
@@ -54,7 +53,7 @@ const SporsmalForm = () => {
         post(
             `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`
         ).then(() => {
-            valgtReisetilskudd.sendt = dayjs(new Date()).format('YYYY-MM-DD')
+            valgtReisetilskudd.sendt = new Date()
             reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
             setReisetilskuddene(reisetilskuddene)
             history.push(`/soknaden/${valgtReisetilskudd.id}/${stegNum + 1}`)

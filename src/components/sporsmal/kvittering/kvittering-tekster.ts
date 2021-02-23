@@ -1,4 +1,4 @@
-const OpplastingTekster: any = {
+const KvitteringTekster: any = {
     'nb': {
         'opplasting.tittel': 'Kvitteringer for reise',
         'opplasting.her-kan': 'Last opp kvitteringer for reise til og fra arbeidsplassen mellom %DATOER%.',
@@ -7,4 +7,4 @@ const OpplastingTekster: any = {
     }, 'en': {}
 }
 
-export default OpplastingTekster
+export default KvitteringTekster

@@ -17,7 +17,6 @@ import Vis from '../../diverse/vis'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
 import validerDato from '../../../utils/validering'
 import { skalBrukeFullskjermKalender } from '../../../utils/browser-utils'
-import { dayjsToDate } from '../../../utils/dato'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
 import { TagTyper, UtgiftTyper } from '../../../types/enums'
@@ -95,10 +94,10 @@ const KvitteringForm = () => {
         }).then((opplastingResponse) => {
             const kvitt: RSKvittering = {
                 blobId: opplastingResponse.parsedBody!.id,
-                storrelse: valgtFil?.size,
-                belop: methods.getValues('belop_input') * 100,
                 datoForUtgift: dato,
-                typeUtgift: UtgiftTyper.ANNET
+                belop: methods.getValues('belop_input') * 100,
+                typeUtgift: UtgiftTyper.ANNET,
+                opprettet: null //TODO: Sett denne
             }
             post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/kvittering`,
                 kvitt
@@ -179,11 +178,11 @@ const KvitteringForm = () => {
                                     showYearSelector={false}
                                     limitations={{
                                         weekendsNotSelectable: false,
-                                        minDate: valgtReisetilskudd?.fom || undefined,
-                                        maxDate: valgtReisetilskudd?.tom || undefined
+                                        minDate: valgtReisetilskudd?.fom.toDateString() || undefined,
+                                        maxDate: valgtReisetilskudd?.tom.toDateString() || undefined
                                     }}
                                     dayPickerProps={{
-                                        initialMonth: dayjsToDate(valgtReisetilskudd?.fom)
+                                        initialMonth: valgtReisetilskudd?.fom
                                     }}
                                 />
                             )}

@@ -2,8 +2,8 @@ import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock'
 
 import env from '../../utils/environment'
 import { generateId } from '../../utils/random'
-import reisetilskudd from './data/reisetilskudd'
 import { sykmeldinger } from './data/sykmeldinger'
+import { reisetilskuddene } from './data/reisetilskudd'
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -16,7 +16,7 @@ mock.get(`${env.sykmeldingerBackendProxyRoot}/api/v1/sykmeldinger`,
     (req, res, ctx) => res(ctx.json(sykmeldinger)))
 
 mock.get(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd`,
-    (req, res, ctx) => res(ctx.json(reisetilskudd)))
+    (req, res, ctx) => res(ctx.json(reisetilskuddene)))
 
 mock.put(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id`, () => Promise.resolve({ status: 200 }))
 

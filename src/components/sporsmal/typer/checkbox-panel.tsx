@@ -6,6 +6,7 @@ import { SpmProps } from '../sporsmal-form/sporsmal-form'
 import { hentFeilmelding } from '../sporsmal-utils'
 import { hentSvar } from '../hent-svar'
 import Vis from '../../diverse/vis'
+import parse from 'html-react-parser'
 
 const CheckboxInput = ({ sporsmal }: SpmProps) => {
     const { setErBekreftet } = useAppStore()
@@ -42,7 +43,7 @@ const CheckboxInput = ({ sporsmal }: SpmProps) => {
         <>
             <div className={classname} ref={bekreft}>
                 <Undertittel tag="h3">{sporsmal.overskrift}</Undertittel>
-                <Normaltekst>{sporsmal.sporsmalstekst}</Normaltekst>
+                <Normaltekst>{parse(sporsmal.sporsmalstekst)}</Normaltekst>
                 <div className="skjemaelement skjemaelement--horisontal">
                     <input type="checkbox"
                         className="skjemaelement__input checkboks"

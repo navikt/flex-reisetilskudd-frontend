@@ -3,13 +3,11 @@ import './fil-liste.less'
 
 import dayjs from 'dayjs'
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import useForceUpdate from 'use-force-update'
 
-import { del } from '../../data/fetcher/fetcher'
 import { useAppStore } from '../../data/stores/app-store'
 import env from '../../utils/environment'
-import { logger } from '../../utils/logger'
 import { formatterTall } from '../../utils/utils'
 import Vis from '../diverse/vis'
 import slettFilIkon from './slett-fil-ikon.svg'
@@ -18,9 +16,10 @@ import { getLedetekst, tekst } from '../../utils/tekster'
 import Lenke from 'nav-frontend-lenker'
 import { RSKvittering } from '../../types/rs-types/rs-kvittering'
 import { TagTyper } from '../../types/enums'
+import { hentSvar } from '../sporsmal/hent-svar'
 
 interface Props {
-    fjernKnapp?: boolean
+    fjernKnapp?: boolean,
 }
 
 enum Sortering {
@@ -38,17 +37,30 @@ const FilListe = ({ fjernKnapp }: Props) => {
     const forceUpdate = useForceUpdate()
 
     let kvitteringer: RSKvittering[] = []
-    valgtReisetilskudd?.sporsmal.forEach(spm => {
-        const svar = spm.svarliste.svar
-        if (spm.tag === TagTyper.KVITTERINGER && svar.length > 0) {
-            kvitteringer = kvitteringer.concat(svar as RSKvittering[])
-        }
-    })
+    const sporsmal = valgtReisetilskudd?.sporsmal.find(spm => spm.tag === TagTyper.KVITTERINGER)
+    if (sporsmal) {
+        kvitteringer = hentSvar(sporsmal)   // TODO: Fix
+    }
+    /*
+    kvitteringer.push(
+        valgtReisetilskudd
+            ?.sporsmal
+        ?.find(spm => {
+            return spm.tag === TagTyper.KVITTERINGER
+        })
+        ?.svarliste.svar
+        .map(svar => {
+            return svar.kvittering!
+        })
+    )
+    */
 
     const slettKvittering = (kvitto: RSKvittering) => {
         const id = valgtReisetilskudd?.id
         const path = '/flex-reisetilskudd-backend/api/v1/reisetilskudd/'
-        del(`${env.flexGatewayRoot}${path}${id}/kvittering/${kvitto.id}`)
+        // TODO: Slett kvittering
+        /*
+        del(`${env.flexGatewayRoot}${path}${id}/kvittering/${kvitto.blobId}`)
             .then(() => {
                 kvitteringer = kvitteringer!.filter((kvittering) =>
                     kvittering.blobId !== kvitto.blobId
@@ -62,6 +74,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
             .catch((error) => {
                 logger.error('Feil under sletting av kvittering', error)
             })
+         */
     }
 
     const visKvittering = (idx: number) => {
