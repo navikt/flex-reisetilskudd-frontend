@@ -50,7 +50,7 @@ const svarToRS = (svar: Svar[]) => {
             verdi: svar.verdi,
             kvittering: (svar.kvittering) ? {
                 blobId: svar.kvittering.blobId,
-                datoForUtgift: svar.kvittering.datoForUtgift,
+                datoForUtgift: svar.kvittering.datoForUtgift.toString(),
                 belop: svar.kvittering.belop,
                 typeUtgift: svar.kvittering.typeUtgift,
                 opprettet: svar.kvittering.opprettet || null
