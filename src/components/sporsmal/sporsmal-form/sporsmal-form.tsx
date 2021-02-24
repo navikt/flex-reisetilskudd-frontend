@@ -1,6 +1,6 @@
 import './sporsmal-form.less'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useHistory, useParams } from 'react-router-dom'
 
@@ -11,80 +11,183 @@ import SporsmalSwitch from '../sporsmal-switch'
 import { Knapp } from 'nav-frontend-knapper'
 import { tekst } from '../../../utils/tekster'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
-import { post } from '../../../data/fetcher/fetcher'
 import env from '../../../utils/environment'
 import { useAppStore } from '../../../data/stores/app-store'
 import Vis from '../../diverse/vis'
+import { sporsmalToRS } from '../../../types/rs-types/rs-sporsmal'
+import { RSOppdaterSporsmalResponse } from '../../../types/rs-types/rest-response/rs-oppdatersporsmalresponse'
+import { redirectTilLoginHvis401 } from '../../../utils/utils'
+import { logger } from '../../../utils/logger'
+import { settSvar } from '../sett-svar'
 
 export interface SpmProps {
     sporsmal: Sporsmal;
 }
 
 const SporsmalForm = () => {
-    const { valgtReisetilskudd, reisetilskuddene, setReisetilskuddene, erBekreftet } = useAppStore()
-    const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
+    const { valgtReisetilskudd, setValgtReisetilskudd, reisetilskuddene, setReisetilskuddene, erBekreftet } = useAppStore()
+    const [ erSiste, setErSiste ] = useState<boolean>(false)
+    const [ poster, setPoster ] = useState<boolean>(false)
+    const [ lagreOgLukk, setLagreOgLukk ] = useState<boolean>(false)
 
-    const { id, steg } = useParams<RouteParams>()
+    const { steg } = useParams<RouteParams>()
     const stegNum = Number(steg)
     const history = useHistory()
     const spmIndex = stegNum - 1
     const sporsmal: Sporsmal = valgtReisetilskudd!.sporsmal[spmIndex]
+    let restFeilet = false
 
-    const methods = useForm(
-        { reValidateMode: 'onSubmit' }
-    )
+    const methods = useForm({ reValidateMode: 'onSubmit' })
+
+    useEffect(() => {
+        setErSiste(spmIndex === valgtReisetilskudd?.sporsmal.length)    // TODO: Sett opp sisteside
+        setLagreOgLukk(false)
+        // eslint-disable-next-line
+    }, [ spmIndex ])
 
     const lagreSoknad = async() => {
-        // TODO: lagre søknaden
+        if (poster) return
+        setLagreOgLukk(true)
     }
 
-    const gaaVidere = () => {
-        history.push(`/soknaden/${id}/${stegNum + 1}`)
+    const sendSvarTilBackend = async() => {
+        const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/sporsmal/${sporsmal.id}`, {
+            method: 'PUT',
+            credentials: 'include',
+            body: JSON.stringify(sporsmalToRS(sporsmal)),
+            headers: { 'Content-Type': 'application/json' }
+        })
+
+        try {
+            let data: any = {}
+            try {
+                data = await res.json()
+                // eslint-disable-next-line no-empty
+            } finally {
+
+            }
+
+            const httpCode = res.status
+            if ([ 200, 201, 203, 206 ].includes(httpCode)) {
+                const rsOppdaterSporsmalResponse: RSOppdaterSporsmalResponse = data
+
+                const spm = rsOppdaterSporsmalResponse.oppdatertSporsmal
+                valgtReisetilskudd!.sporsmal[spmIndex] = new Sporsmal(spm, null, true)
+
+                reisetilskuddene[reisetilskuddene.findIndex(r => r.id === valgtReisetilskudd!.id)] = valgtReisetilskudd!
+                setReisetilskuddene(reisetilskuddene)
+                setValgtReisetilskudd(valgtReisetilskudd)
+            } else {
+                // TODO: Håndter andre feilmeldinger fra backend 400 osv
+                if (redirectTilLoginHvis401(res)) {
+                    return
+                }
+                logger.error(`Feil ved lagring av svar, uhåndtert http kode ${httpCode}`, res)
+                restFeilet = true
+            }
+        } catch (e) {
+            logger.error('Feil ved lagring av svar med exception', e)
+            restFeilet = true
+        }
     }
 
     const sendSoknad = async() => {
+        // TODO: Denne fungerer nok, men er ingen sisteside med send knapp
         if (!valgtReisetilskudd) {
             return
         }
         if (valgtReisetilskudd.status !== ReisetilskuddStatus.SENDBAR) {
+            logger.warn(`Prøvde å sende reisetilskudd ${valgtReisetilskudd.id} men status er ${valgtReisetilskudd.status}`)
             return
         }
 
-        post(
-            `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`
-        ).then(() => {
-            valgtReisetilskudd.sendt = new Date()
-            reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
-            setReisetilskuddene(reisetilskuddene)
-            history.push(`/soknaden/${valgtReisetilskudd.id}/${stegNum + 1}`)
-        }).catch(() => {
-            setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+        const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
         })
 
-        gaaVidere()
+        try {
+            const httpCode = res.status
+            if (redirectTilLoginHvis401(res)) {
+                return
+            } else if ([ 200, 201, 203, 206 ].includes(httpCode)) {
+                valgtReisetilskudd.sendt = new Date()
+                valgtReisetilskudd.status = ReisetilskuddStatus.SENDT
+                reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
+                setReisetilskuddene(reisetilskuddene)
+                setValgtReisetilskudd(valgtReisetilskudd)
+
+                history.push(`/soknaden/${valgtReisetilskudd.id}/bekreftelse`)
+            } else {
+                logger.error('Feil ved sending av reisetilskudd', res)
+                restFeilet = true
+            }
+        } catch (e) {
+            logger.error('Feil ved sending av reisetilskudd', e)
+            restFeilet = true
+        }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const onSubmit = () => {
+    const preSubmit = () => {   // TODO Fix flex-reisetilskudd-backend feilmeldinger
+        methods.clearErrors('syfosoknad')
+    }
+
+    const onSubmit = async() => {
+        if (poster) return
+        setPoster(true)
+        restFeilet = false
+        try {
+            // TODO: OBS, her er det ingen sisteside spørsmål, finn en løsning
+            if (erSiste && !lagreOgLukk) {
+                await sendSoknad()
+            } else {
+                settSvar(sporsmal, methods.getValues()) // TODO: Test at denne funker for alle spørsmål
+                await sendSvarTilBackend()
+            }
+
+            if (restFeilet) {
+                methods.setError(
+                    'syfosoknad',   // TODO:
+                    { type: 'rest-feilet', message: 'Beklager, det oppstod en feil' }
+                )
+            } else {
+                methods.clearErrors()
+                methods.reset()
+                if (lagreOgLukk) {
+                    history.push('/')
+                }
+                else if (!erSiste) {
+                    history.push(`/soknaden/${valgtReisetilskudd!.id}/${stegNum + 1}`)
+                }
+            }
+        } finally {
+            setPoster(false)
+            setLagreOgLukk(false)
+        }
     }
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)} className="sporsmal__form">
+            <form onSubmit={methods.handleSubmit(onSubmit)}
+                onSubmitCapture={preSubmit}
+                className="sporsmal__form">
+
                 <SporsmalSwitch sporsmal={sporsmal} />
+
                 <FeilOppsummering errors={methods.errors} />
 
                 <div className="knapperad">
                     <Vis hvis={stegNum === 1}>
-                        <Knapp type="hoved" onClick={gaaVidere} disabled={!erBekreftet}>
+                        <Knapp type="hoved" disabled={!erBekreftet}>
                             {tekst('hovedpunkter.videre-knapp.tekst')}
                         </Knapp>
                     </Vis>
                     <Vis hvis={stegNum > 1}>
-                        <Knapp type="hoved" onClick={async() => await sendSoknad()} disabled={!erBekreftet}>
+                        <Knapp type="hoved" disabled={!erBekreftet}>
                             {tekst('hovedpunkter.videre-knapp.tekst')}
                         </Knapp>
-                        <Knapp type="standard" onClick={async() => await lagreSoknad()}>
+                        <Knapp type="standard" onClick={lagreSoknad}>
                             {tekst('hovedpunkter.lagre-knapp.tekst')}
                         </Knapp>
                     </Vis>

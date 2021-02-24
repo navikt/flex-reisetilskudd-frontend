@@ -100,7 +100,7 @@ export enum Utgiftstype {
 
 export class Reisetilskudd {
     id: string;
-    status: string;
+    status: ReisetilskuddStatus;
     sykmeldingId: string;
     fnr: string;
     fom: Date;
@@ -117,7 +117,7 @@ export class Reisetilskudd {
         rsReisetilskudd: RSReisetilskudd
     ) {
         this.id = rsReisetilskudd.id
-        this.status = rsReisetilskudd.status as keyof typeof ReisetilskuddStatus
+        this.status = rsReisetilskudd.status as ReisetilskuddStatus
         this.sykmeldingId = rsReisetilskudd.sykmeldingId
         this.fnr = rsReisetilskudd.fnr
         this.fom = dayjsToDate(rsReisetilskudd.fom)!

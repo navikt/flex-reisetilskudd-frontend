@@ -18,7 +18,12 @@ mock.get(`${env.sykmeldingerBackendProxyRoot}/api/v1/sykmeldinger`,
 mock.get(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd`,
     (req, res, ctx) => res(ctx.json(reisetilskuddene)))
 
-mock.put(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id`, () => Promise.resolve({ status: 200 }))
+mock.put(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:reisetilskudd/sporsmal/:spm`,
+    (req) => Promise.resolve({
+        status: 200,
+        body: JSON.stringify({ oppdatertSporsmal: req.body })
+    })
+)
 
 mock.post(`${env.flexGatewayRoot}/flex-bucket-uploader/opplasting`,
     (req, res, ctx) =>
