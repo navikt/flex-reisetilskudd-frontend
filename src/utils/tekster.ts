@@ -71,12 +71,12 @@ type TekstKeys =
 export const tekst = (tekst: TekstKeys): string => {
     const verdi = tekster[tekst]
     // Generiskfeilmelding har ingen tekst
-    if (!verdi === undefined && !tekst.includes('soknad.feilmelding')) {
-        logger.error(`Mangler teksten [ ${tekst} ]`)
+    if (!verdi === undefined && !tekst.toString().includes('soknad.feilmelding')) {
+        logger.error(`Mangler teksten [ ${tekst.toString()} ]`)
         return undefined as any
     }
     if (verdi === undefined) {
-        return tekst
+        return tekst.toString()
     }
     return verdi
 }
