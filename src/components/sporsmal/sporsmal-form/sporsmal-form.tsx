@@ -60,12 +60,11 @@ const SporsmalForm = () => {
         }).catch(() => {
             setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
         })
-
-        gaaVidere()
     }
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const onSubmit = () => {
+    const onSubmit = (e: any) => {
+        e.preventDefault()
     }
 
     return (

@@ -50,6 +50,7 @@ const JaNeiInput = ({ sporsmal }: SpmProps) => {
     }
 
     const valider = (value: any) => {
+        console.log('valider') // eslint-disable-line
         if (value === 'JA' || value === 'NEI') {
             if (sporsmal.erHovedsporsmal) {
                 clearErrors()
