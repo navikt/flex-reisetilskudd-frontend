@@ -102,6 +102,7 @@ const TilskuddTeasere = () => {
                 <Undertittel tag="h2" className="tilskudd__tittel">
                     {tekst('tilskudd.liste.sendte.soknader')}
                 </Undertittel>
+
                 {sendteTilskudd.map((tilskudd, idx) => {
                     return <Teaser tilskudd={tilskudd} key={idx} />
                 })}
@@ -115,10 +116,9 @@ export default TilskuddTeasere
 
 interface TeaserProps {
     tilskudd: Reisetilskudd;
-    key: number;
 }
 
-const Teaser = ({ tilskudd, key }: TeaserProps) => {
+const Teaser = ({ tilskudd }: TeaserProps) => {
     const linkRef = useRef<HTMLAnchorElement>(null)
 
     const teaserInnhold = <div className="teaser__ytre">
@@ -146,7 +146,7 @@ const Teaser = ({ tilskudd, key }: TeaserProps) => {
 
     if (tilskudd.status === 'FREMTIDIG') {
         return (
-            <div id={tilskudd.id} className="dine-reisetilskudd" key={key}>
+            <div id={tilskudd.id} className="dine-reisetilskudd">
                 {teaserInnhold}
             </div>
         )
@@ -154,7 +154,7 @@ const Teaser = ({ tilskudd, key }: TeaserProps) => {
 
     return (
         <Link ref={linkRef} to={getUrlTilSoknad(tilskudd)}
-            className="dine-reisetilskudd" key={key}>
+            className="dine-reisetilskudd">
             {teaserInnhold}
             <HoyreChevron className="tilskudd-chevron" />
         </Link>

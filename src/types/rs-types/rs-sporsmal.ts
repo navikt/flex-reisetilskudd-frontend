@@ -16,26 +16,23 @@ export interface RSSporsmal {
     undersporsmal: RSSporsmal[];
 }
 
-const rsSporsmalMapping = (sporsmal: Sporsmal): RSSporsmal => {
-    const rsSporsmal = {} as RSSporsmal
-    rsSporsmal.id = sporsmal.id
-    rsSporsmal.tag = sporsmal.tag.toString() + tagIndexEllerBlank(sporsmal.tagIndex as any)
-    rsSporsmal.overskrift = sporsmal.overskrift || null
-    rsSporsmal.sporsmalstekst = sporsmal.sporsmalstekst === '' ? null : sporsmal.sporsmalstekst
-    rsSporsmal.undertekst =  sporsmal.undertekst || null
-    rsSporsmal.svartype = sporsmal.svartype
-    rsSporsmal.min = sporsmal.min || null
-    rsSporsmal.max = sporsmal.max || null
-    rsSporsmal.kriterieForVisningAvUndersporsmal = sporsmal.kriterieForVisningAvUndersporsmal || null
-    rsSporsmal.svar = svarToRS(sporsmal.svarliste.svar)
-    if (sporsmal.undersporsmal) {
-        rsSporsmal.undersporsmal = sporsmal.undersporsmal.map((uspm: Sporsmal) => {
-            return rsSporsmalMapping(uspm)
-        })
-    } else {
-        rsSporsmal.undersporsmal = []
-    }
-    return rsSporsmal
+export const sporsmalToRS = (sporsmal: Sporsmal): RSSporsmal => {
+    return {
+        id: sporsmal.id,
+        tag: sporsmal.tag.toString() + tagIndexEllerBlank(sporsmal.tagIndex as any),
+        overskrift: sporsmal.overskrift || null,
+        sporsmalstekst: sporsmal.sporsmalstekst === '' ? null : sporsmal.sporsmalstekst,
+        undertekst: sporsmal.undertekst || null,
+        svartype: sporsmal.svartype,
+        min: sporsmal.min || null,
+        max: sporsmal.max || null,
+        kriterieForVisningAvUndersporsmal: sporsmal.kriterieForVisningAvUndersporsmal || null,
+        svar: svarToRS(sporsmal.svarliste.svar),
+        undersporsmal: (sporsmal.undersporsmal) ?
+            sporsmal.undersporsmal.map((uspm: Sporsmal) => {
+                return sporsmalToRS(uspm)
+            }) : []
+    } as RSSporsmal
 }
 
 const tagIndexEllerBlank = (tagIndex: number) => {
@@ -47,7 +44,7 @@ const svarToRS = (svar: Svar[]) => {
     return  svar.map((svar) => {
         return {
             id: svar.id,
-            verdi: svar.verdi,
+            verdi: svar.verdi || null,
             kvittering: (svar.kvittering) ? {
                 blobId: svar.kvittering.blobId,
                 datoForUtgift: svar.kvittering.datoForUtgift.toString(),

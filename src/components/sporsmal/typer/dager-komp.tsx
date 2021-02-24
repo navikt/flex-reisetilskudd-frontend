@@ -11,7 +11,7 @@ import { SpmProps } from '../sporsmal-form/sporsmal-form'
 import { Sporsmal, Svarliste } from '../../../types/types'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import isoWeek from 'dayjs/plugin/isoWeek'
-import { mnd_stor_forbokstav, sammeAar, sammeMnd } from '../../../utils/dato'
+import { maaneder, sammeAar, sammeMnd } from '../../../utils/dato'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import { useAppStore } from '../../../data/stores/app-store'
 
@@ -37,13 +37,17 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
     }
 
     const kalTittel = () => {
-        const firstYear = sammeAar(sporsmal) ? '' : dayjs(sporsmal.min!).year().toString()
-        const lastYear = dayjs(sporsmal.max!).year().toString()
-        const firstMonth = dayjs(sporsmal.min!).month()
-        const lastMonth = dayjs(sporsmal.max!).month()
-        return sammeMnd(sporsmal)
-            ? `${mnd_stor_forbokstav[firstMonth]} ${firstYear}`
-            : `${mnd_stor_forbokstav[firstMonth]} ${firstYear} - ${mnd_stor_forbokstav[lastMonth]} ${lastYear}`
+        const etaar = sammeAar(sporsmal)
+        const enmnd = sammeMnd(sporsmal)
+        const min = dayjs(sporsmal.min!)
+        const max = dayjs(sporsmal.max!)
+        if (enmnd && etaar) {
+            return `${maaneder[min.month()]} ${min.year()}`
+        } else if (!enmnd && etaar) {
+            return `${maaneder[min.month()]} - ${maaneder[max.month()]} ${max.year()}`
+        } else if (!enmnd && !etaar) {
+            return `${maaneder[min.month()]} ${min.year()} - ${maaneder[max.month()]} ${max.year()}`
+        }
     }
 
     const minWeek = dayjs(sporsmal.min!).isoWeek()
@@ -72,12 +76,13 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
 
         } else if (uke === maxWeek) {
             const ukedager: KalenderDag[] = []
-            for (let i = 0; i < post; i++) {
+            for (let i = 0; i < (5 - post); i++) {
                 ukedager.push({ dayjs: dayjs(sporsmal.max!).isoWeekday(i + 1), tid: 'inni' })
             }
             for (let i = ukedager.length; i < 7; i++) {
                 ukedager.push({ dayjs: dayjs(sporsmal.max!).isoWeekday(i + 1), tid: 'etter' })
             }
+            console.log('ukedager maxWeek', ukedager) // eslint-disable-line
             alledager.push(ukedager)
 
         } else {
