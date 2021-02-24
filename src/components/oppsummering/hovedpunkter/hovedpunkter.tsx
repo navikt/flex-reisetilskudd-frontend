@@ -17,7 +17,6 @@ import {
     formatterTall,
     getUrlTilSoknad,
 } from '../../../utils/utils'
-import { ReisetilskuddStatus } from '../../../types/types'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 import KanSendesAlertstripe from '../../diverse/kan-sendes-alertstripe'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
@@ -50,7 +49,7 @@ const Hovedpunkter = () => {
         if (!valgtReisetilskudd) {
             return
         }
-        if (valgtReisetilskudd.status !== ReisetilskuddStatus.SENDBAR) {
+        if (valgtReisetilskudd.status !== 'SENDBAR') {
             return
         }
 
@@ -58,7 +57,7 @@ const Hovedpunkter = () => {
             `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`
         ).then(() => {
             valgtReisetilskudd.sendt = new Date()
-            valgtReisetilskudd.status = ReisetilskuddStatus.SENDT
+            valgtReisetilskudd.status = 'SENDT'
             reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
             setReisetilskuddene(reisetilskuddene)
             history.push(getUrlTilSoknad(valgtReisetilskudd))
@@ -96,7 +95,7 @@ const Hovedpunkter = () => {
                     </Vis>
                 </Normaltekst>
 
-                <Vis hvis={valgtReisetilskudd?.status === ReisetilskuddStatus.SENDBAR}>
+                <Vis hvis={valgtReisetilskudd?.status === 'SENDBAR'}>
                     <BekreftCheckboksPanel label="" checked={erBekreftet}
                         onChange={(e: any) => setErBekreftet(e.target.checked)}
                     >
@@ -108,7 +107,7 @@ const Hovedpunkter = () => {
                     </BekreftCheckboksPanel>
                 </Vis>
 
-                <Vis hvis={valgtReisetilskudd?.status === ReisetilskuddStatus.ÅPEN}>
+                <Vis hvis={valgtReisetilskudd?.status === 'ÅPEN' || valgtReisetilskudd?.status === 'PÅBEGYNT'}>
                     <KanSendesAlertstripe />
                 </Vis>
 

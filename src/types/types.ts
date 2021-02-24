@@ -45,15 +45,6 @@ export enum Transportmiddel {
     EGEN_BIL = 'Egen bil'
 }
 
-export enum ReisetilskuddStatus {
-    FREMTIDIG = 'FREMTIDIG',
-    ÅPEN = 'ÅPEN',
-    PÅBEGYNT = 'PÅBEGYNT',
-    SENDBAR = 'SENDBAR',
-    SENDT = 'SENDT',
-    AVBRUTT = 'AVBRUTT'
-}
-
 export enum Visningskriterie {
     NEI = 'NEI',
     JA = 'JA',
@@ -100,7 +91,7 @@ export enum Utgiftstype {
 
 export class Reisetilskudd {
     id: string;
-    status: ReisetilskuddStatus;
+    status: 'FREMTIDIG' | 'ÅPEN' | 'PÅBEGYNT' | 'SENDBAR' | 'SENDT' | 'AVBRUTT'
     sykmeldingId: string;
     fnr: string;
     fom: Date;
@@ -117,7 +108,7 @@ export class Reisetilskudd {
         rsReisetilskudd: RSReisetilskudd
     ) {
         this.id = rsReisetilskudd.id
-        this.status = rsReisetilskudd.status as ReisetilskuddStatus
+        this.status = rsReisetilskudd.status
         this.sykmeldingId = rsReisetilskudd.sykmeldingId
         this.fnr = rsReisetilskudd.fnr
         this.fom = dayjsToDate(rsReisetilskudd.fom)!

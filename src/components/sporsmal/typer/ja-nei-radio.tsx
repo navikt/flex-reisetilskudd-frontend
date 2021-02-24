@@ -46,7 +46,7 @@ const JaNeiRadio = ({ sporsmal }: SpmProps) => {
             if (spm.tag.startsWith('INNTEKTSKILDE_') && lokal === 'JA') {
                 return <div className="presisering">
                     <Normaltekst tag="span">
-                        {tekst('soknad.presisering.' + spm.tag)}
+                        {tekst(`soknad.presisering.${spm.tag}` as any)}
                     </Normaltekst>
                 </div>
             }

@@ -8,7 +8,7 @@ import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useAppStore } from '../../data/stores/app-store'
-import { Reisetilskudd, ReisetilskuddStatus } from '../../types/types'
+import { Reisetilskudd } from '../../types/types'
 import { tilLesbarDatoMedArstall, tilLesbarPeriodeMedArstall } from '../../utils/dato'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import Vis from '../diverse/vis'
@@ -43,17 +43,17 @@ const TilskuddTeasere = () => {
     }
 
     const nyeTilskudd = reisetilskuddene.filter(r => {
-        return r.status === ReisetilskuddStatus.FREMTIDIG
+        return r.status === 'FREMTIDIG'
     })
 
     const usendteTilskudd = reisetilskuddene.filter(r => {
-        return r.status === ReisetilskuddStatus.ÅPEN
-            || r.status === ReisetilskuddStatus.SENDBAR
+        return r.status === 'ÅPEN'
+            || r.status === 'SENDBAR'
     })
 
     const sendteTilskudd = reisetilskuddene.filter(r => {
-        return r.status === ReisetilskuddStatus.SENDT
-            || r.status === ReisetilskuddStatus.AVBRUTT
+        return r.status === 'SENDT'
+            || r.status === 'AVBRUTT'
     })
 
     return (
@@ -195,7 +195,7 @@ const StatusEtikett = (props: StatusEtikettProps) => {
                 return 'Klar til utfylling'
             case 'FREMTIDIG':
                 return getLedetekst(
-                    tekst('Aktiveres %DATO%'),
+                    tekst('tilskudd.liste.aktiveres'),
                     { '%DATO%': tilLesbarDatoMedArstall(tilskudd.fom) }
                 )
         }

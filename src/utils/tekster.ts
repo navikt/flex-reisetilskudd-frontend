@@ -19,28 +19,56 @@ import AvbruttSideTekster from '../pages/avbrutt/avbrutt-side-tekster'
 
 import { logger } from './logger'
 
-const tekster = {
-    ...BannerTekster.nb,
-    ...TilskuddListeTekster.nb,
-    ...TilskuddStartTekster.nb,
-    ...TilskuddSideTekster.nb,
-    ...SideNavTekster.nb,
-    ...DragAndDropTekster.nb,
-    ...FilListeTekster.nb,
-    ...KvitteringModalTekster.nb,
-    ...OmReisetilskuddTekster.nb,
-    ...OppsummeringTekster.nb,
-    ...SykmeldingTekster.nb,
-    ...BekreftTekster.nb,
-    ...KvitteringTekster.nb,
-    ...OppsummeringSideTekster.nb,
-    ...SporsmalTekster.nb,
-    ...HovedpunkterTekster.nb,
-    ...AvbrytKnappTekster.nb,
-    ...AvbruttSideTekster.nb,
+const UkjenteBrukteTekstKeysSomMaFikses = {
+    'utbetaling.feil-alternativ': 'utbetaling.feil-alternativ TODO',
+    'klikkbar.videre-knapp.tekst': 'klikkbar.videre-knapp.tekst TODO',
+    'tilskudd.liste.ingen.usendte': 'tilskudd.liste.ingen.usendte TODO'
 }
 
-export const tekst = (tekst: string): string => {
+const tekster = {
+    ...BannerTekster,
+    ...TilskuddListeTekster,
+    ...TilskuddStartTekster,
+    ...TilskuddSideTekster,
+    ...SideNavTekster,
+    ...DragAndDropTekster,
+    ...FilListeTekster,
+    ...KvitteringModalTekster,
+    ...OmReisetilskuddTekster,
+    ...OppsummeringTekster,
+    ...SykmeldingTekster,
+    ...BekreftTekster,
+    ...KvitteringTekster,
+    ...OppsummeringSideTekster,
+    ...SporsmalTekster,
+    ...HovedpunkterTekster,
+    ...AvbrytKnappTekster,
+    ...AvbruttSideTekster,
+    ...UkjenteBrukteTekstKeysSomMaFikses,
+}
+type TekstKeys =
+    keyof typeof BannerTekster
+    | keyof typeof TilskuddListeTekster
+    | keyof typeof TilskuddStartTekster
+    | keyof typeof TilskuddSideTekster
+    | keyof typeof SideNavTekster
+    | keyof typeof DragAndDropTekster
+    | keyof typeof FilListeTekster
+    | keyof typeof KvitteringModalTekster
+    | keyof typeof OmReisetilskuddTekster
+    | keyof typeof OppsummeringTekster
+    | keyof typeof SykmeldingTekster
+    | keyof typeof BekreftTekster
+    | keyof typeof KvitteringTekster
+    | keyof typeof OppsummeringSideTekster
+    | keyof typeof SporsmalTekster
+    | keyof typeof HovedpunkterTekster
+    | keyof typeof AvbrytKnappTekster
+    | keyof typeof AvbruttSideTekster
+    | keyof typeof UkjenteBrukteTekstKeysSomMaFikses;
+
+
+export const tekst = (tekst: TekstKeys): string => {
     const verdi = tekster[tekst]
     // Generiskfeilmelding har ingen tekst
     if (!verdi === undefined && !tekst.includes('soknad.feilmelding')) {
