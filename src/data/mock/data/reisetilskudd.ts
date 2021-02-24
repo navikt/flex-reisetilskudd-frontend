@@ -167,26 +167,33 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
     ]
 }
 
-const apenReisetilskudd = jsonDeepCopy(sendbarReisetilskudd)
+export const apenReisetilskudd = jsonDeepCopy(sendbarReisetilskudd)
 apenReisetilskudd.status = 'ÅPEN'
 apenReisetilskudd.id = '7c44562e-68cc-478c-a49c-379bb150bdda'
 
-const pabegyntReisetilskudd = jsonDeepCopy(sendbarReisetilskudd)
+export const pabegyntReisetilskudd = jsonDeepCopy(sendbarReisetilskudd)
 pabegyntReisetilskudd.status = 'PÅBEGYNT'
 pabegyntReisetilskudd.id = '7829589c-989b-4a14-a4e2-37483b65d91f'
 
-const sendbarMedEtSvar = jsonDeepCopy(sendbarReisetilskudd)
+export const sendbarMedEtSvar = jsonDeepCopy(sendbarReisetilskudd)
 sendbarMedEtSvar.id = 'f473d4d1-3bf1-40c1-8647-94261f6bd30a'
 sendbarMedEtSvar.sporsmal[0].svar.push({ id: 'agdfdfg', verdi: 'CHECKED', kvittering: null })
 
-const fremtidig = jsonDeepCopy(sendbarReisetilskudd)
+export const fremtidig = jsonDeepCopy(sendbarReisetilskudd)
 fremtidig.status = 'FREMTIDIG'
 fremtidig.id = 'e3e3bb3d-2a70-4f67-bc90-8227d747eb4a'
+fremtidig.fom = '2029-05-13'
+
+
+export const avbrutt = jsonDeepCopy(sendbarReisetilskudd)
+avbrutt.status = 'AVBRUTT'
+avbrutt.id = 'e3e3bb3d-2a70-4f67-bc90-8227d747eb4b'
 
 export const reisetilskuddene: RSReisetilskudd[] = [
     sendbarReisetilskudd,
     apenReisetilskudd,
     pabegyntReisetilskudd,
     sendbarMedEtSvar,
-    fremtidig
+    fremtidig,
+    avbrutt,
 ]

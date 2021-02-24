@@ -71,6 +71,7 @@
         "uuid": "^8.3.2"
     },
     "devDependencies": {
+        "@cypress/webpack-preprocessor": "^5.6.0",
         "@testing-library/jest-dom": "^5.11.6",
         "@testing-library/react": "^11.2.2",
         "@testing-library/user-event": "^12.5.0",
@@ -92,6 +93,7 @@
         "husky": "^4.3.5",
         "source-map": "^0.7.3",
         "start-server-and-test": "^1.11.7",
+        "ts-loader": "^8.0.17",
         "yet-another-fetch-mock": "^4.1.0"
     },
     "scripts": {

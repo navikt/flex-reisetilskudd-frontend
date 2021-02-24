@@ -37,13 +37,13 @@ jobs:
         run: npm run lint
       - name: Run tests
         run: CI=true npm run test
-#      - name: Run cypress
-#        uses: cypress-io/github-action@v2
-#        with:
-#            install: false
-#            record: false
-#            start: npm run start-mock
-#            wait-on: http://localhost:3000
+      - name: Run cypress
+        uses: cypress-io/github-action@v2
+        with:
+            install: false
+            record: false
+            start: npm run start-mock
+            wait-on: http://localhost:3000
       - uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:
