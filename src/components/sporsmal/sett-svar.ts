@@ -19,6 +19,7 @@ export const settSvar = (sporsmal: Sporsmal, verdier: Record<string, any>): void
         return
     }
     switch (sporsmal.svartype) {
+        case Svartype.CHECKBOX_PANEL:
         case Svartype.CHECKBOX:
             checkboxSvar(sporsmal, verdi)
             break
