@@ -12,6 +12,7 @@ interface FeiloppsummeringProps {
 }
 
 const FeilOppsummering = (props: FeiloppsummeringProps) => {
+    console.log('props', props) // eslint-disable-line
     const oppsummering = useRef<HTMLDivElement>(null)
     const { settFokus, errors } = props
     const entries: any[] = Object.entries(errors)

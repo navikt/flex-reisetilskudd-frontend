@@ -1,6 +1,6 @@
 import './sporsmal-form.less'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useHistory, useParams } from 'react-router-dom'
 
@@ -21,6 +21,7 @@ export interface SpmProps {
 }
 
 const SporsmalForm = () => {
+    console.log('SporsmalForm') // eslint-disable-line
     const { valgtReisetilskudd, reisetilskuddene, setReisetilskuddene, erBekreftet } = useAppStore()
     const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
 
@@ -33,6 +34,11 @@ const SporsmalForm = () => {
     const methods = useForm(
         { reValidateMode: 'onSubmit' }
     )
+
+    useEffect(() => {
+        methods.clearErrors()
+        // eslint-disable-next-line
+    }, [])
 
     const lagreSoknad = async() => {
         // TODO: lagre søknaden
@@ -49,22 +55,24 @@ const SporsmalForm = () => {
         if (valgtReisetilskudd.status !== ReisetilskuddStatus.SENDBAR) {
             return
         }
+        history.push(`/soknaden/${valgtReisetilskudd.id}/${stegNum + 1}`)
 
-        post(
-            `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`
-        ).then(() => {
-            valgtReisetilskudd.sendt = new Date()
-            reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
-            setReisetilskuddene(reisetilskuddene)
-            history.push(`/soknaden/${valgtReisetilskudd.id}/${stegNum + 1}`)
-        }).catch(() => {
-            setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
-        })
+        /*
+                post(
+                    `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`
+                ).then(() => {
+                    valgtReisetilskudd.sendt = new Date()
+                    reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
+                    setReisetilskuddene(reisetilskuddene)
+                    history.push(`/soknaden/${valgtReisetilskudd.id}/${stegNum + 1}`)
+                }).catch(() => {
+                    setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+                })
+        */
     }
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const onSubmit = (e: any) => {
-        e.preventDefault()
+    const onSubmit = () => {
     }
 
     return (

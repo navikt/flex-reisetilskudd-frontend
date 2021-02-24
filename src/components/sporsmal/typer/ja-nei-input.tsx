@@ -19,6 +19,7 @@ const jaNeiValg = [ {
 } ]
 
 const JaNeiInput = ({ sporsmal }: SpmProps) => {
+    console.log('sporsmal', sporsmal) // eslint-disable-line
     const { setErBekreftet } = useAppStore()
     const { register, setValue, errors, reset, getValues, clearErrors } = useFormContext()
     const feilmelding = hentFeilmelding(sporsmal)
@@ -50,7 +51,6 @@ const JaNeiInput = ({ sporsmal }: SpmProps) => {
     }
 
     const valider = (value: any) => {
-        console.log('valider') // eslint-disable-line
         if (value === 'JA' || value === 'NEI') {
             if (sporsmal.erHovedsporsmal) {
                 clearErrors()
@@ -61,6 +61,12 @@ const JaNeiInput = ({ sporsmal }: SpmProps) => {
         }
         return false
     }
+
+    /*
+        if (sporsmal.id === '7f8e5fd4-325b-4614-9eb3-39faa2bb511f') {
+            return null
+        }
+    */
 
     return (
         <>
