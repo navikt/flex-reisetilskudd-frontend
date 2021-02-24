@@ -21,8 +21,9 @@ const CheckboxInput = ({ sporsmal }: SpmProps) => {
         setLokal(svar)
         setValue(sporsmal.id, svar)
         setClassname(getClassName(svar === 'CHECKED'))
+        bekreft.current!.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' })
         // eslint-disable-next-line
-    }, [sporsmal])
+    }, [ sporsmal ])
 
     const handleChange = (evt: any) => {
         bekreft.current!.classList.toggle('bekreftCheckboksPanel--checked')
