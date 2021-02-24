@@ -2,7 +2,7 @@ import { RSSporsmal } from './rs-sporsmal'
 
 export interface RSReisetilskudd {
     id: string;
-    status: string;
+    status: 'FREMTIDIG' | 'ÅPEN' | 'PÅBEGYNT' | 'SENDBAR' | 'SENDT' | 'AVBRUTT'
     sykmeldingId: string;
     fnr: string;
     fom: string;

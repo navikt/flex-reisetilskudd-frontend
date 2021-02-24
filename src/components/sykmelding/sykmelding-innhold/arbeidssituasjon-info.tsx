@@ -19,7 +19,7 @@ const ArbeidssituasjonInfo = () => {
                 {tekst('sykmelding.arbeidssituasjon')}
             </EtikettLiten>
             <Normaltekst>{
-                tekst(`sykmelding.arbeidssituasjon.alternativ.${arbeidssituasjon?.toLowerCase()}`)}
+                tekst(`sykmelding.arbeidssituasjon.alternativ.${arbeidssituasjon?.toLowerCase()}` as any)}
             </Normaltekst>
         </div>
     )

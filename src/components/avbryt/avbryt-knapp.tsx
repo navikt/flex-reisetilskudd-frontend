@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import env from '../../utils/environment'
 import { getUrlTilSoknad } from '../../utils/utils'
 import { useAppStore } from '../../data/stores/app-store'
-import { Reisetilskudd, ReisetilskuddStatus } from '../../types/types'
+import { Reisetilskudd } from '../../types/types'
 import { useHistory } from 'react-router-dom'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 import { post } from '../../data/fetcher/fetcher'
@@ -41,7 +41,7 @@ const AvbrytKnapp = () => {
         ).then(() => {
             const nyReisetilskudd = {
                 ...valgtReisetilskudd,
-                status: ReisetilskuddStatus.AVBRUTT,
+                status: 'AVBRUTT',
                 avbrutt: new Date()
             } as Reisetilskudd
             setReisetilskuddene(reisetilskuddene.map(r => r.id === valgtReisetilskudd!.id ? nyReisetilskudd : r) as any)

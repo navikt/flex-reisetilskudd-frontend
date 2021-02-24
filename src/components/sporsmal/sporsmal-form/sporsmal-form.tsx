@@ -6,7 +6,7 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../../app'
 import FeilOppsummering from '../feiloppsummering/feil-oppsummering'
-import { ReisetilskuddStatus, Sporsmal } from '../../../types/types'
+import { Sporsmal } from '../../../types/types'
 import SporsmalSwitch from '../sporsmal-switch'
 import { Knapp } from 'nav-frontend-knapper'
 import { tekst } from '../../../utils/tekster'
@@ -96,7 +96,7 @@ const SporsmalForm = () => {
         if (!valgtReisetilskudd) {
             return
         }
-        if (valgtReisetilskudd.status !== ReisetilskuddStatus.SENDBAR) {
+        if (valgtReisetilskudd.status !== 'SENDBAR') {
             logger.warn(`Prøvde å sende reisetilskudd ${valgtReisetilskudd.id} men status er ${valgtReisetilskudd.status}`)
             return
         }
@@ -113,7 +113,7 @@ const SporsmalForm = () => {
                 return
             } else if ([ 200, 201, 203, 206 ].includes(httpCode)) {
                 valgtReisetilskudd.sendt = new Date()
-                valgtReisetilskudd.status = ReisetilskuddStatus.SENDT
+                valgtReisetilskudd.status = 'SENDT'
                 reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
                 setReisetilskuddene(reisetilskuddene)
                 setValgtReisetilskudd(valgtReisetilskudd)
