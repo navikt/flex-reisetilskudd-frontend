@@ -22,7 +22,6 @@ import { logger } from './logger'
 const UkjenteBrukteTekstKeysSomMaFikses = {
     'utbetaling.feil-alternativ': 'utbetaling.feil-alternativ TODO',
     'klikkbar.videre-knapp.tekst': 'klikkbar.videre-knapp.tekst TODO',
-    'tilskudd.liste.ingen.usendte': 'tilskudd.liste.ingen.usendte TODO'
 }
 
 const tekster = {
