@@ -5,6 +5,7 @@ const TilskuddSideTekster = {
     'dine.tilskudd.kansendes': 'Kan sendes %DATO%',
     'dine.tilskudd.kansendes.sendbar': 'Kan sendes når den er utfylt',
     'dine.tilskudd.gjelder': 'Gjelder for reise til og fra jobben',
+    'dine.tilskudd.reise.til': 'Reise til %ARBEIDSGIVER%',
 }
 
 export default TilskuddSideTekster

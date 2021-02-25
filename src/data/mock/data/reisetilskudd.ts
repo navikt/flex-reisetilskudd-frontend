@@ -14,7 +14,7 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
     'sendt': null,
     'avbrutt': null,
     'arbeidsgiverOrgnummer': '995816598',
-    'arbeidsgiverNavn': '995816598 sitt orgnavn :)',
+    'arbeidsgiverNavn': 'BYGDA SFO',
     'sporsmal': [
         {
             'id': '7d293cf9-6274-4d05-80f3-f7a6be337506',
@@ -188,6 +188,12 @@ fremtidig.fom = '2029-05-13'
 export const avbrutt = jsonDeepCopy(sendbarReisetilskudd)
 avbrutt.status = 'AVBRUTT'
 avbrutt.id = 'e3e3bb3d-2a70-4f67-bc90-8227d747eb4b'
+avbrutt.avbrutt = '2020-05-13'
+
+export const sendt = jsonDeepCopy(sendbarReisetilskudd)
+sendt.status = 'SENDT'
+sendt.id = 'e3e3bb3d-2a70-4f67-bc90-8227d747eb4c'
+sendt.avbrutt = '2020-05-13'
 
 export const reisetilskuddene: RSReisetilskudd[] = [
     sendbarReisetilskudd,
@@ -196,4 +202,5 @@ export const reisetilskuddene: RSReisetilskudd[] = [
     sendbarMedEtSvar,
     fremtidig,
     avbrutt,
+    sendt,
 ]
