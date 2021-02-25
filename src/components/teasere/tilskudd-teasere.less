@@ -3,7 +3,7 @@
 .tilskudd__teasere {
     margin-bottom: 2rem;
 
-    .tilskudd--usendt {
+    .tilskudd--nye-pabegynt {
         .dine-reisetilskudd {
             background-color: #fffaf2;
             border-color: @navOransje;
@@ -78,7 +78,9 @@
             outline: 0;
             box-shadow: 0 0 0 3px @fokusFarge;
         }
+    }
 
+    .dine-reisetilskudd-hoverbar {
         &:hover {
             box-shadow: @navLysGra 0 0 4px 2px;
 
@@ -141,37 +143,14 @@
             .teaser__tittel {
                 margin-bottom: 0.5rem;
             }
+        }
 
+        .dine-reisetilskudd-hoverbar {
             &:hover {
                 .ytre__del1 {
                     .teaser__tittel {
                         color: @navBla;
                         text-decoration: underline;
-                    }
-                }
-            }
-        }
-
-        .tilskudd--nye {
-            .dine-reisetilskudd {
-                &:hover {
-                    box-shadow: none;
-
-                    .tilskudd__ikon {
-                        .tilskudd__img {
-                            display: inline;
-                        }
-
-                        .tilskudd__img--hover {
-                            display: none;
-                        }
-                    }
-
-                    .ytre__del1 {
-                        .teaser__tittel {
-                            color: @navMorkGra;
-                            text-decoration: none;
-                        }
                     }
                 }
             }

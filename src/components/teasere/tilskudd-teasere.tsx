@@ -84,7 +84,7 @@ const TilskuddTeasere = () => {
         <div className="tilskudd__teasere">
             <Vis hvis={nyeTilskudd.length > 0}>
 
-                <div className="tilskudd--nye">
+                <div className="tilskudd--nye-pabegynt">
                     <Undertittel tag="h2" className="tilskudd__tittel">
                         {tekst('tilskudd.liste.nye.soknader')}
                     </Undertittel>
@@ -96,7 +96,7 @@ const TilskuddTeasere = () => {
 
             <Vis hvis={påbegynte.length > 0}>
 
-                <div className="tilskudd--usendt">
+                <div className="tilskudd--nye-pabegynt">
                     <Undertittel tag="h2" className="tilskudd__tittel">
                         {tekst('tilskudd.liste.usendte.soknader')}
                     </Undertittel>
@@ -164,9 +164,14 @@ const Teaser = ({ tilskudd }: TeaserProps) => {
                 <Undertittel className="teaser__tittel">
                     {tekst('dine.tilskudd.tittel')}
                 </Undertittel>
-                <Vis hvis={tilskudd.status === 'ÅPEN'}>
+                <Vis hvis={tilskudd.status === 'ÅPEN' || tilskudd.status === 'PÅBEGYNT'}>
                     <Normaltekst>
                         {getLedetekst(tekst('dine.tilskudd.kansendes'), { '%DATO%': tilLesbarDatoMedArstall(aktiveringsdato) })}
+                    </Normaltekst>
+                </Vis>
+                <Vis hvis={tilskudd.status === 'SENDBAR'}>
+                    <Normaltekst>
+                        {tekst('dine.tilskudd.kansendes.sendbar')}
                     </Normaltekst>
                 </Vis>
             </div>
@@ -184,7 +189,7 @@ const Teaser = ({ tilskudd }: TeaserProps) => {
 
     return (
         <Link ref={linkRef} to={getUrlTilSoknad(tilskudd)}
-            className="dine-reisetilskudd">
+            className="dine-reisetilskudd dine-reisetilskudd-hoverbar">
             {teaserInnhold}
             <HoyreChevron className="tilskudd-chevron" />
         </Link>
@@ -206,8 +211,6 @@ const StatusEtikett = (props: StatusEtikettProps) => {
                 return 'info'
             case 'SENDT':
                 return 'suksess'
-            case 'SENDBAR':
-                return 'suksess'
             default:
                 return 'info'
         }
@@ -219,8 +222,6 @@ const StatusEtikett = (props: StatusEtikettProps) => {
                 return 'Avbrutt'
             case 'SENDT':
                 return 'Sendt til NAV'
-            case 'SENDBAR':
-                return 'Klar til innsending'
             case 'ÅPEN':
                 return 'Klar til utfylling'
             case 'FREMTIDIG':
