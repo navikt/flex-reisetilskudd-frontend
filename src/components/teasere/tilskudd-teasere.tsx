@@ -231,7 +231,11 @@ const StatusEtikett = (props: StatusEtikettProps) => {
         }
     }
 
+    const etikettTeksten = etikettTekst()
+    if (!etikettTeksten) {
+        return null
+    }
     return (
-        <Etikett mini type={etikettType()}>{etikettTekst()}</Etikett>
+        <Etikett mini type={etikettType()}>{etikettTeksten}</Etikett>
     )
 }
