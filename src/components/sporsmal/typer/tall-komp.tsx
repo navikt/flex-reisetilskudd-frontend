@@ -1,8 +1,6 @@
 import { Element, Normaltekst } from 'nav-frontend-typografi'
 import React, { useEffect, useRef, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-
-import { TagTyper } from '../../../types/enums'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import { SpmProps } from '../sporsmal-form/sporsmal-form'
 import UndersporsmalListe from '../undersporsmal/undersporsmal-liste'
@@ -10,6 +8,7 @@ import { hentFeilmelding } from '../sporsmal-utils'
 import { hentSvar } from '../hent-svar'
 import Vis from '../../diverse/vis'
 import { useAppStore } from '../../../data/stores/app-store'
+import { Svartype } from '../../../types/types'
 
 const TallInput = ({ sporsmal }: SpmProps) => {
     const { setErBekreftet } = useAppStore()
@@ -61,7 +60,9 @@ const TallInput = ({ sporsmal }: SpmProps) => {
                             )
                         }
                     })}
-                    step={sporsmal.tag === TagTyper.HVOR_MYE_PROSENT_VERDI ? 1 : 0.05}
+                    step={sporsmal.svartype === Svartype.BELOP ? 1 :
+                        sporsmal.svartype === Svartype.KILOMETER ? 0.1 : 1
+                    }
                     onChange={onChange}
                     autoComplete="off"
                 />
