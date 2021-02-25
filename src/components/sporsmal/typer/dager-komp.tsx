@@ -82,7 +82,6 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
             for (let i = ukedager.length; i < 7; i++) {
                 ukedager.push({ dayjs: dayjs(sporsmal.max!).isoWeekday(i + 1), tid: 'etter' })
             }
-            console.log('ukedager maxWeek', ukedager) // eslint-disable-line
             alledager.push(ukedager)
 
         } else {

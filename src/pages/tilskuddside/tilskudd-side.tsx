@@ -58,10 +58,6 @@ const TilskuddSide = () => {
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
-                <Vis hvis={stegNo > 1}>
-                    <SideNav />
-                </Vis>
-
                 <Vis hvis={stegNo === 4}>
                     <SoknadInfoUtvid />
                 </Vis>
@@ -69,6 +65,8 @@ const TilskuddSide = () => {
                 <Vis hvis={stegNo === 1}>
                     <TilskuddStart />
                 </Vis>
+
+                <SideNav />
 
                 <SykmeldingPanel apen={false} />
 
