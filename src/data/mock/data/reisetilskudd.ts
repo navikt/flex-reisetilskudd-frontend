@@ -130,8 +130,8 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
                     'sporsmalstekst': 'Hvilke dager reiste du med bil',
                     'undertekst': null,
                     'svartype': 'DATOER',
-                    'min': '2021-02-01',
-                    'max': '2021-02-18',
+                    'min': '2020-02-01',
+                    'max': '2021-03-18',
                     'kriterieForVisningAvUndersporsmal': null,
                     'svar': [],
                     'undersporsmal': []
