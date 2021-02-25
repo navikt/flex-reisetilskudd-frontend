@@ -8,12 +8,13 @@ import { useFormContext } from 'react-hook-form'
 
 import Vis from '../../diverse/vis'
 import { SpmProps } from '../sporsmal-form/sporsmal-form'
-import { Sporsmal, Svarliste } from '../../../types/types'
+import { Sporsmal, Svar } from '../../../types/types'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import isoWeek from 'dayjs/plugin/isoWeek'
 import { maaneder, sammeAar, sammeMnd } from '../../../utils/dato'
 import { getLedetekst, tekst } from '../../../utils/tekster'
 import { useAppStore } from '../../../data/stores/app-store'
+import { hentSvar } from '../hent-svar'
 
 dayjs.extend(weekOfYear)
 dayjs.extend(isoWeek)
@@ -26,7 +27,7 @@ interface KalenderDag {
 const DagerKomp = ({ sporsmal }: SpmProps) => {
     const { setErBekreftet } = useAppStore()
     const [ lokal, setLokal ] = useState<string[]>([])
-    const { register, errors, setValue } = useFormContext()
+    const { register, errors } = useFormContext()
 
     const dagerSidenMandag = (spm: Sporsmal) => {
         return ((dayjs(spm.min!).day() - 1)) % 7
@@ -82,7 +83,6 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
             for (let i = ukedager.length; i < 7; i++) {
                 ukedager.push({ dayjs: dayjs(sporsmal.max!).isoWeekday(i + 1), tid: 'etter' })
             }
-            console.log('ukedager maxWeek', ukedager) // eslint-disable-line
             alledager.push(ukedager)
 
         } else {
@@ -97,26 +97,20 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
     })
 
     useEffect(() => {
-        setLokal(new Array(uker.length).fill(''))
-        // eslint-disable-next-line
-    }, [])
-
-    useEffect(() => {
-        const lagret: Svarliste[] = [] // hentSvar(sporsmal)
-        lagret.forEach((liste, idx) => {
-            const svar: any = liste.svar[0]
-            if (svar !== undefined && svar.verdi !== 'Ikke til behandling') {
+        const lagret: Svar[] = hentSvar(sporsmal)
+        lagret.forEach((svar, idx) => {
+            if (svar?.verdi !== undefined && svar?.verdi !== '') {
                 lokal[idx] = svar.verdi
-                const radio = document.querySelector('.radioknapp[value="' + lokal[idx] + '"]')
+                const radio = document.querySelector('.checkboks[value="' + lokal[idx] + '"]')
                 radio!.setAttribute('checked', 'checked')
             }
         })
         setLokal(lokal)
-
+        setErBekreftet(lokal.length > 0)
         // eslint-disable-next-line
     }, [ sporsmal ])
 
-    const radioKlikk = (value: string, name: string) => {
+    const radioKlikk = (value: string) => {
         const index = lokal.indexOf(value)
         if (index > -1) {
             lokal.splice(index, 1)
@@ -124,7 +118,6 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
             lokal.push(value)
         }
         setLokal(Array.from(new Set(lokal)))
-        setValue(name, lokal)
         setErBekreftet(lokal.length > 0)
     }
 
@@ -163,10 +156,10 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
                                                 <>
                                                     <input type="checkbox"
                                                         id={`${sporsmal.id}_${ukeidx}_${idx}`}
-                                                        name={sporsmal.id}
+                                                        name={`${sporsmal.id}_${ukeidx}_${idx}`}
                                                         value={dag.dayjs.format('YYYY-MM-DD')}
                                                         ref={register}
-                                                        onChange={() => radioKlikk(dag.dayjs.format(('YYYY-MM-DD')), sporsmal.id)}
+                                                        onChange={() => radioKlikk(dag.dayjs.format(('YYYY-MM-DD')))}
                                                         className="checkboks"
                                                     />
                                                     <label htmlFor={`${sporsmal.id}_${ukeidx}_${idx}`}>

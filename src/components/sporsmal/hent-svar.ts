@@ -1,16 +1,11 @@
-import { SvarEnums } from '../../types/enums'
 import { Sporsmal, Svartype } from '../../types/types'
 
 export const hentSvar = (sporsmal: Sporsmal): any => {
     const svarliste = sporsmal.svarliste
     const svar = svarliste.svar[0]
 
-    if (sporsmal.svartype.toString().startsWith('RADIO_GRUPPE')) {
-        const besvartSporsmal = sporsmal.undersporsmal.find((spm: Sporsmal) => {
-            const svr = spm.svarliste.svar[0]
-            return svr && svr.verdi === SvarEnums.CHECKED
-        })
-        return besvartSporsmal ? besvartSporsmal.sporsmalstekst : undefined
+    if (sporsmal.svartype === Svartype.DATOER) {
+        return svarliste.svar || []
     }
 
     // TODO: Fix

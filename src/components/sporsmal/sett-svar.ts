@@ -1,5 +1,5 @@
 import { SvarEnums } from '../../types/enums'
-import { Sporsmal, Svartype } from '../../types/types'
+import { Sporsmal, Svar, Svartype } from '../../types/types'
 import { empty } from '../../utils/constants'
 
 const hentVerdier = (sporsmal: Sporsmal, verdier: Record<string, any>) => {
@@ -8,7 +8,7 @@ const hentVerdier = (sporsmal: Sporsmal, verdier: Record<string, any>) => {
         verdi = Object.entries(verdier)
             .filter(([ key ]) => key.startsWith(sporsmal.id))
             .map(([ key ]) => verdier[key])
-            .filter((verdi) => verdi !== empty)
+            .filter((verdi) => verdi !== empty && verdi !== false)
     }
     return verdi
 }
@@ -26,6 +26,9 @@ export const settSvar = (sporsmal: Sporsmal, verdier: Record<string, any>): void
         case Svartype.CHECKBOX_GRUPPE:
             // Skal ikke ha svarverdi
             break
+        case Svartype.DATOER:
+            datoerSvar(sporsmal, verdi)
+            break
         // TODO: Kvittering
         default:
             sporsmal.svarliste = {
@@ -42,6 +45,25 @@ export const settSvar = (sporsmal: Sporsmal, verdier: Record<string, any>): void
 const checkboxSvar = (sporsmal: Sporsmal, verdi: any) => {
     sporsmal.svarliste = {
         sporsmalId: sporsmal.id,
-        svar: [ { verdi: (verdi === SvarEnums.CHECKED || verdi === true) ? SvarEnums.CHECKED : '' } ]
+        svar: [ {
+            verdi: (verdi === SvarEnums.CHECKED || verdi === true)
+                ? SvarEnums.CHECKED
+                : ''
+        } ]
+    }
+}
+
+const datoerSvar = (sporsmal: Sporsmal, verdi: any) => {
+    const svar: Svar[] = []
+    if (verdi !== undefined) {
+        verdi.toString().split(',').map( (dag: string) =>
+            svar.push({
+                verdi: dag
+            })
+        )
+    }
+    sporsmal.svarliste = {
+        sporsmalId: sporsmal.id,
+        svar: svar
     }
 }
