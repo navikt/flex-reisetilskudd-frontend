@@ -147,6 +147,8 @@ interface TeaserProps {
 const Teaser = ({ tilskudd }: TeaserProps) => {
     const linkRef = useRef<HTMLAnchorElement>(null)
 
+    const aktiveringsdato = dayjs(tilskudd.tom).add(1, 'day')
+
     const teaserInnhold = <div className="teaser__ytre">
         <div className="ytre__del1">
             <span className="tilskudd__ikon">
@@ -162,9 +164,11 @@ const Teaser = ({ tilskudd }: TeaserProps) => {
                 <Undertittel className="teaser__tittel">
                     {tekst('dine.tilskudd.tittel')}
                 </Undertittel>
-                <Normaltekst>
-                    {tekst('dine.tilskudd.org')}
-                </Normaltekst>
+                <Vis hvis={tilskudd.status === 'ÅPEN'}>
+                    <Normaltekst>
+                        {getLedetekst(tekst('dine.tilskudd.kansendes'), { '%DATO%': tilLesbarDatoMedArstall(aktiveringsdato) })}
+                    </Normaltekst>
+                </Vis>
             </div>
         </div>
         <StatusEtikett tilskudd={tilskudd} />
