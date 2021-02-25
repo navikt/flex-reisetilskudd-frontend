@@ -26,7 +26,6 @@ export interface SpmProps {
 
 const SporsmalForm = () => {
     const { valgtReisetilskudd, setValgtReisetilskudd, reisetilskuddene, setReisetilskuddene, erBekreftet } = useAppStore()
-    const [ erSiste, setErSiste ] = useState<boolean>(false)
     const [ poster, setPoster ] = useState<boolean>(false)
     const [ lagreOgLukk, setLagreOgLukk ] = useState<boolean>(false)
 
@@ -40,7 +39,6 @@ const SporsmalForm = () => {
     const methods = useForm({ reValidateMode: 'onSubmit' })
 
     useEffect(() => {
-        setErSiste(spmIndex === valgtReisetilskudd?.sporsmal.length)    // TODO: Sett opp sisteside
         setLagreOgLukk(false)
         // eslint-disable-next-line
     }, [ spmIndex ])
@@ -91,44 +89,6 @@ const SporsmalForm = () => {
         }
     }
 
-    const sendSoknad = async() => {
-        // TODO: Denne fungerer nok, men er ingen sisteside med send knapp
-        if (!valgtReisetilskudd) {
-            return
-        }
-        if (valgtReisetilskudd.status !== 'SENDBAR') {
-            logger.warn(`Prøvde å sende reisetilskudd ${valgtReisetilskudd.id} men status er ${valgtReisetilskudd.status}`)
-            return
-        }
-
-        const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' }
-        })
-
-        try {
-            const httpCode = res.status
-            if (redirectTilLoginHvis401(res)) {
-                return
-            } else if ([ 200, 201, 203, 206 ].includes(httpCode)) {
-                valgtReisetilskudd.sendt = new Date()
-                valgtReisetilskudd.status = 'SENDT'
-                reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
-                setReisetilskuddene(reisetilskuddene)
-                setValgtReisetilskudd(valgtReisetilskudd)
-
-                history.push(`/soknaden/${valgtReisetilskudd.id}/bekreftelse`)
-            } else {
-                logger.error('Feil ved sending av reisetilskudd', res)
-                restFeilet = true
-            }
-        } catch (e) {
-            logger.error('Feil ved sending av reisetilskudd', e)
-            restFeilet = true
-        }
-    }
-
     const preSubmit = () => {   // TODO Fix flex-reisetilskudd-backend feilmeldinger
         methods.clearErrors('syfosoknad')
     }
@@ -138,13 +98,8 @@ const SporsmalForm = () => {
         setPoster(true)
         restFeilet = false
         try {
-            // TODO: OBS, her er det ingen sisteside spørsmål, finn en løsning
-            if (erSiste && !lagreOgLukk) {
-                await sendSoknad()
-            } else {
-                settSvar(sporsmal, methods.getValues()) // TODO: Test at denne funker for alle spørsmål
-                await sendSvarTilBackend()
-            }
+            settSvar(sporsmal, methods.getValues()) // TODO: Test at denne funker for alle spørsmål
+            await sendSvarTilBackend()
 
             if (restFeilet) {
                 methods.setError(
@@ -157,7 +112,7 @@ const SporsmalForm = () => {
                 if (lagreOgLukk) {
                     history.push('/')
                 }
-                else if (!erSiste) {
+                else {
                     history.push(`/soknaden/${valgtReisetilskudd!.id}/${stegNum + 1}`)
                 }
             }
