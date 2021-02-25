@@ -164,9 +164,14 @@ const Teaser = ({ tilskudd }: TeaserProps) => {
                 <Undertittel className="teaser__tittel">
                     {tekst('dine.tilskudd.tittel')}
                 </Undertittel>
-                <Vis hvis={tilskudd.status === 'ÅPEN'}>
+                <Vis hvis={tilskudd.status === 'ÅPEN' || tilskudd.status === 'PÅBEGYNT'}>
                     <Normaltekst>
                         {getLedetekst(tekst('dine.tilskudd.kansendes'), { '%DATO%': tilLesbarDatoMedArstall(aktiveringsdato) })}
+                    </Normaltekst>
+                </Vis>
+                <Vis hvis={tilskudd.status === 'SENDBAR'}>
+                    <Normaltekst>
+                        {tekst('dine.tilskudd.kansendes.sendbar')}
                     </Normaltekst>
                 </Vis>
             </div>
@@ -206,8 +211,6 @@ const StatusEtikett = (props: StatusEtikettProps) => {
                 return 'info'
             case 'SENDT':
                 return 'suksess'
-            case 'SENDBAR':
-                return 'suksess'
             default:
                 return 'info'
         }
@@ -219,8 +222,6 @@ const StatusEtikett = (props: StatusEtikettProps) => {
                 return 'Avbrutt'
             case 'SENDT':
                 return 'Sendt til NAV'
-            case 'SENDBAR':
-                return 'Klar til innsending'
             case 'ÅPEN':
                 return 'Klar til utfylling'
             case 'FREMTIDIG':
