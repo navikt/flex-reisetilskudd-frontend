@@ -84,7 +84,7 @@ const TilskuddTeasere = () => {
         <div className="tilskudd__teasere">
             <Vis hvis={nyeTilskudd.length > 0}>
 
-                <div className="tilskudd--nye">
+                <div className="tilskudd--nye-pabegynt">
                     <Undertittel tag="h2" className="tilskudd__tittel">
                         {tekst('tilskudd.liste.nye.soknader')}
                     </Undertittel>
@@ -96,7 +96,7 @@ const TilskuddTeasere = () => {
 
             <Vis hvis={påbegynte.length > 0}>
 
-                <div className="tilskudd--usendt">
+                <div className="tilskudd--nye-pabegynt">
                     <Undertittel tag="h2" className="tilskudd__tittel">
                         {tekst('tilskudd.liste.usendte.soknader')}
                     </Undertittel>
@@ -184,7 +184,7 @@ const Teaser = ({ tilskudd }: TeaserProps) => {
 
     return (
         <Link ref={linkRef} to={getUrlTilSoknad(tilskudd)}
-            className="dine-reisetilskudd">
+            className="dine-reisetilskudd dine-reisetilskudd-hoverbar">
             {teaserInnhold}
             <HoyreChevron className="tilskudd-chevron" />
         </Link>
