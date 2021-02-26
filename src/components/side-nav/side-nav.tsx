@@ -14,13 +14,17 @@ const SideNav = () => {
     const { id, steg } = useParams<RouteParams>()
     const stegNum = Number(steg)
 
+    const sider = valgt!.sporsmal.map(spm => {
+        return spm.overskrift
+    })
+    sider.push('Oppsummering')
+
     const min = 1
-    const max = valgt!.sporsmal.length
-    const nesteStegOk = valgt!.sporsmal[stegNum - 1].svarliste.svar.length > 0
+    const max = sider.length
+    const nesteStegOk = valgt!.sporsmal[stegNum - 1]?.svarliste?.svar?.length > 0 || false
 
     const handleChange = (e: any) => {
-        console.log('e.target.value', e.target.value) // eslint-disable-line
-        if (valgt!.sporsmal[e.target.value].svarliste.svar.length > 0) {
+        if (valgt!.sporsmal[e.target.value - 1]?.svarliste?.svar?.length > 0 || e.target.value === max.toString()) {
             history.push(`/soknaden/${id}/${e.target.value}`)
         }
     }
@@ -36,10 +40,6 @@ const SideNav = () => {
             history.push(`/soknaden/${id}/${stegNum + 1}`)
         }
     }
-
-    const sider = valgt!.sporsmal.map(spm => {
-        return spm.overskrift
-    })
 
     return (
         <section className="side_nav">
