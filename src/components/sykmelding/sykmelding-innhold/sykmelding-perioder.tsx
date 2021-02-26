@@ -1,6 +1,6 @@
 import { useAppStore } from '../../../data/stores/app-store'
 import React from 'react'
-import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi'
+import { UndertekstBold, Normaltekst } from 'nav-frontend-typografi'
 import { tekst } from '../../../utils/tekster'
 import { getDuration, tilLesbarPeriodeMedArstall } from '../../../utils/dato'
 import { Periode } from '../../../types/sykmelding'
@@ -34,9 +34,9 @@ const SykmeldingPerioder = () => {
 
                 return (
                     <div className="avsnitt" key={idx}>
-                        <EtikettLiten tag="h3" className="avsnitt-hode">
+                        <UndertekstBold tag="h3" className="avsnitt-hode">
                             {tekst('sykmelding.periode')}
-                        </EtikettLiten>
+                        </UndertekstBold>
                         <Normaltekst>
                             <strong>
                                 {tilLesbarPeriodeMedArstall(periode.fom, periode.tom)}
