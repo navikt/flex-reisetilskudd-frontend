@@ -10,7 +10,6 @@ import env from '../../utils/environment'
 import { formatterTall } from '../../utils/utils'
 import Vis from '../diverse/vis'
 import slettFilIkon from './slett-fil-ikon.svg'
-import NavFrontendChevron from 'nav-frontend-chevron'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import { TagTyper } from '../../types/enums'
 import { hentSvar } from '../sporsmal/hent-svar'
@@ -23,18 +22,9 @@ interface Props {
     fjernKnapp?: boolean,
 }
 
-enum Sortering {
-    DatoMax = 'DatoMax',
-    DatoMin = 'DatoMin',
-    TransportMax = 'TransportMax',
-    TransportMin = 'TransportMin',
-    BelopMax = 'BelopMax',
-    BelopMin = 'BelopMin',
-}
-
 const FilListe = ({ fjernKnapp }: Props) => {
     const { valgtReisetilskudd, setValgtReisetilskudd, setOpenModal, setValgtKvittering } = useAppStore()
-    const [ sortering, setSortering ] = useState<Sortering>(Sortering.DatoMax)
+    const [ sortering, setSortering ] = useState<String>('descending_dato_sortering')
     const forceUpdate = useForceUpdate()
 
     let kvitteringer: Kvittering[] = []
@@ -66,15 +56,49 @@ const FilListe = ({ fjernKnapp }: Props) => {
         setValgtKvittering(kvittering)
     }
 
+    const sorteringOnClick = (e: any) => {
+        const parent = e.target.parentElement
+        const id = parent.id
+        const sort = parent.getAttribute('aria-sort')
+
+        let nySort: string
+
+        if (sort === 'none' || sort === 'ascending') {
+            nySort = 'descending'
+        } else {
+            nySort = 'ascending'
+        }
+
+        parent.setAttribute('aria-sort', nySort)
+        parent.setAttribute('class', (nySort === 'ascending')
+            ? 'tabell__th--sortert-asc'
+            : 'tabell__th--sortert-desc'
+        )
+
+        setSortering(`${nySort}_${id}`)
+    }
+
     const sorterteKvitteringer = () => {
-        if (sortering === Sortering.DatoMax) {
-            kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? -1 : 1)
-        } else if (sortering === Sortering.DatoMin) {
-            kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? 1 : -1)
-        } else if (sortering === Sortering.BelopMax) {
-            kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? -1 : 1)
-        } else if (sortering === Sortering.BelopMin) {
-            kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? 1 : -1)
+        if (sortering.includes('dato_sortering')) {
+            if (sortering.includes('descending')) {
+                kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? -1 : 1)
+            } else {
+                kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? 1 : -1)
+            }
+        }
+        else if(sortering.includes('utgift_sortering')) {
+            if (sortering.includes('descending')) {
+                kvitteringer.sort((a, b) => (a.typeUtgift! > b.typeUtgift!) ? -1 : 1)
+            } else {
+                kvitteringer.sort((a, b) => (a.typeUtgift! > b.typeUtgift!) ? 1 : -1)
+            }
+        }
+        else if(sortering.includes('belop_sortering')) {
+            if (sortering.includes('descending')) {
+                kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? -1 : 1)
+            } else {
+                kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? 1 : -1)
+            }
         }
         return kvitteringer
     }
@@ -92,54 +116,20 @@ const FilListe = ({ fjernKnapp }: Props) => {
                 <Vis hvis={fjernKnapp}>
                     <thead>
                         <tr>
-                            <th>
-                                <div className="sortering__heading">
-                                    <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp" type="button">
-                                        Dato
-                                    </button>
-                                    <span className="sortering__chevron">
-                                        <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp" type="button">
-                                            <NavFrontendChevron type="opp" />
-                                        </button>
-                                        <button onClick={() => setSortering(Sortering.DatoMin)} className="lenkeknapp" type="button">
-                                            <NavFrontendChevron type="ned" />
-                                        </button>
-                                    </span>
-                                </div>
+                            <th role="columnheader" aria-sort="none" id="dato_sortering">
+                                <button onClick={sorteringOnClick} type="button">
+                                    Dato
+                                </button>
                             </th>
-                            <th>
-                                <div className="sortering__heading">
-                                    <button onClick={() => setSortering(Sortering.TransportMin)} className="lenkeknapp" type="button">
-                                        Utgift
-                                    </button>
-                                    <span className="sortering__chevron">
-                                        <button onClick={() => setSortering(Sortering.TransportMax)}
-                                            type="button"
-                                            className="lenkeknapp">
-                                            <NavFrontendChevron type="opp" />
-                                        </button>
-                                        <button onClick={() => setSortering(Sortering.TransportMin)}
-                                            type="button"
-                                            className="lenkeknapp">
-                                            <NavFrontendChevron type="ned" />
-                                        </button>
-                                    </span>
-                                </div>
+                            <th role="columnheader" aria-sort="none" id="utgift_sortering">
+                                <button onClick={sorteringOnClick} type="button">
+                                    Utgift
+                                </button>
                             </th>
-                            <th>
-                                <div className="sortering__heading belop">
-                                    <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp" type="button">
-                                        Beløp
-                                    </button>
-                                    <span className="sortering__chevron">
-                                        <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp" type="button">
-                                            <NavFrontendChevron type="opp" />
-                                        </button>
-                                        <button onClick={() => setSortering(Sortering.BelopMin)} className="lenkeknapp" type="button">
-                                            <NavFrontendChevron type="ned" />
-                                        </button>
-                                    </span>
-                                </div>
+                            <th role="columnheader" aria-sort="none" id="belop_sortering">
+                                <button onClick={sorteringOnClick} type="button">
+                                    Beløp
+                                </button>
                             </th>
                             <th />
                         </tr>
