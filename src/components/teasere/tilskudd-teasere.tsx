@@ -174,6 +174,11 @@ const Teaser = ({ tilskudd }: TeaserProps) => {
                         {tekst('dine.tilskudd.kansendes.sendbar')}
                     </Normaltekst>
                 </Vis>
+                <Vis hvis={tilskudd.status === 'SENDT' && tilskudd.arbeidsgiverNavn}>
+                    <Normaltekst>
+                        {getLedetekst(tekst('dine.tilskudd.reise.til'), { '%ARBEIDSGIVER%': tilskudd.arbeidsgiverNavn })}
+                    </Normaltekst>
+                </Vis>
             </div>
         </div>
         <StatusEtikett tilskudd={tilskudd} />
