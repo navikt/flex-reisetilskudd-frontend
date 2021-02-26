@@ -1,5 +1,5 @@
 import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
-import { UtgiftTyper } from '../../../types/enums'
+import { UtgiftTyper } from '../../../types/types'
 
 export const kvitteringBil: RSKvittering = {
     blobId: '2134afw4f4q6',

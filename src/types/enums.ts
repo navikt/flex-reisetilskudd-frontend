@@ -23,11 +23,3 @@ export enum SvarEnums {
     CHECKED = 'CHECKED',
     UNCHECKED = 'UNCHECKED'
 }
-
-export enum UtgiftTyper {
-    OFFENTLIG_TRANSPORT = 'OFFENTLIG_TRANSPORT',
-    TAXI = 'TAXI',
-    PARKERING = 'PARKERING',
-    BOMPENGER = 'BOMPENGER',
-    ANNET = 'ANNET'
-}

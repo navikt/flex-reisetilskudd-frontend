@@ -39,7 +39,9 @@ export const settSvar = (sporsmal: Sporsmal, verdier: Record<string, any>): void
             case Svartype.DATOER:
                 datoerSvar(sporsmal, verdi)
                 break
-            // TODO: Kvittering
+            case Svartype.KVITTERING:
+                // Denne settes i kvittering-form
+                return
             default:
                 sporsmal.svarliste = {
                     sporsmalId: sporsmal.id,

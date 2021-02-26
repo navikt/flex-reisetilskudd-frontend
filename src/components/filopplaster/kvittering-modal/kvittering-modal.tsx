@@ -5,17 +5,16 @@ import React from 'react'
 
 import { useAppStore } from '../../../data/stores/app-store'
 import KvitteringForm from './kvittering-form'
+import { SpmProps } from '../../sporsmal/sporsmal-form/sporsmal-form'
 
-const KvitteringModal = () => {
-    const { openModal, setOpenModal, valgtSykmelding } = useAppStore()
+const KvitteringModal = ({ sporsmal }: SpmProps) => {
+    const { openModal, setOpenModal } = useAppStore()
 
     Modal.setAppElement('#maincontent')
 
     const lukkModal = () => {
         setOpenModal(false)
     }
-
-    if (valgtSykmelding === undefined) return null
 
     return (
         <Modal
@@ -26,7 +25,7 @@ const KvitteringModal = () => {
             className="kvittering_modal"
         >
             <div className="modal-content">
-                <KvitteringForm />
+                <KvitteringForm sporsmal={sporsmal} />
             </div>
         </Modal>
     )

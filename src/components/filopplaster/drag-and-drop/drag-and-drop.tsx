@@ -12,33 +12,33 @@ import { getLedetekst, tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import Utvidbar from '../../utvidbar/utvidbar'
 import binders from './binders.svg'
-import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
 
 const formattertFiltyper = env.formaterteFiltyper
 const tillatteFiltyper = env.tillatteFiltyper
 const maxFilstørrelse = env.maksFilstørrelse
 const maks = formaterFilstørrelse(maxFilstørrelse)
 
-interface Props {
-    kvittering: RSKvittering
-}
-
-const DragAndDrop = ({ kvittering }: Props) => {
-    const { valgtFil, setValgtFil } = useAppStore()
+const DragAndDrop = () => {
+    const { valgtFil, setValgtFil, valgtKvittering } = useAppStore()
     const { setError, errors, register } = useFormContext()
     const filRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        if (kvittering.blobId) {
-            // TODO: Hent bilde med id
-            // eslint-disable-next-line no-console
-            console.log('Her må bilde hentes ned')
-            setValgtFil(null)
+        if (valgtKvittering?.blobId) {
+            fetch(`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering/${valgtKvittering.blobId}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            }).then((res) => {
+                res.blob().then((blob) => {
+                    setValgtFil(blob as any)
+                })
+            })
         } else {
             setValgtFil(null)
         }
         // eslint-disable-next-line
-    }, [])
+    }, [ valgtKvittering ])
 
     const onDropCallback = useCallback(
         (filer) => {

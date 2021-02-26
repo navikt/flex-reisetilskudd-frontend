@@ -83,7 +83,7 @@ export const del = async function(
     path: string,
     // eslint-disable-next-line
     args: RequestInit = {
-        method: 'delete', credentials: 'include', headers: { 'Content-Type': 'application/json' },
+        method: 'delete', credentials: 'include',
     },
 ): Promise<HttpResponse<string>> {
     return fetcher<string>(new Request(path, args))
