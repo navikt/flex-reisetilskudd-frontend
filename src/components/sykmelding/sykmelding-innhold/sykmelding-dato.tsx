@@ -1,5 +1,5 @@
 import React from 'react'
-import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi'
+import { UndertekstBold, Normaltekst } from 'nav-frontend-typografi'
 import { useAppStore } from '../../../data/stores/app-store'
 import { tilLesbarDatoMedArstall } from '../../../utils/dato'
 import { tekst } from '../../../utils/tekster'
@@ -9,9 +9,9 @@ const SykmeldingDato = () => {
 
     return (
         <div className="avsnitt">
-            <EtikettLiten tag="h3" className="avsnitt-hode">
+            <UndertekstBold tag="h3" className="avsnitt-hode">
                 {tekst('sykmelding.dato')}
-            </EtikettLiten>
+            </UndertekstBold>
             <Normaltekst>
                 {tilLesbarDatoMedArstall(valgtSykmelding?.behandletTidspunkt)}
             </Normaltekst>

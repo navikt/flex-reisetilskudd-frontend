@@ -7,50 +7,39 @@ import { useHistory, useParams } from 'react-router-dom'
 import { RouteParams } from '../../app'
 import { useAppStore } from '../../data/stores/app-store'
 
-export const sider = [ 'Utbetaling', 'Transport', 'Kvitteringer', 'Bekreft og send' ]
-
 const SideNav = () => {
     const { valgtReisetilskudd: valgt } = useAppStore()
 
     const history = useHistory()
     const { id, steg } = useParams<RouteParams>()
     const stegNum = Number(steg)
-    const min = 1, max = 4
 
-    let steg2ok = false
-    let steg3ok = false
-    let steg4ok = false
-    let nesteStegOk = false
-
-    if (valgt !== undefined) {
-        steg2ok = true
-        steg3ok = true // valgt!.offentlig > 0 || valgt!.egenBil > 0
-        steg4ok = true
-
-        if (stegNum === 1) nesteStegOk = steg2ok
-        else if (stegNum === 2) nesteStegOk = steg3ok
-        else if (stegNum === 3) nesteStegOk = steg4ok
-    }
+    const min = 1
+    const max = valgt!.sporsmal.length
+    const nesteStegOk = valgt!.sporsmal[stegNum - 1].svarliste.svar.length > 0
 
     const handleChange = (e: any) => {
-        if (nesteStegOk) {
-            history.push('/soknaden/' + id + '/' + (e.target.value))
+        console.log('e.target.value', e.target.value) // eslint-disable-line
+        if (valgt!.sporsmal[e.target.value].svarliste.svar.length > 0) {
+            history.push(`/soknaden/${id}/${e.target.value}`)
         }
     }
 
     const venstreKlikk = () => {
-        if (stegNum > min) {
-            history.push('/soknaden/' + id + '/' + (stegNum - 1))
-        } else {
-            history.push('/soknaden/' + id)
+        if (stegNum >= min) {
+            history.push(`/soknaden/${id}/${stegNum - 1}`)
         }
     }
 
     const hoyreKlikk = () => {
         if (stegNum < max) {
-            history.push('/soknaden/' + id + '/' + (stegNum + 1))
+            history.push(`/soknaden/${id}/${stegNum + 1}`)
         }
     }
+
+    const sider = valgt!.sporsmal.map(spm => {
+        return spm.overskrift
+    })
 
     return (
         <section className="side_nav">
@@ -61,7 +50,7 @@ const SideNav = () => {
                 {sider.map((side, index) => {
                     return (
                         <option value={index + 1} key={index}>
-                            {`${index} av ${sider.length} ${side}`}
+                            {`${index + 1} av ${sider.length} ${side}`}
                         </option>
                     )
                 })}

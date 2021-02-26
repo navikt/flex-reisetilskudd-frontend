@@ -1,5 +1,5 @@
 import React from 'react'
-import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi'
+import { UndertekstBold, Normaltekst } from 'nav-frontend-typografi'
 import { tekst } from '../../../utils/tekster'
 import { useAppStore } from '../../../data/stores/app-store'
 
@@ -15,9 +15,9 @@ const ArbeidssituasjonInfo = () => {
 
     return (
         <div className="avsnitt">
-            <EtikettLiten tag="h3" className="avsnitt-hode">
+            <UndertekstBold tag="h3" className="avsnitt-hode">
                 {tekst('sykmelding.arbeidssituasjon')}
-            </EtikettLiten>
+            </UndertekstBold>
             <Normaltekst>{
                 tekst(`sykmelding.arbeidssituasjon.alternativ.${arbeidssituasjon?.toLowerCase()}` as any)}
             </Normaltekst>
