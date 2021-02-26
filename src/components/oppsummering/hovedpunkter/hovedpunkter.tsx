@@ -2,11 +2,8 @@ import './hovedpunkter.less'
 
 import dayjs from 'dayjs'
 import { Knapp } from 'nav-frontend-knapper'
-import Lenke from 'nav-frontend-lenker'
-import Modal from 'nav-frontend-modal'
-import { BekreftCheckboksPanel } from 'nav-frontend-skjema'
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { useAppStore } from '../../../data/stores/app-store'
@@ -16,34 +13,38 @@ import env from '../../../utils/environment'
 import {
     formatterTall,
     getUrlTilSoknad,
+    redirectTilLoginHvis401,
 } from '../../../utils/utils'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
 import KanSendesAlertstripe from '../../diverse/kan-sendes-alertstripe'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
-import { post } from '../../../data/fetcher/fetcher'
 import { TagTyper } from '../../../types/enums'
-import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
+import { logger } from '../../../utils/logger'
+import { Kvittering } from '../../../types/types'
 
 const Hovedpunkter = () => {
     const { valgtReisetilskudd, reisetilskuddene, setReisetilskuddene } = useAppStore()
-    const [ openPlikter, setOpenPlikter ] = useState<boolean>(false)
     const [ erBekreftet, setErBekreftet ] = useState<boolean>(false)
     const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
+    const [ bilag, setBilag ] = useState<Kvittering[]>([])
     const history = useHistory()
 
-    const fom = dayjs(valgtReisetilskudd!.fom)
-    const tom = dayjs(valgtReisetilskudd!.tom)
+    const fom = dayjs(valgtReisetilskudd?.fom)
+    const tom = dayjs(valgtReisetilskudd?.tom)
     const sameYear = fom.year() === tom.year()
 
-    let bilag: RSKvittering[] = []
+    useEffect(() => {
+        setErBekreftet(valgtReisetilskudd?.status === 'SENDBAR')
 
-    valgtReisetilskudd?.sporsmal.forEach(spm => {
-        const svar = spm.svarliste.svar
-        if (spm.tag === TagTyper.KVITTERINGER && svar.length > 0) {
-            bilag = bilag.concat(svar as RSKvittering[])
-        }
-    })
-
+        const kvitteringer: Kvittering[] = []
+        valgtReisetilskudd?.sporsmal.forEach(spm => {
+            const svar = spm.svarliste.svar
+            if (spm.tag === TagTyper.KVITTERINGER && svar.length > 0) {
+                kvitteringer.push(svar[0].kvittering!)
+            }
+        })
+        setBilag(kvitteringer)
+    }, [ valgtReisetilskudd ])
 
     const sendSoknad = async() => {
         if (!valgtReisetilskudd) {
@@ -53,18 +54,37 @@ const Hovedpunkter = () => {
             return
         }
 
-        post(
-            `${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`
-        ).then(() => {
-            valgtReisetilskudd.sendt = new Date()
-            valgtReisetilskudd.status = 'SENDT'
-            reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
-            setReisetilskuddene(reisetilskuddene)
-            history.push(getUrlTilSoknad(valgtReisetilskudd))
-        }).catch(() => {
-            setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+        if (valgtReisetilskudd.status !== 'SENDBAR') {
+            logger.warn(`Prøvde å sende reisetilskudd ${valgtReisetilskudd.id} men status er ${valgtReisetilskudd.status}`)
+            return
+        }
+
+        const res = await fetch(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd.id}/send`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
         })
+
+        try {
+            const httpCode = res.status
+            if (redirectTilLoginHvis401(res)) {
+                return
+            } else if ([ 200, 201, 203, 206 ].includes(httpCode)) {
+                valgtReisetilskudd.sendt = new Date()
+                valgtReisetilskudd.status = 'SENDT'
+                reisetilskuddene[reisetilskuddene.findIndex(reis => reis.id === valgtReisetilskudd.id)] = valgtReisetilskudd
+                setReisetilskuddene(reisetilskuddene)
+
+                history.push(getUrlTilSoknad(valgtReisetilskudd))
+            } else {
+                setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+            }
+        } catch (e) {
+            setFetchFeilmelding('Det skjedde en feil i baksystemene, prøv igjen senere')
+        }
     }
+
+    if (!valgtReisetilskudd) return null
 
     return (
         <>
@@ -95,18 +115,6 @@ const Hovedpunkter = () => {
                     </Vis>
                 </Normaltekst>
 
-                <Vis hvis={valgtReisetilskudd?.status === 'SENDBAR'}>
-                    <BekreftCheckboksPanel label="" checked={erBekreftet}
-                        onChange={(e: any) => setErBekreftet(e.target.checked)}
-                    >
-                        {tekst('hovedpunkter.bekreft.tekst')}
-                        <button className="lenkeknapp" onClick={() => setOpenPlikter(true)}>
-                            {tekst('hovedpunkter.bekreft.lenke')}
-                        </button>
-                        .
-                    </BekreftCheckboksPanel>
-                </Vis>
-
                 <Vis hvis={valgtReisetilskudd?.status === 'ÅPEN' || valgtReisetilskudd?.status === 'PÅBEGYNT'}>
                     <KanSendesAlertstripe />
                 </Vis>
@@ -124,36 +132,6 @@ const Hovedpunkter = () => {
                     <AvbrytKnapp />
                 </div>
             </section>
-
-            <Modal
-                isOpen={openPlikter}
-                onRequestClose={() => setOpenPlikter(false)}
-                closeButton={true}
-                contentLabel="Hovedpunkter plikter"
-                shouldCloseOnOverlayClick={true}
-            >
-                <div className="plikter">
-                    <Undertittel className="avsnitt">{tekst('hovedpunkter.plikter.tittel')}</Undertittel>
-                    <Normaltekst>
-                        {tekst('hovedpunkter.plikter.tilskudd')}
-                        <Lenke href={'hovedpunkter.plikter.tilskudd.url'} target="_blank">
-                            {tekst('hovedpunkter.plikter.tilskudd.lenke')}
-                        </Lenke>.
-                    </Normaltekst>
-                    <Element className="avsnitt">{tekst('hovedpunkter.plikter.viktig')}</Element>
-                    <Normaltekst tag="ul" className="punkter">
-                        <li>{tekst('hovedpunkter.plikter.punkter.punkt1')}</li>
-                        <li>{tekst('hovedpunkter.plikter.punkter.punkt2')}</li>
-                        <li>{tekst('hovedpunkter.plikter.punkter.punkt3')}</li>
-                        <li>{tekst('hovedpunkter.plikter.punkter.punkt4')}</li>
-                        <li>{tekst('hovedpunkter.plikter.punkter.punkt5')}</li>
-                    </Normaltekst>
-
-                    <div className="knapperad">
-                        <Knapp type="standard" onClick={() => setOpenPlikter(false)}>OK</Knapp>
-                    </div>
-                </div>
-            </Modal>
         </>
     )
 }

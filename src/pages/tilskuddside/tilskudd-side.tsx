@@ -18,6 +18,7 @@ import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 import { Sykmelding } from '../../types/sykmelding'
 import SporsmalForm from '../../components/sporsmal/sporsmal-form/sporsmal-form'
 import TilskuddStart from '../../components/tilskuddstart/tilskudd-start'
+import Hovedpunkter from '../../components/oppsummering/hovedpunkter/hovedpunkter'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -35,6 +36,7 @@ const TilskuddSide = () => {
     const { valgtReisetilskudd, setValgtReisetilskudd, reisetilskuddene, sykmeldinger, setValgtSykmelding } = useAppStore()
     const { steg, id } = useParams<RouteParams>()
     const stegNo = Number(steg)
+    const sisteside = valgtReisetilskudd?.sporsmal.length || 5
 
     useEffect(() => {
         setBodyClass('reisetilskudd-side')
@@ -58,7 +60,7 @@ const TilskuddSide = () => {
             <Brodsmuler brodsmuler={brodsmuler} />
 
             <div className="limit">
-                <Vis hvis={stegNo === 4}>
+                <Vis hvis={stegNo > sisteside}>
                     <SoknadInfoUtvid />
                 </Vis>
 
@@ -70,7 +72,13 @@ const TilskuddSide = () => {
 
                 <SykmeldingPanel apen={false} />
 
-                <SporsmalForm />
+                <Vis hvis={stegNo <= sisteside}>
+                    <SporsmalForm />
+                </Vis>
+
+                <Vis hvis={stegNo > sisteside}>
+                    <Hovedpunkter />
+                </Vis>
             </div>
         </>
     )

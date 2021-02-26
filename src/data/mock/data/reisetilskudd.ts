@@ -1,5 +1,6 @@
 import { mockSykmelding } from './sykmeldinger'
 import { RSReisetilskudd } from '../../../types/rs-types/rs-reisetilskudd'
+import { jsonDeepCopy } from '../../../utils/json-deep-copy'
 
 export const sendbarReisetilskudd: RSReisetilskudd = {
     'id': '3b6d3764-bc4d-4fe2-902d-5097b9e0ce93',
@@ -129,8 +130,8 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
                     'sporsmalstekst': 'Hvilke dager reiste du med bil?',
                     'undertekst': null,
                     'svartype': 'DATOER',
-                    'min': '2021-02-01',
-                    'max': '2021-02-18',
+                    'min': '2020-02-01',
+                    'max': '2021-03-18',
                     'kriterieForVisningAvUndersporsmal': null,
                     'svar': [],
                     'undersporsmal': []
@@ -166,6 +167,33 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
     ]
 }
 
+export const apenReisetilskudd = jsonDeepCopy(sendbarReisetilskudd)
+apenReisetilskudd.status = 'ÅPEN'
+apenReisetilskudd.id = '7c44562e-68cc-478c-a49c-379bb150bdda'
+
+export const pabegyntReisetilskudd = jsonDeepCopy(sendbarReisetilskudd)
+pabegyntReisetilskudd.status = 'PÅBEGYNT'
+pabegyntReisetilskudd.id = '7829589c-989b-4a14-a4e2-37483b65d91f'
+
+export const sendbarMedEtSvar = jsonDeepCopy(sendbarReisetilskudd)
+sendbarMedEtSvar.id = 'f473d4d1-3bf1-40c1-8647-94261f6bd30a'
+sendbarMedEtSvar.sporsmal[0].svar.push({ id: 'agdfdfg', verdi: 'CHECKED', kvittering: null })
+
+export const fremtidig = jsonDeepCopy(sendbarReisetilskudd)
+fremtidig.status = 'FREMTIDIG'
+fremtidig.id = 'e3e3bb3d-2a70-4f67-bc90-8227d747eb4a'
+fremtidig.fom = '2029-05-13'
+
+
+export const avbrutt = jsonDeepCopy(sendbarReisetilskudd)
+avbrutt.status = 'AVBRUTT'
+avbrutt.id = 'e3e3bb3d-2a70-4f67-bc90-8227d747eb4b'
+
 export const reisetilskuddene: RSReisetilskudd[] = [
     sendbarReisetilskudd,
+    apenReisetilskudd,
+    pabegyntReisetilskudd,
+    sendbarMedEtSvar,
+    fremtidig,
+    avbrutt,
 ]

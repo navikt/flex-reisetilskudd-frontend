@@ -8,7 +8,6 @@ import StoreProvider from './data/stores/store-provider'
 import BekreftSide from './pages/bekreftelse/bekreft-side'
 import TilskuddListe from './pages/tilskuddliste/tilskudd-liste'
 import TilskuddSide from './pages/tilskuddside/tilskudd-side'
-import TilskuddStart from './components/tilskuddstart/tilskudd-start'
 import AvbruttSide from './pages/avbrutt/avbrutt-side'
 
 export interface RouteParams {
@@ -22,9 +21,9 @@ const App = () => {
             <DataFetcher>
                 <Switch>
                     <Route exact={true} path="/" component={TilskuddListe} />
-                    <Route path={'/soknaden/:id/:steg'} component={TilskuddSide} />
                     <Route path={'/soknaden/:id/avbrutt'} component={AvbruttSide} />
                     <Route path={'/soknaden/:id/bekreftelse'} component={BekreftSide} />
+                    <Route path={'/soknaden/:id/:steg'} component={TilskuddSide} />
                 </Switch>
             </DataFetcher>
         </StoreProvider>

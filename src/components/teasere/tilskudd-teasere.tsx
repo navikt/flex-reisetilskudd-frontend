@@ -24,6 +24,7 @@ enum Sortering {
     Sendt = 'Sendt',
 }
 
+
 const TilskuddTeasere = () => {
     const { reisetilskuddene } = useAppStore()
     const [ sortering, setSortering ] = useState<Sortering>(Sortering.Dato)
@@ -42,71 +43,96 @@ const TilskuddTeasere = () => {
         return reisetilskuddene
     }
 
+    function harBesvart(reisetilskudd: Reisetilskudd): boolean {
+        return reisetilskudd.sporsmal.some(s => s.svarliste.svar.length > 0)
+    }
+
+    type kategori = 'NYE' | 'PÅBEGYNTE' | 'TIDLIGERE'
+
+    function hovedkategori(reisetilskudd: Reisetilskudd): kategori {
+        switch (reisetilskudd.status) {
+            case 'FREMTIDIG':
+            case 'ÅPEN':
+                return 'NYE'
+            case 'PÅBEGYNT':
+                return 'PÅBEGYNTE'
+            case 'SENDBAR': {
+                if (harBesvart(reisetilskudd)) {
+                    return 'PÅBEGYNTE'
+                } else {
+                    return 'NYE'
+                }
+            }
+        }
+        return 'TIDLIGERE'
+    }
+
     const nyeTilskudd = reisetilskuddene.filter(r => {
-        return r.status === 'FREMTIDIG'
+        return hovedkategori(r) === 'NYE'
     })
 
-    const usendteTilskudd = reisetilskuddene.filter(r => {
-        return r.status === 'ÅPEN'
-            || r.status === 'SENDBAR'
+    const påbegynte = reisetilskuddene.filter(r => {
+        return hovedkategori(r) === 'PÅBEGYNTE'
+
     })
 
-    const sendteTilskudd = reisetilskuddene.filter(r => {
-        return r.status === 'SENDT'
-            || r.status === 'AVBRUTT'
+    const tidligere = reisetilskuddene.filter(r => {
+        return hovedkategori(r) === 'TIDLIGERE'
     })
 
     return (
         <div className="tilskudd__teasere">
-            <div className="tilskudd--nye">
-                <Undertittel tag="h2" className="tilskudd__tittel">
-                    {tekst('tilskudd.liste.nye.soknader')}
-                </Undertittel>
-                <Vis hvis={nyeTilskudd.length === 0}>
-                    <Normaltekst>{tekst('tilskudd.liste.ingen.nye')}</Normaltekst>
-                </Vis>
-                <Vis hvis={nyeTilskudd.length > 0}>
+            <Vis hvis={nyeTilskudd.length > 0}>
+
+                <div className="tilskudd--nye-pabegynt">
+                    <Undertittel tag="h2" className="tilskudd__tittel">
+                        {tekst('tilskudd.liste.nye.soknader')}
+                    </Undertittel>
                     {nyeTilskudd.map((tilskudd, idx) => {
                         return <Teaser tilskudd={tilskudd} key={idx} />
                     })}
-                </Vis>
-            </div>
+                </div>
+            </Vis>
 
-            <div className="tilskudd--usendt">
-                <Undertittel tag="h2" className="tilskudd__tittel">
-                    {tekst('tilskudd.liste.usendte.soknader')}
-                </Undertittel>
-                <Vis hvis={usendteTilskudd.length === 0}>
-                    <Normaltekst>{tekst('tilskudd.liste.ingen.usendte')}</Normaltekst>
-                </Vis>
-                <Vis hvis={usendteTilskudd.length > 0}>
-                    {usendteTilskudd.map((tilskudd, idx) => {
+            <Vis hvis={påbegynte.length > 0}>
+
+                <div className="tilskudd--nye-pabegynt">
+                    <Undertittel tag="h2" className="tilskudd__tittel">
+                        {tekst('tilskudd.liste.usendte.soknader')}
+                    </Undertittel>
+
+                    {påbegynte.map((tilskudd, idx) => {
                         return <Teaser tilskudd={tilskudd} key={idx} />
                     })}
-                </Vis>
-            </div>
+                </div>
+            </Vis>
+
 
             <OmReisetilskudd />
 
-            <div className="tilskudd--tidligere">
-                <Vis hvis={sorterteSoknader().length > 0}>
-                    <Select label="Sorter etter" className="teasere__sortering"
-                        onChange={(event) => setSortering(event.target.value as Sortering)}
-                    >
-                        {Object.values(Sortering).map((sort, idx) => {
-                            return <option value={sort} key={idx}>{sort}</option>
-                        })}
-                    </Select>
-                </Vis>
+            <Vis hvis={tidligere.length > 0}>
 
-                <Undertittel tag="h2" className="tilskudd__tittel">
-                    {tekst('tilskudd.liste.sendte.soknader')}
-                </Undertittel>
+                <div className="tilskudd--tidligere">
+                    <Vis hvis={sorterteSoknader().length > 0}>
+                        <Select label="Sorter etter" className="teasere__sortering"
+                            onChange={(event) => setSortering(event.target.value as Sortering)}
+                        >
+                            {Object.values(Sortering).map((sort, idx) => {
+                                return <option value={sort} key={idx}>{sort}</option>
+                            })}
+                        </Select>
+                    </Vis>
 
-                {sendteTilskudd.map((tilskudd, idx) => {
-                    return <Teaser tilskudd={tilskudd} key={idx} />
-                })}
-            </div>
+                    <Undertittel tag="h2" className="tilskudd__tittel">
+                        {tekst('tilskudd.liste.sendte.soknader')}
+                    </Undertittel>
+
+                    {tidligere.map((tilskudd, idx) => {
+                        return <Teaser tilskudd={tilskudd} key={idx} />
+                    })}
+                </div>
+            </Vis>
+
         </div>
     )
 }
@@ -120,6 +146,8 @@ interface TeaserProps {
 
 const Teaser = ({ tilskudd }: TeaserProps) => {
     const linkRef = useRef<HTMLAnchorElement>(null)
+
+    const aktiveringsdato = dayjs(tilskudd.tom).add(1, 'day')
 
     const teaserInnhold = <div className="teaser__ytre">
         <div className="ytre__del1">
@@ -136,9 +164,16 @@ const Teaser = ({ tilskudd }: TeaserProps) => {
                 <Undertittel className="teaser__tittel">
                     {tekst('dine.tilskudd.tittel')}
                 </Undertittel>
-                <Normaltekst>
-                    {tekst('dine.tilskudd.org')}
-                </Normaltekst>
+                <Vis hvis={tilskudd.status === 'ÅPEN' || tilskudd.status === 'PÅBEGYNT'}>
+                    <Normaltekst>
+                        {getLedetekst(tekst('dine.tilskudd.kansendes'), { '%DATO%': tilLesbarDatoMedArstall(aktiveringsdato) })}
+                    </Normaltekst>
+                </Vis>
+                <Vis hvis={tilskudd.status === 'SENDBAR'}>
+                    <Normaltekst>
+                        {tekst('dine.tilskudd.kansendes.sendbar')}
+                    </Normaltekst>
+                </Vis>
             </div>
         </div>
         <StatusEtikett tilskudd={tilskudd} />
@@ -154,7 +189,7 @@ const Teaser = ({ tilskudd }: TeaserProps) => {
 
     return (
         <Link ref={linkRef} to={getUrlTilSoknad(tilskudd)}
-            className="dine-reisetilskudd">
+            className="dine-reisetilskudd dine-reisetilskudd-hoverbar">
             {teaserInnhold}
             <HoyreChevron className="tilskudd-chevron" />
         </Link>
@@ -176,8 +211,6 @@ const StatusEtikett = (props: StatusEtikettProps) => {
                 return 'info'
             case 'SENDT':
                 return 'suksess'
-            case 'SENDBAR':
-                return 'suksess'
             default:
                 return 'info'
         }
@@ -189,8 +222,6 @@ const StatusEtikett = (props: StatusEtikettProps) => {
                 return 'Avbrutt'
             case 'SENDT':
                 return 'Sendt til NAV'
-            case 'SENDBAR':
-                return 'Klar til innsending'
             case 'ÅPEN':
                 return 'Klar til utfylling'
             case 'FREMTIDIG':
@@ -201,7 +232,11 @@ const StatusEtikett = (props: StatusEtikettProps) => {
         }
     }
 
+    const etikettTeksten = etikettTekst()
+    if (!etikettTeksten) {
+        return null
+    }
     return (
-        <Etikett mini type={etikettType()}>{etikettTekst()}</Etikett>
+        <Etikett mini type={etikettType()}>{etikettTeksten}</Etikett>
     )
 }
