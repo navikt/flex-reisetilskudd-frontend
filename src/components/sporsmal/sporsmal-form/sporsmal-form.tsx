@@ -19,6 +19,7 @@ import { RSOppdaterSporsmalResponse } from '../../../types/rs-types/rest-respons
 import { redirectTilLoginHvis401 } from '../../../utils/utils'
 import { logger } from '../../../utils/logger'
 import { settSvar } from '../sett-svar'
+import { TagTyper } from '../../../types/enums'
 
 export interface SpmProps {
     sporsmal: Sporsmal;
@@ -98,8 +99,10 @@ const SporsmalForm = () => {
         setPoster(true)
         restFeilet = false
         try {
-            settSvar(sporsmal, methods.getValues()) // TODO: Test at denne funker for alle spørsmål
-            await sendSvarTilBackend()
+            if (sporsmal.tag !== TagTyper.KVITTERINGER) {
+                settSvar(sporsmal, methods.getValues())
+                await sendSvarTilBackend()
+            }
 
             if (restFeilet) {
                 methods.setError(

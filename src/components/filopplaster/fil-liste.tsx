@@ -4,93 +4,101 @@ import './fil-liste.less'
 import dayjs from 'dayjs'
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
 import React, { useState } from 'react'
-import useForceUpdate from 'use-force-update'
 
 import { useAppStore } from '../../data/stores/app-store'
 import env from '../../utils/environment'
 import { formatterTall } from '../../utils/utils'
 import Vis from '../diverse/vis'
 import slettFilIkon from './slett-fil-ikon.svg'
-import NavFrontendChevron from 'nav-frontend-chevron'
 import { getLedetekst, tekst } from '../../utils/tekster'
-import Lenke from 'nav-frontend-lenker'
-import { RSKvittering } from '../../types/rs-types/rs-kvittering'
 import { TagTyper } from '../../types/enums'
 import { hentSvar } from '../sporsmal/hent-svar'
+import { Kvittering, UtgiftTyper } from '../../types/types'
+import { del } from '../../data/fetcher/fetcher'
+import { logger } from '../../utils/logger'
+import useForceUpdate from 'use-force-update'
 
 interface Props {
     fjernKnapp?: boolean,
 }
 
-enum Sortering {
-    DatoMax = 'DatoMax',
-    DatoMin = 'DatoMin',
-    TransportMax = 'TransportMax',
-    TransportMin = 'TransportMin',
-    BelopMax = 'BelopMax',
-    BelopMin = 'BelopMin',
-}
-
 const FilListe = ({ fjernKnapp }: Props) => {
-    const { valgtReisetilskudd, setValgtReisetilskudd, setOpenModal, setKvitteringIndex } = useAppStore()
-    const [ sortering, setSortering ] = useState<Sortering>(Sortering.DatoMax)
+    const { valgtReisetilskudd, setValgtReisetilskudd, setOpenModal, setValgtKvittering } = useAppStore()
+    const [ sortering, setSortering ] = useState<String>('descending_dato_sortering')
     const forceUpdate = useForceUpdate()
 
-    let kvitteringer: RSKvittering[] = []
+    let kvitteringer: Kvittering[] = []
     const sporsmal = valgtReisetilskudd?.sporsmal.find(spm => spm.tag === TagTyper.KVITTERINGER)
     if (sporsmal) {
-        kvitteringer = hentSvar(sporsmal)   // TODO: Fix
+        kvitteringer = hentSvar(sporsmal)
     }
-    /*
-    kvitteringer.push(
-        valgtReisetilskudd
-            ?.sporsmal
-        ?.find(spm => {
-            return spm.tag === TagTyper.KVITTERINGER
-        })
-        ?.svarliste.svar
-        .map(svar => {
-            return svar.kvittering!
-        })
-    )
-    */
 
-    const slettKvittering = (kvitto: RSKvittering) => {
-        const id = valgtReisetilskudd?.id
+    const slettKvittering = (kvitto: Kvittering) => {
         const path = '/flex-reisetilskudd-backend/api/v1/reisetilskudd/'
-        // TODO: Slett kvittering
-        /*
-        del(`${env.flexGatewayRoot}${path}${id}/kvittering/${kvitto.blobId}`)
-            .then(() => {
-                kvitteringer = kvitteringer!.filter((kvittering) =>
-                    kvittering.blobId !== kvitto.blobId
-                )
-                const spm = valgtReisetilskudd!.sporsmal.filter(spm => spm.tag === TagTyper.KVITTERINGER)[0]
-                spm.svarliste.svar = kvitteringer
-                setValgtReisetilskudd(valgtReisetilskudd)
+        const id = valgtReisetilskudd?.id
+        const idx = sporsmal!.svarliste.svar.findIndex((svar => svar?.kvittering?.blobId === kvitto.blobId))!
+        const svar = sporsmal?.svarliste.svar.find((svar => svar?.kvittering?.blobId === kvitto.blobId ))
 
+        del(`${env.flexGatewayRoot}${path}${id}/sporsmal/${sporsmal?.id}/svar/${svar?.id}`)
+            .then(() => {
+                sporsmal?.svarliste.svar.splice(idx, 1)
+                valgtReisetilskudd!.sporsmal[valgtReisetilskudd!.sporsmal.findIndex(spm => spm.id === sporsmal?.id)] = sporsmal!
+                setValgtReisetilskudd(valgtReisetilskudd)
                 forceUpdate()
             })
             .catch((error) => {
                 logger.error('Feil under sletting av kvittering', error)
             })
-         */
     }
 
-    const visKvittering = (idx: number) => {
+    const visKvittering = (kvittering: Kvittering) => {
         setOpenModal(true)
-        setKvitteringIndex(idx)
+        setValgtKvittering(kvittering)
+    }
+
+    const sorteringOnClick = (e: any) => {
+        const parent = e.target.parentElement
+        const id = parent.id
+        const sort = parent.getAttribute('aria-sort')
+
+        let nySort: string
+
+        if (sort === 'none' || sort === 'ascending') {
+            nySort = 'descending'
+        } else {
+            nySort = 'ascending'
+        }
+
+        parent.setAttribute('aria-sort', nySort)
+        parent.setAttribute('class', (nySort === 'ascending')
+            ? 'tabell__th--sortert-asc'
+            : 'tabell__th--sortert-desc'
+        )
+
+        setSortering(`${nySort}_${id}`)
     }
 
     const sorterteKvitteringer = () => {
-        if (sortering === Sortering.DatoMax) {
-            kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? -1 : 1)
-        } else if (sortering === Sortering.DatoMin) {
-            kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? 1 : -1)
-        } else if (sortering === Sortering.BelopMax) {
-            kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? -1 : 1)
-        } else if (sortering === Sortering.BelopMin) {
-            kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? 1 : -1)
+        if (sortering.includes('dato_sortering')) {
+            if (sortering.includes('descending')) {
+                kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? -1 : 1)
+            } else {
+                kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? 1 : -1)
+            }
+        }
+        else if(sortering.includes('utgift_sortering')) {
+            if (sortering.includes('descending')) {
+                kvitteringer.sort((a, b) => (a.typeUtgift! > b.typeUtgift!) ? -1 : 1)
+            } else {
+                kvitteringer.sort((a, b) => (a.typeUtgift! > b.typeUtgift!) ? 1 : -1)
+            }
+        }
+        else if(sortering.includes('belop_sortering')) {
+            if (sortering.includes('descending')) {
+                kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? -1 : 1)
+            } else {
+                kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? 1 : -1)
+            }
         }
         return kvitteringer
     }
@@ -108,62 +116,30 @@ const FilListe = ({ fjernKnapp }: Props) => {
                 <Vis hvis={fjernKnapp}>
                     <thead>
                         <tr>
-                            <th>
-                                <div className="sortering__heading">
-                                    <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp">
-                                        Utlegg
-                                    </button>
-                                    <span className="sortering__chevron">
-                                        <button onClick={() => setSortering(Sortering.DatoMax)} className="lenkeknapp">
-                                            <NavFrontendChevron type="opp" />
-                                        </button>
-                                        <button onClick={() => setSortering(Sortering.DatoMin)} className="lenkeknapp">
-                                            <NavFrontendChevron type="ned" />
-                                        </button>
-                                    </span>
-                                </div>
+                            <th role="columnheader" aria-sort="none" id="dato_sortering">
+                                <button onClick={sorteringOnClick} type="button">
+                                    Dato
+                                </button>
                             </th>
-                            <th>
-                                <div className="sortering__heading">
-                                    <button onClick={() => setSortering(Sortering.TransportMin)} className="lenkeknapp">
-                                        Transport
-                                    </button>
-                                    <span className="sortering__chevron">
-                                        <button onClick={() => setSortering(Sortering.TransportMax)}
-                                            className="lenkeknapp">
-                                            <NavFrontendChevron type="opp" />
-                                        </button>
-                                        <button onClick={() => setSortering(Sortering.TransportMin)}
-                                            className="lenkeknapp">
-                                            <NavFrontendChevron type="ned" />
-                                        </button>
-                                    </span>
-                                </div>
+                            <th role="columnheader" aria-sort="none" id="utgift_sortering">
+                                <button onClick={sorteringOnClick} type="button">
+                                    Utgift
+                                </button>
                             </th>
-                            <th>
-                                <div className="sortering__heading belop">
-                                    <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp">
-                                        Beløp
-                                    </button>
-                                    <span className="sortering__chevron">
-                                        <button onClick={() => setSortering(Sortering.BelopMax)} className="lenkeknapp">
-                                            <NavFrontendChevron type="opp" />
-                                        </button>
-                                        <button onClick={() => setSortering(Sortering.BelopMin)} className="lenkeknapp">
-                                            <NavFrontendChevron type="ned" />
-                                        </button>
-                                    </span>
-                                </div>
+                            <th role="columnheader" aria-sort="none" id="belop_sortering">
+                                <button onClick={sorteringOnClick} type="button">
+                                    Beløp
+                                </button>
                             </th>
                             <th />
                         </tr>
                     </thead>
                 </Vis>
                 <tbody>
-                    {sorterteKvitteringer().map((kvittering: RSKvittering, idx) => (
+                    {sorterteKvitteringer().map((kvittering: Kvittering, idx) => (
                         <tr key={idx}>
                             <td className="dato">
-                                <button tabIndex={0} className="lenkeknapp" onClick={() => visKvittering(idx)}>
+                                <button type="button" tabIndex={0} className="lenkeknapp" onClick={() => visKvittering(kvittering)}>
                                     {kvittering.datoForUtgift
                                         ? dayjs(kvittering.datoForUtgift).format('dddd DD.MM.YYYY')
                                         : ''
@@ -171,7 +147,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
                                 </button>
                             </td>
                             <td className="transport">
-                                {kvittering.typeUtgift}
+                                {UtgiftTyper[kvittering.typeUtgift]}
                             </td>
                             <td className="belop">
                                 {formatterTall(kvittering.belop! / 100)} kr
@@ -179,17 +155,11 @@ const FilListe = ({ fjernKnapp }: Props) => {
                             <td>
                                 <div className="juster">
                                     <button className="lenkeknapp slett-knapp"
+                                        type="button"
                                         onClick={() => slettKvittering(kvittering)} tabIndex={0}
                                     >
                                         <img src={slettFilIkon} className="slett-img" alt="" />
                                     </button>
-                                    <Vis hvis={env.isQ1 || env.isDev}>
-                                        <Lenke target="_blank"
-                                            href={`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering/${kvittering.blobId}`}
-                                        >
-                                            se bilde
-                                        </Lenke>
-                                    </Vis>
                                 </div>
                             </td>
                         </tr>

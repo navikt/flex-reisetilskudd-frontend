@@ -11,16 +11,17 @@ import PlussIkon from './pluss-ikon.svg'
 import { SpmProps } from '../sporsmal-form/sporsmal-form'
 
 const Kvittering = ({ sporsmal }: SpmProps) => {
-    const { setOpenModal, setKvitteringIndex, setErBekreftet } = useAppStore()
+    const { setOpenModal, setErBekreftet, setValgtKvittering } = useAppStore()
 
     useEffect(() => {
         setErBekreftet(true)
         // eslint-disable-next-line
     }, [])
 
-    const aktiverModal = () => {
+    const aktiverModal = (event: any) => {
+        event.preventDefault()
         setOpenModal(true)
-        setKvitteringIndex(-1)
+        setValgtKvittering(null)
     }
 
     return (
@@ -40,7 +41,7 @@ const Kvittering = ({ sporsmal }: SpmProps) => {
                 <Normaltekst tag="span">{tekst('opplasting.legg-til')}</Normaltekst>
             </button>
 
-            <KvitteringModal />
+            <KvitteringModal sporsmal={sporsmal} />
 
             <FilListe fjernKnapp />
         </div>

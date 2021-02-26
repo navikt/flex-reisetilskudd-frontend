@@ -1,7 +1,7 @@
 import constate from 'constate'
 import { useState } from 'react'
 
-import { Reisetilskudd } from '../../types/types'
+import { Kvittering, Reisetilskudd } from '../../types/types'
 import { Sykmelding } from '../../types/sykmelding'
 
 export const [ AppStoreProvider, useAppStore ] = constate(() => {
@@ -10,7 +10,7 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
     const [ sykmeldinger, setSykmeldinger ] = useState<Sykmelding[]>([])
     const [ valgtSykmelding, setValgtSykmelding ] = useState<Sykmelding>()
     const [ erBekreftet, setErBekreftet ] = useState<boolean>(false)
-    const [ kvitteringIndex, setKvitteringIndex ] = useState<number>(0)
+    const [ valgtKvittering, setValgtKvittering ] = useState<Kvittering | null>(null)
     const [ openModal, setOpenModal ] = useState<boolean>(false)
     const [ valgtFil, setValgtFil ] = useState<File | null>(null)
     const [ top, setTop ] = useState<number>(0)
@@ -23,7 +23,7 @@ export const [ AppStoreProvider, useAppStore ] = constate(() => {
         sykmeldinger, setSykmeldinger,
         valgtSykmelding, setValgtSykmelding,
         erBekreftet, setErBekreftet,
-        kvitteringIndex, setKvitteringIndex,
+        valgtKvittering, setValgtKvittering,
         openModal, setOpenModal,
         valgtFil, setValgtFil,
         top, setTop,

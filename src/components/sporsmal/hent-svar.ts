@@ -8,9 +8,8 @@ export const hentSvar = (sporsmal: Sporsmal): any => {
         return svarliste.svar || []
     }
 
-    // TODO: Fix
     if (sporsmal.svartype === Svartype.KVITTERING) {
-        return []
+        return svarliste.svar.map(s => s.kvittering)
     }
 
     if (svar === undefined) {

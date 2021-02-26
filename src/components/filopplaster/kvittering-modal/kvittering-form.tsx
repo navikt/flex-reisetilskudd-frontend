@@ -5,11 +5,10 @@ import NavFrontendSpinner from 'nav-frontend-spinner'
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi'
 import React, { useEffect, useState } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
-import useForceUpdate from 'use-force-update'
 
 import { post } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
-import { Transportmiddel } from '../../../types/types'
+import { Sporsmal, UtgiftTyper } from '../../../types/types'
 import env from '../../../utils/environment'
 import { formaterFilstørrelse } from '../../../utils/fil-utils'
 import { getLedetekst, tekst } from '../../../utils/tekster'
@@ -19,7 +18,11 @@ import validerDato from '../../../utils/validering'
 import { skalBrukeFullskjermKalender } from '../../../utils/browser-utils'
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
-import { TagTyper, UtgiftTyper } from '../../../types/enums'
+import { RSSvar } from '../../../types/rs-types/rs-svar'
+import { SpmProps } from '../../sporsmal/sporsmal-form/sporsmal-form'
+import { RSSporsmal } from '../../../types/rs-types/rs-sporsmal'
+import { useParams } from 'react-router-dom'
+import { RouteParams } from '../../../app'
 
 const formaterteFiltyper = env.formaterteFiltyper
 const maksFilstorrelse = formaterFilstørrelse(env.maksFilstørrelse)
@@ -28,60 +31,40 @@ interface OpplastetKvittering {
     id: string;
 }
 
-const KvitteringForm = () => {
+const KvitteringForm = ({ sporsmal }: SpmProps) => {
     const {
-        valgtReisetilskudd, setValgtReisetilskudd, kvitteringIndex, setOpenModal, valgtFil
+        valgtReisetilskudd, setValgtReisetilskudd, valgtKvittering, setOpenModal, valgtFil
     } = useAppStore()
     const [ laster, setLaster ] = useState<boolean>(false)
-    const [ kvittering, setKvittering ] = useState<RSKvittering>()
     const [ dato, setDato ] = useState<string>('')
     const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
-    const forceUpdate = useForceUpdate()
+    const { steg } = useParams<RouteParams>()
+    const stegNum = Number(steg)
+    const spmIndex = stegNum - 1
 
     const methods = useForm({
         reValidateMode: 'onSubmit'
     })
 
-    const options = [
-        { id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.TAXI}`, value: 'TAXI', name: Transportmiddel.TAXI },
-        {
-            id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.EGEN_BIL}`,
-            value: 'EGEN_BIL',
-            name: Transportmiddel.EGEN_BIL
-        },
-        {
-            id: `${Transportmiddel.SPORSMAL_KEY}-${Transportmiddel.KOLLEKTIVT}`,
-            value: 'KOLLEKTIVT',
-            name: Transportmiddel.KOLLEKTIVT
+    useEffect(() => {
+        if (valgtKvittering) {
+            setDato(dayjs(valgtKvittering?.datoForUtgift).format('YYYY-MM-DD'))
         }
-    ]
-
-    const kvitteringer: RSKvittering[] = []
-
-    useEffect(() => {
-        valgtReisetilskudd?.sporsmal.forEach(spm => {
-            const svar = spm.svarliste.svar
-            if (spm.tag === TagTyper.KVITTERINGER && svar.length > 0) {
-                kvitteringer.concat(svar as RSKvittering[])
-            }
-        })
-        // eslint-disable-next-line
-    }, [ valgtReisetilskudd ])
-
-    useEffect(() => {
-        if (kvitteringIndex === -1) {
-            setKvittering({} as RSKvittering)
-        } else {
-            const kvitto = kvitteringer[kvitteringIndex]
-            setKvittering(kvitto)
-            setDato(dayjs(kvitto!.datoForUtgift).format('YYYY-MM-DD'))
-            forceUpdate()
+        else {
+            setDato('')
         }
         // eslint-disable-next-line
-    }, [])
+    }, [ valgtReisetilskudd, valgtKvittering ])
 
     const onSubmit = async() => {
         setLaster(true)
+
+        const valid = await methods.trigger()
+
+        if (!valid) {
+            setLaster(false)
+            return
+        }
 
         const requestData = new FormData()
         const blob = await valgtFil as Blob
@@ -92,18 +75,18 @@ const KvitteringForm = () => {
             body: requestData,
             credentials: 'include'
         }).then((opplastingResponse) => {
-            const kvitt: RSKvittering = {
-                blobId: opplastingResponse.parsedBody!.id,
-                datoForUtgift: dato,
-                belop: methods.getValues('belop_input') * 100,
-                typeUtgift: UtgiftTyper.ANNET,
-                opprettet: null //TODO: Sett denne
-            }
-            post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/kvittering`,
-                kvitt
-            ).then(() => {
-                setKvittering(kvitt)
-                kvitteringer.push(kvitt)
+            const svar = {
+                kvittering: {
+                    blobId: opplastingResponse.parsedBody!.id,
+                    datoForUtgift: dato,
+                    belop: methods.getValues('belop_input') * 100,
+                    typeUtgift: methods.getValues('transportmiddel')
+                } as RSKvittering
+            } as RSSvar
+            post<RSSporsmal>(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/${valgtReisetilskudd!.id}/sporsmal/${sporsmal!.id}/svar`,
+                svar
+            ).then((rsSporsmal) => {
+                valgtReisetilskudd!.sporsmal[spmIndex] = new Sporsmal(rsSporsmal.parsedBody!, null, true)
                 setValgtReisetilskudd(valgtReisetilskudd)
                 setOpenModal(false)
             }).catch(() => {
@@ -124,11 +107,11 @@ const KvitteringForm = () => {
         })
     }
 
-    if (!kvittering) return null
+    if (!valgtReisetilskudd) return null
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <form key="kvittering_form">
                 <Systemtittel className="kvittering-header">
                     {tekst('kvittering_modal.nytt-utlegg.tittel')}
                 </Systemtittel>
@@ -141,7 +124,7 @@ const KvitteringForm = () => {
                         <Controller
                             control={methods.control}
                             name="dato_input"
-                            defaultValue={kvittering?.datoForUtgift || ''}
+                            defaultValue={valgtKvittering?.datoForUtgift || ''}
                             rules={{
                                 validate: () => {
                                     const div: HTMLDivElement | null = document.querySelector('.nav-datovelger__input')
@@ -178,8 +161,8 @@ const KvitteringForm = () => {
                                     showYearSelector={false}
                                     limitations={{
                                         weekendsNotSelectable: false,
-                                        minDate: valgtReisetilskudd?.fom.toDateString() || undefined,
-                                        maxDate: valgtReisetilskudd?.tom.toDateString() || undefined
+                                        minDate: valgtReisetilskudd?.fom.toISOString() || undefined,
+                                        maxDate: valgtReisetilskudd?.tom.toISOString() || undefined
                                     }}
                                     dayPickerProps={{
                                         initialMonth: valgtReisetilskudd?.fom
@@ -209,13 +192,13 @@ const KvitteringForm = () => {
                             id="transportmiddel"
                             name="transportmiddel"
                             onChange={() => methods.trigger('transportmiddel')}
-                            defaultValue={kvittering.typeUtgift}
+                            defaultValue={valgtKvittering?.typeUtgift}
                         >
                             <option value="">Velg</option>
-                            {options.map((option, idx) => {
+                            {Object.entries(UtgiftTyper).map((keyval, idx) => {
                                 return (
-                                    <option value={option.value} id={option.id} key={idx}>
-                                        {option.name}
+                                    <option value={keyval[0]} id={keyval[0]} key={idx}>
+                                        {keyval[1]}
                                     </option>
                                 )
                             })}
@@ -243,7 +226,7 @@ const KvitteringForm = () => {
                             id="belop_input"
                             name="belop_input"
                             inputMode={'decimal'}
-                            defaultValue={kvittering.belop ? (kvittering.belop / 100) : ''}
+                            defaultValue={valgtKvittering?.belop ? (valgtKvittering.belop / 100) : ''}
                             className={
                                 'skjemaelement__input input--m periode-element' +
                                 (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
@@ -259,7 +242,7 @@ const KvitteringForm = () => {
                     </div>
                 </div>
 
-                <DragAndDrop kvittering={kvittering} />
+                <DragAndDrop />
 
                 <Vis hvis={fetchFeilmelding}>
                     <AlertStripeAdvarsel>
@@ -288,7 +271,7 @@ const KvitteringForm = () => {
                         <Knapp htmlType="button" className="lagre-kvittering" onClick={() => setOpenModal(false)}>
                             {tekst('kvittering_modal.tilbake')}
                         </Knapp>
-                        <Knapp type="hoved" htmlType="submit" className="lagre-kvittering">
+                        <Knapp type="hoved" htmlType="button" className="lagre-kvittering" onClick={() => onSubmit()}>
                             {tekst('kvittering_modal.bekreft')}
                         </Knapp>
                     </div>

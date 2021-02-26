@@ -33,18 +33,6 @@ export interface Brodsmule {
     erKlikkbar?: boolean;
 }
 
-export enum Transport {
-    OFFENTLIG = 'OFFENTLIG',
-    EGEN_BIL = 'EGEN BIL',
-}
-
-export enum Transportmiddel {
-    SPORSMAL_KEY = 'kvittering-transportmiddel-spørsmål',
-    TAXI = 'Taxi',
-    KOLLEKTIVT = 'Kollektivtransport',
-    EGEN_BIL = 'Egen bil'
-}
-
 export enum Visningskriterie {
     NEI = 'NEI',
     JA = 'JA',
@@ -77,16 +65,16 @@ export interface Kvittering {
     blobId: string;
     datoForUtgift: Date;
     belop: number; // Beløp i heltall øre
-    typeUtgift: Utgiftstype;
+    typeUtgift: keyof typeof UtgiftTyper;
     opprettet?: Date;
 }
 
-export enum Utgiftstype {
-    OFFENTLIG_TRANSPORT = 'OFFENTLIG_TRANSPORT',
-    TAXI = 'TAXI',
-    PARKERING = 'PARKERING',
-    BOMPENGER = 'BOMPENGER',
-    ANNET = 'ANNET'
+export enum UtgiftTyper {
+    OFFENTLIG_TRANSPORT = 'Offentlig transport',
+    TAXI = 'Taxi',
+    PARKERING = 'parkering',
+    BOMPENGER = 'Bompenger',
+    ANNET = 'Annet'
 }
 
 export class Reisetilskudd {
@@ -186,7 +174,7 @@ export const rsToKvittering = (rsKvittering: RSKvittering | null) => {
         blobId: rsKvittering.blobId,
         datoForUtgift: dayjsToDate(rsKvittering.datoForUtgift),
         belop: rsKvittering.belop,
-        typeUtgift: rsKvittering.typeUtgift as Utgiftstype,
+        typeUtgift: rsKvittering.typeUtgift,
         opprettet: dayjsToDate(rsKvittering.opprettet) || undefined
     } as Kvittering
 }
