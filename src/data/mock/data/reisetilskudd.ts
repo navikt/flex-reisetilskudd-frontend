@@ -1,6 +1,9 @@
 import { mockSykmelding } from './sykmeldinger'
 import { RSReisetilskudd } from '../../../types/rs-types/rs-reisetilskudd'
 import { jsonDeepCopy } from '../../../utils/json-deep-copy'
+import { RSSvar } from '../../../types/rs-types/rs-svar'
+import { kvitteringBil, kvitteringTaxi } from './kvitteringer'
+import { TagTyper } from '../../../types/enums'
 
 export const sendbarReisetilskudd: RSReisetilskudd = {
     'id': '3b6d3764-bc4d-4fe2-902d-5097b9e0ce93',
@@ -174,6 +177,14 @@ apenReisetilskudd.id = '7c44562e-68cc-478c-a49c-379bb150bdda'
 export const pabegyntReisetilskudd = jsonDeepCopy(sendbarReisetilskudd)
 pabegyntReisetilskudd.status = 'PÅBEGYNT'
 pabegyntReisetilskudd.id = '7829589c-989b-4a14-a4e2-37483b65d91f'
+pabegyntReisetilskudd.sporsmal.find(spm => spm.tag === TagTyper.ANSVARSERKLARING)!.svar = [ { verdi: 'CHECKED' } ] as RSSvar[]
+pabegyntReisetilskudd.sporsmal.find(spm => spm.tag === TagTyper.TRANSPORT_TIL_DAGLIG)!.svar = [ { verdi: 'NEI' } ] as RSSvar[]
+pabegyntReisetilskudd.sporsmal.find(spm => spm.tag === TagTyper.REISE_MED_BIL)!.svar = [ { verdi: 'NEI' } ] as RSSvar[]
+pabegyntReisetilskudd.sporsmal.find(spm => spm.tag === TagTyper.KVITTERINGER)!.svar = [
+    { kvittering: kvitteringTaxi },
+    { kvittering: kvitteringBil }
+] as RSSvar[]
+pabegyntReisetilskudd.sporsmal.find(spm => spm.tag === TagTyper.UTBETALING)!.svar = [ { verdi: 'NEI' } ] as RSSvar[]
 
 export const sendbarMedEtSvar = jsonDeepCopy(sendbarReisetilskudd)
 sendbarMedEtSvar.id = 'f473d4d1-3bf1-40c1-8647-94261f6bd30a'
