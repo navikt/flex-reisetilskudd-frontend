@@ -118,6 +118,39 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
 
                 <div className="skjemakolonner">
                     <div className="skjemaelement">
+                        <label htmlFor="transportmiddel" className="skjemaelement__label">
+                            <Element tag="strong">{tekst('kvittering_modal.utgift')}</Element>
+                        </label>
+                        <select
+                            ref={methods.register({ required: tekst('kvittering_modal.transportmiddel.feilmelding') })}
+                            className={
+                                'skjemaelement__input kvittering-element' +
+                                (methods.errors['transportmiddel'] ? ' skjemaelement__input--harFeil' : '')
+                            }
+                            id="transportmiddel"
+                            name="transportmiddel"
+                            onChange={() => methods.trigger('transportmiddel')}
+                            defaultValue={valgtKvittering?.typeUtgift}
+                        >
+                            <option value="">Velg</option>
+                            {Object.entries(UtgiftTyper).map((keyval, idx) => {
+                                return (
+                                    <option value={keyval[0]} id={keyval[0]} key={idx}>
+                                        {keyval[1]}
+                                    </option>
+                                )
+                            })}
+                        </select>
+
+                        <Normaltekst tag="div" role="alert" aria-live="assertive"
+                            className="skjemaelement__feilmelding">
+                            <Vis hvis={methods.errors['transportmiddel']}>
+                                <p>{tekst('kvittering_modal.transportmiddel.feilmelding')}</p>
+                            </Vis>
+                        </Normaltekst>
+                    </div>
+
+                    <div className="skjemaelement">
                         <label htmlFor="dato_input" className="skjemaelement__label">
                             <Element tag="strong">{tekst('kvittering_modal.dato')}</Element>
                         </label>
@@ -175,39 +208,6 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             className="skjemaelement__feilmelding">
                             <Vis hvis={methods.errors['dato_input']}>
                                 <p>{methods.errors['dato_input']?.message}</p>
-                            </Vis>
-                        </Normaltekst>
-                    </div>
-
-                    <div className="skjemaelement">
-                        <label htmlFor="transportmiddel" className="skjemaelement__label">
-                            Transportmiddel
-                        </label>
-                        <select
-                            ref={methods.register({ required: tekst('kvittering_modal.transportmiddel.feilmelding') })}
-                            className={
-                                'skjemaelement__input kvittering-element' +
-                                (methods.errors['transportmiddel'] ? ' skjemaelement__input--harFeil' : '')
-                            }
-                            id="transportmiddel"
-                            name="transportmiddel"
-                            onChange={() => methods.trigger('transportmiddel')}
-                            defaultValue={valgtKvittering?.typeUtgift}
-                        >
-                            <option value="">Velg</option>
-                            {Object.entries(UtgiftTyper).map((keyval, idx) => {
-                                return (
-                                    <option value={keyval[0]} id={keyval[0]} key={idx}>
-                                        {keyval[1]}
-                                    </option>
-                                )
-                            })}
-                        </select>
-
-                        <Normaltekst tag="div" role="alert" aria-live="assertive"
-                            className="skjemaelement__feilmelding">
-                            <Vis hvis={methods.errors['transportmiddel']}>
-                                <p>{tekst('kvittering_modal.transportmiddel.feilmelding')}</p>
                             </Vis>
                         </Normaltekst>
                     </div>
