@@ -226,6 +226,7 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             id="belop_input"
                             name="belop_input"
                             inputMode={'decimal'}
+                            placeholder="Skriv inn beløp"
                             defaultValue={valgtKvittering?.belop ? (valgtKvittering.belop / 100) : ''}
                             className={
                                 'skjemaelement__input input--m periode-element' +
@@ -233,6 +234,10 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             }
                             step={0.01}     // Setter minste lovlige endring i desimaler
                         />
+                        <Normaltekst tag="span">
+                            { ' kr' }
+                        </Normaltekst>
+
                         <Normaltekst tag="div" role="alert" aria-live="assertive"
                             className="skjemaelement__feilmelding">
                             <Vis hvis={methods.errors['belop_input']}>
