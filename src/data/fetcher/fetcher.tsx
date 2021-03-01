@@ -32,7 +32,7 @@ async function fetcher<T>(
     try {
         response.parsedBody = await response.json()
     } catch (ex) {
-        logger.error(ex)
+        logger.error('Feil ved utehenting av json', ex)
     }
     if (!response.ok) {
         if (redirectTilLoginHvis401(response)) {
