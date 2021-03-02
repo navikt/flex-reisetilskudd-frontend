@@ -39,7 +39,7 @@ spec:
     - name: SYKMELDINGER_BACKEND_PROXY_ROOT
       value: "https://sykmeldinger-backend-proxy.dev.nav.no"
     - name: SYKEFRAVAER_URL
-      value: "https://tjenester-q1.nav.no/sykefravaer"
+      value: "https://www-gcp.dev.nav.no/sykefravaer"
     - name: DITTNAV_URL
       value: "https://www.dev.nav.no/person/dittnav/"
     - name: FRONTENDLOGGER_ROOT
