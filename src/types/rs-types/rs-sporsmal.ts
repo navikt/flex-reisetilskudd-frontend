@@ -8,6 +8,10 @@ export interface RSSporsmal {
     overskrift: string | null;
     sporsmalstekst: string | null;
     undertekst: string | null;
+    hjelpetekst: {
+        tittel: string | null,
+        brodtekst: string | null,
+    } | null,
     svartype: string;
     min: string | null;
     max: string | null;
@@ -23,6 +27,7 @@ export const sporsmalToRS = (sporsmal: Sporsmal): RSSporsmal => {
         overskrift: sporsmal.overskrift || null,
         sporsmalstekst: sporsmal.sporsmalstekst === '' ? null : sporsmal.sporsmalstekst,
         undertekst: sporsmal.undertekst || null,
+        hjelpetekst: sporsmal.hjelpetekst,
         svartype: sporsmal.svartype,
         min: sporsmal.min || null,
         max: sporsmal.max || null,

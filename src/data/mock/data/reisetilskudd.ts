@@ -1,6 +1,7 @@
 import { mockSykmelding } from './sykmeldinger'
 import { RSReisetilskudd } from '../../../types/rs-types/rs-reisetilskudd'
 import { jsonDeepCopy } from '../../../utils/json-deep-copy'
+import { kvitteringBil } from './kvitteringer'
 
 export const sendbarReisetilskudd: RSReisetilskudd = {
     'id': '3b6d3764-bc4d-4fe2-902d-5097b9e0ce93',
@@ -22,6 +23,7 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
             'overskrift': 'Vi stoler på deg',
             'sporsmalstekst': 'Jeg, <strong>Ola Nordmann</strong>, bekrefter at jeg vil gi riktige og fullstendige opplysninger.',
             'undertekst': 'Jeg vet at jeg kan miste retten til sykepenger hvis jeg ikke har gitt riktige opplysninger. Jeg vet også at jeg må betale tilbake hvis jeg har gitt feil opplysninger eller latt være å informere.',
+            'hjelpetekst': null,
             'svartype': 'CHECKBOX_PANEL',
             'min': null,
             'max': null,
@@ -32,9 +34,13 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
         {
             'id': 'b59b2bea-1d4c-49e7-9e05-351aaf083232',
             'tag': 'TRANSPORT_TIL_DAGLIG',
-            'overskrift': 'Transport til daglig',
-            'sporsmalstekst': 'Bruker du vanligvis bil eller offentlig transport til og fra arbeidsplassen?',
+            'overskrift': 'Før du fikk sykmelding',
+            'sporsmalstekst': 'Brukte du bil eller offentlig transport til og fra jobben?',
             'undertekst': null,
+            'hjelpetekst': {
+                'tittel': 'Hva regnes som offentlig transport?',
+                'brodtekst': 'Eksempler på offentlig transport: Buss, tog, t-bane, bysykkel, el-sparkesykkel.',
+            },
             'svartype': 'JA_NEI',
             'min': null,
             'max': null,
@@ -47,6 +53,7 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
                     'overskrift': null,
                     'sporsmalstekst': 'Hva slags type transport bruker du?',
                     'undertekst': null,
+                    'hjelpetekst': null,
                     'svartype': 'CHECKBOX_GRUPPE',
                     'min': null,
                     'max': null,
@@ -59,6 +66,7 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
                             'overskrift': null,
                             'sporsmalstekst': 'Bil',
                             'undertekst': null,
+                            'hjelpetekst': null,
                             'svartype': 'CHECKBOX',
                             'min': null,
                             'max': null,
@@ -69,13 +77,14 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
                                     'id': 'c56ca825-5993-4a13-bba7-29d592944b20',
                                     'tag': 'KM_HJEM_JOBB',
                                     'overskrift': null,
-                                    'sporsmalstekst': 'Hvor mange km er reisen med bil hjemmefra til jobb?',
+                                    'sporsmalstekst': 'Hvor mange km er kjøreturen mellom hjemmet ditt og jobben?',
                                     'undertekst': null,
+                                    'hjelpetekst': null,
                                     'svartype': 'KILOMETER',
                                     'min': '0',
                                     'max': null,
                                     'kriterieForVisningAvUndersporsmal': null,
-                                    'svar': [],
+                                    'svar': [ { id: null, verdi: null, kvittering: kvitteringBil } ],
                                     'undersporsmal': []
                                 }
                             ]
@@ -86,6 +95,7 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
                             'overskrift': null,
                             'sporsmalstekst': 'Offentlig transport',
                             'undertekst': null,
+                            'hjelpetekst': null,
                             'svartype': 'CHECKBOX',
                             'min': null,
                             'max': null,
@@ -98,6 +108,7 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
                                     'overskrift': null,
                                     'sporsmalstekst': 'Hvor mye betaler du vanligvis i måneden for offentlig transport?',
                                     'undertekst': null,
+                                    'hjelpetekst': null,
                                     'svartype': 'BELOP',
                                     'min': '0',
                                     'max': null,
@@ -115,8 +126,9 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
             'id': '7f8e5fd4-325b-4614-9eb3-39faa2bb511f',
             'tag': 'REISE_MED_BIL',
             'overskrift': 'Reise med bil',
-            'sporsmalstekst': 'Reiser du med bil til og fra jobben mellom 1. - 18. februar 2021?',
+            'sporsmalstekst': 'Reiste du med egen bil, leiebil eller en kollega til jobben fra 1. februar - 18. mars 2021?',
             'undertekst': null,
+            'hjelpetekst': null,
             'svartype': 'JA_NEI',
             'min': null,
             'max': null,
@@ -129,6 +141,7 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
                     'overskrift': null,
                     'sporsmalstekst': 'Hvilke dager reiste du med bil?',
                     'undertekst': null,
+                    'hjelpetekst': null,
                     'svartype': 'DATOER',
                     'min': '2020-02-01',
                     'max': '2021-03-18',
@@ -142,8 +155,9 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
             'id': 'c5e8e211-d8d1-404d-85a7-d6e073f1fd4b',
             'tag': 'KVITTERINGER',
             'overskrift': 'Kvitteringer',
-            'sporsmalstekst': 'Last opp kvitteringer for reiser til og fra jobben mellom 1. - 18. februar 2021.',
+            'sporsmalstekst': 'Last opp kvitteringer for reiseutgifter til jobben fra 1. februar til 18. mars 2021.',
             'undertekst': null,
+            'hjelpetekst': null,
             'svartype': 'KVITTERING',
             'min': null,
             'max': null,
@@ -157,6 +171,7 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
             'overskrift': 'Utbetaling',
             'sporsmalstekst': 'Legger arbeidsgiveren din ut for reisene?',
             'undertekst': null,
+            'hjelpetekst': null,
             'svartype': 'JA_NEI',
             'min': null,
             'max': null,

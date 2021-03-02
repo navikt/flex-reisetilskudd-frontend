@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom'
 import { RouteParams } from '../../app'
 import SykmeldingPanel from '../../components/sykmelding/sykmelding-panel'
 import { Sykmelding } from '../../types/sykmelding'
+import parser from 'html-react-parser'
 
 const brodsmuler: Brodsmule[] = [
     {
@@ -68,7 +69,7 @@ const BekreftSide = () => {
 
                 <section className="brevinfo">
                     <Undertittel>{tekst('bekreft.brevinfo.tittel')}</Undertittel>
-                    <Normaltekst>{tekst('bekreft.brevinfo.tekst')}</Normaltekst>
+                    <Normaltekst>{parser(tekst('bekreft.brevinfo.tekst'))}</Normaltekst>
                 </section>
 
                 <SykmeldingPanel />

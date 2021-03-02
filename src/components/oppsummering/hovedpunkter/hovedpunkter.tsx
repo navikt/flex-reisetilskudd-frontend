@@ -21,6 +21,7 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 import { TagTyper } from '../../../types/enums'
 import { logger } from '../../../utils/logger'
 import { Kvittering } from '../../../types/types'
+import parser from 'html-react-parser'
 
 const Hovedpunkter = () => {
     const { valgtReisetilskudd, reisetilskuddene, setReisetilskuddene } = useAppStore()
@@ -87,52 +88,50 @@ const Hovedpunkter = () => {
     if (!valgtReisetilskudd) return null
 
     return (
-        <>
-            <section className="hovedpunkter">
-                <Undertittel className="avsnitt" tag="h2">{tekst('hovedpunkter.tittel.bekreft')}</Undertittel>
-                <Normaltekst>{tekst('hovedpunkter.ingress')}</Normaltekst>
+        <section className="hovedpunkter">
+            <Undertittel className="avsnitt" tag="h2">{tekst('hovedpunkter.tittel.bekreft')}</Undertittel>
+            <Normaltekst>{parser(tekst('hovedpunkter.ingress'))}</Normaltekst>
 
-                <Element className="avsnitt" tag="h3">{tekst('hovedpunkter.tittel')}</Element>
-                <Normaltekst tag="ul" className="punkter">
+            <Element className="avsnitt" tag="h3">{tekst('hovedpunkter.tittel')}</Element>
+            <Normaltekst tag="ul" className="punkter">
+                <li>
+                    {getLedetekst(tekst('hovedpunkter.fra_til'), {
+                        '%FRA%': sameYear ? fom.format('DD.') : fom.format('DD. MMM YYYY'),
+                        '%TIL%': tom.format('DD. MMM YYYY')
+                    })}
+                </li>
+
+                <Vis hvis={valgtReisetilskudd!.arbeidsgiverNavn !== undefined}>
+                    <li>{tekst('hovedpunkter.arbeidsgiver_betaler')}</li>
+                </Vis>
+
+                <Vis hvis={bilag.length > 0}>
                     <li>
-                        {getLedetekst(tekst('hovedpunkter.fra_til'), {
-                            '%FRA%': sameYear ? fom.format('DD.') : fom.format('DD. MMM YYYY'),
-                            '%TIL%': tom.format('DD. MMM YYYY')
+                        {getLedetekst(tekst('hovedpunkter.kvitteringer'), {
+                            '%ANTALL%': bilag.length,
+                            '%SUM%': formatterTall(bilag.reduce((acc, b) => acc + b.belop!, 0) / 100)
                         })}
                     </li>
-
-                    <Vis hvis={valgtReisetilskudd!.arbeidsgiverNavn !== undefined}>
-                        <li>{tekst('hovedpunkter.arbeidsgiver_betaler')}</li>
-                    </Vis>
-
-                    <Vis hvis={bilag.length > 0}>
-                        <li>
-                            {getLedetekst(tekst('hovedpunkter.kvitteringer'), {
-                                '%ANTALL%': bilag.length,
-                                '%SUM%': formatterTall(bilag.reduce((acc, b) => acc + b.belop!, 0)/100)
-                            })}
-                        </li>
-                    </Vis>
-                </Normaltekst>
-
-                <Vis hvis={valgtReisetilskudd?.status === 'ÅPEN' || valgtReisetilskudd?.status === 'PÅBEGYNT'}>
-                    <KanSendesAlertstripe />
                 </Vis>
+            </Normaltekst>
 
-                <Vis hvis={fetchFeilmelding}>
-                    <AlertStripeAdvarsel>
-                        <Normaltekst>{fetchFeilmelding}</Normaltekst>
-                    </AlertStripeAdvarsel>
-                </Vis>
+            <Vis hvis={valgtReisetilskudd?.status === 'ÅPEN' || valgtReisetilskudd?.status === 'PÅBEGYNT'}>
+                <KanSendesAlertstripe />
+            </Vis>
 
-                <div className="knapperad">
-                    <Knapp type="hoved" onClick={async() => await sendSoknad()} disabled={!erBekreftet}>
-                        {tekst('hovedpunkter.send-knapp.tekst')}
-                    </Knapp>
-                    <AvbrytKnapp />
-                </div>
-            </section>
-        </>
+            <Vis hvis={fetchFeilmelding}>
+                <AlertStripeAdvarsel>
+                    <Normaltekst>{fetchFeilmelding}</Normaltekst>
+                </AlertStripeAdvarsel>
+            </Vis>
+
+            <div className="knapperad">
+                <Knapp type="hoved" onClick={async() => await sendSoknad()} disabled={!erBekreftet}>
+                    {tekst('hovedpunkter.send-knapp.tekst')}
+                </Knapp>
+                <AvbrytKnapp />
+            </div>
+        </section>
     )
 }
 

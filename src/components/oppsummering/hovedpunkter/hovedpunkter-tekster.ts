@@ -1,6 +1,6 @@
 const HovedpunkterTekster = {
     'hovedpunkter.tittel.bekreft': 'Bekreft og send søknaden',
-    'hovedpunkter.ingress': 'Sjekk at du har fått med alle nødvendige opplysninger og kvitteringer. Når du sender søknaden, går den til NAV. POSTEN NORGE får samtidig en kopi.',
+    'hovedpunkter.ingress': 'Sjekk at du har fått med alle nødvendige opplysninger og kvitteringer.<br/>Når du sender søknaden, går den til NAV.',
     'hovedpunkter.tittel': 'Hovedpunkter fra søknaden',
     'hovedpunkter.undertittel': 'Opplastede kvitteringer',
     'hovedpunkter.fra_til': 'Du søker om reisetilskudd mellom %FRA% og %TIL%',

@@ -2,8 +2,8 @@ const BekreftTekster = {
     'bekreft.sendt-til': 'Søknaden ble sendt til NAV',
     'bekreft.sendt-kl': 'Sendt: %TID%',
     'bekreft.sidetittel': 'Søknad om reisetilskudd',
-    'bekreft.brevinfo.tittel': 'Du får brev fra oss',
-    'bekreft.brevinfo.tekst': 'Når vi har behandlet søknaden din, får du svaret i Digipost. Har du reservert deg mot digital post, får du et brev på papir.',
+    'bekreft.brevinfo.tittel': 'NAV behandler søknaden',
+    'bekreft.brevinfo.tekst': 'Saksbehandlingstiden kan variere noe. <a href="https://www.nav.no/no/nav-og-samfunn/om-nav/saksbehandlingstider-i-nav" target="_blank">Sjekk saksbehandlingstiden i ditt fylke</a>.',
 }
 
 export default BekreftTekster
