@@ -19,6 +19,7 @@ const CheckboxInput = ({ sporsmal }: SpmProps) => {
     useEffect(() => {
         const svar = hentSvar(sporsmal)
         setLokal(svar)
+        setErBekreftet(svar)
         setValue(sporsmal.id, svar)
         setClassname(getClassName(svar === 'CHECKED'))
         bekreft.current!.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' })

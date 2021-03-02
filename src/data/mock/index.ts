@@ -4,8 +4,8 @@ import env from '../../utils/environment'
 import { generateId } from '../../utils/random'
 import { sykmeldinger } from './data/sykmeldinger'
 import { reisetilskuddene } from './data/reisetilskudd'
-import { RSKvittering } from '../../types/rs-types/rs-kvittering'
 import { RSSvar } from '../../types/rs-types/rs-svar'
+import { kvitteringTaxi } from './data/kvitteringer'
 
 const mock = FetchMock.configure({
     enableFallback: true,
@@ -39,12 +39,7 @@ mock.post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskud
         const r = reisetilskuddene.find((r) => r.id === req.pathParams.id)
         const spm = r!.sporsmal.find((spm) => spm.id === req.pathParams.spmid)
         spm!.svar = [ {
-            kvittering: {
-                blobId: generateId(),
-                datoForUtgift: '05-04-2020',
-                belop: 20100,
-                typeUtgift: 'TAXI'
-            } as RSKvittering
+            kvittering: kvitteringTaxi
         } as RSSvar ]
         return res(ctx.json(spm))
     }
