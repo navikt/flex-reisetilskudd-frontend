@@ -16,8 +16,7 @@ import {
     redirectTilLoginHvis401,
 } from '../../../utils/utils'
 import AvbrytKnapp from '../../avbryt/avbryt-knapp'
-import KanSendesAlertstripe from '../../diverse/kan-sendes-alertstripe'
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
+import Alertstripe, { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
 import { TagTyper } from '../../../types/enums'
 import { logger } from '../../../utils/logger'
 import { Kvittering } from '../../../types/types'
@@ -41,7 +40,9 @@ const Hovedpunkter = () => {
         valgtReisetilskudd?.sporsmal.forEach(spm => {
             const svar = spm.svarliste.svar
             if (spm.tag === TagTyper.KVITTERINGER && svar.length > 0) {
-                kvitteringer.push(svar[0].kvittering!)
+                svar.forEach(sv => {
+                    kvitteringer.push(sv.kvittering!)
+                })
             }
         })
         setBilag(kvitteringer)
@@ -95,28 +96,33 @@ const Hovedpunkter = () => {
             <Element className="avsnitt" tag="h3">{tekst('hovedpunkter.tittel')}</Element>
             <Normaltekst tag="ul" className="punkter">
                 <li>
-                    {getLedetekst(tekst('hovedpunkter.fra_til'), {
-                        '%FRA%': sameYear ? fom.format('DD.') : fom.format('DD. MMM YYYY'),
+                    {parser(getLedetekst(tekst('hovedpunkter.fra_til'), {
+                        '%FRA%': sameYear ? fom.format('DD. MMM') : fom.format('DD. MMM YYYY'),
                         '%TIL%': tom.format('DD. MMM YYYY')
-                    })}
+                    }))}
                 </li>
 
                 <Vis hvis={valgtReisetilskudd!.arbeidsgiverNavn !== undefined}>
-                    <li>{tekst('hovedpunkter.arbeidsgiver_betaler')}</li>
+                    <li>{parser(tekst('hovedpunkter.arbeidsgiver_betaler'))}</li>
                 </Vis>
 
                 <Vis hvis={bilag.length > 0}>
                     <li>
-                        {getLedetekst(tekst('hovedpunkter.kvitteringer'), {
+                        {parser(getLedetekst(tekst('hovedpunkter.kvitteringer'), {
                             '%ANTALL%': bilag.length,
-                            '%SUM%': formatterTall(bilag.reduce((acc, b) => acc + b.belop!, 0) / 100)
-                        })}
+                            '%SUM%': formatterTall(bilag.reduce((acc, b) => acc + b.belop!, 0)/100)
+                        }))}
                     </li>
                 </Vis>
             </Normaltekst>
 
             <Vis hvis={valgtReisetilskudd?.status === 'ÅPEN' || valgtReisetilskudd?.status === 'PÅBEGYNT'}>
-                <KanSendesAlertstripe />
+                <Alertstripe className="kan-sendes" type="info">
+                    <Element>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
+                        '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMM')
+                    })}</Element>
+                    <Normaltekst>{tekst('tilskudd.start.alertstripe.tekst')}</Normaltekst>
+                </Alertstripe>
             </Vis>
 
             <Vis hvis={fetchFeilmelding}>
