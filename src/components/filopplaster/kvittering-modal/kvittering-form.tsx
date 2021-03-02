@@ -226,7 +226,6 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             id="belop_input"
                             name="belop_input"
                             inputMode={'decimal'}
-                            placeholder="Skriv inn beløp"
                             defaultValue={valgtKvittering?.belop ? (valgtKvittering.belop / 100) : ''}
                             className={
                                 'skjemaelement__input input--xs periode-element' +
