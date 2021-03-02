@@ -41,6 +41,6 @@ spec:
     - name: SYKEFRAVAER_URL
       value: "https://tjenester-q1.nav.no/sykefravaer"
     - name: DITTNAV_URL
-      value: "https://www-q1.nav.no/person/dittnav/"
+      value: "https://www.dev.nav.no/person/dittnav/"
     - name: FRONTENDLOGGER_ROOT
       value: "https://tjenester-q1.nav.no"
