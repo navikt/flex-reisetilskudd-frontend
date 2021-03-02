@@ -9,6 +9,7 @@ import Vis from '../../diverse/vis'
 import { hentFeilmelding, sporsmalIdListe } from '../sporsmal-utils'
 import { hentFormState, hentSvar } from '../hent-svar'
 import { useAppStore } from '../../../data/stores/app-store'
+import Utvidbar from '../../utvidbar/utvidbar'
 
 const jaNeiValg = [ {
     value: 'JA',
@@ -67,6 +68,14 @@ const JaNeiInput = ({ sporsmal }: SpmProps) => {
                             {sporsmal.overskrift}
                         </Undertittel>
                         <Element>{sporsmal.sporsmalstekst}</Element>
+                        <Vis hvis={sporsmal.undertekst}>
+                            <Normaltekst>{sporsmal.undertekst}</Normaltekst>
+                        </Vis>
+                        <Vis hvis={sporsmal.hjelpetekst}>
+                            <Utvidbar erApen={false} type="intern" tittel={sporsmal.hjelpetekst?.tittel}>
+                                <Normaltekst>{sporsmal.hjelpetekst?.brodtekst}</Normaltekst>
+                            </Utvidbar>
+                        </Vis>
                     </legend>
                     <div className="inputPanelGruppe__inner">
                         {jaNeiValg.map((valg, idx) => {

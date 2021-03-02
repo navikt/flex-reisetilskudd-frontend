@@ -118,6 +118,10 @@ export class Sporsmal {
     overskrift: string;
     sporsmalstekst: string;
     undertekst?: string;
+    hjelpetekst: {
+        tittel: string | null,
+        brodtekst: string | null,
+    } | null;
     svartype: Svartype;
     min?: string;
     max?: string;
@@ -135,6 +139,7 @@ export class Sporsmal {
         this.overskrift = rsspm.overskrift === null ? '' : rsspm.overskrift
         this.sporsmalstekst = rsspm.sporsmalstekst === null ? '' : rsspm.sporsmalstekst
         this.undertekst = rsspm.undertekst || undefined
+        this.hjelpetekst = rsspm.hjelpetekst === null ? null : { tittel: rsspm.hjelpetekst!.tittel, brodtekst: rsspm.hjelpetekst!.brodtekst }
         this.svartype = rsspm.svartype as Svartype
         this.min = rsspm.min || undefined
         this.max = rsspm.max || undefined

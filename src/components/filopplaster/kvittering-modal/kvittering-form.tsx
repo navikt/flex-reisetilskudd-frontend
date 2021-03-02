@@ -119,12 +119,12 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                 <div className="skjemakolonner">
                     <div className="skjemaelement">
                         <label htmlFor="transportmiddel" className="skjemaelement__label">
-                            <Element tag="strong">{tekst('kvittering_modal.utgift')}</Element>
+                            {tekst('kvittering_modal.type-utgift.label')}
                         </label>
                         <select
                             ref={methods.register({ required: tekst('kvittering_modal.transportmiddel.feilmelding') })}
                             className={
-                                'skjemaelement__input kvittering-element' +
+                                'skjemaelement__input input--fullbredde kvittering-element' +
                                 (methods.errors['transportmiddel'] ? ' skjemaelement__input--harFeil' : '')
                             }
                             id="transportmiddel"
@@ -226,18 +226,14 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             id="belop_input"
                             name="belop_input"
                             inputMode={'decimal'}
-                            placeholder="Skriv inn beløp"
                             defaultValue={valgtKvittering?.belop ? (valgtKvittering.belop / 100) : ''}
                             className={
-                                'skjemaelement__input input--m periode-element' +
+                                'skjemaelement__input input--xs periode-element' +
                                 (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
                             }
                             step={0.01}     // Setter minste lovlige endring i desimaler
                         />
-                        <Normaltekst tag="span">
-                            { ' kr' }
-                        </Normaltekst>
-
+                        <span className="enhet">kr</span>
                         <Normaltekst tag="div" role="alert" aria-live="assertive"
                             className="skjemaelement__feilmelding">
                             <Vis hvis={methods.errors['belop_input']}>
