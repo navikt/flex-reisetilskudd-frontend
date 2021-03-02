@@ -25,11 +25,6 @@ const JaNeiInput = ({ sporsmal }: SpmProps) => {
     const [ lokal, setLokal ] = useState<string>(hentSvar(sporsmal))
 
     useEffect(() => {
-        setErBekreftet(false)
-        // eslint-disable-next-line
-    }, [])
-
-    useEffect(() => {
         if (sporsmal.erHovedsporsmal) {
             reset(hentFormState(sporsmal))
         } else {
@@ -39,7 +34,9 @@ const JaNeiInput = ({ sporsmal }: SpmProps) => {
     }, [ sporsmal.id ]);
 
     useEffect(() => {
-        setLokal(hentSvar(sporsmal))
+        const svar = hentSvar(sporsmal)
+        setLokal(svar)
+        setErBekreftet(svar)
         // eslint-disable-next-line
     }, [ sporsmal ])
 
