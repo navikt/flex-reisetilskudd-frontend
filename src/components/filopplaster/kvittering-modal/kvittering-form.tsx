@@ -220,7 +220,14 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             ref={methods.register({
                                 required: tekst('kvittering_modal.belop.feilmelding'),
                                 min: { value: 0, message: 'Beløp kan ikke være negativt' },
-                                max: { value: 10000, message: 'Beløp kan ikke være større enn 10 000' }
+                                max: { value: 10000, message: 'Beløp kan ikke være større enn 10 000' },
+                                validate: (val) => {
+                                    const belop = val.split('.')
+                                    if (belop[1]?.length > 2) {
+                                        methods.setValue('belop_input', belop[0] + '.' + belop[1].substring(0, 2))
+                                    }
+                                    return true
+                                }
                             })}
                             type="number"
                             id="belop_input"
@@ -231,7 +238,8 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                                 'skjemaelement__input input--xs periode-element' +
                                 (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
                             }
-                            step={0.01}     // Setter minste lovlige endring i desimaler
+                            step={0.01}
+                            autoComplete="off"
                         />
                         <span className="enhet">kr</span>
                         <Normaltekst tag="div" role="alert" aria-live="assertive"

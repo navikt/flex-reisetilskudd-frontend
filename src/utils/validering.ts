@@ -1,4 +1,4 @@
-import { dayjsToDate } from './dato'
+import { dayjsToDate, tilLesbarDatoMedArstall } from './dato'
 
 const validerDato = (values: any, min?: Date, max?: Date) => {
     const formDato = values['dato_input']
@@ -9,8 +9,8 @@ const validerDato = (values: any, min?: Date, max?: Date) => {
     // Formattering er riktig når dato er skrevet inn manuelt
     if (isNaN(valgtDato?.getTime() || NaN)) return 'Datoen følger ikke formatet dd.mm.åååå'
     // Grenseverdier
-    if (min && valgtDato! < min) return 'Datoen kan ikke være før ' + min
-    if (max && valgtDato! > max) return 'Datoen kan ikke være etter ' + max
+    if (min && valgtDato! < min) return 'Datoen kan ikke være før ' + tilLesbarDatoMedArstall(min)
+    if (max && valgtDato! > max) return 'Datoen kan ikke være etter ' + tilLesbarDatoMedArstall(max)
 
     return true
 }

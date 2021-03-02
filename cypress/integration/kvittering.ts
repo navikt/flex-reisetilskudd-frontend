@@ -1,28 +1,28 @@
-import { apenReisetilskudd as   åpenReisetilskudd } from '../../src/data/mock/data/reisetilskudd'
+import { apenReisetilskudd as åpenReisetilskudd } from '../../src/data/mock/data/reisetilskudd'
 
-xdescribe('Tester utfylling av kvittering', () => {
+describe('Tester utfylling av kvittering', () => {
     const reisetilskudd = åpenReisetilskudd
 
     before(() => {
-        cy.visit(`http://localhost:3000/syk/reisetilskudd/soknaden/${reisetilskudd.id}/3`)
+        cy.visit(`http://localhost:3000/syk/reisetilskudd/soknaden/${reisetilskudd.id}/4`)
     })
 
     describe('Kvittering reisetilskudd', () => {
         it('URL er riktig', () => {
-            cy.url().should('include', `/soknaden/${reisetilskudd.id}/3`)
+            cy.url().should('include', `/soknaden/${reisetilskudd.id}/4`)
         })
 
         it('Legger inn taxi kvittering', () => {
             cy.get('.fler-vedlegg').click()
 
-            cy.contains('Legg til reise')
+            cy.contains('Legg til reiseutgift')
+
+            cy.get('select[name=transportmiddel]').select('TAXI')
 
             cy.get('.nav-datovelger__kalenderknapp').click()
             cy.get('.DayPicker-Body').contains('13').click()
 
             cy.get('input[name=belop_input]').type('1234')
-
-            cy.get('select[name=transportmiddel]').select('TAXI')
 
             cy.get('.filopplasteren input[type=file]').attachFile('icon.png')
 
@@ -34,16 +34,16 @@ xdescribe('Tester utfylling av kvittering', () => {
         it('Fil list oppdateres med kvittering', () => {
             cy.get('.fil_liste')
 
-            cy.get('.sortering__heading').contains('Utlegg')
-            cy.get('.sortering__heading').contains('Transport')
-            cy.get('.sortering__heading').contains('Beløp')
+            cy.get('#dato_sortering').contains('Dato')
+            cy.get('#utgift_sortering').contains('Utgift')
+            cy.get('#belop_sortering').contains('Beløp')
 
-            cy.get('.dato').contains('fredag 13.05.2022')
+            cy.get('.dato').contains('fredag 29.09.2034')
             cy.get('.transport').contains('Taxi')
-            cy.get('.belop').contains('1 234 kr')
+            cy.get('.belop').contains('2')
 
             cy.get('.sumlinje').contains('1 utlegg på til sammen')
-            cy.get('.sumlinje .belop').contains('1 234 kr')
+            cy.get('.sumlinje .belop').contains('2 kr')
         })
 
         it('Åpner og lukker modal', () => {
@@ -69,20 +69,20 @@ xdescribe('Tester utfylling av kvittering', () => {
             })
 
             it('Dato før fom', () => {
-                cy.get('input[name=dato_input]').clear().type('10.05.2022')
+                cy.get('input[name=dato_input]').clear().type('10.01.2021')
                 cy.get('.lagre-kvittering').contains('Bekreft').click()
-                cy.get('.skjemaelement__feilmelding').contains('Datoen kan ikke være før 2022-05-13')
+                cy.get('.skjemaelement__feilmelding').contains('Datoen kan ikke være før 1. februar 2021')
             })
 
             it('Dato etter tom', () => {
                 cy.get('input[name=dato_input]').clear().type('10.08.2022')
                 cy.get('.lagre-kvittering').contains('Bekreft').click()
-                cy.get('.skjemaelement__feilmelding').contains('Datoen kan ikke være etter 2022-05-31')
+                cy.get('.skjemaelement__feilmelding').contains('Datoen kan ikke være etter 18. februar 2021')
             })
 
             it('Gyldig dato', () => {
                 cy.get('input[name=dato_input]').should('have.class', 'skjemaelement__input--harFeil')
-                cy.get('input[name=dato_input]').clear().type('15.05.2022')
+                cy.get('input[name=dato_input]').clear().type('13.02.2021')
                 cy.get('.lagre-kvittering').contains('Bekreft').click()
                 cy.get('input[name=dato_input]').should('not.have.class', 'skjemaelement__input--harFeil')
             })
@@ -96,7 +96,7 @@ xdescribe('Tester utfylling av kvittering', () => {
 
             it('Velger egen bil', () => {
                 cy.get('select[name=transportmiddel]').should('have.class', 'skjemaelement__input--harFeil')
-                cy.get('select[name=transportmiddel]').select('EGEN_BIL')
+                cy.get('select[name=transportmiddel]').select('TAXI')
                 cy.get('select[name=transportmiddel]').should('not.have.class', 'skjemaelement__input--harFeil')
             })
         })
@@ -115,14 +115,15 @@ xdescribe('Tester utfylling av kvittering', () => {
             })
 
             it('Kan ikke skrive inn med 3 desimaler', () => {
-                // Input feltet viser egen feilmelding
                 cy.get('input[name=belop_input]').clear().type('100.253')
                 cy.get('.lagre-kvittering').contains('Bekreft').click()
+                cy.get('input[name=belop_input]').invoke('val').should((val) => {
+                    expect(val).to.be.eq('100.25')
+                })
             })
 
             it('Gyldig beløp med 2 desimaler', () => {
-                cy.get('input[name=belop_input]').should('have.class', 'skjemaelement__input--harFeil')
-                cy.get('input[name=belop_input]').clear().type('100.25')
+                cy.get('input[name=belop_input]').clear().type('100.30')
                 cy.get('.lagre-kvittering').contains('Bekreft').click()
                 cy.get('input[name=belop_input]').should('not.have.class', 'skjemaelement__input--harFeil')
             })
@@ -138,40 +139,6 @@ xdescribe('Tester utfylling av kvittering', () => {
             it('Legger inn gyldig kvittering', () => {
                 cy.get('.filopplasteren input[type=file]').attachFile('icon.png')
                 cy.get('.lagre-kvittering').contains('Bekreft').click()
-            })
-        })
-
-        describe('Fil liste', () => {
-            it('Sum av kvitteringer stemmer', () => {
-                cy.get('.fil_liste')
-
-                cy.get('.sortering__heading').contains('Utlegg')
-                cy.get('.sortering__heading').contains('Transport')
-                cy.get('.sortering__heading').contains('Beløp')
-
-                cy.get('.dato')
-                    .should('contain', 'fredag 13.05.2022')
-                    .and('contain', 'søndag 15.05.2022')
-
-                cy.get('.transport')
-                    .should('contain', 'Taxi')
-                    .and('contain', 'Egen bil')
-
-                cy.get('.belop').contains('99 kr')
-                cy.get('.belop').contains('1 234 kr')
-
-                cy.get('.sumlinje').contains('2 utlegg på til sammen')
-                cy.get('.sumlinje .belop').contains('1 333 kr')
-            })
-
-            it('Sletter en kvittering', () => {
-                cy.get('.belop')
-                    .contains('1 234 kr')
-                    .siblings()
-                    .find('.slett-knapp')
-                    .click()
-                cy.get('.sumlinje').contains('1 utlegg på til sammen')
-                cy.get('.sumlinje .belop').contains('99 kr')
             })
         })
     })

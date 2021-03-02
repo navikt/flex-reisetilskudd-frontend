@@ -84,7 +84,7 @@ const TilskuddTeasere = () => {
         <div className="tilskudd__teasere">
             <Vis hvis={nyeTilskudd.length > 0}>
 
-                <div className="tilskudd--nye-pabegynt">
+                <div className="tilskudd--nye">
                     <Undertittel tag="h2" className="tilskudd__tittel">
                         {tekst('tilskudd.liste.nye.soknader')}
                     </Undertittel>
@@ -96,7 +96,7 @@ const TilskuddTeasere = () => {
 
             <Vis hvis={påbegynte.length > 0}>
 
-                <div className="tilskudd--nye-pabegynt">
+                <div className="tilskudd--pabegynt">
                     <Undertittel tag="h2" className="tilskudd__tittel">
                         {tekst('tilskudd.liste.usendte.soknader')}
                     </Undertittel>

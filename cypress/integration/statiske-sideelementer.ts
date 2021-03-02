@@ -1,15 +1,17 @@
 import { sendbarReisetilskudd } from '../../src/data/mock/data/reisetilskudd'
 
-xdescribe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
+describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
     const reisetilskudd = sendbarReisetilskudd
 
     const reisetilskuddSporsmalSjekk = () => {
         it('Laster inn sidenavigasjon', () => {
             cy.get('.side_nav').should('be.visible')
-            cy.contains('Utbetaling')
-            cy.contains('Transport')
-            cy.contains('Kvitteringer')
-            cy.contains('Bekreft og send')
+            cy.contains('1 av 6 Vi stoler på deg')
+            cy.contains('2 av 6 Før du fikk sykmelding')
+            cy.contains('3 av 6 Reise med bil')
+            cy.contains('4 av 6 Kvitteringer')
+            cy.contains('5 av 6 Utbetaling')
+            cy.contains('6 av 6 Oppsummering')
             cy.get('button .chevron--venstre').should('be.visible')
             cy.get('button .chevron--hoyre').should('be.visible')
         })
@@ -19,7 +21,7 @@ xdescribe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         })
 
         it('Knapperad', () => {
-            cy.get('.knapperad').contains('Gå videre')
+            cy.get('.knapperad').contains('Gå videre').and('have.attr', 'disabled')
             cy.get('.knapperad').contains('Jeg ønsker ikke å bruke denne søknaden')
         })
     }
@@ -39,7 +41,7 @@ xdescribe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         })
 
         it('Påbegynte søknader', () => {
-            cy.get('.tilskudd__teasere .tilskudd--usendt')
+            cy.get('.tilskudd__teasere .tilskudd--pabegynt')
                 .contains('Påbegynte søknader')
         })
 
@@ -64,9 +66,9 @@ xdescribe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         })
     })
 
-    describe('Soknadstart', () => {
+    describe('Vi stoler på deg', () => {
         it('URL er riktig', () => {
-            cy.url().should('include', `/soknadstart/${reisetilskudd.id}/1`)
+            cy.url().should('include', `/soknaden/${reisetilskudd.id}/1`)
         })
 
         it('Laster inn header og headerelementer', () => {
@@ -107,37 +109,19 @@ xdescribe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
 
         it('Laster inn sykmelding-panel', () => {
             cy.get('.sykmelding-panel .ekspanderbartPanel__hode')
-                .should('have.attr', 'aria-expanded', 'true')
+                .should('have.attr', 'aria-expanded', 'false')
             cy.get('.sykmelding-panel .sykmelding-panel__tittel')
                 .should('be.visible')
                 .and('have.text', 'Opplysninger fra sykmeldingen')
         })
 
-        it('Laster inn alertstripe med kan-sendes-dato', () => {
-            cy.get('.kan-sendes').should('be.visible')
-            cy.get('.kan-sendes.alertstripe--suksess')
-                .should('be.visible')
-                .and('contain.text', 'Søknaden er klar til å sendes inn')
-        })
-
         it('Laster inn knapperad, klikker og går til soknad-side', () => {
-            cy.get('.knapp--hoved').should('be.visible').click()
-        })
-    })
-
-    describe('Reisetilskudd side 1', () => {
-        it('URL er riktig', () => {
-            cy.url().should('include', `/soknaden/${reisetilskudd.id}/1`)
-        })
-
-        reisetilskuddSporsmalSjekk()
-
-        it('Gå videre', () => {
+            cy.get('input[type=checkbox]').click({ force: true })
             cy.get('.knapperad').contains('Gå videre').click()
         })
     })
 
-    describe('Reisetilskudd side 2', () => {
+    describe('Før du fikk sykmelding', () => {
         it('URL er riktig', () => {
             cy.url().should('include', `/soknaden/${reisetilskudd.id}/2`)
         })
@@ -145,11 +129,12 @@ xdescribe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         reisetilskuddSporsmalSjekk()
 
         it('Gå videre', () => {
+            cy.get('input[type=radio][value=NEI]').click({ force: true })
             cy.get('.knapperad').contains('Gå videre').click()
         })
     })
 
-    describe('Reisetilskudd side 3', () => {
+    describe('Reise med bil', () => {
         it('URL er riktig', () => {
             cy.url().should('include', `/soknaden/${reisetilskudd.id}/3`)
         })
@@ -157,21 +142,64 @@ xdescribe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         reisetilskuddSporsmalSjekk()
 
         it('Gå videre', () => {
+            cy.get('input[type=radio][value=NEI]').click({ force: true })
             cy.get('.knapperad').contains('Gå videre').click()
         })
     })
 
-    describe('Reisetilskudd side 4', () => {
+    describe('Kvitteringer', () => {
         it('URL er riktig', () => {
             cy.url().should('include', `/soknaden/${reisetilskudd.id}/4`)
         })
 
         it('Laster inn sidenavigasjon', () => {
             cy.get('.side_nav').should('be.visible')
-            cy.contains('Utbetaling')
-            cy.contains('Transport')
-            cy.contains('Kvitteringer')
-            cy.contains('Bekreft og send')
+            cy.contains('1 av 6 Vi stoler på deg')
+            cy.contains('2 av 6 Før du fikk sykmelding')
+            cy.contains('3 av 6 Reise med bil')
+            cy.contains('4 av 6 Kvitteringer')
+            cy.contains('5 av 6 Utbetaling')
+            cy.contains('6 av 6 Oppsummering')
+            cy.get('button .chevron--venstre').should('be.visible')
+            cy.get('button .chevron--hoyre').should('be.visible')
+        })
+
+        it('Laster inn sykemeldingpanel', () => {
+            cy.get('.sykmelding-panel').should('be.visible').and('have.text', 'Opplysninger fra sykmeldingen')
+        })
+
+        it('Gå videre', () => {
+            cy.get('.knapperad').contains('Gå videre').and('not.have.attr', 'disabled')
+            cy.get('.knapperad').contains('Gå videre').click()
+        })
+    })
+
+    describe('Utbetaling', () => {
+        it('URL er riktig', () => {
+            cy.url().should('include', `/soknaden/${reisetilskudd.id}/5`)
+        })
+
+        reisetilskuddSporsmalSjekk()
+
+        it('Gå videre', () => {
+            cy.get('input[type=radio][value=NEI]').click({ force: true })
+            cy.get('.knapperad').contains('Gå videre').click()
+        })
+    })
+
+    describe('Oppsummering', () => {
+        it('URL er riktig', () => {
+            cy.url().should('include', `/soknaden/${reisetilskudd.id}/6`)
+        })
+
+        it('Laster inn sidenavigasjon', () => {
+            cy.get('.side_nav').should('be.visible')
+            cy.contains('1 av 6 Vi stoler på deg')
+            cy.contains('2 av 6 Før du fikk sykmelding')
+            cy.contains('3 av 6 Reise med bil')
+            cy.contains('4 av 6 Kvitteringer')
+            cy.contains('5 av 6 Utbetaling')
+            cy.contains('6 av 6 Oppsummering')
             cy.get('button .chevron--venstre').should('be.visible')
             cy.get('button .chevron--hoyre').should('be.visible')
         })
@@ -186,10 +214,10 @@ xdescribe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
 
         it('Tekster', () => {
             cy.get('.typo-undertittel').contains('Bekreft og send søknaden')
-            cy.get('.typo-normal').contains('Sjekk at du har fått med alle nødvendige opplysninger og kvitteringer. Når du sender søknaden, går den til NAV.')
+            cy.get('.typo-normal').contains('Sjekk at du har fått med alle nødvendige opplysninger og kvitteringer.')
+            cy.get('.typo-normal').contains('Når du sender søknaden, går den til NAV.')
             cy.get('.typo-element').contains('Hovedpunkter fra søknaden')
             cy.get('.punkter').should('exist')
-            cy.get('.bekreftCheckboksPanel').contains('Jeg har lest informasjonen jeg har fått underveis i søknaden og bekrefter at opplysningene jeg har gitt er korrekte. Jeg bekrefter også at jeg har lest og forstått')
         })
     })
 })
