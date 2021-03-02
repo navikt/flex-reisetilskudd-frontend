@@ -1,6 +1,6 @@
 import { sendbarReisetilskudd } from '../../src/data/mock/data/reisetilskudd'
 
-xdescribe('Tester reisetilskuddsøknaden', () => {
+describe('Tester reisetilskuddsøknaden', () => {
 
     const reisetilskudd = sendbarReisetilskudd
 
@@ -11,24 +11,26 @@ xdescribe('Tester reisetilskuddsøknaden', () => {
     it('Laster startside', () => {
         cy.get('.typo-sidetittel').should('be.visible').and('have.text', 'Søknader om reisetilskudd')
         cy.get(`.tilskudd__teasere a[href*=${reisetilskudd.id}]`).click()
+        cy.url().should('include', `/soknaden/${reisetilskudd.id}/1`)
     })
 
-    describe('Soknadstart', () => {
+    describe('Vi stoler på deg', () => {
         it('Opplysninger fra sykmeldingen', () => {
             cy.get('.sykmelding-panel')
                 .should('be.visible')
                 .and('contain', 'Opplysninger fra sykmeldingen')
+                .click()
 
             cy.get('.sykmelding-perioder')
                 .should('contain', 'Periode')
-                .and('contain', '1. – 7. januar 2021 • 7 dager')
+                .and('contain', '1. – 18. februar 2021 • 18 dager')
                 .and('contain', 'Reisetilskudd')
 
             cy.get('.sykmelding-panel')
                 .should('contain', 'Arbeidsgiver')
                 .and('contain', 'LOMMEN BARNEHAVE')
                 .and('contain', 'Dato sykmeldingen ble skrevet')
-                .and('contain', '1. januar 2021')
+                .and('contain', '1. februar 2021')
                 .and('contain', 'Hva passer best for deg?')
                 .and('contain', 'Jeg er ansatt')
         })
@@ -40,128 +42,110 @@ xdescribe('Tester reisetilskuddsøknaden', () => {
 
             cy.get('.sykmelding-panel')
                 .should('not.contain', 'Dato sykmeldingen ble skrevet')
-
-            cy.get('.sykmelding-panel')
-                .click()
-
-            cy.get('.sykmelding-panel')
-                .should('contain', 'Dato sykmeldingen ble skrevet')
         })
 
-        it('Finner videreknappen', () => {
-            cy.get('.knapperad .knapp--hoved').should('be.visible').click()
-        })
-    })
-
-    describe('Reisetilskudd side 1', () => {
-        it('Inneholder content', () => {
-            cy.get('.horisontal-radio').should('be.visible')
-        })
-
-        it('Laster tekst', () => {
-            cy.get('.skjemagruppe__legend .typo-systemtittel').should('be.visible')
-            cy.contains('Utbetaling')
-            cy.contains('Skal reisetilskuddet utbetales til arbeidsgiveren din?')
-        })
-
-        it('Tar tak i meg-knapp og clicker', () => {
+        it('Må huke av checkbox før neste steg', () => {
+            cy.get('.knapperad .knapp--hoved').should('be.visible').click({ force: true })
             cy.url().should('include', `/soknaden/${reisetilskudd.id}/1`)
-            cy.get('.inputPanel').children().eq(1).should('be.visible').click()
-        })
 
-        it('Tester at begge radiobuttons er clickable via id', () => {
-            cy.get('#utbetaling-arbeidsgiver').click({ force: true }).should('be.checked')
-            cy.get('#utbetaling-meg').click({ force: true }).should('be.checked')
-        })
-
-        it('Finner videreknappen', () => {
-            cy.get('.knapperad .knapp--hoved').should('be.visible').click()
+            cy.get('input[type=checkbox]').click({ force: true })
+            cy.get('.knapperad').contains('Gå videre').click()
         })
     })
 
-    describe('Reisetilskudd side 2', () => {
-        it('Fyller ut går, egen bil, klikker på hjelpetekst, fyller inn km', () => {
-            cy.url().should('include', `/soknaden/${reisetilskudd.id}/2`)
+    describe('Før du fikk sykmelding', () => {
+        it('Laster tekst', () => {
+            cy.get('.skjema__legend').within(() => {
+                cy.get('.typo-undertittel').should('have.text', 'Før du fikk sykmelding')
+                cy.get('.typo-element').should('have.text', 'Brukte du bil eller offentlig transport til og fra jobben?')
+                cy.get('.utvidbar.intern').contains('Hva regnes som offentlig transport?').click()
+                cy.get('.utvidbar__innhold .typo-normal').contains('Eksempler på offentlig transport: Buss, tog, t-bane, bysykkel, el-sparkesykkel.')
+            })
+        })
 
-            cy.get('label[for=transport-ja]').click({ force: true })
-            cy.get('label[for=OFFENTLIG]').click({ force: true })
+        it('Kan ikke gå videre før spørsmål er besvart', () => {
+            cy.get('.knapperad').contains('Gå videre').should('have.attr', 'disabled')
+            cy.get('input[type=radio][value=NEI]').click({ force: true })
+            cy.get('.knapperad').contains('Gå videre').should('not.have.attr', 'disabled')
+        })
 
-            cy.get('#utgifter-koll').should('be.visible')
-                .type('900').should('have.value', '0900')
+        it('Svarer på underspørsmål', () => {
+            cy.get('input[type=radio][value=JA]').click({ force: true })
+            cy.get('.knapperad').contains('Gå videre').should('have.attr', 'disabled')
 
-            cy.get('label[for=EGEN_BIL]').click({ force: true })
-            cy.get('#kilometer-bil').should('be.visible')
-                .type('1337', { force: true }).should('have.value', '01337')
+            cy.get('.skjemaelement__label').contains('Bil').click({ force: true })
+            cy.get('.knapperad').contains('Gå videre').should('have.attr', 'disabled')
+
+            cy.get('.undersporsmal').contains('Hvor mange km er kjøreturen mellom hjemmet ditt og jobben?')
+            cy.get('input[type=number]').type('25.1')
+
+            cy.get('.knapperad').contains('Gå videre').click({ force: true })
+        })
+    })
+
+    describe('Reise med bil', () => {
+        it('Laster tekst', () => {
+            cy.get('.skjema__legend').within(() => {
+                cy.get('.typo-undertittel').should('have.text', 'Reise med bil')
+                cy.get('.typo-element').should('have.text', 'Reiste du med egen bil, leiebil eller en kollega til jobben fra 1. februar - 18. mars 2021?')
+            })
+        })
+
+        it('Fyller ut reise med bil', () => {
+            cy.url().should('include', `/soknaden/${reisetilskudd.id}/3`)
+            cy.get('.knapperad').contains('Gå videre').should('have.attr', 'disabled')
+
+            cy.get('input[type=radio][value=JA]').click({ force: true })
+            cy.get('.knapperad').contains('Gå videre').should('have.attr', 'disabled')
+
+            cy.get('.undersporsmal .typo-element').should('have.text', 'Hvilke dager reiste du med bil?')
+            cy.get('.skjema__dager').within(() => {
+                cy.get('.kalenderdag.foran').contains('31')
+                cy.get('.kalenderdag.etter').contains('19')
+
+                cy.get('.kalenderdag label').contains('05').click({ force: true })
+                cy.get('.kalenderdag label').contains('11').click({ force: true })
+                cy.get('.kalenderdag label').contains('12').click({ force: true })
+                cy.get('.kalenderdag label').contains('13').click({ force: true })
+                cy.get('.kalenderdag label').contains('19').click({ force: true })
+
+                cy.get('.kalenderdag label').contains('12').click({ force: true })
+
+                cy.get('.kalenderdag input:checked + label').should('have.text', '05111319')
+            })
 
             cy.get('.knapperad .knapp--hoved').click({ force: true })
         })
     })
 
-    describe('Reisetilskudd side 3', () => {
+    describe('Kvitteringer', () => {
+        it('Går videre', () => {
+            cy.get('.knapperad').contains('Gå videre').click()
+        })
+    })
 
-        it('Sjekker at siden inneholder elementer', () => {
-            cy.url().should('include', `/soknaden/${reisetilskudd.id}/3`)
-            cy.contains('Kvitteringer for reise')
-            cy.contains('Last opp kvitteringer for reise til og fra arbeidsplassen mellom')
-            cy.get('.fler-vedlegg').should('be.visible').click()
+    describe('Utbetaling', () => {
+        it('Laster tekst', () => {
+            cy.get('.skjema__legend').within(() => {
+                cy.get('.typo-undertittel').should('have.text', 'Utbetaling')
+                cy.get('.typo-element').should('have.text', 'Legger arbeidsgiveren din ut for reisene?')
+            })
         })
 
-        it('Sjekker at utlegg-modalen inneholder opplastingform', () => {
-            cy.contains('Legg til reise')
-
-            cy.get('.nav-datovelger__kalenderknapp').click()
-            cy.get('.DayPicker-Body').contains('13').click()
-
-            cy.get('input[name=belop_input]').type('1000')
-
-            cy.get('select[name=transportmiddel]').select('TAXI')
-
-            cy.get('.filopplasteren input[type=file]').attachFile('icon.png')
-
-            cy.get('.lagre-kvittering')
-                .contains('Bekreft')
-                .click()
-        })
-
-        it('Fil list oppdateres med kvittering', () => {
-            cy.get('.fil_liste')
-
-            cy.get('.sortering__heading').contains('Utlegg')
-            cy.get('.sortering__heading').contains('Transport')
-            cy.get('.sortering__heading').contains('Beløp')
-
-            cy.get('.dato').contains('onsdag 13.05.2020')
-            cy.get('.transport').contains('Taxi')
-            cy.get('.belop').contains('1 000 kr')
-
-            cy.get('.sumlinje').contains('1 utlegg på til sammen')
-            cy.get('.sumlinje .belop').contains('1 000 kr')
-        })
-
-        it('Åpner opp en opplastet kvittering', () => {
-            cy.get('.dato')
-                .contains('onsdag 13.05.2020')
-                .click()
-
-            cy.get('#dato_input')
-                .should('have.value', '13.05.2020')
-            cy.get('#transportmiddel option[value=TAXI]')
-                .should('have.attr', 'selected')
-            cy.get('#belop_input')
-                .should('have.value', '1000')
-
-            cy.get('.lukknapp').click()
+        it('Svarer nei', () => {
+            cy.get('.knapperad').contains('Gå videre').should('have.attr', 'disabled')
+            cy.get('input[type=radio][value=NEI]').click({ force: true })
         })
 
         it('Går videre', () => {
+            cy.url().should('include', `/soknaden/${reisetilskudd.id}/5`)
             cy.get('.knapperad').contains('Gå videre').click()
-            cy.url().should('include', `/soknaden/${reisetilskudd.id}/4`)
         })
     })
 
     describe('Reisetilskudd side 4', () => {
         // TODO: Er dette siste versjon av oppsummering?
-        it('Oppsummering av søknaden', () => {
+        xit('Oppsummering av søknaden', () => {
             cy.get('.soknad-info-utvid').click()
             cy.contains('Oppsummering av søknaden')
             cy.contains('Hvem skal pengene utbetales til?')
@@ -169,7 +153,7 @@ xdescribe('Tester reisetilskuddsøknaden', () => {
             cy.contains('Opplastede kvitteringer')
         })
 
-        it('Reisetilskudd tekster', () => {
+        xit('Reisetilskudd tekster', () => {
             cy.get('.typo-undertittel').contains('Bekreft og send søknaden')
             cy.get('.typo-normal').contains('Sjekk at du har fått med alle nødvendige opplysninger og kvitteringer. Når du sender søknaden, går den til NAV. POSTEN NORGE får samtidig en kopi.')
 
@@ -179,7 +163,9 @@ xdescribe('Tester reisetilskuddsøknaden', () => {
 
             cy.get('.bekreftCheckboksPanel').contains('Jeg har lest informasjonen jeg har fått underveis i søknaden og bekrefter at opplysningene jeg har gitt er korrekte. Jeg bekrefter også at jeg har lest og forstått')
             cy.get('.bekreftCheckboksPanel input').click()
+        })
 
+        it('Send inn søknaden', () => {
             cy.get('.knapperad').contains('Send inn søknaden').click()
         })
     })
@@ -189,12 +175,11 @@ xdescribe('Tester reisetilskuddsøknaden', () => {
             cy.url().should('include', `/soknaden/${reisetilskudd.id}/bekreftelse`)
 
             cy.get('.alertstripe--suksess').contains('Søknaden ble sendt til NAV')
-            cy.get('.alertstripe--suksess').contains('Sendt: ')
+
+            cy.get('.typo-undertittel').contains('NAV behandler søknaden')
+            cy.get('.typo-normal').contains('Saksbehandlingstiden kan variere noe.')
 
             cy.get('.soknad-info-utvid')
-
-            cy.get('.typo-undertittel').contains('Du får brev fra oss')
-            cy.get('.typo-normal').contains('Når vi har behandlet søknaden din, får du svaret i Digipost. Har du reservert deg mot digital post, får du et brev på papir.')
 
             cy.get('.sykmelding-panel')
                 .should('be.visible')

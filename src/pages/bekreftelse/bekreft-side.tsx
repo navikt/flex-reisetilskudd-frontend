@@ -6,7 +6,7 @@ import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
 import { Brodsmule } from '../../types/types'
 import { SEPARATOR } from '../../utils/constants'
-import { getLedetekst, tekst } from '../../utils/tekster'
+import { tekst } from '../../utils/tekster'
 import { setBodyClass } from '../../utils/utils'
 import AlertStripe from 'nav-frontend-alertstriper'
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
@@ -60,17 +60,15 @@ const BekreftSide = () => {
                     <Undertittel>
                         {tekst('bekreft.sendt-til')}
                     </Undertittel>
-                    {getLedetekst(tekst('bekreft.sendt-kl'), {
-                        '%TID%': dayjs(valgtReisetilskudd!.sendt).format('DD. MMMM YYYY kl HH:mm')
-                    })}
+                    { dayjs(valgtReisetilskudd!.sendt).format('DD. MMMM YYYY') }
                 </AlertStripe>
-
-                <SoknadInfoUtvid />
 
                 <section className="brevinfo">
                     <Undertittel>{tekst('bekreft.brevinfo.tittel')}</Undertittel>
                     <Normaltekst>{parser(tekst('bekreft.brevinfo.tekst'))}</Normaltekst>
                 </section>
+
+                <SoknadInfoUtvid />
 
                 <SykmeldingPanel />
             </div>
