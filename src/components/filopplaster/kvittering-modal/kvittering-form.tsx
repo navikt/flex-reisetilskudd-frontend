@@ -16,7 +16,7 @@ import Vis from '../../diverse/vis'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
 import validerDato from '../../../utils/validering'
 import { skalBrukeFullskjermKalender } from '../../../utils/browser-utils'
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper'
+import Alertstripe  from 'nav-frontend-alertstriper'
 import { RSKvittering } from '../../../types/rs-types/rs-kvittering'
 import { RSSvar } from '../../../types/rs-types/rs-svar'
 import { SpmProps } from '../../sporsmal/sporsmal-form/sporsmal-form'
@@ -37,6 +37,7 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
     } = useAppStore()
     const [ laster, setLaster ] = useState<boolean>(false)
     const [ dato, setDato ] = useState<string>('')
+    const [ typeUtgift, setTypeUtgift ] = useState<string>('')
     const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
     const { steg } = useParams<RouteParams>()
     const stegNum = Number(steg)
@@ -107,6 +108,11 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
         })
     }
 
+    const typeUtgiftOnChange = (e: any) => {
+        setTypeUtgift(e.target.value)
+        methods.trigger('transportmiddel')
+    }
+
     if (!valgtReisetilskudd) return null
 
     return (
@@ -129,7 +135,7 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             }
                             id="transportmiddel"
                             name="transportmiddel"
-                            onChange={() => methods.trigger('transportmiddel')}
+                            onChange={typeUtgiftOnChange}
                             defaultValue={valgtKvittering?.typeUtgift}
                         >
                             <option value="">Velg</option>
@@ -251,12 +257,18 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                     </div>
                 </div>
 
+                <Vis hvis={typeUtgift === 'OFFENTLIG_TRANSPORT'}>
+                    <Alertstripe type="info" form="inline">
+                        <Normaltekst>{tekst('kvittering_modal.type-utgift.hjelpetekst')}</Normaltekst>
+                    </Alertstripe>
+                </Vis>
+
                 <DragAndDrop />
 
                 <Vis hvis={fetchFeilmelding}>
-                    <AlertStripeAdvarsel>
+                    <Alertstripe type="advarsel">
                         <Normaltekst>{fetchFeilmelding}</Normaltekst>
-                    </AlertStripeAdvarsel>
+                    </Alertstripe>
                 </Vis>
 
                 <Normaltekst className="restriksjoner">

@@ -81,7 +81,6 @@ export const tekst = (tekst: TekstKeys): string => {
 }
 
 export const getLedetekst = (text: string, data: any): string => {
-    console.log('text', text) // eslint-disable-line
     if (text === undefined || data === undefined) {
         return ''
     }

@@ -31,6 +31,18 @@ describe('Tester utfylling av kvittering', () => {
                 .click()
         })
 
+        it('Ekstra informasjon for offentlig transport utgift', () => {
+            cy.get('.fler-vedlegg').click()
+
+            cy.get('select[name=transportmiddel]').select('OFFENTLIG_TRANSPORT')
+            cy.get('.alertstripe--inline').contains('Ukes- eller månedskort legger du inn som utgift med datoen du betalte.')
+
+            cy.get('select[name=transportmiddel]').select('TAXI')
+            cy.get('.alertstripe--inline').should('not.exist')
+
+            cy.get('.lukknapp').click()
+        })
+
         it('Fil list oppdateres med kvittering', () => {
             cy.get('.fil_liste')
 

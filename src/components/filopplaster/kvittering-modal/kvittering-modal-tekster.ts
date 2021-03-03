@@ -12,6 +12,7 @@ const KvitteringModalTekster = {
     'kvittering_modal.bekreft': 'Bekreft',
     'kvittering_modal.tilbake': 'Tilbake',
     'kvittering_modal.type-utgift.label': 'Type utgift',
+    'kvittering_modal.type-utgift.hjelpetekst': 'Ukes- eller månedskort legger du inn som utgift med datoen du betalte.',
 }
 
 export default KvitteringModalTekster
