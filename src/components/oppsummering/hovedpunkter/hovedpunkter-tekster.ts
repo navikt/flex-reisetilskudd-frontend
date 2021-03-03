@@ -4,7 +4,6 @@ const HovedpunkterTekster = {
     'hovedpunkter.tittel': 'Hovedpunkter fra søknaden',
     'hovedpunkter.undertittel': 'Opplastede kvitteringer',
     'hovedpunkter.fra_til': 'Du søker om reisetilskudd for <strong>%FRA% til %TIL%</strong>',
-    'hovedpunkter.arbeidsgiver_betaler': 'Du har krysset av for at arbeidsgiveren din betaler utgiftene. Reisetilskuddet fra NAV går derfor til <strong>arbeidsgiveren din</strong>.',
     'hovedpunkter.arbeidsgiver_betaler-ikke': 'Du har krysset av for at arbeidsgiveren din ikke legger ut for utgiftene. Reisetilskuddet fra NAV utbetales til deg.',
     'hovedpunkter.kvitteringer': 'Du har lagt ved <strong>%ANTALL% utgifter</strong> på til sammen <strong>%SUM% kroner</strong>.',
     'hovedpunkter.bekreft.tekst': 'Jeg har lest informasjonen jeg har fått underveis i søknaden og bekrefter at opplysningene jeg har gitt er korrekte. Jeg bekrefter også at jeg har lest og forstått ',

@@ -106,8 +106,8 @@ const Hovedpunkter = () => {
                     }))}
                 </li>
 
-                <Vis hvis={valgtReisetilskudd!.arbeidsgiverNavn !== undefined && utbetalTil === 'Arbeidsgiver'}>
-                    <li>{parser(tekst('hovedpunkter.arbeidsgiver_betaler'))}</li>
+                <Vis hvis={utbetalTil === 'Arbeidsgiver'}>
+                    <li>{parser(tekst('hovedpunkter.arbeidsgiver_betaler-ikke'))}</li>
                 </Vis>
 
                 <Vis hvis={bilag.length > 0}>
