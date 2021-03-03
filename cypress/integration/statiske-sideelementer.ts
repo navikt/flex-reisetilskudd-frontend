@@ -204,8 +204,8 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
             cy.get('button .chevron--hoyre').should('be.visible')
         })
 
-        it('Oppsummering av søknaden', () => {
-            cy.get('.soknad-info-utvid').should('be.visible').and('have.text', 'Oppsummering av søknaden')
+        it('Oppsummering fra søknaden', () => {
+            cy.get('.soknad-info-utvid').should('be.visible').and('have.text', 'Oppsummering fra søknaden')
         })
 
         it('Laster inn sykemeldingpanel', () => {

@@ -12,10 +12,9 @@ const TilskuddStartTekster = {
     'tilskudd.start.les-mer.url': '/',
     'tilskudd.start.husk': 'Husk å søke før fristen',
     'tilskudd.start.fristen-for': 'Fristen for å søke om refusjon er 3 måneder etter at sykmeldingsperioden er over.',
-    'tilskudd.start.alertstripe.tittel': 'Søknaden kan sendes %DATO%',
-    'tilskudd.start.alertstripe.tekst.ÅPEN': 'Du kan begynne å fylle ut søknaden. Alle endringer lagres.',
-    'tilskudd.start.alertstripe.tekst.SENDBAR': 'Søknaden er klar til å sendes inn',
-    'tilskudd.start.alertstripe.tekst.SENDT': 'Søknaden er sendt',
+    'tilskudd.start.alertstripe.tittel': 'Søknaden kan ikke sendes før %DATO%',
+    'tilskudd.start.alertstripe.tekst.forsiden': 'Du kan begynne å fylle ut søknaden. Alle endringer lagres.',
+    'tilskudd.start.alertstripe.tekst': 'Er du ferdig for nå, kan du lukke søknaden. Alle endringer lagres. Du får en melding når søknaden kan sendes inn.',
     'tilskudd.start.mobil.tittel': 'Spar tid ved å bruke mobilen',
     'tilskudd.start.mobil.tekst': 'Om du gjennomfører søknaden på mobilen, kan du ta bilde av kvitteringen direkte når du laster opp kvitteringer for reiser.',
 }
