@@ -106,7 +106,7 @@ const Hovedpunkter = () => {
                     }))}
                 </li>
 
-                <Vis hvis={utbetalTil === 'Arbeidsgiver'}>
+                <Vis hvis={utbetalTil !== 'Arbeidsgiver'}>
                     <li>{parser(tekst('hovedpunkter.arbeidsgiver_betaler-ikke'))}</li>
                 </Vis>
 
