@@ -27,6 +27,7 @@ const Hovedpunkter = () => {
     const [ erBekreftet, setErBekreftet ] = useState<boolean>(false)
     const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
     const [ bilag, setBilag ] = useState<Kvittering[]>([])
+    const [ utbetalTil, setUtbetalTil ] = useState<string>('')
     const history = useHistory()
 
     const fom = dayjs(valgtReisetilskudd?.fom)
@@ -39,6 +40,9 @@ const Hovedpunkter = () => {
         const kvitteringer: Kvittering[] = []
         valgtReisetilskudd?.sporsmal.forEach(spm => {
             const svar = spm.svarliste.svar
+            if (spm.tag === TagTyper.UTBETALING && spm.svarliste.svar[0].verdi === 'JA') {
+                setUtbetalTil('Arbeidsgiver')
+            }
             if (spm.tag === TagTyper.KVITTERINGER && svar.length > 0) {
                 svar.forEach(sv => {
                     kvitteringer.push(sv.kvittering!)
@@ -102,7 +106,7 @@ const Hovedpunkter = () => {
                     }))}
                 </li>
 
-                <Vis hvis={valgtReisetilskudd!.arbeidsgiverNavn !== undefined}>
+                <Vis hvis={valgtReisetilskudd!.arbeidsgiverNavn !== undefined && utbetalTil === 'Arbeidsgiver'}>
                     <li>{parser(tekst('hovedpunkter.arbeidsgiver_betaler'))}</li>
                 </Vis>
 
