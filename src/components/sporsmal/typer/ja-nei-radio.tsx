@@ -8,6 +8,8 @@ import { SpmProps } from '../sporsmal-form/sporsmal-form'
 import { hentSvar } from '../hent-svar'
 import { hentFeilmelding } from '../sporsmal-utils'
 import Vis from '../../diverse/vis'
+import UndersporsmalListe from '../undersporsmal/undersporsmal-liste'
+import AnimateOnMount from '../animate-on-mount'
 
 const jaNeiValg = [ {
     value: 'JA',
@@ -26,7 +28,7 @@ const JaNeiRadio = ({ sporsmal }: SpmProps) => {
 
     useEffect(() => {
         const lagret = hentSvar(sporsmal)
-        if(lagret !== '') {
+        if (lagret !== '') {
             setValue(sporsmal.id, lagret)
             setLokal(lagret)
         }
@@ -50,8 +52,7 @@ const JaNeiRadio = ({ sporsmal }: SpmProps) => {
                     </Normaltekst>
                 </div>
             }
-        }
-        else return <></>
+        } else return <></>
     }
 
     return (
@@ -93,6 +94,15 @@ const JaNeiRadio = ({ sporsmal }: SpmProps) => {
                     </Normaltekst>
                 </Vis>
             </div>
+
+            <AnimateOnMount
+                mounted={lokal === sporsmal.kriterieForVisningAvUndersporsmal}
+                enter="undersporsmal--vis"
+                leave="undersporsmal--skjul"
+                start="undersporsmal"
+            >
+                <UndersporsmalListe oversporsmal={sporsmal} oversporsmalSvar={lokal} />
+            </AnimateOnMount>
         </>
     )
 }
