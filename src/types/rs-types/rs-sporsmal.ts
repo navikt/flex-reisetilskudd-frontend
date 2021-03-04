@@ -21,6 +21,8 @@ export interface RSSporsmal {
 }
 
 export const sporsmalToRS = (sporsmal: Sporsmal): RSSporsmal => {
+    // eslint-disable-next-line no-console
+    console.log(sporsmal)
     return {
         id: sporsmal.id,
         tag: sporsmal.tag.toString() + tagIndexEllerBlank(sporsmal.tagIndex as any),
