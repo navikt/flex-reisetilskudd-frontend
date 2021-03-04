@@ -73,7 +73,6 @@ export enum UtgiftTyper {
     OFFENTLIG_TRANSPORT = 'Offentlig transport',
     TAXI = 'Taxi',
     PARKERING = 'Parkering',
-    BOMPENGER = 'Bompenger',
     ANNET = 'Annet'
 }
 

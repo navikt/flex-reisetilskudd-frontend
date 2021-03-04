@@ -150,6 +150,32 @@ export const sendbarReisetilskudd: RSReisetilskudd = {
                     'kriterieForVisningAvUndersporsmal': null,
                     'svar': [],
                     'undersporsmal': []
+                }, {
+                    'id': 'da7d7561-2ef1-4ba5-b89f-8d849ec9c697',
+                    'tag': 'BIL_BOMPENGER',
+                    'overskrift': null,
+                    'sporsmalstekst': 'Hadde du utgifter til bompenger?',
+                    'undertekst': null,
+                    'hjelpetekst': null,
+                    'svartype': 'JA_NEI',
+                    'min': null,
+                    'max': null,
+                    'kriterieForVisningAvUndersporsmal': 'JA',
+                    'svar': [],
+                    'undersporsmal': [ {
+                        'id': '616cc0cb-434e-4114-a68b-b5708e033e9e',
+                        'tag': 'BIL_BOMPENGER_BELOP',
+                        'overskrift': null,
+                        'sporsmalstekst': 'Hvor mye betalte du i bompenger mellom hjemmet ditt og jobben i perioden?',
+                        'undertekst': null,
+                        'hjelpetekst': null,
+                        'svartype': 'BELOP',
+                        'min': '0',
+                        'max': null,
+                        'kriterieForVisningAvUndersporsmal': null,
+                        'svar': [],
+                        'undersporsmal': []
+                    } ]
                 }
             ]
         },

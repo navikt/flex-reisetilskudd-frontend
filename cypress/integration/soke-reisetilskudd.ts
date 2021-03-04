@@ -98,7 +98,7 @@ describe('Tester reisetilskuddsøknaden', () => {
             cy.get('input[type=radio][value=JA]').click({ force: true })
             cy.get('.knapperad').contains('Gå videre').should('have.attr', 'disabled')
 
-            cy.get('.undersporsmal .typo-element').should('have.text', 'Hvilke dager reiste du med bil?')
+            cy.get('.undersporsmal .typo-element').first().should('have.text', 'Hvilke dager reiste du med bil?')
             cy.get('.skjema__dager').within(() => {
                 cy.get('.kalenderdag.foran').contains('31')
                 cy.get('.kalenderdag.etter').contains('19')
@@ -113,7 +113,10 @@ describe('Tester reisetilskuddsøknaden', () => {
 
                 cy.get('.kalenderdag input:checked + label').should('have.text', '05111319')
             })
-
+            cy.get('.kriterie--ja.skjemaelement').within(() => {
+                cy.get('.skjema__sporsmal').should('have.text', 'Hadde du utgifter til bompenger?')
+                cy.get('input[type=radio][value=NEI]').click({ force: true })
+            })
             cy.get('.knapperad .knapp--hoved').click({ force: true })
         })
     })
