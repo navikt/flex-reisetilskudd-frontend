@@ -1,7 +1,7 @@
 import './app.less'
 
 import React from 'react'
-import { Route, Switch, } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import { DataFetcher } from './data/data-fetcher'
 import StoreProvider from './data/stores/store-provider'

@@ -15,8 +15,8 @@ const TilskuddStartTekster = {
     'tilskudd.start.alertstripe.tittel': 'Søknaden kan ikke sendes før %DATO%',
     'tilskudd.start.alertstripe.tekst.forsiden': 'Du kan begynne å fylle ut søknaden. Alle endringer lagres.',
     'tilskudd.start.alertstripe.tekst': 'Er du ferdig for nå, kan du lukke søknaden. Alle endringer lagres. Du får en melding når søknaden kan sendes inn.',
-    'tilskudd.start.mobil.tittel': 'Spar tid ved å bruke mobilen',
-    'tilskudd.start.mobil.tekst': 'Om du gjennomfører søknaden på mobilen, kan du ta bilde av kvitteringen direkte når du laster opp kvitteringer for reiser.',
+    'tilskudd.start.mobil.tittel': 'Spar tid med mobilen',
+    'tilskudd.start.mobil.tekst': 'Fyller du ut fra telefonen, kan du ta bilde av kvitteringene og bruke dem direkte i søknaden.',
 }
 
 export default TilskuddStartTekster

@@ -1,6 +1,6 @@
 import './tilskudd-side.less'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { RouteParams } from '../../app'
@@ -35,6 +35,7 @@ const brodsmuler: Brodsmule[] = [
 const TilskuddSide = () => {
     const { valgtReisetilskudd, setValgtReisetilskudd, reisetilskuddene, sykmeldinger, setValgtSykmelding } = useAppStore()
     const { steg, id } = useParams<RouteParams>()
+    const limitRef = useRef<HTMLDivElement>(null)
     const stegNo = Number(steg)
     const sisteside = valgtReisetilskudd?.sporsmal.length || 5
 
@@ -42,6 +43,11 @@ const TilskuddSide = () => {
         setBodyClass('reisetilskudd-side')
         // eslint-disable-next-line
     }, [])
+
+    useEffect(() => {
+        limitRef.current && limitRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        // eslint-disable-next-line
+    }, [ steg ])
 
     useEffect(() => {
         const funnetTilskudd = reisetilskuddene?.find((reisetilskudd) => reisetilskudd.id === id)
@@ -59,7 +65,7 @@ const TilskuddSide = () => {
             <Banner tittel={tekst('banner.sidetittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
-            <div className="limit">
+            <div ref={limitRef} className="limit">
                 <SideNav />
 
                 <Vis hvis={stegNo > sisteside}>

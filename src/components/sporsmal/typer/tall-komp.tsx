@@ -8,7 +8,7 @@ import { hentFeilmelding } from '../sporsmal-utils'
 import { hentSvar } from '../hent-svar'
 import Vis from '../../diverse/vis'
 import { useAppStore } from '../../../data/stores/app-store'
-import { Svartype } from '../../../types/types'
+import { Sporsmal, Svartype } from '../../../types/types'
 
 const TallInput = ({ sporsmal }: SpmProps) => {
     const { setErBekreftet } = useAppStore()
@@ -32,6 +32,17 @@ const TallInput = ({ sporsmal }: SpmProps) => {
         }
         // eslint-disable-next-line
     }, [])
+
+    const finnEnhet = (sporsmal: Sporsmal) => {
+        switch(sporsmal.svartype) {
+            case Svartype.BELOP:
+                return 'kr'
+            case Svartype.KILOMETER:
+                return 'km'
+            default:
+                return ''
+        }
+    }
 
     return (
         <>
@@ -66,7 +77,9 @@ const TallInput = ({ sporsmal }: SpmProps) => {
                     onChange={onChange}
                     autoComplete="off"
                 />
-                <label className="medEnhet__enhet" htmlFor={sporsmal.id}>{sporsmal.undertekst}</label>
+                <label className="medEnhet__enhet" htmlFor={sporsmal.id}>
+                    {finnEnhet(sporsmal)}
+                </label>
             </div>
 
             <div role="alert" aria-live="assertive" className="skjemaelement__feilmelding">

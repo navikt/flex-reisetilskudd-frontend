@@ -6,7 +6,7 @@ import { SpmProps } from '../sporsmal-form/sporsmal-form'
 import { hentFeilmelding } from '../sporsmal-utils'
 import { hentSvar } from '../hent-svar'
 import Vis from '../../diverse/vis'
-import parse from 'html-react-parser'
+import parser from 'html-react-parser'
 
 const CheckboxInput = ({ sporsmal }: SpmProps) => {
     const { setErBekreftet } = useAppStore()
@@ -22,7 +22,7 @@ const CheckboxInput = ({ sporsmal }: SpmProps) => {
         setErBekreftet(svar)
         setValue(sporsmal.id, svar)
         setClassname(getClassName(svar === 'CHECKED'))
-        bekreft.current!.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' })
+        // bekreft.current!.scrollIntoView({ behavior: 'smooth', block: 'end' })
         // eslint-disable-next-line
     }, [ sporsmal ])
 
@@ -45,7 +45,7 @@ const CheckboxInput = ({ sporsmal }: SpmProps) => {
         <>
             <div className={classname} ref={bekreft}>
                 <Undertittel tag="h3">{sporsmal.overskrift}</Undertittel>
-                <Normaltekst>{parse(sporsmal.sporsmalstekst)}</Normaltekst>
+                <Normaltekst>{sporsmal.sporsmalstekst}</Normaltekst>
                 <div className="skjemaelement skjemaelement--horisontal">
                     <input type="checkbox"
                         className="skjemaelement__input checkboks"
@@ -56,7 +56,7 @@ const CheckboxInput = ({ sporsmal }: SpmProps) => {
                         ref={register({ required: feilmelding.global })}
                     />
                     <label className="skjemaelement__label" htmlFor={sporsmal.id}>
-                        {sporsmal.undertekst}
+                        {parser(sporsmal.undertekst!)}
                     </label>
                 </div>
             </div>
