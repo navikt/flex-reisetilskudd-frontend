@@ -22,7 +22,6 @@ const CheckboxInput = ({ sporsmal }: SpmProps) => {
         setErBekreftet(svar)
         setValue(sporsmal.id, svar)
         setClassname(getClassName(svar === 'CHECKED'))
-        // bekreft.current!.scrollIntoView({ behavior: 'smooth', block: 'end' })
         // eslint-disable-next-line
     }, [ sporsmal ])
 

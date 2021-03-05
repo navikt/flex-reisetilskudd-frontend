@@ -1,7 +1,7 @@
 import './tilskudd-liste.less'
 
 import { Normaltekst } from 'nav-frontend-typografi'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
@@ -21,9 +21,11 @@ const brodsmuler: Brodsmule[] = [ {
 
 const TilskuddListe = () => {
     const { reisetilskuddene } = useAppStore()
+    const limitRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         setBodyClass('reisetilskudd-liste')
+        limitRef.current && limitRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }, [])
 
     return (
@@ -31,7 +33,7 @@ const TilskuddListe = () => {
             <Banner tittel={tekst('tilskudd.liste.tittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
-            <div className="limit">
+            <div ref={limitRef} className="limit">
                 <Vis hvis={reisetilskuddene === undefined}>
                     <Normaltekst>{tekst('tilskudd.liste.feilmelding')}</Normaltekst>
                 </Vis>

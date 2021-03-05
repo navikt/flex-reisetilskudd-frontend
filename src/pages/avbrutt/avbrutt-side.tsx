@@ -1,6 +1,6 @@
 import './avbrutt-side.less'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import Banner from '../../components/diverse/banner/banner'
 import { tekst } from '../../utils/tekster'
@@ -35,13 +35,15 @@ const brodsmuler: Brodsmule[] = [
 
 const AvbruttSide = () => {
     const { reisetilskuddene, setReisetilskuddene, valgtReisetilskudd, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
-    const { id } = useParams<RouteParams>()
-    const [ gjenapner, setGjenapner ] = useState<boolean>(false)
     const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
+    const [ gjenapner, setGjenapner ] = useState<boolean>(false)
+    const limitRef = useRef<HTMLDivElement>(null)
+    const { id } = useParams<RouteParams>()
     const history = useHistory()
 
     useEffect(() => {
         setBodyClass('avbrutt-side')
+        limitRef.current && limitRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }, [])
 
     useEffect(() => {
@@ -87,7 +89,7 @@ const AvbruttSide = () => {
             <Banner tittel={tekst('banner.sidetittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
-            <div className="limit">
+            <div ref={limitRef} className="limit">
                 <AlertStripeAdvarsel>
                     <Undertittel>
                         {tekst('avbrutt.alertstripe')}
