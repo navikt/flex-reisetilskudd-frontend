@@ -1,7 +1,7 @@
 import './drag-and-drop.less'
 
 import { Element, Normaltekst } from 'nav-frontend-typografi'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useFormContext } from 'react-hook-form'
 
@@ -22,9 +22,11 @@ const DragAndDrop = () => {
     const { valgtFil, setValgtFil, valgtKvittering } = useAppStore()
     const { setError, errors, register } = useFormContext()
     const filRef = useRef<HTMLInputElement>(null)
+    const [ formErDisabled, setFormErDisabled ] = useState<boolean>(false)
 
     useEffect(() => {
         if (valgtKvittering?.blobId) {
+            setFormErDisabled(true)
             fetch(`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering/${valgtKvittering.blobId}`, {
                 method: 'GET',
                 credentials: 'include',
@@ -36,6 +38,7 @@ const DragAndDrop = () => {
             })
         } else {
             setValgtFil(null)
+            setFormErDisabled(false)
         }
         // eslint-disable-next-line
     }, [ valgtKvittering ])
@@ -75,23 +78,24 @@ const DragAndDrop = () => {
         multiple: false,
     })
 
-    // TODO: Fix Vis
     return (
         <div className="ddfil__wrap">
             <label htmlFor="ddfil" className="skjemaelement__label">
                 <Element tag="strong">{tekst('drag_and_drop.label')}</Element>
             </label>
 
-            {valgtFil ? <Vis hvis={valgtFil}>
+            <Vis hvis={valgtFil}>
                 <Utvidbar
-                    erApen={false}
-                    tittel={customTruncet(valgtFil?.name || '', 20)}
+                    erApen={formErDisabled}
+                    tittel={customTruncet(valgtFil?.name || 'Kvittering.png', 20)}
                     type="intern"
                     fixedHeight={true}
                 >
-                    <div className="preview">
-                        <img alt="" src={URL.createObjectURL(valgtFil)} />
-                    </div>
+                    <div className="preview">{
+                        valgtFil
+                            ? <img alt="" src={URL.createObjectURL(valgtFil)} />
+                            : null
+                    }</div>
                 </Utvidbar>
 
                 <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
@@ -106,39 +110,54 @@ const DragAndDrop = () => {
                         )}</p>
                     </Vis>
                 </Normaltekst>
-            </Vis> : null}
+            </Vis>
 
-            <div className="filopplasteren" {...getRootProps()}>
-                <input ref={filRef} {...getInputProps()} id="ddfil" />
-                <input type="hidden" name="fil_input" id="fil_input"
-                    ref={register({
-                        validate: () => {
-                            const div: HTMLDivElement | null = document.querySelector('.filopplasteren')
-                            if (valgtFil === undefined || valgtFil === null) {
-                                div?.classList.add('skjemaelement__input--harFeil')
-                                return tekst('kvittering_modal.filopplasting.feilmelding')
+            <Vis hvis={!formErDisabled}>
+                <div className="filopplasteren" {...getRootProps()}>
+                    <input ref={filRef} {...getInputProps()} id="ddfil" />
+                    <input type="hidden" name="fil_input" id="fil_input"
+                        ref={register({
+                            validate: () => {
+                                const div: HTMLDivElement | null = document.querySelector('.filopplasteren')
+                                if (valgtFil === undefined || valgtFil === null) {
+                                    div?.classList.add('skjemaelement__input--harFeil')
+                                    return tekst('kvittering_modal.filopplasting.feilmelding')
+                                }
+                                div?.classList.remove('skjemaelement__input--harFeil')
+                                return true
                             }
-                            div?.classList.remove('skjemaelement__input--harFeil')
-                            return true
+                        })}
+                    />
+                    <img src={binders} className="opplastingsikon" alt="Opplastingsikon" />
+                    <Normaltekst tag="span" className="tekst">
+                        {isDragActive
+                            ? tekst('drag_and_drop.dragtekst.aktiv')
+                            : valgtFil
+                                ? tekst('drag_and_drop.dragtekst.endre')
+                                : tekst('drag_and_drop.dragtekst')
                         }
-                    })}
-                />
-                <img src={binders} className="opplastingsikon" alt="Opplastingsikon" />
-                <Normaltekst tag="span" className="tekst">
-                    {isDragActive
-                        ? tekst('drag_and_drop.dragtekst.aktiv')
-                        : valgtFil
-                            ? tekst('drag_and_drop.dragtekst.endre')
-                            : tekst('drag_and_drop.dragtekst')
-                    }
-                </Normaltekst>
-            </div>
+                    </Normaltekst>
+                </div>
 
-            <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
-                <Vis hvis={errors.fil_input}>
-                    <p>{errors.fil_input?.message}</p>
-                </Vis>
-            </Normaltekst>
+                <Normaltekst tag="div" role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
+                    <Vis hvis={errors.fil_input}>
+                        <p>{errors.fil_input?.message}</p>
+                    </Vis>
+                </Normaltekst>
+
+                <Normaltekst className="restriksjoner">
+                    <span className="filtype">{
+                        getLedetekst(tekst('kvittering_modal.filtyper'), {
+                            '%FILTYPER%': formattertFiltyper
+                        })
+                    }</span>
+                    <span className="filstr">{
+                        getLedetekst(tekst('kvittering_modal.maksfilstr'), {
+                            '%MAKSFILSTR%': maks
+                        })
+                    }</span>
+                </Normaltekst>
+            </Vis>
         </div>
     )
 }

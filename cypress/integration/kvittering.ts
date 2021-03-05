@@ -58,6 +58,30 @@ describe('Tester utfylling av kvittering', () => {
             cy.get('.sumlinje .belop').contains('2 kr')
         })
 
+        it('Endring av kvittering',  () => {
+            cy.get('.dato').contains('fredag 29.09.2034').click()
+
+            cy.contains('Endre reiseutgift')
+
+            cy.get('.alertstripe--info').contains('Du kan foreløpig ikke redigere utgifter som du har lagt til. Men du kan slette den som er feil, og legge inn på nytt.')
+
+            cy.get('select[name=transportmiddel]').should('have.attr', 'disabled')
+
+            cy.get('.nav-datovelger__kalenderknapp').should('have.attr', 'disabled')
+
+            cy.get('input[name=belop_input]').should('have.attr', 'disabled')
+
+            cy.get('.filopplasteren input[type=file]').should('not.exist')
+
+            cy.get('.knapperad').within(() => {
+                cy.contains('Tilbake')
+                cy.contains('Slett')
+                cy.contains('Bekreft').should('not.exist')
+            })
+
+            cy.get('.lukknapp').click()
+        })
+
         it('Åpner og lukker modal', () => {
             cy.get('.fler-vedlegg').click()
             cy.get('.lagre-kvittering').contains('Tilbake').click()

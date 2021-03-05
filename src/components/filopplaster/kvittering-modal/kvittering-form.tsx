@@ -6,12 +6,11 @@ import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi'
 import React, { useEffect, useState } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 
-import { post } from '../../../data/fetcher/fetcher'
+import { del, post } from '../../../data/fetcher/fetcher'
 import { useAppStore } from '../../../data/stores/app-store'
 import { Sporsmal, UtgiftTyper } from '../../../types/types'
 import env from '../../../utils/environment'
-import { formaterFilstørrelse } from '../../../utils/fil-utils'
-import { getLedetekst, tekst } from '../../../utils/tekster'
+import { tekst } from '../../../utils/tekster'
 import Vis from '../../diverse/vis'
 import DragAndDrop from '../drag-and-drop/drag-and-drop'
 import validerDato from '../../../utils/validering'
@@ -23,9 +22,8 @@ import { SpmProps } from '../../sporsmal/sporsmal-form/sporsmal-form'
 import { RSSporsmal } from '../../../types/rs-types/rs-sporsmal'
 import { useParams } from 'react-router-dom'
 import { RouteParams } from '../../../app'
-
-const formaterteFiltyper = env.formaterteFiltyper
-const maksFilstorrelse = formaterFilstørrelse(env.maksFilstørrelse)
+import { logger } from '../../../utils/logger'
+import AlertStripe from 'nav-frontend-alertstriper'
 
 interface OpplastetKvittering {
     id: string;
@@ -38,6 +36,8 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
     const [ laster, setLaster ] = useState<boolean>(false)
     const [ dato, setDato ] = useState<string>('')
     const [ typeUtgift, setTypeUtgift ] = useState<string>('')
+    const [ kvitteringHeader, setKvitteringHeader ] = useState<string>('')
+    const [ formErDisabled, setFormErDisabled ] = useState<boolean>(false)
     const [ fetchFeilmelding, setFetchFeilmelding ] = useState<string | null>(null)
     const { steg } = useParams<RouteParams>()
     const stegNum = Number(steg)
@@ -50,9 +50,15 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
     useEffect(() => {
         if (valgtKvittering) {
             setDato(dayjs(valgtKvittering?.datoForUtgift).format('YYYY-MM-DD'))
+            setTypeUtgift(valgtKvittering?.typeUtgift)
+            setKvitteringHeader(tekst('kvittering_modal.endre-utlegg.tittel'))
+            setFormErDisabled(true)
         }
         else {
             setDato('')
+            setTypeUtgift('')
+            setKvitteringHeader(tekst('kvittering_modal.nytt-utlegg.tittel'))
+            setFormErDisabled(false)
         }
         // eslint-disable-next-line
     }, [ valgtReisetilskudd, valgtKvittering ])
@@ -108,6 +114,28 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
         })
     }
 
+    const slettKvittering = () => {
+        setLaster(true)
+
+        const path = '/flex-reisetilskudd-backend/api/v1/reisetilskudd/'
+        const id = valgtReisetilskudd?.id
+        const idx = sporsmal!.svarliste.svar.findIndex((svar => svar?.kvittering?.blobId === valgtKvittering?.blobId))!
+        const svar = sporsmal?.svarliste.svar.find((svar => svar?.kvittering?.blobId === valgtKvittering?.blobId ))
+
+        del(`${env.flexGatewayRoot}${path}${id}/sporsmal/${sporsmal?.id}/svar/${svar?.id}`)
+            .then(() => {
+                sporsmal?.svarliste.svar.splice(idx, 1)
+                valgtReisetilskudd!.sporsmal[valgtReisetilskudd!.sporsmal.findIndex(spm => spm.id === sporsmal?.id)] = sporsmal!
+                setValgtReisetilskudd(valgtReisetilskudd)
+                setOpenModal(false)
+            })
+            .catch((error) => {
+                logger.error('Feil under sletting av kvittering', error)
+            }).finally(() => {
+                setLaster(false)
+            })
+    }
+
     const typeUtgiftOnChange = (e: any) => {
         setTypeUtgift(e.target.value)
         methods.trigger('transportmiddel')
@@ -119,8 +147,14 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
         <FormProvider {...methods}>
             <form key="kvittering_form">
                 <Systemtittel className="kvittering-header">
-                    {tekst('kvittering_modal.nytt-utlegg.tittel')}
+                    {kvitteringHeader}
                 </Systemtittel>
+
+                <Vis hvis={formErDisabled}>
+                    <AlertStripe type="info">
+                        <Normaltekst>{tekst('kvittering_modal.endre-utlegg.hjelpetekst')}</Normaltekst>
+                    </AlertStripe>
+                </Vis>
 
                 <div className="skjemakolonner">
                     <div className="skjemaelement">
@@ -128,6 +162,7 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             {tekst('kvittering_modal.type-utgift.label')}
                         </label>
                         <select
+                            disabled={formErDisabled}
                             ref={methods.register({ required: tekst('kvittering_modal.transportmiddel.feilmelding') })}
                             className={
                                 'skjemaelement__input input--fullbredde kvittering-element' +
@@ -183,6 +218,7 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             }}
                             render={({ name }) => (
                                 <Datepicker
+                                    disabled={formErDisabled}
                                     locale={'nb'}
                                     inputId="dato_input"
                                     onChange={(value) => {
@@ -223,6 +259,7 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             <Element tag="strong">{tekst('kvittering_modal.tittel')}</Element>
                         </label>
                         <input
+                            disabled={formErDisabled}
                             ref={methods.register({
                                 required: tekst('kvittering_modal.belop.feilmelding'),
                                 min: { value: 0, message: 'Beløp kan ikke være negativt' },
@@ -241,7 +278,7 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                             inputMode={'decimal'}
                             defaultValue={valgtKvittering?.belop ? (valgtKvittering.belop / 100) : ''}
                             className={
-                                'skjemaelement__input input--xs periode-element' +
+                                'skjemaelement__input input--s periode-element' +
                                 (methods.errors['belop_input'] ? ' skjemaelement__input--harFeil' : '')
                             }
                             step={0.01}
@@ -257,7 +294,7 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                     </div>
                 </div>
 
-                <Vis hvis={typeUtgift === 'OFFENTLIG_TRANSPORT'}>
+                <Vis hvis={typeUtgift === 'OFFENTLIG_TRANSPORT' && !formErDisabled}>
                     <Alertstripe type="info" form="inline">
                         <Normaltekst>{tekst('kvittering_modal.type-utgift.hjelpetekst')}</Normaltekst>
                     </Alertstripe>
@@ -271,19 +308,6 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                     </Alertstripe>
                 </Vis>
 
-                <Normaltekst className="restriksjoner">
-                    <span className="filtype">{
-                        getLedetekst(tekst('kvittering_modal.filtyper'), {
-                            '%FILTYPER%': formaterteFiltyper
-                        })
-                    }</span>
-                    <span className="filstr">{
-                        getLedetekst(tekst('kvittering_modal.maksfilstr'), {
-                            '%MAKSFILSTR%': maksFilstorrelse
-                        })
-                    }</span>
-                </Normaltekst>
-
                 {laster
                     ?
                     <NavFrontendSpinner className="lagre-kvittering" />
@@ -292,9 +316,16 @@ const KvitteringForm = ({ sporsmal }: SpmProps) => {
                         <Knapp htmlType="button" className="lagre-kvittering" onClick={() => setOpenModal(false)}>
                             {tekst('kvittering_modal.tilbake')}
                         </Knapp>
-                        <Knapp type="hoved" htmlType="button" className="lagre-kvittering" onClick={() => onSubmit()}>
-                            {tekst('kvittering_modal.bekreft')}
-                        </Knapp>
+                        <Vis hvis={!formErDisabled}>
+                            <Knapp type="hoved" htmlType="button" className="lagre-kvittering" onClick={onSubmit}>
+                                {tekst('kvittering_modal.bekreft')}
+                            </Knapp>
+                        </Vis>
+                        <Vis hvis={formErDisabled}>
+                            <Knapp type="fare" htmlType="button" className="lagre-kvittering" onClick={slettKvittering}>
+                                {tekst('kvittering_modal.slett')}
+                            </Knapp>
+                        </Vis>
                     </div>
                 }
             </form>

@@ -9,7 +9,6 @@ import { useAppStore } from '../../data/stores/app-store'
 import env from '../../utils/environment'
 import { formatterTall } from '../../utils/utils'
 import Vis from '../diverse/vis'
-import slettFilIkon from './slett-fil-ikon.svg'
 import { getLedetekst, tekst } from '../../utils/tekster'
 import { TagTyper } from '../../types/enums'
 import { hentSvar } from '../sporsmal/hent-svar'
@@ -17,6 +16,7 @@ import { Kvittering, UtgiftTyper } from '../../types/types'
 import { del } from '../../data/fetcher/fetcher'
 import { logger } from '../../utils/logger'
 import useForceUpdate from 'use-force-update'
+import { Delete as DeleteSVG } from '@navikt/ds-icons'
 
 interface Props {
     fjernKnapp?: boolean,
@@ -153,14 +153,12 @@ const FilListe = ({ fjernKnapp }: Props) => {
                                 {formatterTall(kvittering.belop! / 100)} kr
                             </td>
                             <td>
-                                <div className="juster">
-                                    <button className="lenkeknapp slett-knapp"
-                                        type="button"
-                                        onClick={() => slettKvittering(kvittering)} tabIndex={0}
-                                    >
-                                        <img src={slettFilIkon} className="slett-img" alt="" />
-                                    </button>
-                                </div>
+                                <button className="lenkeknapp slett-knapp"
+                                    type="button"
+                                    onClick={() => slettKvittering(kvittering)} tabIndex={0}
+                                >
+                                    <DeleteSVG aria-label="Slett" role="img" />
+                                </button>
                             </td>
                         </tr>
                     ))}
