@@ -31,16 +31,17 @@ const TilskuddTeasere = () => {
 
     const sorterteSoknader = () => {
         if (sortering === Sortering.Dato) {
-            return reisetilskuddene.sort((a, b) => dayjs(b.tom).diff(a.tom))    // TODO: test at denne funker
+            return tidligere.sort((a, b) => dayjs(a.tom).diff(b.tom))
         } else if (sortering === Sortering.Status) {
-            return reisetilskuddene.sort((a, b) => a.status.localeCompare(b.status))
+            return tidligere.sort((a, b) => a.status.localeCompare(b.status))
         } else if (sortering === Sortering.Sendt) {
-            return reisetilskuddene.sort((a, b) => {
-                return (dayjs(b.sendt).toDate().getTime() || dayjs(b.avbrutt).toDate().getTime() || 0)
-                    - (dayjs(a.sendt).toDate().getTime() || dayjs(a.avbrutt).toDate().getTime() || 0)
+            return tidligere.sort((a, b) => {
+                const aVal = b.sendt?.getTime() || b.avbrutt?.getTime() || 0
+                const bVal = a.sendt?.getTime() || a.avbrutt?.getTime() || 0
+                return aVal - bVal
             })
         }
-        return reisetilskuddene
+        return tidligere
     }
 
     function harBesvart(reisetilskudd: Reisetilskudd): boolean {
@@ -113,21 +114,19 @@ const TilskuddTeasere = () => {
             <Vis hvis={tidligere.length > 0}>
 
                 <div className="tilskudd--tidligere">
-                    <Vis hvis={sorterteSoknader().length > 0}>
-                        <Select label="Sorter etter" className="teasere__sortering"
-                            onChange={(event) => setSortering(event.target.value as Sortering)}
-                        >
-                            {Object.values(Sortering).map((sort, idx) => {
-                                return <option value={sort} key={idx}>{sort}</option>
-                            })}
-                        </Select>
-                    </Vis>
+                    <Select label="Sorter etter" className="teasere__sortering"
+                        onChange={(event) => setSortering(event.target.value as Sortering)}
+                    >
+                        {Object.values(Sortering).map((sort, idx) => {
+                            return <option value={sort} key={idx}>{sort}</option>
+                        })}
+                    </Select>
 
                     <Undertittel tag="h2" className="tilskudd__tittel">
                         {tekst('tilskudd.liste.sendte.soknader')}
                     </Undertittel>
 
-                    {tidligere.map((tilskudd, idx) => {
+                    {sorterteSoknader().map((tilskudd, idx) => {
                         return <Teaser tilskudd={tilskudd} key={idx} />
                     })}
                 </div>

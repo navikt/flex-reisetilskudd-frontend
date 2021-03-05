@@ -52,3 +52,5 @@ mock.post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskud
 mock.post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id/avbryt`, () => Promise.resolve({ status: 200 }))
 
 mock.post(`${env.flexGatewayRoot}/flex-reisetilskudd-backend/api/v1/reisetilskudd/:id/gjenapne`, () => Promise.resolve({ status: 200 }))
+
+mock.get(`${env.flexGatewayRoot}/flex-bucket-uploader/kvittering/:blob`, () => Promise.resolve({ status: 200 }))
