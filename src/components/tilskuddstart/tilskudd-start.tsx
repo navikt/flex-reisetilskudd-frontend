@@ -37,7 +37,7 @@ const TilskuddStart = () => {
             <Veileder />
             <Alertstripe className="kan-sendes" type="info">
                 <Element>{getLedetekst(tekst('tilskudd.start.alertstripe.tittel'), {
-                    '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMM')
+                    '%DATO%': dayjs(valgtReisetilskudd.tom).add(1, 'day').format('DD. MMMM')
                 })}</Element>
                 <Normaltekst>{tekst('tilskudd.start.alertstripe.tekst.forsiden')}</Normaltekst>
             </Alertstripe>
