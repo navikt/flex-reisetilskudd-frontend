@@ -3,7 +3,7 @@ import './fil-liste.less'
 
 import dayjs from 'dayjs'
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useAppStore } from '../../data/stores/app-store'
 import env from '../../utils/environment'
@@ -16,7 +16,7 @@ import { Kvittering, UtgiftTyper } from '../../types/types'
 import { del } from '../../data/fetcher/fetcher'
 import { logger } from '../../utils/logger'
 import useForceUpdate from 'use-force-update'
-import { Delete as DeleteSVG } from '@navikt/ds-icons'
+import SlettFilIkon from './slettfil-ikon.svg'
 
 interface Props {
     fjernKnapp?: boolean,
@@ -24,7 +24,8 @@ interface Props {
 
 const FilListe = ({ fjernKnapp }: Props) => {
     const { valgtReisetilskudd, setValgtReisetilskudd, setOpenModal, setValgtKvittering } = useAppStore()
-    const [ sortering, setSortering ] = useState<String>('descending_dato_sortering')
+    const [ sortering, setSortering ] = useState<string>('descending_dato_sortering')
+    const [ tabellDato, setTabellDato ] = useState<string>()
     const forceUpdate = useForceUpdate()
 
     let kvitteringer: Kvittering[] = []
@@ -33,11 +34,26 @@ const FilListe = ({ fjernKnapp }: Props) => {
         kvitteringer = hentSvar(sporsmal)
     }
 
+    useEffect(() => {
+        const resizeListener = () => {
+            if (window.innerWidth > 768) {
+                setTabellDato('dddd DD.MM.YYYY')
+            } else {
+                setTabellDato('DD.MM.YYYY')
+            }
+        }
+        window.addEventListener('resize', resizeListener)
+
+        return () => {
+            window.removeEventListener('resize', resizeListener)
+        }
+    }, [ setTabellDato ])
+
     const slettKvittering = (kvitto: Kvittering) => {
         const path = '/flex-reisetilskudd-backend/api/v1/reisetilskudd/'
         const id = valgtReisetilskudd?.id
         const idx = sporsmal!.svarliste.svar.findIndex((svar => svar?.kvittering?.blobId === kvitto.blobId))!
-        const svar = sporsmal?.svarliste.svar.find((svar => svar?.kvittering?.blobId === kvitto.blobId ))
+        const svar = sporsmal?.svarliste.svar.find((svar => svar?.kvittering?.blobId === kvitto.blobId))
 
         del(`${env.flexGatewayRoot}${path}${id}/sporsmal/${sporsmal?.id}/svar/${svar?.id}`)
             .then(() => {
@@ -85,19 +101,11 @@ const FilListe = ({ fjernKnapp }: Props) => {
             } else {
                 kvitteringer.sort((a, b) => (a.datoForUtgift! > b.datoForUtgift!) ? 1 : -1)
             }
-        }
-        else if(sortering.includes('utgift_sortering')) {
+        } else if (sortering.includes('utgift_sortering')) {
             if (sortering.includes('descending')) {
                 kvitteringer.sort((a, b) => (a.typeUtgift! > b.typeUtgift!) ? -1 : 1)
             } else {
                 kvitteringer.sort((a, b) => (a.typeUtgift! > b.typeUtgift!) ? 1 : -1)
-            }
-        }
-        else if(sortering.includes('belop_sortering')) {
-            if (sortering.includes('descending')) {
-                kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? -1 : 1)
-            } else {
-                kvitteringer.sort((a, b) => (a.belop! > b.belop!) ? 1 : -1)
             }
         }
         return kvitteringer
@@ -126,10 +134,8 @@ const FilListe = ({ fjernKnapp }: Props) => {
                                     Utgift
                                 </button>
                             </th>
-                            <th role="columnheader" aria-sort="none" id="belop_sortering">
-                                <button onClick={sorteringOnClick} type="button">
-                                    Beløp
-                                </button>
+                            <th role="columnheader">
+                                Beløp
                             </th>
                             <th />
                         </tr>
@@ -141,7 +147,7 @@ const FilListe = ({ fjernKnapp }: Props) => {
                             <td className="dato">
                                 <button type="button" tabIndex={0} className="lenkeknapp" onClick={() => visKvittering(kvittering)}>
                                     {kvittering.datoForUtgift
-                                        ? dayjs(kvittering.datoForUtgift).format('dddd DD.MM.YYYY')
+                                        ? dayjs(kvittering.datoForUtgift).format(tabellDato)
                                         : ''
                                     }
                                 </button>
@@ -153,11 +159,10 @@ const FilListe = ({ fjernKnapp }: Props) => {
                                 {formatterTall(kvittering.belop! / 100)} kr
                             </td>
                             <td>
-                                <button className="lenkeknapp slett-knapp"
-                                    type="button"
+                                <button className="lenkeknapp" type="button"
                                     onClick={() => slettKvittering(kvittering)} tabIndex={0}
                                 >
-                                    <DeleteSVG aria-label="Slett" role="img" />
+                                    <img src={SlettFilIkon} alt="Slett" />
                                 </button>
                             </td>
                         </tr>

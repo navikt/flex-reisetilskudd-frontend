@@ -1,6 +1,6 @@
 import './bekreft-side.less'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import Banner from '../../components/diverse/banner/banner'
 import Brodsmuler from '../../components/diverse/brodsmuler/brodsmuler'
@@ -34,9 +34,11 @@ const brodsmuler: Brodsmule[] = [
 const BekreftSide = () => {
     const { reisetilskuddene, valgtReisetilskudd, setValgtReisetilskudd, setValgtSykmelding, sykmeldinger } = useAppStore()
     const { id } = useParams<RouteParams>()
+    const limitRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         setBodyClass('bekreftelses-side')
+        limitRef.current && limitRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }, [])
 
     useEffect(() => {
@@ -55,7 +57,7 @@ const BekreftSide = () => {
             <Banner tittel={tekst('bekreft.sidetittel')} />
             <Brodsmuler brodsmuler={brodsmuler} />
 
-            <div className="limit">
+            <div ref={limitRef} className="limit">
                 <AlertStripe type="suksess">
                     <Undertittel>
                         {tekst('bekreft.sendt-til')}
