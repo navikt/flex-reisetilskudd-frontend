@@ -18,7 +18,7 @@ describe('Tester åpen Reisetilskudd', () => {
         it('Kan sendes inn alert', () => {
             cy.url().should('contain', `/syk/reisetilskudd/soknaden/${åpenReisetilskudd.id}/1`)
             cy.get('.kan-sendes.alertstripe--info')
-                .should('contain', 'Søknaden kan ikke sendes før 19. feb.')
+                .should('contain', 'Søknaden kan ikke sendes før 19. februar')
                 .and('contain', 'Du kan begynne å fylle ut søknaden. Alle endringer lagres.')
         })
 
@@ -41,7 +41,7 @@ describe('Tester åpen Reisetilskudd', () => {
         it('Send inn søknaden skal ikke være mulig', () => {
             cy.url().should('contain', `/syk/reisetilskudd/soknaden/${åpenReisetilskudd.id}/6`)
             cy.get('.kan-sendes.alertstripe--info')
-                .should('contain', 'Søknaden kan ikke sendes før 19. feb.')
+                .should('contain', 'Søknaden kan ikke sendes før 19. februar')
                 .and('contain', 'Er du ferdig for nå, kan du lukke søknaden. Alle endringer lagres. Du får en melding når søknaden kan sendes inn.')
 
             cy.get('.knapperad .knapp--hoved[type=submit]')

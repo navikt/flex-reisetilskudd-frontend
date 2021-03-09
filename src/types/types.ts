@@ -76,6 +76,11 @@ export enum UtgiftTyper {
     ANNET = 'Annet'
 }
 
+export interface Hjelpetekst {
+    tittel?: string,
+    brodtekst?: string,
+}
+
 export class Reisetilskudd {
     id: string;
     status: 'FREMTIDIG' | 'ÅPEN' | 'PÅBEGYNT' | 'SENDBAR' | 'SENDT' | 'AVBRUTT'
@@ -117,10 +122,7 @@ export class Sporsmal {
     overskrift: string;
     sporsmalstekst: string;
     undertekst?: string;
-    hjelpetekst: {
-        tittel: string | null,
-        brodtekst: string | null,
-    } | null;
+    hjelpetekst?: Hjelpetekst;
     svartype: Svartype;
     min?: string;
     max?: string;
@@ -138,7 +140,7 @@ export class Sporsmal {
         this.overskrift = rsspm.overskrift === null ? '' : rsspm.overskrift
         this.sporsmalstekst = rsspm.sporsmalstekst === null ? '' : rsspm.sporsmalstekst
         this.undertekst = rsspm.undertekst || undefined
-        this.hjelpetekst = (rsspm.hjelpetekst === null || rsspm.hjelpetekst === undefined) ? null : { tittel: rsspm.hjelpetekst!.tittel, brodtekst: rsspm.hjelpetekst!.brodtekst }
+        this.hjelpetekst = rsToHjelpeteskt(rsspm.hjelpetekst)
         this.svartype = rsspm.svartype as Svartype
         this.min = rsspm.min || undefined
         this.max = rsspm.max || undefined
@@ -181,4 +183,12 @@ export const rsToKvittering = (rsKvittering: RSKvittering | null) => {
         typeUtgift: rsKvittering.typeUtgift,
         opprettet: dayjsToDate(rsKvittering.opprettet) || undefined
     } as Kvittering
+}
+
+const rsToHjelpeteskt = (rs: any) => {
+    if (rs === null) return undefined
+    return {
+        tittel: rs.tittel || undefined,
+        brodtekst: rs.brodtekst || undefined
+    } as Hjelpetekst
 }

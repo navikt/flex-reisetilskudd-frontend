@@ -27,7 +27,7 @@ export const sporsmalToRS = (sporsmal: Sporsmal): RSSporsmal => {
         overskrift: sporsmal.overskrift || null,
         sporsmalstekst: sporsmal.sporsmalstekst === '' ? null : sporsmal.sporsmalstekst,
         undertekst: sporsmal.undertekst || null,
-        hjelpetekst: sporsmal.hjelpetekst,
+        hjelpetekst: sporsmal.hjelpetekst || null,
         svartype: sporsmal.svartype,
         min: sporsmal.min || null,
         max: sporsmal.max || null,
