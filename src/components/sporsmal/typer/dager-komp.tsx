@@ -12,9 +12,11 @@ import { Sporsmal, Svar } from '../../../types/types'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import isoWeek from 'dayjs/plugin/isoWeek'
 import { maaneder, sammeAar, sammeMnd } from '../../../utils/dato'
-import { getLedetekst, tekst } from '../../../utils/tekster'
+import { tekst } from '../../../utils/tekster'
 import { useAppStore } from '../../../data/stores/app-store'
 import { hentSvar } from '../hent-svar'
+import KalenderIkon from './kalender-ikon.svg'
+import SlettIkon from './slett-ikon.svg'
 
 dayjs.extend(weekOfYear)
 dayjs.extend(isoWeek)
@@ -101,8 +103,6 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
         lagret.forEach((svar, idx) => {
             if (svar?.verdi !== undefined && svar?.verdi !== '') {
                 lokal[idx] = svar.verdi
-                const radio = document.querySelector('.checkboks[value="' + lokal[idx] + '"]')
-                radio!.setAttribute('checked', 'checked')
             }
         })
         setLokal(lokal)
@@ -119,6 +119,23 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
         }
         setLokal(Array.from(new Set(lokal)))
         setErBekreftet(lokal.length > 0)
+    }
+
+    const velgAlle = () => {
+        const dager: string[] = []
+        alledager.forEach((uke: any) => {
+            for (let i = 0; i < uke.length; i++) {
+                const dag = uke[i]
+                if (dag.tid === 'inni' && dag.dayjs.isoWeekday() < 6) {
+                    dager.push(dag.dayjs.format('YYYY-MM-DD'))
+                }
+            }
+        })
+        setLokal(Array.from(new Set(dager)))
+    }
+
+    const fjernAlle = () => {
+        setLokal([])
     }
 
     return (
@@ -159,6 +176,7 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
                                                         name={`${sporsmal.id}_${ukeidx}_${idx}`}
                                                         value={dag.dayjs.format('YYYY-MM-DD')}
                                                         ref={register}
+                                                        checked={lokal.includes(dag.dayjs.format('YYYY-MM-DD'))}
                                                         onChange={() => radioKlikk(dag.dayjs.format(('YYYY-MM-DD')))}
                                                         className="checkboks"
                                                     />
@@ -175,13 +193,24 @@ const DagerKomp = ({ sporsmal }: SpmProps) => {
                             </div>
                         )
                     })}
+
                     <Normaltekst className="kalender__hjelp">
-                        {getLedetekst(tekst('sporsmal.egen-bil.kalender.hjelp'), {
-                            '%FRA%': sammeAar(sporsmal)
-                                ? dayjs(sporsmal.min!).format('DD. MMMM')
-                                : dayjs(sporsmal.min!).format('DD. MMMM YYYY'),
-                            '%TIL%': dayjs(sporsmal.max!).format('DD. MMMM YYYY')
-                        })}
+                        {lokal.length === 0
+                            ? tekst('sporsmal.egen-bil.kalender.hjelp')
+                            : lokal.length === 1
+                                ? `${lokal.length} ${tekst('sporsmal.egen-bil.kalender.dagvalgt')}`
+                                : `${lokal.length} ${tekst('sporsmal.egen-bil.kalender.dagervalgt')}`
+                        }
+                    </Normaltekst>
+
+                    <Normaltekst className="kalendervalg">
+                        <button type="button" className="lenkeknapp velgalle" onClick={velgAlle}>
+                            {tekst('sporsmal.egen-bil.kalender.ukedager')}
+                        </button>
+                        <button type="button" className="lenkeknapp fjernalle" onClick={fjernAlle}>
+                            <img src={SlettIkon} alt="" />
+                            {tekst('sporsmal.egen-bil.kalender.fjern')}
+                        </button>
                     </Normaltekst>
                 </div>
             </div>

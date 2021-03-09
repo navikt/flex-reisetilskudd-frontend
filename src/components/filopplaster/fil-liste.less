@@ -35,27 +35,13 @@
 
 @media (min-width: @screen-sm) {
     .tabell.fil_liste {
-        th .belop {
+        th:nth-child(3) {
             padding-right: 3rem;
+            text-align: right;
         }
 
         td.belop {
-            padding-right: 3.6rem;
-        }
-
-        .slett-knapp {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            width: 17px;
-            height: 17px;
-            margin: 0;
-
-            &:focus {
-                box-shadow: 0 0 0 3px @navDypBla;
-                background-color: @white;
-            }
+            padding-right: 3rem;
         }
     }
 }
