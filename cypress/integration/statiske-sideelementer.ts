@@ -37,12 +37,12 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
 
         it('Nye søknader', () => {
             cy.get('.tilskudd__teasere .tilskudd--nye')
-                .contains('Nye søknader')
+                .contains('Nye')
         })
 
         it('Påbegynte søknader', () => {
             cy.get('.tilskudd__teasere .tilskudd--pabegynt')
-                .contains('Påbegynte søknader')
+                .contains('Påbegynte')
         })
 
         it('Om reisetilskudd', () => {
@@ -54,7 +54,7 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
 
         it('Tidligere søknader', () => {
             cy.get('.tilskudd__teasere .tilskudd--tidligere')
-                .contains('Tidligere søknader')
+                .contains('Tidligere')
             cy.get('.tilskudd__teasere .tilskudd--tidligere .teasere__sortering')
                 .contains('Sorter etter')
                 .get('.selectContainer')
@@ -62,7 +62,7 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
         })
 
         it('Velger et reisetilskudd', () => {
-            cy.get(`.tilskudd__teasere a[href*=${reisetilskudd.id}]`).click()
+            cy.get(`.tilskudd__teasere a[href*=${reisetilskudd.id}]`).click({ force: true })
         })
     })
 
@@ -103,8 +103,8 @@ describe('Teste statiske sidelelementer i reisetilskuddsøknaden', () => {
 
         it('Laster inn veilederpanel spar-tid', () => {
             cy.get('.spar-tid').should('be.visible')
-            cy.get('.spar-tid .nav-veilederpanel__content h2').should('be.visible').and('have.text', 'Spar tid ved å bruke mobilen')
-            cy.get('.spar-tid .nav-veilederpanel__content').contains('Om du gjennomfører søknaden på mobilen, kan du ta bilde av kvitteringen direkte når du laster opp kvitteringer for reiser.')
+            cy.get('.spar-tid .nav-veilederpanel__content h2').should('be.visible').and('have.text', 'Spar tid med mobilen')
+            cy.get('.spar-tid .nav-veilederpanel__content').contains('Fyller du ut fra telefonen, kan du ta bilde av kvitteringene og bruke dem direkte i søknaden.')
         })
 
         it('Laster inn sykmelding-panel', () => {

@@ -9,7 +9,7 @@ describe('Tester åpen Reisetilskudd', () => {
     describe('Åpen reisetilskudd', () => {
         it('Reisetilskudd teaser', () => {
             cy.get('.tilskudd--nye').within(() => {
-                cy.contains('Nye søknader')
+                cy.contains('Nye')
                 cy.get(`a[href*=${åpenReisetilskudd.id}]`).click()
             })
         })

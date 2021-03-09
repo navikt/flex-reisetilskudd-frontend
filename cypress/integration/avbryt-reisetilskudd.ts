@@ -10,7 +10,7 @@ describe('Tester avbruttReisetilskudd', () => {
     describe('Gjenåpning av reisetilskudd', () => {
         it('Finner avbrutt reisetilskudd', () => {
             cy.get('.tilskudd--tidligere').within(() => {
-                cy.contains('Tidligere søknader')
+                cy.contains('Tidligere')
                 cy.get(`a[href*=${reisetilskudd.id}]`).click()
             })
             cy.url().should('include', `/soknaden/${reisetilskudd.id}/avbrutt`)

@@ -48,39 +48,30 @@ describe('Tester utfylling av kvittering', () => {
 
             cy.get('#dato_sortering').contains('Dato')
             cy.get('#utgift_sortering').contains('Utgift')
-            cy.get('#belop_sortering').contains('Beløp')
 
-            cy.get('.dato').contains('fredag 29.09.2034')
             cy.get('.transport').contains('Taxi')
             cy.get('.belop').contains('2')
 
-            cy.get('.sumlinje').contains('1 utlegg på til sammen')
+            cy.get('.sumlinje').contains('1 utgifter på til sammen')
             cy.get('.sumlinje .belop').contains('2 kr')
         })
 
-        it('Endring av kvittering',  () => {
-            cy.get('.dato').contains('fredag 29.09.2034').click()
-
-            cy.contains('Endre reiseutgift')
-
-            cy.get('.alertstripe--info').contains('Du kan foreløpig ikke redigere utgifter som du har lagt til. Men du kan slette den som er feil, og legge inn på nytt.')
-
-            cy.get('select[name=transportmiddel]').should('have.attr', 'disabled')
-
-            cy.get('.nav-datovelger__kalenderknapp').should('have.attr', 'disabled')
-
-            cy.get('input[name=belop_input]').should('have.attr', 'disabled')
-
-            cy.get('.filopplasteren input[type=file]').should('not.exist')
-
-            cy.get('.knapperad').within(() => {
-                cy.contains('Tilbake')
-                cy.contains('Slett')
-                cy.contains('Bekreft').should('not.exist')
-            })
-
-            cy.get('.lukknapp').click()
-        })
+        /*
+                it('Endring av kvittering',  () => {
+                    cy.contains('Legg til reiseutgift')
+                    cy.get('.alertstripe--info').contains('Du kan foreløpig ikke redigere utgifter som du har lagt til. Men du kan slette den som er feil, og legge inn på nytt.')
+                    cy.get('select[name=transportmiddel]').should('have.attr', 'disabled')
+                    cy.get('.nav-datovelger__kalenderknapp').should('have.attr', 'disabled')
+                    cy.get('input[name=belop_input]').should('have.attr', 'disabled')
+                    cy.get('.filopplasteren input[type=file]').should('not.exist')
+                    cy.get('.knapperad').within(() => {
+                        cy.contains('Tilbake')
+                        cy.contains('Slett')
+                        cy.contains('Bekreft').should('not.exist')
+                    })
+                    cy.get('.lukknapp').click()
+                })
+        */
 
         it('Åpner og lukker modal', () => {
             cy.get('.fler-vedlegg').click()
